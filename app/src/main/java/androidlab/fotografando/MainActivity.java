@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
         tabHost.addTab(spec);
 
 
-        final Intent takePhotoIntent = new Intent(this,takePhoto.class);
+        final Intent takePhotoIntent = new Intent(this,photo.class);
         Button btn = (Button) findViewById(R.id.btn1);
 
         btn.setOnClickListener(new View.OnClickListener() {
