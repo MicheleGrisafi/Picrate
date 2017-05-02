@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -30,10 +31,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.util.TypedValue;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -57,11 +58,12 @@ public class camera extends Activity {
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT = 1;
     private static final int STATE_PREVIEW = 0;
     private static final int STATE_WAIT_LOCK = 1;
-    private int mCaptureState = STATE_PREVIEW;
+    private int mCaptureState;
 
-    private int topLayerHeight;
-    private int bottomLayerHeight;
 
+    private RelativeLayout topOverlay;
+    private RelativeLayout bottomOverlay;
+    private int topLayerHeight = 0,bottomLayerHeight = 0;
 
     private Intent checkPhotoIntent;
     private Button mTakePhotoButton;
@@ -95,7 +97,14 @@ public class camera extends Activity {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
+            Toast.makeText(camera.this, "camera opened", Toast.LENGTH_SHORT).show();
             startPreview();
+        }
+
+        @Override
+        public void onClosed(@NonNull CameraDevice camera) {
+            super.onClosed(camera);
+            Toast.makeText(camera.this, "Camera closed", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -107,6 +116,23 @@ public class camera extends Activity {
         @Override
         public void onError(@NonNull CameraDevice camera,  int error) {
             camera.close();
+            switch (error){
+                case CameraDevice.StateCallback.ERROR_CAMERA_DEVICE:
+                    Toast.makeText(camera.this, "ERROR_CAMERA_DEVICE", Toast.LENGTH_SHORT).show();
+                    break;
+                case CameraDevice.StateCallback.ERROR_CAMERA_DISABLED:
+                    Toast.makeText(camera.this, "ERROR_CAMERA_DISABLED", Toast.LENGTH_SHORT).show();
+                    break;
+                case CameraDevice.StateCallback.ERROR_CAMERA_IN_USE:
+                    Toast.makeText(camera.this, "ERROR_CAMERA_IN_USE", Toast.LENGTH_SHORT).show();
+                    break;
+                case CameraDevice.StateCallback.ERROR_CAMERA_SERVICE:
+                    Toast.makeText(camera.this, "ERROR_CAMERA_SERVICE", Toast.LENGTH_SHORT).show();
+                    break;
+                case CameraDevice.StateCallback.ERROR_MAX_CAMERAS_IN_USE:
+                    Toast.makeText(camera.this, "ERROR_MAX_CAMERAS_IN_USE", Toast.LENGTH_SHORT).show();
+                    break;
+            }
             mCameraDevice = null;
         }
     };
@@ -137,11 +163,38 @@ public class camera extends Activity {
 
             //inizio
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            int width = bitmap.getHeight();
-            int offset = (bitmap.getWidth() * topLayerHeight) / mTextureView.getHeight(); //surf : heig = top : x
+
+            int offset; //= (height * topLayerHeight) / mTextureView.getHeight(); //surf : heig = top : x
+            Resources r = getResources();
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, topLayerHeight, r.getDisplayMetrics());
             Matrix matrix = new Matrix();
             matrix.postRotate(90);
-            Bitmap cropped = Bitmap.createBitmap(bitmap, 0, offset, width, width, matrix, true);
+            Bitmap cropped;
+
+            if (bitmap.getWidth() >= bitmap.getHeight()){
+                offset = (bitmap.getWidth() * topLayerHeight) / mTextureView.getHeight();
+                int offset2 = bitmap.getWidth()/2 - bitmap.getHeight()/2;
+                cropped = Bitmap.createBitmap(
+                        bitmap,
+                        (int)px,
+                        0,
+                        bitmap.getHeight(),
+                        bitmap.getHeight(),matrix,true
+                );
+            }else{
+                offset = (bitmap.getHeight() * topLayerHeight) / mTextureView.getHeight();
+                int offset2 = bitmap.getWidth()/2 - bitmap.getHeight()/2;
+                cropped = Bitmap.createBitmap(
+                        bitmap,
+                        0,
+                        (int)px,
+                        bitmap.getWidth(),
+                        bitmap.getWidth(),matrix,true
+                );
+            }
+
+
+            //Bitmap cropped = Bitmap.createBitmap(bitmap, 0, 0, width, width, matrix, true);
             bitmap.recycle();
 
             FileOutputStream out = null;
@@ -172,14 +225,13 @@ public class camera extends Activity {
                 e.printStackTrace();
             }finally{
                 mImage.close();
-                if(fileOutputStream != null){
+                if(fileOutputStream != null) {
                     try {
                         fileOutputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                cropAndCheck();
             }*/
         }
     }
@@ -196,14 +248,15 @@ public class camera extends Activity {
                     break;
                 case STATE_WAIT_LOCK:
                     //Toast.makeText(camera.this, "SATE WAIT LOCK", Toast.LENGTH_SHORT).show();
-                    mCaptureState = STATE_PREVIEW;
+                   // mCaptureState = STATE_PREVIEW;
                     Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
-                    if (afState == CaptureRequest.CONTROL_AF_STATE_FOCUSED_LOCKED || afState == CaptureRequest.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED){
+                    if (afState == CaptureRequest.CONTROL_AF_STATE_FOCUSED_LOCKED /*|| afState == CaptureRequest.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED*/){
+                        unLockFocus();
                         Toast.makeText(getApplicationContext(),"AF locked!",Toast.LENGTH_LONG).show();
                         startStillCaptureRequest();
                     }else{
                         //Toast.makeText(camera.this, "af state WRONG", Toast.LENGTH_SHORT).show();
-                        lockFocus(true);
+                        //lockFocus(true);
                     }
                     break;
             }
@@ -248,8 +301,8 @@ public class camera extends Activity {
         mTextureView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lockFocus(false);
-                unLockFocus();
+                /*lockFocus(false);
+                unLockFocus();*/
             }
         });
 
@@ -260,6 +313,10 @@ public class camera extends Activity {
                 shootPhoto();
             }
         });
+
+        topOverlay = (RelativeLayout)findViewById(R.id.topLayer);
+        bottomOverlay = (RelativeLayout)findViewById(R.id.bottomLayer);
+
     }
 
     @Override
@@ -295,6 +352,42 @@ public class camera extends Activity {
                     |View.SYSTEM_UI_FLAG_FULLSCREEN
                     |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
+        // Get the preview size
+        int previewWidth = mTextureView.getMeasuredWidth();
+        int previewHeight = mTextureView.getMeasuredHeight();
+        int btnDimension = mTakePhotoButton.getMeasuredHeight();
+        // Set the height of the overlay so that it makes the preview a square
+
+
+
+
+        if (previewHeight-previewWidth >= btnDimension) {
+            if ((previewHeight - previewWidth) / 2 >= btnDimension) {
+                topLayerHeight = (previewHeight - previewWidth) / 2;
+                bottomLayerHeight = (previewHeight - previewWidth) / 2;
+            } else {
+                bottomLayerHeight = previewHeight - previewWidth;
+                topLayerHeight = 0;
+            }
+        }else{
+            /*
+            btnDimension = previewHeight - previewWidth;
+            mTakePhotoButton.getLayoutParams().height = btnDimension;
+            mTakePhotoButton.getLayoutParams().width = btnDimension;*/
+        }
+
+
+        RelativeLayout.LayoutParams overlayTopParams = (RelativeLayout.LayoutParams) topOverlay.getLayoutParams();
+        overlayTopParams.height = topLayerHeight;
+
+        RelativeLayout.LayoutParams overlayBottomParams = (RelativeLayout.LayoutParams) bottomOverlay.getLayoutParams();
+        overlayBottomParams.height = bottomLayerHeight;
+
+        topOverlay.setLayoutParams(overlayTopParams);
+        bottomOverlay.setLayoutParams(overlayBottomParams);
+
+
+
     }
 
     @Override
@@ -344,18 +437,20 @@ public class camera extends Activity {
 
 
     private void closeCamera(){
-        if(mCameraDevice != null){
-            mCameraDevice.close();
-            mCameraDevice = null;
-        }
-        if(mPreviewCaptureSession != null){
-            mPreviewCaptureSession.close();
-            mPreviewCaptureSession = null;
-        }
-        if(mImageReader != null){
-            mImageReader.close();
-            mImageReader = null;
-        }
+
+            if (mCameraDevice != null) {
+                mCameraDevice.close();
+                mCameraDevice = null;
+            }
+            if (mPreviewCaptureSession != null) {
+                mPreviewCaptureSession.close();
+                mPreviewCaptureSession = null;
+            }
+            if (mImageReader != null) {
+                mImageReader.close();
+                mImageReader = null;
+            }
+
     }
     private void setupCamera(int width, int height){
         CameraManager cameraManager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
@@ -430,7 +525,6 @@ public class camera extends Activity {
                     } catch (CameraAccessException e) {
                         e.printStackTrace();
                     }
-                    setDimension();
                 }
 
                 @Override
@@ -462,7 +556,7 @@ public class camera extends Activity {
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
                     super.onCaptureCompleted(session, request, result);
-                    unLockFocus();
+                    //unLockFocus();
                 }
 
                 @Override
@@ -547,14 +641,13 @@ public class camera extends Activity {
         }
     }
     private void lockFocus(boolean shoot){
-        mCaptureState = STATE_WAIT_LOCK;
-        mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CaptureRequest.CONTROL_AF_TRIGGER_START);
-        if (shoot){
-            try {
-                mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),mPreviewCaptureCallback,mBackgroundHandler);
-            } catch (CameraAccessException e) {
-                e.printStackTrace();
-            }
+        try {
+            mCaptureState = STATE_WAIT_LOCK;
+            mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CaptureRequest.CONTROL_AF_TRIGGER_START);
+
+            mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),mPreviewCaptureCallback,mBackgroundHandler);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
         }
     }
     private void unLockFocus(){
@@ -567,45 +660,7 @@ public class camera extends Activity {
         }
     }
     private void shootPhoto() {
-
         lockFocus(true);
-
     }
-    private void setDimension(){
 
-        final int windowWidth = mTextureView.getWidth();
-        final int windowHeight = mTextureView.getHeight();
-        int btnDimension = mTakePhotoButton.getWidth();
-
-
-
-        if (windowHeight-windowWidth >= btnDimension) {
-            if ((windowHeight - windowWidth) / 2 >= btnDimension) {
-                topLayerHeight = (windowHeight - windowWidth) / 2;
-                bottomLayerHeight = (windowHeight - windowWidth) / 2;
-
-            } else {
-                bottomLayerHeight = windowHeight - windowWidth;
-                topLayerHeight = 0;
-            }
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    RelativeLayout topLayer = (RelativeLayout)findViewById(R.id.topLayer);
-                    RelativeLayout bottomLayer = (RelativeLayout)findViewById(R.id.bottomLayer);
-                    topLayer.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,200));
-                    bottomLayer.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,200));
-                }
-            });
-
-
-        }else{
-            btnDimension = windowHeight - windowWidth;
-            mTakePhotoButton.getLayoutParams().height = btnDimension;
-            mTakePhotoButton.getLayoutParams().width = btnDimension;
-           /* bottomLayer.getLayoutParams().height = bottomLayerHeight = btnDimension;
-            topLayer.getLayoutParams().height = topLayerHeight = 0;*/
-        }
-    }
 }
