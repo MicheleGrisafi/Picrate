@@ -1,23 +1,11 @@
 package androidlab.fotografando;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.os.Bundle;
-
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TabHost;
 import android.widget.Button;
-import android.hardware.camera2.*;
-import android.content.Context;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.TabHost;
 
 public class MainActivity extends Activity {
 
@@ -46,28 +34,24 @@ public class MainActivity extends Activity {
         tabHost.addTab(spec);
 
 
-        final Intent takePhotoIntent = new Intent(this,photo.class);
+        final Intent takePhotoIntent = new Intent(this,takePhoto.class);
         Button btn = (Button) findViewById(R.id.btn1);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(takePhotoIntent, 200);
+                startActivity(takePhotoIntent);
+            }
+        });
+        final Intent openCamera = new Intent(this,camera.class);
+        Button btn2 = (Button) findViewById(R.id.button2);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(openCamera);
             }
         });
 
+
     }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode==1) {
-            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
 
 }

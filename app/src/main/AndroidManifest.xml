@@ -29,7 +29,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".takePhoto" />
-        <activity android:name=".photo"></activity>
+        <activity android:name=".camera" />
+        <activity android:name=".checkPhoto"></activity>
     </application>
 
 </manifest>

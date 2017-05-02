@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Fotografando</string>
+    <string name="permissionMessage">Fotografando requires camera permission</string>
+    <string name="PermissionNotGranted">Fotografando won\'t be able to run without the camera!</string>
+    <string name="cameraObtained">Camera connection established</string>
+    <string name="GenericError">Something went wrong</string>
+    <string name="PhotoFolder">fotografando</string>
+    <string name="askWriteToSDpermission">Fotografando need to access external storage</string>
+    <string name="permissionStorageDenied">Fotografando need to be able to access External Storage</string>
 </resources>
