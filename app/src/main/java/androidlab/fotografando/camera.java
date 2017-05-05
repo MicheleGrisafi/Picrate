@@ -31,7 +31,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.Size;
 import android.util.SparseIntArray;
-import android.util.TypedValue;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -194,7 +193,6 @@ public class camera extends Activity {
             }
 
 
-            //Bitmap cropped = Bitmap.createBitmap(bitmap, 0, 0, width, width, matrix, true);
             bitmap.recycle();
 
             FileOutputStream out = null;

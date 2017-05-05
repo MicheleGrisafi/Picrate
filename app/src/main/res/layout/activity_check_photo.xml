@@ -1,48 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="androidlab.fotografando.checkPhoto">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorRed"
         app:srcCompat="@mipmap/ic_launcher" />
 
-    <ImageButton
-        android:id="@+id/btnOk"
-        android:layout_width="62dp"
-        android:layout_height="58dp"
-        app:srcCompat="@drawable/ic_check_box_black_24dp"
-        app:layout_constraintRight_toLeftOf="@+id/btnCancel"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        tools:layout_editor_absoluteY="501dp"
-        tools:layout_editor_absoluteX="78dp" />
+    <RelativeLayout
+        android:id="@+id/topRelative"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorBlack"
+        android:layout_alignParentTop="true">
 
-    <ImageButton
-        android:id="@+id/btnCancel"
-        android:layout_width="60dp"
-        android:layout_height="55dp"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/btnOk"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        tools:layout_editor_absoluteY="504dp"
-        tools:layout_editor_absoluteX="231dp" />
+        <ImageButton
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@null"
+            android:tint="@color/colorWhite"
+            android:src="@drawable/ic_arrow_back_black_50dp" />
+    </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/bottomRelative"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/colorBlack"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+
+
+        <ImageButton
+            android:id="@+id/btnOk"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:tint="@color/colorWhite"
+            android:src="@drawable/ic_check_black_50dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

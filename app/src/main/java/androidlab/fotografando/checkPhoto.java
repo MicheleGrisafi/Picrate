@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -16,6 +17,9 @@ public class checkPhoto extends Activity {
     private ImageView mImageView;
     private ImageButton btnOk;
     private ImageButton btnCancel;
+    private RelativeLayout topOverlay,bottomOverlay;
+    private RelativeLayout layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,10 @@ public class checkPhoto extends Activity {
         btnOk = (ImageButton)findViewById(R.id.btnOk);
         btnCancel = (ImageButton)findViewById(R.id.btnCancel);
 
+        topOverlay = (RelativeLayout)findViewById(R.id.topRelative);
+        bottomOverlay = (RelativeLayout)findViewById(R.id.bottomRelative);
+        layout = (RelativeLayout)findViewById(R.id.layout);
+
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(1,out);
@@ -41,6 +49,7 @@ public class checkPhoto extends Activity {
                 finish();
             }
         });
+
     }
     @Override
     public void onWindowFocusChanged(boolean hasFocus){
@@ -54,6 +63,38 @@ public class checkPhoto extends Activity {
                     |View.SYSTEM_UI_FLAG_FULLSCREEN
                     |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
+        // Get the preview size
+        int imageWidth = mImageView.getMeasuredWidth();
+        int imageHeight = mImageView.getMeasuredHeight();
+        int btnDimension = btnOk.getMeasuredHeight();
+        // Set the height of the overlay so that it makes the preview a square
+        int topLayerHeight = 0, bottomLayerHeight = 0;
+
+        if (imageHeight-imageWidth >= btnDimension) {
+            if ((imageHeight - imageWidth) / 2 >= btnDimension) {
+                topLayerHeight = (imageHeight - imageWidth) / 2;
+                bottomLayerHeight = (imageHeight - imageWidth) / 2;
+            } else {
+                bottomLayerHeight = imageHeight - imageWidth;
+                topLayerHeight = 0;
+            }
+        }else{
+            /*
+            btnDimension = imageHeight - imageWidth;
+            mTakePhotoButton.getLayoutParams().height = btnDimension;
+            mTakePhotoButton.getLayoutParams().width = btnDimension;*/
+        }
+
+
+        RelativeLayout.LayoutParams overlayTopParams = (RelativeLayout.LayoutParams) topOverlay.getLayoutParams();
+        overlayTopParams.height = topLayerHeight;
+
+        RelativeLayout.LayoutParams overlayBottomParams = (RelativeLayout.LayoutParams) bottomOverlay.getLayoutParams();
+        overlayBottomParams.height = bottomLayerHeight;
+
+        topOverlay.setLayoutParams(overlayTopParams);
+        bottomOverlay.setLayoutParams(overlayBottomParams);
+        Toast.makeText(this,Integer.toString(mImageView.getMeasuredHeight()) + " - " +layout.getMeasuredHeight(), Toast.LENGTH_LONG).show();
     }
     private boolean setImage(Intent intent){
         String name = intent.getExtras().get("fileName").toString();
