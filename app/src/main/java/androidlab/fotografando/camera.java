@@ -164,30 +164,30 @@ public class camera extends Activity {
             //inizio
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-            int offset; //= (height * topLayerHeight) / mTextureView.getHeight(); //surf : heig = top : x
-            Resources r = getResources();
-            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, topLayerHeight, r.getDisplayMetrics());
+            int destHeight;
+
             Matrix matrix = new Matrix();
-            matrix.postRotate(90);
+
             Bitmap cropped;
 
             if (bitmap.getWidth() >= bitmap.getHeight()){
-                offset = (bitmap.getWidth() * topLayerHeight) / mTextureView.getHeight();
-                int offset2 = bitmap.getWidth()/2 - bitmap.getHeight()/2;
+                matrix.postRotate(90);
+                destHeight = bitmap.getWidth() - (bitmap.getWidth() * topLayerHeight) / mTextureView.getHeight();
+
                 cropped = Bitmap.createBitmap(
                         bitmap,
-                        (int)px,
+                        bitmap.getWidth() - destHeight,
                         0,
                         bitmap.getHeight(),
                         bitmap.getHeight(),matrix,true
                 );
             }else{
-                offset = (bitmap.getHeight() * topLayerHeight) / mTextureView.getHeight();
-                int offset2 = bitmap.getWidth()/2 - bitmap.getHeight()/2;
+                matrix.postRotate(0);
+                destHeight = bitmap.getHeight() - (bitmap.getHeight() * topLayerHeight) / mTextureView.getHeight();
                 cropped = Bitmap.createBitmap(
                         bitmap,
                         0,
-                        (int)px,
+                        bitmap.getHeight() - destHeight,
                         bitmap.getWidth(),
                         bitmap.getWidth(),matrix,true
                 );
@@ -294,7 +294,7 @@ public class camera extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        checkWriteStoragePermission();
+
         createPhotoFolder();
         checkPhotoIntent = new Intent(this,checkPhoto.class);
         mTextureView = (TextureView)findViewById(R.id.textureView2);
@@ -310,10 +310,11 @@ public class camera extends Activity {
         mTakePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 shootPhoto();
             }
         });
-
+        checkWriteStoragePermission();
         topOverlay = (RelativeLayout)findViewById(R.id.topLayer);
         bottomOverlay = (RelativeLayout)findViewById(R.id.bottomLayer);
 
@@ -395,8 +396,12 @@ public class camera extends Activity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
             case REQUEST_CAMERA_PERMISSION_RESULT:
-                if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(getApplicationContext(), R.string.PermissionNotGranted, Toast.LENGTH_SHORT).show();
+                try {
+                    if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(getApplicationContext(), R.string.PermissionNotGranted, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
                 }
                 break;
             case REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT:
@@ -621,11 +626,11 @@ public class camera extends Activity {
     private void checkWriteStoragePermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                try {
+                /*try {
                     createPhotoFileName();
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
             }else{
                 if(shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
                     Toast.makeText(this,R.string.askWriteToSDpermission,Toast.LENGTH_LONG).show();
@@ -633,11 +638,11 @@ public class camera extends Activity {
                 requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
             }
         }else{
-            try {
+           /* try {
                 createPhotoFileName();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
     private void lockFocus(boolean shoot){

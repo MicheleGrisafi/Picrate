@@ -28,7 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".takePhoto" />
         <activity android:name=".camera" />
         <activity android:name=".checkPhoto"></activity>
     </application>

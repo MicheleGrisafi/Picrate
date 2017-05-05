@@ -34,14 +34,7 @@ public class MainActivity extends Activity {
         tabHost.addTab(spec);
 
 
-        final Intent takePhotoIntent = new Intent(this,takePhoto.class);
-        Button btn = (Button) findViewById(R.id.btn1);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(takePhotoIntent);
-            }
-        });
+
         final Intent openCamera = new Intent(this,camera.class);
         Button btn2 = (Button) findViewById(R.id.button2);
         btn2.setOnClickListener(new View.OnClickListener() {
