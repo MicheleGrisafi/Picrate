@@ -94,7 +94,6 @@ public class checkPhoto extends Activity {
 
         topOverlay.setLayoutParams(overlayTopParams);
         bottomOverlay.setLayoutParams(overlayBottomParams);
-        Toast.makeText(this,Integer.toString(mImageView.getMeasuredHeight()) + " - " +layout.getMeasuredHeight(), Toast.LENGTH_LONG).show();
     }
     private boolean setImage(Intent intent){
         String name = intent.getExtras().get("fileName").toString();

@@ -312,7 +312,7 @@ public class camera extends Activity {
                 shootPhoto();
             }
         });
-        checkWriteStoragePermission();
+        //checkWriteStoragePermission();
         topOverlay = (RelativeLayout)findViewById(R.id.topLayer);
         bottomOverlay = (RelativeLayout)findViewById(R.id.bottomLayer);
 
@@ -549,11 +549,11 @@ public class camera extends Activity {
                 @Override
                 public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
                     super.onCaptureStarted(session, request, timestamp, frameNumber);
-                    try {
+                    /*try {
                         createPhotoFileName();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
+                    }*/
                 }
 
                 @Override
@@ -624,11 +624,11 @@ public class camera extends Activity {
     private void checkWriteStoragePermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
-                /*try {
+                try {
                     createPhotoFileName();
                 } catch (IOException e) {
                     e.printStackTrace();
-                }*/
+                }
             }else{
                 if(shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
                     Toast.makeText(this,R.string.askWriteToSDpermission,Toast.LENGTH_LONG).show();
@@ -636,11 +636,11 @@ public class camera extends Activity {
                 requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
             }
         }else{
-           /* try {
+           try {
                 createPhotoFileName();
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
     }
     private void lockFocus(boolean shoot){
@@ -663,6 +663,9 @@ public class camera extends Activity {
         }
     }
     private void shootPhoto() {
+
+        checkWriteStoragePermission();
+
         lockFocus(true);
     }
 
