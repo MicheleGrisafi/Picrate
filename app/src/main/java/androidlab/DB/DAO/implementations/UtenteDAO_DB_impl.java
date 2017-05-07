@@ -17,7 +17,7 @@ import androidlab.DB.Objects.Utente;
 
 public class UtenteDAO_DB_impl implements UtenteDAO {
     MySqlDatabase database;
-
+    Object result;
     @Override
     public void open() {
         database = new MySqlDatabase();
@@ -29,7 +29,7 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
 
     @Override
     public Utente insertUtente(Utente user) {
-        Object result = null;
+        result = null;
         if (Integer.parseInt(database.insertUtente(user.getEmail(),user.getGoogleKey())) == 1){
             result = user;
         }
@@ -42,8 +42,11 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
     }
 
     @Override
-    public boolean setUsername(Utente user,String username) {
+    public Utente setUsername(Utente user,String username) {
+        result = null;
+        if(Integer.parseInt(database.setUsername(user.get(),username)) == 1){
+            result = user,
+        }
 
-        return false;
     }
 }

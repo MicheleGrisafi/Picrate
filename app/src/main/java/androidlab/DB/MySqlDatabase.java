@@ -29,11 +29,12 @@ public class MySqlDatabase {
     BufferedWriter bufferedWriter;
     InputStream inputStream;
     BufferedReader bufferedReader;
+    String data = "";
     public MySqlDatabase(){
 
     }
     public String insertUtente(String... param){
-        String data = "";
+        data = "";
         try {
 
             switch (param.length){
@@ -61,8 +62,15 @@ public class MySqlDatabase {
         return openConnection(data);
     }
 
-    public String setUsername(){
-        
+    public String setUsername(String id, String username){
+        data ="";
+        try {
+            data =  URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8") +"&" +
+                    URLEncoder.encode("googleKey","UTF-8")+"="+ URLEncoder.encode(username,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data);
     }
 
     private String openConnection(String data){

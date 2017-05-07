@@ -12,5 +12,5 @@ public interface UtenteDAO {
 
     Utente insertUtente(Utente user);
     void deleteUtente(Utente user);
-    boolean setUsername(Utente user,String username);
+    Utente setUsername(Utente user,String username);
 }

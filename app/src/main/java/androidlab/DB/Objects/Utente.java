@@ -6,6 +6,7 @@ package androidlab.DB.Objects;
 
 public class Utente {
     private String username;
+    private int id;
     private String email;
     private String googleKey;
     private int score;
