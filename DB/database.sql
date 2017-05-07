@@ -1,0 +1,39 @@
+CREATE TABLE User(
+	VARCHAR(20) 	IDUser NOT NULL,
+	VARCHAR(255) 	password NOT NULL,
+	SMALLINT		score,
+	SMALLINT		money,
+	CONSTRAINT PKUser PRIMARY KEY (IDUser)
+);
+CREATE TABLE Challenge(
+	SMALLINT		IDChallenge NOT NULL AUTO_INCREMENT,
+	VARCHAR(255)	description NOT NULL,
+	VARCHAR(20)		title NOT NULL,
+	VARCHAR(255)	image NOT NULL,
+	DATETIME 		expire,
+	INT(1)			state NOT NULL,
+	CONSTRAINT PKChallenge PRIMARY KEY(IDChallenge),
+);
+CREATE TABLE Photo(
+	INTEGER(10)		IDPhoto NOT NULL AUTO_INCREMENT,
+	VARCHAR(255)	location,
+	VARCHAR(20)		owner NOT NULL,
+	
+	CONSTRAINT PKPhoto PRIMARY KEY (IDPhoto),
+	CONSTRAINT FKPhotoOwner FOREIGN KEY (owner) REFERENCES User(IDUser)
+);
+CREATE TABLE Rating(
+	INTEGER(10)		IDPhoto NOT NULL,
+	VARCHAR(20)		IDUser NOT NULL,
+	INT(1)			Rating DEFAULT NULL,
+	
+	CONSTRAINT FKRatingPhoto FOREIGN KEY (IDPhoto) REFERENCES Photo(IDPhoto),
+	CONSTRAINT FKRatingUser FOREIGN KEY (IDUser) REFERENCES User(IDUser)
+);
+
+
+
+
+/* ***********************************QUERIES****************************** */
+/* TOP X players */
+SELECT * FROM user ORDER BY score LIMIT X;
