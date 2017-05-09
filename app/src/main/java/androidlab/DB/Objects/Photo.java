@@ -15,21 +15,25 @@ public class Photo {
     private Bitmap image;
     private double longitudine;
     private double latitudine;
+
     private int ownerID;
+    private int sessionID;
 
     public Photo(){
 
     }
-    public Photo(Utente user){
+    public Photo(Utente user,ChallengeSession session){
         this();
         ownerID = user.getId();
+        sessionID = session.getId();
     }
-    public Photo(int id, URL image, double longitudine, double latitudine, Utente user){
-        this(user);
+    public Photo(int id, URL imageUrl, double longitudine, double latitudine, Utente user,ChallengeSession session, Bitmap image){
+        this(user,session);
         this.id = id;
-        this.image = image;
+        this.imageUrl = imageUrl;
         this.longitudine = longitudine;
         this.latitudine = latitudine;
+        this.image = image;
     }
 
     public int getId() {
@@ -67,5 +71,11 @@ public class Photo {
     }
     public void setImage(Bitmap image) {
         this.image = image;
+    }
+    public int getSessionID() {
+        return sessionID;
+    }
+    public void setSessionID(int sessionID) {
+        this.sessionID = sessionID;
     }
 }

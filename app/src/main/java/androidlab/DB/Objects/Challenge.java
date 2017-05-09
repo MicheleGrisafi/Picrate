@@ -10,10 +10,10 @@ import java.net.URL;
 
 public class Challenge {
     private int id;
-    private String description;
-    private String title;
-    private URL imageUrl;
-    private Bitmap image;
+    protected String description;
+    protected String title;
+    protected URL imageUrl;
+    protected Bitmap image;
 
     public Challenge(){}
 
