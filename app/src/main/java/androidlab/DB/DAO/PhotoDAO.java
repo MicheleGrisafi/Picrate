@@ -10,7 +10,7 @@ public interface PhotoDAO {
     void open();
     void close();
 
-    Photo insertPhoto(Photo user, );
+    Photo insertPhoto(Photo user);
     void deletePhoto(Photo user);
 
 
