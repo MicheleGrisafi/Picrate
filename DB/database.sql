@@ -14,21 +14,31 @@ CREATE TABLE Challenge(
 	description		VARCHAR(255) NOT NULL,
 	title			VARCHAR(20)	NOT NULL,
 	image			VARCHAR(255) NOT NULL,
-	expire			DATETIME,
+	CONSTRAINT PKChallenge PRIMARY KEY(IDChallenge)
+);
+CREATE TABLE ChallengeSession(
+	IDSession		INT NOT NULL AUTO_INCREMENT,
+	image			VARCHAR(255) DEFAULT NULL,
+	expiration		DATETIME,
 	stato			INT(1) NOT NULL,
-	CONSTRAINT PKChallenge PRIMARY KEY(IDChallenge),
+	IDChallenge		SMALLINT NOT NULL,
+	CONSTRAINT PKChallengeSession PRIMARY KEY(IDSession),
+	CONSTRAINT FKChallengeOfTheSession FOREIGN KEY (IDChallenge) REFERENCES Challenge(IDChallenge)
 );
 CREATE TABLE Photo(
 	IDPhoto			INTEGER(10)	NOT NULL AUTO_INCREMENT,
-	location		VARCHAR(255),
-	owner			VARCHAR(20)	NOT NULL,
+	latitudine		DOUBLE,
+	longitudine		DOUBLE,
+	owner			INT	NOT NULL,
+	challenge		INT NOT NULL,
 	
 	CONSTRAINT PKPhoto PRIMARY KEY (IDPhoto),
-	CONSTRAINT FKPhotoOwner FOREIGN KEY (owner) REFERENCES Utente(IDUser)
+	CONSTRAINT FKPhotoOwner FOREIGN KEY (owner) REFERENCES Utente(IDUser),
+	CONSTRAINT FKPhotoChallenge FOREIGN KEY (challenge) REFERENCES ChallengeSession(IDSession)
 );
 CREATE TABLE Rating(
 	IDPhoto			INTEGER(10) NOT NULL,
-	IDUser			VARCHAR(20)	NOT NULL,
+	IDUser			INT	NOT NULL,
 	Rating			INT(1) DEFAULT NULL,
 	
 	CONSTRAINT FKRatingPhoto FOREIGN KEY (IDPhoto) REFERENCES Photo(IDPhoto),

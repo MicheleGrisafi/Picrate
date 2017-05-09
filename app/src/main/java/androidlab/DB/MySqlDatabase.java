@@ -1,5 +1,6 @@
 package androidlab.DB;
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -18,11 +19,28 @@ import java.net.URLEncoder;
  */
 
 public class MySqlDatabase {
-    private static final String url_name = "http://10.0.0.2";
+    private static final String url_name = "http://192.168.1.133";
+
+    private static final String urlUtente = "/utente";
+    private static final String urlFoto = "/foto";
+
     private static final String urlInsertUtente = "/insertUtente.php";
+    private static final String urlGetUtente = "/getUtente.php";
     private static final String urlSetUsername = "/setUsername.php";
+    private static final String urlSetMoney = "/setMoney.php";
+    private static final String urlGetMoney = "/getMoney.php";
+    private static final String urlSetScore = "/setScore.php";
+    private static final String urlGetScore = "/getScore.php";
+    private static final String urlInsertPhoto = "/insertPhoto.php";
+
     public static final int INSERT_UTENTE = 0;
     public static final int SET_USERNAME = 1;
+    public static final int SET_MONEY = 2;
+    public static final int GET_MONEY = 3;
+    public static final int SET_SCORE = 4;
+    public static final int GET_SCORE = 5;
+    public static final int GET_UTENTE = 6;
+    public static final int INSERT_PHOTO = 7;
 
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
@@ -33,6 +51,8 @@ public class MySqlDatabase {
     public MySqlDatabase(){
 
     }
+
+    /********************** OPERAZIONI UTENTE ************************/
     public String insertUtente(String... param){
         data = "";
         try {
@@ -40,16 +60,16 @@ public class MySqlDatabase {
             switch (param.length){
                 case 2:
                     data =  URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
-                            URLEncoder.encode("googleKey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8");
+                            URLEncoder.encode("googlekey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8");
                     break;
                 case 3:
                     data =  URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
-                            URLEncoder.encode("googleKey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
+                            URLEncoder.encode("googlekey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
                             URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8");
                     break;
                 default:
                     data =  URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
-                            URLEncoder.encode("googleKey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
+                            URLEncoder.encode("googlekey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
                             URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8") +"&" +
                             URLEncoder.encode("score","UTF-8")+"="+ URLEncoder.encode(param[3],"UTF-8") +"&" +
                             URLEncoder.encode("money","UTF-8")+"="+ URLEncoder.encode(param[4],"UTF-8");
@@ -59,9 +79,17 @@ public class MySqlDatabase {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return openConnection(data);
+        return openConnection(data,INSERT_UTENTE);
     }
-
+    public String getUtente(String username){
+        data="";
+        try {
+            data =  URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(username,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_UTENTE);
+    }
     public String setUsername(String id, String username){
         data ="";
         try {
@@ -70,13 +98,83 @@ public class MySqlDatabase {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return openConnection(data);
+        return openConnection(data,SET_USERNAME);
+    }
+    public String setMoney(String id, String money, String increment){
+        data="";
+        try {
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8") +"&" +
+                    URLEncoder.encode("money","UTF-8")+"="+ URLEncoder.encode(money,"UTF-8") +"&" +
+                    URLEncoder.encode("increment","UTF-8")+"="+ URLEncoder.encode(increment,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,SET_MONEY);
+    }
+    public String getMoney(String id){
+        data="";
+        try {
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_MONEY);
+    }
+    public String setScore(String id, String score, String increment){
+        data="";
+        try {
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8") +"&" +
+                    URLEncoder.encode("score","UTF-8")+"="+ URLEncoder.encode(score,"UTF-8") +"&" +
+                    URLEncoder.encode("increment","UTF-8")+"="+ URLEncoder.encode(increment,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,SET_SCORE);
+    }
+    public String getScore(String id){
+        data="";
+        try {
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_SCORE);
     }
 
-    private String openConnection(String data){
-        String result = null;
+    /********************** OPERAZIONI FOTO ************************/
+    public String insertPhoto(String... param){
+        data = "";
         try {
-            httpURLConnection = (HttpURLConnection)getUrl(INSERT_UTENTE).openConnection();
+
+            switch (param.length){
+                case 2:
+                    data =  URLEncoder.encode("owner","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
+                            URLEncoder.encode("challenge","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8");
+                    break;
+                case 3:
+                    data =  URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
+                            URLEncoder.encode("googlekey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
+                            URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8");
+                    break;
+                default:
+                    data =  URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
+                            URLEncoder.encode("googlekey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
+                            URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8") +"&" +
+                            URLEncoder.encode("score","UTF-8")+"="+ URLEncoder.encode(param[3],"UTF-8") +"&" +
+                            URLEncoder.encode("money","UTF-8")+"="+ URLEncoder.encode(param[4],"UTF-8");
+                    break;
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,INSERT_PHOTO);
+    }
+
+    private String openConnection(String data, int action){
+        String result = "";
+        try {
+            httpURLConnection = (HttpURLConnection)getUrl(action).openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
@@ -88,7 +186,7 @@ public class MySqlDatabase {
             outputStream.close();
             inputStream = httpURLConnection.getInputStream();
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-            String line = null;
+            String line = "";
             while((line = bufferedReader.readLine()) != null){
                 result += line;
             }
@@ -107,10 +205,28 @@ public class MySqlDatabase {
 
             switch (action){
                 case INSERT_UTENTE:
-                    url = new URL(url_name+urlInsertUtente);
+                    url = new URL(url_name+urlUtente+urlInsertUtente);
                 break;
                 case SET_USERNAME:
-                    url = new URL(url_name+urlSetUsername);
+                    url = new URL(url_name+urlUtente+urlSetUsername);
+                    break;
+                case GET_MONEY:
+                    url = new URL(url_name+urlUtente+urlGetMoney);
+                    break;
+                case SET_MONEY:
+                    url = new URL(url_name+urlUtente+urlSetMoney);
+                    break;
+                case GET_SCORE:
+                    url = new URL(url_name+urlUtente+urlGetScore);
+                    break;
+                case SET_SCORE:
+                    url = new URL(url_name+urlUtente+urlSetScore);
+                    break;
+                case GET_UTENTE:
+                    url = new URL(url_name+urlUtente+urlGetUtente);
+                    break;
+                case INSERT_PHOTO:
+                    url = new URL(url_name+urlFoto+urlInsertPhoto);
                     break;
             }
             return url;

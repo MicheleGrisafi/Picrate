@@ -36,6 +36,7 @@ public class MainActivity extends Activity {
 
 
         final Intent openCamera = new Intent(this,camera.class);
+        final Intent signUp = new Intent(this,signup_activity.class);
         Button btn2 = (Button) findViewById(R.id.button2);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +45,13 @@ public class MainActivity extends Activity {
             }
         });
 
+        Button btn1 = (Button)findViewById(R.id.btn1);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(signUp);
+            }
+        });
 
     }
 
