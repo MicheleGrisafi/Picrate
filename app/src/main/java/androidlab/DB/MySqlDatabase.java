@@ -145,31 +145,26 @@ public class MySqlDatabase {
     public String insertPhoto(String... param){
         data = "";
         try {
-
             switch (param.length){
-                case 2:
-                    data =  URLEncoder.encode("owner","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
-                            URLEncoder.encode("challenge","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8");
-                    break;
                 case 3:
-                    data =  URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
-                            URLEncoder.encode("googlekey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
-                            URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8");
+                    data =  URLEncoder.encode("owner","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
+                            URLEncoder.encode("challenge","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
+                            URLEncoder.encode("image","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8");
                     break;
                 default:
-                    data =  URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
-                            URLEncoder.encode("googlekey","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
-                            URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8") +"&" +
-                            URLEncoder.encode("score","UTF-8")+"="+ URLEncoder.encode(param[3],"UTF-8") +"&" +
-                            URLEncoder.encode("money","UTF-8")+"="+ URLEncoder.encode(param[4],"UTF-8");
+                    data =  URLEncoder.encode("owner","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
+                            URLEncoder.encode("challenge","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
+                            URLEncoder.encode("image","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8")+"&" +
+                            URLEncoder.encode("latitudine","UTF-8")+"="+ URLEncoder.encode(param[3],"UTF-8") +"&" +
+                            URLEncoder.encode("longitudine","UTF-8")+"="+ URLEncoder.encode(param[4],"UTF-8");
                     break;
             }
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return openConnection(data,INSERT_PHOTO);
     }
+    //public String getPhoto(String )
 
     private String openConnection(String data, int action){
         String result = "";
@@ -186,7 +181,7 @@ public class MySqlDatabase {
             outputStream.close();
             inputStream = httpURLConnection.getInputStream();
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-            String line = "";
+            String line;
             while((line = bufferedReader.readLine()) != null){
                 result += line;
             }

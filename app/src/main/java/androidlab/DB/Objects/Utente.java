@@ -12,7 +12,10 @@ public class Utente {
     private int score;
     private int money;
 
-    public Utente(){}
+    public Utente(){
+        username = email = googleKey = "";
+        id = score = money = 0;
+    }
     public Utente(String email, String googleKey){
         this();
         this.email = email;

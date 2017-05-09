@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,12 +14,22 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import androidlab.DB.DAO.PhotoDAO;
+import androidlab.DB.DAO.UtenteDAO;
+import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
+import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
+import androidlab.DB.Objects.Challenge;
+import androidlab.DB.Objects.ChallengeSession;
+import androidlab.DB.Objects.Photo;
+import androidlab.DB.Objects.Utente;
+
 public class checkPhoto extends Activity {
     private ImageView mImageView;
     private ImageButton btnOk;
     private ImageButton btnCancel;
     private RelativeLayout topOverlay,bottomOverlay;
     private RelativeLayout layout;
+    private Bitmap imageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +50,9 @@ public class checkPhoto extends Activity {
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setResult(1,out);
-                finish();
+                new insertThePhoto().execute();
+                //setResult(1,out);
+                //finish();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +132,7 @@ public class checkPhoto extends Activity {
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);*/
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 //Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
                 mImageView.setImageBitmap(myBitmap);
                 myBitmap = null;
@@ -129,6 +142,31 @@ public class checkPhoto extends Activity {
             Toast.makeText(getApplicationContext(),"image not valid: " + name,Toast.LENGTH_SHORT).show();
         }
         return false;
+    }
+    class insertThePhoto extends AsyncTask<Photo, Void, Photo> {
+
+
+        @Override
+        protected Photo doInBackground(Photo... params) {
+            PhotoDAO dao = new PhotoDAO_DB_impl();
+            UtenteDAO daoUser = new UtenteDAO_DB_impl();
+            dao.open();
+            daoUser.open();
+            Utente user = new Utente();
+            Challenge challenge = new Challenge();
+            challenge.setId(1);
+            ChallengeSession session = new ChallengeSession(1,null,challenge);
+            user.setUsername("michele");
+            user = daoUser.getUtente(user);
+            Photo thisPhoto = dao.insertPhoto(new Photo(user,session,imageBitmap));
+            return thisPhoto;
+        }
+
+        @Override
+        protected void onPostExecute(Photo photo) {
+            super.onPostExecute(photo);
+            Toast.makeText(checkPhoto.this, "Photo uploaded", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 
