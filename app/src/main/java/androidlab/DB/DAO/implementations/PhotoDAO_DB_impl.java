@@ -23,13 +23,13 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
 
     @Override
     public Photo insertPhoto(Photo photo) {
-        result = null;
+        result = null;/*
         response = database.insertPhoto(user.getEmail(),user.getGoogleKey());
         if (response != "null"){
             user.setId(Integer.parseInt(response));
             result = user;
-        }
-        return (Utente)result;
+        }*/
+        return (Photo)result;
     }
 
     @Override

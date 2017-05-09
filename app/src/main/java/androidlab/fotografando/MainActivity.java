@@ -2,10 +2,20 @@ package androidlab.fotografando;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TabHost;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends Activity {
 
@@ -13,7 +23,17 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
 //ciao
+=======
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
+        }
+
+>>>>>>> refs/remotes/origin/master
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost); //Tabhost = tab manager
         tabHost.setup();    //Inizializzo
 
@@ -33,10 +53,7 @@ public class MainActivity extends Activity {
         spec.setIndicator("", getResources().getDrawable(R.drawable.ic_star_black_24dp));
         tabHost.addTab(spec);
 
-
-
         final Intent openCamera = new Intent(this,camera.class);
-        final Intent signUp = new Intent(this,signup_activity.class);
         Button btn2 = (Button) findViewById(R.id.button2);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,14 +62,19 @@ public class MainActivity extends Activity {
             }
         });
 
-        Button btn1 = (Button)findViewById(R.id.btn1);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        Button btnMap = (Button) findViewById(R.id.btnMap);
+        btnMap.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(signUp);
+                Intent mapIntent = new Intent(MainActivity.this, MapsActivity.class);
+                mapIntent.putExtra("latLng", new LatLng(-34, 151));
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.beautiful_photography);
+                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bs);
+                mapIntent.putExtra("photo", bs.toByteArray());
+                startActivity(new Intent(mapIntent));
             }
         });
-
     }
 
 }

@@ -5,4 +5,6 @@
     <color name="colorRed">#d50000</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLightGray">#adadad</color>
+    <color name="materialOrange400">#ff7043</color>
+    <color name="materialOrange600">#F4511E</color>
 </resources>
