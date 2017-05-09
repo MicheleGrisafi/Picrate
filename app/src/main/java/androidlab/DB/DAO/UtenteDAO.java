@@ -12,4 +12,12 @@ public interface UtenteDAO {
 
     Utente insertUtente(Utente user);
     void deleteUtente(Utente user);
+    Utente setUsername(Utente user,String username);
+    Utente setMoney(Utente user,int money,boolean increment);
+    Utente getMoney(Utente user);
+    Utente setScore(Utente user,int score,boolean increment);
+    Utente getScore(Utente user);
+    Utente getUtente(Utente user);
+
+
 }
