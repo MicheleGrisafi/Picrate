@@ -59,7 +59,6 @@ public class camera extends Activity {
     private static final int STATE_WAIT_LOCK = 1;
     private int mCaptureState;
 
-
     private RelativeLayout topOverlay;
     private RelativeLayout bottomOverlay;
     private int topLayerHeight = 0,bottomLayerHeight = 0;
@@ -234,8 +233,6 @@ public class camera extends Activity {
         }
     }
 
-
-
     private CaptureRequest mPreviewCaptureRequest;
     private CaptureRequest.Builder mCaptureRequestBuilder;
     private CameraCaptureSession mPreviewCaptureSession;
@@ -292,7 +289,6 @@ public class camera extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-
         createPhotoFolder();
         checkPhotoIntent = new Intent(this,checkPhoto.class);
         mTextureView = (TextureView)findViewById(R.id.textureView2);
@@ -315,7 +311,6 @@ public class camera extends Activity {
         //checkWriteStoragePermission();
         topOverlay = (RelativeLayout)findViewById(R.id.topLayer);
         bottomOverlay = (RelativeLayout)findViewById(R.id.bottomLayer);
-
     }
 
     @Override
@@ -357,9 +352,6 @@ public class camera extends Activity {
         int btnDimension = mTakePhotoButton.getMeasuredHeight();
         // Set the height of the overlay so that it makes the preview a square
 
-
-
-
         if (previewHeight-previewWidth >= btnDimension) {
             if ((previewHeight - previewWidth) / 2 >= btnDimension) {
                 topLayerHeight = (previewHeight - previewWidth) / 2;
@@ -375,7 +367,6 @@ public class camera extends Activity {
             mTakePhotoButton.getLayoutParams().width = btnDimension;*/
         }
 
-
         RelativeLayout.LayoutParams overlayTopParams = (RelativeLayout.LayoutParams) topOverlay.getLayoutParams();
         overlayTopParams.height = topLayerHeight;
 
@@ -384,9 +375,6 @@ public class camera extends Activity {
 
         topOverlay.setLayoutParams(overlayTopParams);
         bottomOverlay.setLayoutParams(overlayBottomParams);
-
-
-
     }
 
     @Override
@@ -437,7 +425,6 @@ public class camera extends Activity {
                 break;
         }
     }
-
 
     private void closeCamera(){
 
@@ -668,5 +655,4 @@ public class camera extends Activity {
 
         lockFocus(true);
     }
-
 }

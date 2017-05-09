@@ -7,4 +7,6 @@
     <string name="PhotoFolder">fotografando</string>
     <string name="askWriteToSDpermission">Fotografando need to access external storage</string>
     <string name="permissionStorageDenied">Fotografando need to be able to access External Storage</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
