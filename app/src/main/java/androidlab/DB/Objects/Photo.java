@@ -11,7 +11,6 @@ import java.net.URL;
 public class Photo {
 
     private int id;
-    private URL imageUrl;
     private Bitmap image;
     private double longitudine;
     private double latitudine;
@@ -20,20 +19,21 @@ public class Photo {
     private int sessionID;
 
     public Photo(){
-
+        latitudine = 0;
+        longitudine = 0;
+        id = ownerID = sessionID = 0;
+        image = null;
     }
-    public Photo(Utente user,ChallengeSession session){
+    public Photo(Utente user,ChallengeSession session, Bitmap image){
         this();
         ownerID = user.getId();
         sessionID = session.getId();
+        this.image = image;
     }
-    public Photo(int id, URL imageUrl, double longitudine, double latitudine, Utente user,ChallengeSession session, Bitmap image){
-        this(user,session);
-        this.id = id;
-        this.imageUrl = imageUrl;
+    public Photo( double longitudine, double latitudine, Utente user,ChallengeSession session, Bitmap image){
+        this(user,session,image);
         this.longitudine = longitudine;
         this.latitudine = latitudine;
-        this.image = image;
     }
 
     public int getId() {
@@ -41,12 +41,6 @@ public class Photo {
     }
     public void setId(int id) {
         this.id = id;
-    }
-    public URL getImageUrl() {
-        return imageUrl;
-    }
-    public void setImageUrl(URL imageUrl) {
-        this.imageUrl = imageUrl;
     }
     public double getLongitudine() {
         return longitudine;

@@ -15,7 +15,12 @@ public class Challenge {
     protected URL imageUrl;
     protected Bitmap image;
 
-    public Challenge(){}
+    public Challenge(){
+        id = 0;
+        description = title = "";
+        image = null;
+        imageUrl = null;
+    }
 
     public Challenge(String description, String title, URL imageUrl, Bitmap image){
         this();
