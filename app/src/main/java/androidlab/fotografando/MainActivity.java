@@ -23,9 +23,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
-//ciao
-=======
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -33,7 +30,6 @@ public class MainActivity extends Activity {
             window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
         }
 
->>>>>>> refs/remotes/origin/master
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost); //Tabhost = tab manager
         tabHost.setup();    //Inizializzo
 
