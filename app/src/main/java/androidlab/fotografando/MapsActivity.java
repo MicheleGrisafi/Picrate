@@ -114,10 +114,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 //if(state == 0) {
+                if (myLatLng != null) {
                     myFAB.setImageResource(R.drawable.ic_my_location_orange_24dp);
                     imageFAB.setImageResource(R.drawable.ic_image_gray_24dp);
                     setCurrPosLocator();
                     moveToMyPosition();
+                } else {
+                    Toast.makeText(MapsActivity.this, "Can't find position", Toast.LENGTH_LONG).show();
+                }
                 //}
                 //state = 1;
             }
@@ -127,12 +131,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 //if(state == 1) {
-                    myFAB.setImageResource(R.drawable.ic_my_location_gray_24dp);
-                    imageFAB.setImageResource(R.drawable.ic_image_orange_24dp);
-                    moveToPhotoPosition();
-                //}
-                //state = 0;
+                myFAB.setImageResource(R.drawable.ic_my_location_gray_24dp);
+                imageFAB.setImageResource(R.drawable.ic_image_orange_24dp);
+                moveToPhotoPosition();
             }
+            //}
+            //state = 0;
         });
     }
 
@@ -153,19 +157,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         final Criteria criteria = new Criteria();
-
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         lm.getBestProvider(criteria, true);
-
         if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         }
 
+        Location tempLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(tempLocation != null){
+            mLastLocation = tempLocation;
+        }
+
         if (mLastLocation != null) {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (mLastLocation != null) {
-                myLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-            }
+            myLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
         }
     }
 
@@ -211,8 +215,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
-        mLastLocation = location;
-        myLatLng =  new LatLng(location.getLatitude(), location.getLongitude());;
+        if(location != null) {
+            mLastLocation = location;
+            myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        }
     }
 
     @Override
@@ -291,7 +297,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
 
                 } else {
-
                     // Permission denied, Disable the functionality that depends on this permission.
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
                 }
