@@ -44,3 +44,7 @@ CREATE TABLE Rating(
 	CONSTRAINT FKRatingPhoto FOREIGN KEY (IDPhoto) REFERENCES Photo(IDPhoto),
 	CONSTRAINT FKRatingUser FOREIGN KEY (IDUser) REFERENCES Utente(IDUser)
 );
+CREATE TABLE dataInfo(
+	picturesFolder	VARCHAR(255),
+	version			INT(2)
+);
