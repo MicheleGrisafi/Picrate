@@ -39,8 +39,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.List;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -120,7 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     setCurrPosLocator();
                     moveToMyPosition();
                 } else {
-                    Toast.makeText(MapsActivity.this, "Can't find position", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MapsActivity.this, R.string.position_not_found, Toast.LENGTH_LONG).show();
                 }
                 //}
                 //state = 1;
@@ -175,15 +173,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("GPS is off. Turn it on?")
+        builder.setMessage(R.string.turn_on_gps)
                 .setCancelable(true)
-                .setPositiveButton("YES",
+                .setPositiveButton(R.string.yes,
                         new DialogInterface.OnClickListener() {
                             public void onClick(final DialogInterface dialog, final int id) {
                                 startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                             }
                         })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
                     }
@@ -198,7 +196,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void moveToPhotoPosition() {
         if(mCurrLocationMarker == null) {
-            mMap.addMarker(new MarkerOptions().position(photoLatLng).title("Photo Position"));
+            mMap.addMarker(new MarkerOptions().position(photoLatLng).title(String.valueOf(R.string.photo_locator)));
         }
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(photoLatLng, 15.0f));
@@ -298,7 +296,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 } else {
                     // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.gps_permission_denied, Toast.LENGTH_LONG).show();
                 }
                 return;
             }

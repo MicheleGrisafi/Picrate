@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Fotografando</string>
+    <string name="ask_camera_permission">Fotografando vuole acceere alla fotocamera</string>
+    <string name="camera_permission_denied">Permessi fotocamera necessari!</string>
+    <string name="camera_permission_granted">Connessione fotocamera riuscita</string>
+    <string name="generic_camera_error">Qualcosa è andato storto</string>
+    <string name="photo_folder_name">Fotografando</string>
+    <string name="ask_storage_permission">Fotografando vuole accedere alla memoria esterna</string>
+    <string name="storage_permission_denied">Permessi memoria esterna necessari!</string>
+    <string name="position_not_found">Impossibile recuperare posizione</string>
+    <string name="turn_on_gps">GPS disabilitato. Vuoi abilitarlo?</string>
+    <string name="yes">SI</string>
+    <string name="no">NO</string>
+    <string name="photo_locator">Foto</string>
+    <string name="gps_permission_denied">Permessi GPS necessari!</string>
+    <string name="image_storage_error">Salvataggio fallito</string>
+</resources>
