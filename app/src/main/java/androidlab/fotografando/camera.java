@@ -384,7 +384,7 @@ public class camera extends Activity {
             case REQUEST_CAMERA_PERMISSION_RESULT:
                 try {
                     if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(getApplicationContext(), R.string.PermissionNotGranted, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.camera_permission_denied, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Resources.NotFoundException e) {
                     e.printStackTrace();
@@ -398,7 +398,7 @@ public class camera extends Activity {
                         e.printStackTrace();
                     }
                 }else{
-                    Toast.makeText(this,R.string.permissionStorageDenied,Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,R.string.storage_permission_denied,Toast.LENGTH_LONG).show();
                 }
                 break;
         }
@@ -481,7 +481,7 @@ public class camera extends Activity {
                     cameraManager.openCamera(mCameraId,mCameraDeviceStateCallback,mBackgroundHandler);
                 }else{
                     if(shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA)){
-                        Toast.makeText(this, R.string.permissionMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.ask_camera_permission, Toast.LENGTH_SHORT).show();
                     }
                     requestPermissions(new String[] {android.Manifest.permission.CAMERA},REQUEST_CAMERA_PERMISSION_RESULT);
                 }
@@ -519,7 +519,7 @@ public class camera extends Activity {
 
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-                    Toast.makeText(getApplicationContext(),R.string.GenericError,Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),R.string.generic_camera_error,Toast.LENGTH_LONG).show();
                 }
             },null);
         } catch (CameraAccessException e) {
@@ -618,7 +618,7 @@ public class camera extends Activity {
                 }
             }else{
                 if(shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-                    Toast.makeText(this,R.string.askWriteToSDpermission,Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,R.string.ask_storage_permission,Toast.LENGTH_LONG).show();
                 }
                 requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
             }

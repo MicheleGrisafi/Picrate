@@ -1,12 +1,17 @@
 <resources>
     <string name="app_name">Fotografando</string>
-    <string name="permissionMessage">Fotografando requires camera permission</string>
-    <string name="PermissionNotGranted">Fotografando won\'t be able to run without the camera!</string>
-    <string name="cameraObtained">Camera connection established</string>
-    <string name="GenericError">Something went wrong</string>
-    <string name="PhotoFolder">fotografando</string>
-    <string name="askWriteToSDpermission">Fotografando need to access external storage</string>
-    <string name="permissionStorageDenied">Fotografando need to be able to access External Storage</string>
-    <string name="title_activity_map">MapActivity</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="ask_camera_permission">Fotografando wants to access camera</string>
+    <string name="camera_permission_denied">Camera permission necessary!</string>
+    <string name="camera_permission_granted">Camera connection established</string>
+    <string name="generic_camera_error">Something went wrong</string>
+    <string name="photo_folder_name">Fotografando</string>
+    <string name="ask_storage_permission">Fotografando wants to access storage</string>
+    <string name="storage_permission_denied">Storage permission necessary!</string>
+    <string name="position_not_found">Can\'t retrieve position</string>
+    <string name="turn_on_gps">GPS is off. Turn it on?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="photo_locator">Photo</string>
+    <string name="gps_permission_denied">GPS permission necessary!</string>
+    <string name="image_storage_error">Couldn\'t save image</string>
 </resources>

@@ -39,8 +39,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.List;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -114,10 +112,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 //if(state == 0) {
+                if (myLatLng != null) {
                     myFAB.setImageResource(R.drawable.ic_my_location_orange_24dp);
                     imageFAB.setImageResource(R.drawable.ic_image_gray_24dp);
                     setCurrPosLocator();
                     moveToMyPosition();
+                } else {
+                    Toast.makeText(MapsActivity.this, R.string.position_not_found, Toast.LENGTH_LONG).show();
+                }
                 //}
                 //state = 1;
             }
@@ -127,12 +129,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 //if(state == 1) {
-                    myFAB.setImageResource(R.drawable.ic_my_location_gray_24dp);
-                    imageFAB.setImageResource(R.drawable.ic_image_orange_24dp);
-                    moveToPhotoPosition();
-                //}
-                //state = 0;
+                myFAB.setImageResource(R.drawable.ic_my_location_gray_24dp);
+                imageFAB.setImageResource(R.drawable.ic_image_orange_24dp);
+                moveToPhotoPosition();
             }
+            //}
+            //state = 0;
         });
     }
 
@@ -153,33 +155,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         final Criteria criteria = new Criteria();
-
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         lm.getBestProvider(criteria, true);
-
         if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         }
 
+        Location tempLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if(tempLocation != null){
+            mLastLocation = tempLocation;
+        }
+
         if (mLastLocation != null) {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (mLastLocation != null) {
-                myLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-            }
+            myLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
         }
     }
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("GPS is off. Turn it on?")
+        builder.setMessage(R.string.turn_on_gps)
                 .setCancelable(true)
-                .setPositiveButton("YES",
+                .setPositiveButton(R.string.yes,
                         new DialogInterface.OnClickListener() {
                             public void onClick(final DialogInterface dialog, final int id) {
                                 startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                             }
                         })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
                     }
@@ -194,7 +196,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void moveToPhotoPosition() {
         if(mCurrLocationMarker == null) {
-            mMap.addMarker(new MarkerOptions().position(photoLatLng).title("Photo Position"));
+            mMap.addMarker(new MarkerOptions().position(photoLatLng).title(String.valueOf(R.string.photo_locator)));
         }
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(photoLatLng, 15.0f));
@@ -211,8 +213,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
-        mLastLocation = location;
-        myLatLng =  new LatLng(location.getLatitude(), location.getLongitude());;
+        if(location != null) {
+            mLastLocation = location;
+            myLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        }
     }
 
     @Override
@@ -291,9 +295,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
 
                 } else {
-
                     // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.gps_permission_denied, Toast.LENGTH_LONG).show();
                 }
                 return;
             }

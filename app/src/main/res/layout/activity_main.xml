@@ -84,16 +84,12 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/btnMap"
+                        android:id="@+id/btnZoom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="MAP"
+                        android:text="Zoom"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintRight_toRightOf="parent"/>
 
                 </android.support.constraint.ConstraintLayout>
             </FrameLayout>
