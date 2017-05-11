@@ -14,6 +14,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import androidlab.DB.DAO.ChallengeDAO;
+import androidlab.DB.DAO.ChallengeSessionDAO;
+
 /**
  * Created by miki4 on 07/05/2017.
  */
@@ -23,6 +26,7 @@ public class MySqlDatabase {
 
     private static final String urlUtente = "/utente";
     private static final String urlFoto = "/foto";
+    private static final String urlSession = "/session";
 
     private static final String urlInsertUtente = "/insertUtente.php";
     private static final String urlGetUtente = "/getUtente.php";
@@ -31,7 +35,11 @@ public class MySqlDatabase {
     private static final String urlGetMoney = "/getMoney.php";
     private static final String urlSetScore = "/setScore.php";
     private static final String urlGetScore = "/getScore.php";
+
     private static final String urlInsertPhoto = "/insertPhoto.php";
+
+    private static final String urlGetSessions = "/getSessions.php";
+
 
     public static final int INSERT_UTENTE = 0;
     public static final int SET_USERNAME = 1;
@@ -41,6 +49,7 @@ public class MySqlDatabase {
     public static final int GET_SCORE = 5;
     public static final int GET_UTENTE = 6;
     public static final int INSERT_PHOTO = 7;
+    public static final int GET_SESSIONS = 8;
 
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
@@ -166,6 +175,17 @@ public class MySqlDatabase {
     }
     //public String getPhoto(String )
 
+    /********************** OPERAZIONI SESSION ************************/
+    public String getSessions(String stato){
+        data = "";
+        try {
+            data =  URLEncoder.encode("stato","UTF-8")+"="+ URLEncoder.encode(stato,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_SESSIONS);
+    }
+
     private String openConnection(String data, int action){
         String result = "";
         try {
@@ -222,6 +242,9 @@ public class MySqlDatabase {
                     break;
                 case INSERT_PHOTO:
                     url = new URL(url_name+urlFoto+urlInsertPhoto);
+                    break;
+                case GET_SESSIONS:
+                    url = new URL(url_name+urlSession+urlGetSessions);
                     break;
             }
             return url;

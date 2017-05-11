@@ -1,15 +1,13 @@
 package androidlab.DB.Objects;
 
-import android.graphics.Bitmap;
 
-import java.net.URL;
 import java.util.Date;
 
 /**
  * Created by miki4 on 08/05/2017.
  */
 
-public class ChallengeSession extends Challenge {
+public class ChallengeSession extends Challenge  {
     private int IDSession;
     private Date expiration;
     private int stato;

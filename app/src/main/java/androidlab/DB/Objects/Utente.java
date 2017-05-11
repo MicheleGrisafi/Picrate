@@ -16,6 +16,9 @@ public class Utente {
         username = email = googleKey = "";
         id = score = money = 0;
     }
+    public Utente(String username){
+        this.username = username;
+    }
     public Utente(String email, String googleKey){
         this();
         this.email = email;

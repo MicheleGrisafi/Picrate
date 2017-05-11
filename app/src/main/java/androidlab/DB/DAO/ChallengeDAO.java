@@ -5,4 +5,6 @@ package androidlab.DB.DAO;
  */
 
 public interface ChallengeDAO {
+    void open();
+    void close();
 }

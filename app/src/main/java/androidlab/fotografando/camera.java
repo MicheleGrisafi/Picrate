@@ -193,6 +193,7 @@ public class camera extends Activity {
 
 
             bitmap.recycle();
+            bitmap = null;
 
             FileOutputStream out = null;
             try {
