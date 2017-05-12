@@ -1,16 +1,16 @@
 package androidlab.fotografando;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.BitmapShader;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.Shader;
-import android.graphics.drawable.Drawable;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,7 +26,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -39,6 +38,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -96,7 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         photoLatLng = (LatLng) extras.get("latLng");
         setCurrPosLocator();
-        setPhotoPosition();
+        moveToPhotoPosition();
 
         ImageButton btnBack = (ImageButton) findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -112,24 +113,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         myFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(state == 0) {
+                //if(state == 0) {
                     myFAB.setImageResource(R.drawable.ic_my_location_orange_24dp);
                     imageFAB.setImageResource(R.drawable.ic_image_gray_24dp);
-                    setMyPosition();
-                }
-                state = 1;
+                    setCurrPosLocator();
+                    moveToMyPosition();
+                //}
+                //state = 1;
             }
         });
 
         imageFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(state == 1) {
+                //if(state == 1) {
                     myFAB.setImageResource(R.drawable.ic_my_location_gray_24dp);
                     imageFAB.setImageResource(R.drawable.ic_image_orange_24dp);
-                    setPhotoPosition();
-                }
-                state = 0;
+                    moveToPhotoPosition();
+                //}
+                //state = 0;
             }
         });
     }
@@ -147,16 +149,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
+            mGoogleApiClient.connect();
+        }
+
+        final Criteria criteria = new Criteria();
+
+        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        lm.getBestProvider(criteria, true);
+
+        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }
+
+        if (mLastLocation != null) {
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            if (mLastLocation != null) {
+                myLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            }
         }
     }
 
-    private void setMyPosition() {
-        //move map camera
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(myLatLng));
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("GPS is off. Turn it on?")
+                .setCancelable(true)
+                .setPositiveButton("YES",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            }
+                        })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void moveToMyPosition() {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 15.0f));
     }
 
-    private void setPhotoPosition() {
+    private void moveToPhotoPosition() {
         if(mCurrLocationMarker == null) {
             mMap.addMarker(new MarkerOptions().position(photoLatLng).title("Photo Position"));
         }
@@ -177,16 +213,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onLocationChanged(Location location) {
         mLastLocation = location;
         myLatLng =  new LatLng(location.getLatitude(), location.getLongitude());;
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        mLocationRequest = new LocationRequest();
+        mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -262,7 +293,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 } else {
 
                     // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
