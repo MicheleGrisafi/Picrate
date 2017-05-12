@@ -17,7 +17,7 @@ import androidlab.DB.DAO.ChallengeSessionDAO;
 import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.Challenge;
 import androidlab.DB.Objects.ChallengeSession;
-import androidlab.fotografando.BitmapDownload;
+import androidlab.fotografando.assets.BitmapDownload;
 
 /**
  * Created by Michele Grisafi on 10/05/2017.

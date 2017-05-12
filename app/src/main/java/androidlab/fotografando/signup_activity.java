@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidlab.DB.Objects.Utente;
+import androidlab.fotografando.assets.SignUpTask;
 
 public class signup_activity extends Activity {
 

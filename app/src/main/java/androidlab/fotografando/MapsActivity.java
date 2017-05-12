@@ -39,6 +39,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -113,10 +115,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 //if(state == 0) {
                 if (myLatLng != null) {
+
                     myFAB.setImageResource(R.drawable.ic_my_location_orange_24dp);
                     imageFAB.setImageResource(R.drawable.ic_image_gray_24dp);
                     setCurrPosLocator();
                     moveToMyPosition();
+
                 } else {
                     Toast.makeText(MapsActivity.this, R.string.position_not_found, Toast.LENGTH_LONG).show();
                 }
@@ -155,6 +159,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         final Criteria criteria = new Criteria();
+
         final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         lm.getBestProvider(criteria, true);
         if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -296,6 +301,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 } else {
                     // Permission denied, Disable the functionality that depends on this permission.
+
                     Toast.makeText(this, R.string.gps_permission_denied, Toast.LENGTH_LONG).show();
                 }
                 return;
