@@ -58,17 +58,12 @@ public class MainActivity extends Activity {
             }
         });
 
-        Button btnMap = (Button) findViewById(R.id.btnMap);
-        btnMap.setOnClickListener(new View.OnClickListener(){
+        Button btnZoom = (Button) findViewById(R.id.btnZoom);
+        btnZoom.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent mapIntent = new Intent(MainActivity.this, MapsActivity.class);
-                mapIntent.putExtra("latLng", new LatLng(-34, 151));
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.beautiful_photography);
-                ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bs);
-                mapIntent.putExtra("photo", bs.toByteArray());
-                startActivity(new Intent(mapIntent));
+                Intent zoomIntent = new Intent(MainActivity.this, ZoomActivity.class);
+                startActivity(new Intent(zoomIntent));
             }
         });
     }
