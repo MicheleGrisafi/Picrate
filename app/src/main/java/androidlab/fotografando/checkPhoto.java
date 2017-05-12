@@ -22,6 +22,7 @@ import androidlab.DB.Objects.Challenge;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
+import androidlab.fotografando.assets.InsertThePhoto;
 
 public class checkPhoto extends Activity {
     private ImageView mImageView;
@@ -51,9 +52,10 @@ public class checkPhoto extends Activity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //new insertThePhoto().execute();
-                setResult(1,out);
+                /*setResult(1,out);
                 freeResources();
-                finish();
+                finish();*/
+                insertPhoto();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +127,16 @@ public class checkPhoto extends Activity {
         imageBitmap = null;
     }
     private void insertPhoto(){
-
+        Utente user = new Utente(10,"michele","miki426811@gmail.com","123456",0,0);
+        Challenge challenge = new Challenge();
+        challenge.setId(20);
+        ChallengeSession session = new ChallengeSession(30,null,challenge);
+        Photo foto = new Photo();
+        foto.setImage(imageBitmap);
+        foto.setOwnerID(10);
+        foto.setSessionID(30);
+        InsertThePhoto insert = new InsertThePhoto(foto,getIntent().getExtras().get("fileName").toString(),checkPhoto.this);
+        insert.execute();
     }
 }
 
