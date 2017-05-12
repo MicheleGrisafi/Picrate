@@ -1,11 +1,14 @@
 package androidlab.fotografando.assets;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Camera;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.UUID;
 
 import androidlab.DB.DAO.PhotoDAO;
@@ -23,30 +26,44 @@ import androidlab.fotografando.checkPhoto;
  * Created by Michele Grisafi on 11/05/2017.
  */
 
-public class InsertThePhoto extends AsyncTask<Photo, Void, Photo> {
+public class InsertThePhoto extends AsyncTask<Void, Void, Photo> {
     Photo fotografia;
     String nameFile;
+    AlertDialog alertDialog;
     Context context;
-    String response;
-    public InsertThePhoto(Photo fotografia, String namefile, Context ctx){
+    public InsertThePhoto(Photo fotografia, String namefile, Context context){
         super();
         this.fotografia = fotografia;
         this.nameFile = namefile;
-        context = ctx;
+        this.context = context;
     }
-
     @Override
-    protected Photo doInBackground(Photo... params) {
-        //Toast.makeText(context, "Beginning", Toast.LENGTH_LONG).show();
-        MySqlDatabase database = new MySqlDatabase();
-        response = database.uploadPic(nameFile);
-
+    protected Photo doInBackground(Void... params) {
+        PhotoDAO photoDAO = new PhotoDAO_DB_impl();
+        photoDAO.open();
+        fotografia = photoDAO.insertPhoto(fotografia,nameFile);
         return fotografia;
     }
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        alertDialog = new AlertDialog.Builder(context).create();
+    }
+
+    @Override
     protected void onPostExecute(Photo photo) {
-        super.onPostExecute(photo);
-        //Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+        alertDialog.setTitle("Result");
+        if(fotografia == null) {
+            File file = new File(nameFile);
+            boolean deleted = file.delete();
+            if (!deleted) {
+                alertDialog.setMessage("Error in the uploading! Local image deleted");
+            }else
+                alertDialog.setMessage("Error in the uploading! Local image cannot be deleted");
+        }else{
+            alertDialog.setMessage("Image was uploaded");
+        }
+        alertDialog.show();
     }
 }

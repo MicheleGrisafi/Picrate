@@ -19,7 +19,7 @@ public class signup_activity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SignUpTask(getApplicationContext()).execute(new Utente("miki426811@gmail.comma","googleKey1"));
+                //new SignUpTask(getApplicationContext()).execute(new Utente("miki426811@gmail.comma","googleKey1"));
             }
         });
     }

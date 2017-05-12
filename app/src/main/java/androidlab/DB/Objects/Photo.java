@@ -27,7 +27,7 @@ public class Photo {
     public Photo(Utente user,ChallengeSession session, Bitmap image){
         this();
         ownerID = user.getId();
-        sessionID = session.getId();
+        sessionID = session.getIDSession();
         this.image = image;
     }
     public Photo( double longitudine, double latitudine, Utente user,ChallengeSession session, Bitmap image){

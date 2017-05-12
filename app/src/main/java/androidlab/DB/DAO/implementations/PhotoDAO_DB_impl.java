@@ -1,12 +1,7 @@
 package androidlab.DB.DAO.implementations;
 
-import android.graphics.Bitmap;
-import android.util.Base64;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-
+import org.json.*;
 import androidlab.DB.DAO.PhotoDAO;
 import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.Photo;
@@ -29,24 +24,22 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
     }
 
     @Override
-    public Photo insertPhoto(Photo photo) {
+    public Photo insertPhoto(Photo photo,String imagePath) {
         result = null;
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        photo.getImage().compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-        String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(),Base64.DEFAULT);
-        ArrayList<String> arguments = new ArrayList<String>(5);
-        arguments.add(Integer.toString(photo.getOwnerID()));
-        arguments.add(Integer.toString(photo.getSessionID()));
-        arguments.add(encodedImage);
-        if(photo.getLatitudine() != 0) {
-            arguments.add(Double.toString(photo.getLatitudine()));
-            arguments.add(Double.toString(photo.getLongitudine()));
-        }
-        String [] params = arguments.toArray(new String[arguments.size()]);
-        response = database.insertPhoto(params);
+        response = database.insertPhoto(imagePath,Integer.toString(photo.getOwnerID()),
+                Integer.toString(photo.getSessionID()),Double.toString(photo.getLatitudine()),
+                Double.toString(photo.getLongitudine()));
+
         if (response != "null"){
-            photo.setId(Integer.parseInt(response));
-            result = photo;
+            try {
+                JSONObject obj = new JSONObject(response);
+                if(!obj.getBoolean("error")){
+                    photo.setId(obj.getInt("idImage"));
+                    result = photo;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         return (Photo)result;
     }

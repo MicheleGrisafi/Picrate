@@ -131,11 +131,10 @@ public class checkPhoto extends Activity {
         Challenge challenge = new Challenge();
         challenge.setId(20);
         ChallengeSession session = new ChallengeSession(30,null,challenge);
-        Photo foto = new Photo();
-        foto.setImage(imageBitmap);
-        foto.setOwnerID(10);
-        foto.setSessionID(30);
-        InsertThePhoto insert = new InsertThePhoto(foto,getIntent().getExtras().get("fileName").toString(),checkPhoto.this);
+        Photo foto = new Photo(user,session,imageBitmap);
+        String fileName = getIntent().getExtras().get("fileName").toString();
+
+        InsertThePhoto insert = new InsertThePhoto(foto,fileName,this);
         insert.execute();
     }
 }

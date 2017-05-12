@@ -17,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.DoubleBuffer;
 
 import androidlab.DB.DAO.ChallengeDAO;
 import androidlab.DB.DAO.ChallengeSessionDAO;
@@ -202,7 +203,8 @@ public class MySqlDatabase {
             dos.writeBytes(lineEnd);
             dos.writeBytes(session);
             dos.writeBytes(lineEnd);
-            if (latitudine != ""){
+            double tmp = 0;
+            if (latitudine != Double.toString(tmp)){
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"latitudine\""+ lineEnd);
                 dos.writeBytes(lineEnd);
@@ -218,7 +220,8 @@ public class MySqlDatabase {
 
             dos.writeBytes(twoHyphens + boundary + lineEnd);
             dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\""+filetoupload.getName()+"\"" + lineEnd); // uploaded_file_name is the Name of the File to be uploaded
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
+
+            dos.writeBytes(lineEnd);
 
 
             bytesAvailable = fileInputStream.available();
