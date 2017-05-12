@@ -22,6 +22,7 @@ import androidlab.DB.Objects.Challenge;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
+import androidlab.fotografando.assets.InsertThePhoto;
 
 public class checkPhoto extends Activity {
     private ImageView mImageView;
@@ -50,9 +51,11 @@ public class checkPhoto extends Activity {
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new insertThePhoto().execute();
-                //setResult(1,out);
-                //finish();
+                //new insertThePhoto().execute();
+                /*setResult(1,out);
+                freeResources();
+                finish();*/
+                insertPhoto();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -111,62 +114,29 @@ public class checkPhoto extends Activity {
         String name = intent.getExtras().get("fileName").toString();
         File imgFile = new File(name);
         if(imgFile.exists()){
-
-                /*ExifInterface exif = new ExifInterface(name);
-
-                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
-                switch (orientation){
-                    case ExifInterface.ORIENTATION_NORMAL:
-
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_90:
-
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_180:
-
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_270:
-
-                        break;
-                }
-                Matrix matrix = new Matrix();
-                matrix.postRotate(90);*/
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                //Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
-                mImageView.setImageBitmap(myBitmap);
-                myBitmap = null;
-                return true;
-
+            imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            mImageView.setImageBitmap(imageBitmap);
+            return true;
         }else{
             Toast.makeText(getApplicationContext(),"image not valid: " + name,Toast.LENGTH_SHORT).show();
         }
         return false;
     }
-    class insertThePhoto extends AsyncTask<Photo, Void, Photo> {
-
-
-        @Override
-        protected Photo doInBackground(Photo... params) {
-            PhotoDAO dao = new PhotoDAO_DB_impl();
-            UtenteDAO daoUser = new UtenteDAO_DB_impl();
-            dao.open();
-            daoUser.open();
-            Utente user = new Utente();
-            Challenge challenge = new Challenge();
-            challenge.setId(1);
-            ChallengeSession session = new ChallengeSession(1,null,challenge);
-            user.setUsername("michele");
-            user = daoUser.getUtente(user);
-            Photo thisPhoto = dao.insertPhoto(new Photo(user,session,imageBitmap));
-            return thisPhoto;
-        }
-
-        @Override
-        protected void onPostExecute(Photo photo) {
-            super.onPostExecute(photo);
-            Toast.makeText(checkPhoto.this, "Photo uploaded", Toast.LENGTH_SHORT).show();
-        }
+    private void freeResources(){
+        imageBitmap.recycle();
+        imageBitmap = null;
+    }
+    private void insertPhoto(){
+        Utente user = new Utente(10,"michele","miki426811@gmail.com","123456",0,0);
+        Challenge challenge = new Challenge();
+        challenge.setId(20);
+        ChallengeSession session = new ChallengeSession(30,null,challenge);
+        Photo foto = new Photo();
+        foto.setImage(imageBitmap);
+        foto.setOwnerID(10);
+        foto.setSessionID(30);
+        InsertThePhoto insert = new InsertThePhoto(foto,getIntent().getExtras().get("fileName").toString(),checkPhoto.this);
+        insert.execute();
     }
 }
 

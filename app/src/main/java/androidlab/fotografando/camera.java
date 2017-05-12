@@ -193,11 +193,12 @@ public class camera extends Activity {
 
 
             bitmap.recycle();
+            bitmap = null;
 
             FileOutputStream out = null;
             try {
                 out = new FileOutputStream(mPhotoFileName);
-                cropped.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                cropped.compress(Bitmap.CompressFormat.JPEG, 50, out);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -210,6 +211,8 @@ public class camera extends Activity {
                     e.printStackTrace();
                 }
             }
+            cropped.recycle();
+            cropped = null;
             checkPhotoIntent.putExtra("fileName",mPhotoFileName);
             startActivityForResult(checkPhotoIntent,REQUEST_CODE);
             //fine

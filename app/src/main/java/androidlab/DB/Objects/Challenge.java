@@ -29,6 +29,10 @@ public class Challenge {
         this.imageUrl = imageUrl;
         this.image = image;
     }
+    public Challenge(int id,String description, String title, URL imageUrl, Bitmap image){
+        this(description,title,imageUrl,image);
+        this.id = id;
+    }
 
     public int getId() {
         return id;

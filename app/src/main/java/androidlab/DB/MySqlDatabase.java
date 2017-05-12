@@ -3,6 +3,10 @@ package androidlab.DB;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,6 +18,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import androidlab.DB.DAO.ChallengeDAO;
+import androidlab.DB.DAO.ChallengeSessionDAO;
+
 /**
  * Created by miki4 on 07/05/2017.
  */
@@ -23,6 +30,7 @@ public class MySqlDatabase {
 
     private static final String urlUtente = "/utente";
     private static final String urlFoto = "/foto";
+    private static final String urlSession = "/session";
 
     private static final String urlInsertUtente = "/insertUtente.php";
     private static final String urlGetUtente = "/getUtente.php";
@@ -31,7 +39,11 @@ public class MySqlDatabase {
     private static final String urlGetMoney = "/getMoney.php";
     private static final String urlSetScore = "/setScore.php";
     private static final String urlGetScore = "/getScore.php";
+
     private static final String urlInsertPhoto = "/insertPhoto.php";
+
+    private static final String urlGetSessions = "/getSessions.php";
+
 
     public static final int INSERT_UTENTE = 0;
     public static final int SET_USERNAME = 1;
@@ -41,6 +53,7 @@ public class MySqlDatabase {
     public static final int GET_SCORE = 5;
     public static final int GET_UTENTE = 6;
     public static final int INSERT_PHOTO = 7;
+    public static final int GET_SESSIONS = 8;
 
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
@@ -166,6 +179,17 @@ public class MySqlDatabase {
     }
     //public String getPhoto(String )
 
+    /********************** OPERAZIONI SESSION ************************/
+    public String getSessions(String stato){
+        data = "";
+        try {
+            data =  URLEncoder.encode("stato","UTF-8")+"="+ URLEncoder.encode(stato,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_SESSIONS);
+    }
+
     private String openConnection(String data, int action){
         String result = "";
         try {
@@ -223,6 +247,9 @@ public class MySqlDatabase {
                 case INSERT_PHOTO:
                     url = new URL(url_name+urlFoto+urlInsertPhoto);
                     break;
+                case GET_SESSIONS:
+                    url = new URL(url_name+urlSession+urlGetSessions);
+                    break;
             }
             return url;
         }catch (MalformedURLException e) {
@@ -231,4 +258,89 @@ public class MySqlDatabase {
         return url;
     }
 
+    public String uploadPic(String file_path){
+        String reponse_data = "";
+        HttpURLConnection conn = null;
+        DataOutputStream dos = null;
+        DataInputStream inStream = null;
+        String existingFileName = file_path;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary =  "*****";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1*1024*1024;
+        try{
+            //------------------ CLIENT REQUEST
+            FileInputStream fileInputStream = new FileInputStream(new File(existingFileName) );
+            // open a URL connection to the Servlet
+            URL url = getUrl(INSERT_PHOTO);
+            // Open a HTTP connection to the URL
+            conn = (HttpURLConnection) url.openConnection();
+            // Allow Inputs
+            conn.setDoInput(true);
+            // Allow Outputs
+            conn.setDoOutput(true);
+            // Don't use a cached copy.
+            conn.setUseCaches(false);
+            // Use a post method.
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Connection", "Keep-Alive");
+            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
+            dos = new DataOutputStream( conn.getOutputStream() );
+
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"challenge\""+ lineEnd);
+            dos.writeBytes(lineEnd);
+            dos.writeBytes("30");
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"owner\""+ lineEnd);
+            dos.writeBytes(lineEnd);
+            dos.writeBytes("10");
+            dos.writeBytes(lineEnd);
+
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\""+file_path+"\"" + lineEnd); // uploaded_file_name is the Name of the File to be uploaded
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+
+
+            bytesAvailable = fileInputStream.available();
+            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            buffer = new byte[bufferSize];
+            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            while (bytesRead > 0){
+                dos.write(buffer, 0, bufferSize);
+                bytesAvailable = fileInputStream.available();
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            }
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+            fileInputStream.close();
+            dos.flush();
+            dos.close();
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        //------------------ read the SERVER RESPONSE
+        try {
+            inStream = new DataInputStream ( conn.getInputStream() );
+            String str;
+
+            while (( str = inStream.readLine()) != null){
+
+                reponse_data+=str;
+            }
+            inStream.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return reponse_data;
+    }
 }
