@@ -2,9 +2,6 @@ package androidlab.fotografando;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -12,10 +9,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TabHost;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends Activity {
 
@@ -49,7 +42,7 @@ public class MainActivity extends Activity {
         spec.setIndicator("", getResources().getDrawable(R.drawable.ic_star_black_24dp));
         tabHost.addTab(spec);
 
-        final Intent openCamera = new Intent(this,camera.class);
+        final Intent openCamera = new Intent(this,cameraActivity.class);
         Button btn2 = (Button) findViewById(R.id.button2);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,4 +14,5 @@
     <string name="photo_locator">Foto</string>
     <string name="gps_permission_denied">Permessi GPS necessari!</string>
     <string name="image_storage_error">Salvataggio fallito</string>
+    <string name="deletingLocalFileError">L\'immagine non è stata eliminata</string>
 </resources>
