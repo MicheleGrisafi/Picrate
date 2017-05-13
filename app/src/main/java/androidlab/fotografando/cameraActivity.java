@@ -50,7 +50,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public class camera extends Activity {
+import androidlab.DB.Objects.Photo;
+
+public class cameraActivity extends Activity {
 
     private static final int REQUEST_CODE = 0;
     private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
@@ -59,11 +61,14 @@ public class camera extends Activity {
     private static final int STATE_WAIT_LOCK = 1;
     private int mCaptureState;
 
+    private Intent inIntent;
+    private Intent outIntent;
+    private Intent checkPhotoIntent;
+
     private RelativeLayout topOverlay;
     private RelativeLayout bottomOverlay;
     private int topLayerHeight = 0,bottomLayerHeight = 0;
 
-    private Intent checkPhotoIntent;
     private Button mTakePhotoButton;
     private TextureView mTextureView;
     private TextureView.SurfaceTextureListener mSurfaceTextureListener = new TextureView.SurfaceTextureListener() {
@@ -95,14 +100,14 @@ public class camera extends Activity {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
-            Toast.makeText(camera.this, "camera opened", Toast.LENGTH_SHORT).show();
+            Toast.makeText(cameraActivity.this, "cameraActivity opened", Toast.LENGTH_SHORT).show();
             startPreview();
         }
 
         @Override
         public void onClosed(@NonNull CameraDevice camera) {
             super.onClosed(camera);
-            Toast.makeText(camera.this, "Camera closed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(cameraActivity.this, "Camera closed", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -116,19 +121,19 @@ public class camera extends Activity {
             camera.close();
             switch (error){
                 case CameraDevice.StateCallback.ERROR_CAMERA_DEVICE:
-                    Toast.makeText(camera.this, "ERROR_CAMERA_DEVICE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(cameraActivity.this, "ERROR_CAMERA_DEVICE", Toast.LENGTH_SHORT).show();
                     break;
                 case CameraDevice.StateCallback.ERROR_CAMERA_DISABLED:
-                    Toast.makeText(camera.this, "ERROR_CAMERA_DISABLED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(cameraActivity.this, "ERROR_CAMERA_DISABLED", Toast.LENGTH_SHORT).show();
                     break;
                 case CameraDevice.StateCallback.ERROR_CAMERA_IN_USE:
-                    Toast.makeText(camera.this, "ERROR_CAMERA_IN_USE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(cameraActivity.this, "ERROR_CAMERA_IN_USE", Toast.LENGTH_SHORT).show();
                     break;
                 case CameraDevice.StateCallback.ERROR_CAMERA_SERVICE:
-                    Toast.makeText(camera.this, "ERROR_CAMERA_SERVICE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(cameraActivity.this, "ERROR_CAMERA_SERVICE", Toast.LENGTH_SHORT).show();
                     break;
                 case CameraDevice.StateCallback.ERROR_MAX_CAMERAS_IN_USE:
-                    Toast.makeText(camera.this, "ERROR_MAX_CAMERAS_IN_USE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(cameraActivity.this, "ERROR_MAX_CAMERAS_IN_USE", Toast.LENGTH_SHORT).show();
                     break;
             }
             mCameraDevice = null;
@@ -245,7 +250,7 @@ public class camera extends Activity {
                 case STATE_PREVIEW:
                     break;
                 case STATE_WAIT_LOCK:
-                    //Toast.makeText(camera.this, "SATE WAIT LOCK", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(cameraActivity.this, "SATE WAIT LOCK", Toast.LENGTH_SHORT).show();
                    // mCaptureState = STATE_PREVIEW;
                     Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
                     if (afState == CaptureRequest.CONTROL_AF_STATE_FOCUSED_LOCKED /*|| afState == CaptureRequest.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED*/){
@@ -253,7 +258,7 @@ public class camera extends Activity {
                         Toast.makeText(getApplicationContext(),"AF locked!",Toast.LENGTH_LONG).show();
                         startStillCaptureRequest();
                     }else{
-                        //Toast.makeText(camera.this, "af state WRONG", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(cameraActivity.this, "af state WRONG", Toast.LENGTH_SHORT).show();
                         //lockFocus(true);
                     }
                     break;
@@ -293,7 +298,9 @@ public class camera extends Activity {
         setContentView(R.layout.activity_camera);
 
         createPhotoFolder();
-        checkPhotoIntent = new Intent(this,checkPhoto.class);
+        checkPhotoIntent = new Intent(this,checkPhotoActivity.class);
+        inIntent = getIntent();
+        outIntent = new Intent();
         mTextureView = (TextureView)findViewById(R.id.textureView2);
         mTextureView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -415,16 +422,18 @@ public class camera extends Activity {
             case 0:
                 File image = new File(mPhotoFileName);
                 boolean deleted = image.delete();
-
                 if (deleted) {
-                    Toast.makeText(this, "Deleted!", Toast.LENGTH_SHORT).show();
                     mPhotoFileName = null;
                 }
                 else
-                    Toast.makeText(this, "CANNOT DELETE! " + mPhotoFileName, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.deletingLocalFileError, Toast.LENGTH_LONG).show();
                 break;
             case 1:
-                Toast.makeText(this, "Photo Created", Toast.LENGTH_SHORT).show();
+                Photo foto = data.getExtras().getParcelable("image");
+                outIntent.putExtra("image",foto);
+                setResult(1,outIntent);
+                closeCamera();
+                finish();
                 break;
         }
     }
@@ -555,7 +564,7 @@ public class camera extends Activity {
                 @Override
                 public void onCaptureFailed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull CaptureFailure failure) {
                     super.onCaptureFailed(session, request, failure);
-                    Toast.makeText(camera.this, "Captured failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(cameraActivity.this, "Captured failed", Toast.LENGTH_SHORT).show();
                 }
             };
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),stillCaptureCallback,null);

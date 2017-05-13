@@ -2,6 +2,7 @@ package androidlab.fotografando;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -22,15 +23,18 @@ import androidlab.DB.Objects.Challenge;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
+import androidlab.fotografando.assets.AppInfo;
 import androidlab.fotografando.assets.InsertThePhoto;
 
-public class checkPhoto extends Activity {
+public class checkPhotoActivity extends Activity {
     private ImageView mImageView;
     private ImageButton btnOk;
     private ImageButton btnCancel;
     private RelativeLayout topOverlay,bottomOverlay;
     private RelativeLayout layout;
     private Bitmap imageBitmap;
+    private Intent inIntent;
+    private Intent outIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +43,9 @@ public class checkPhoto extends Activity {
 
         mImageView = (ImageView)findViewById(R.id.imageView);
         mImageView.setImageResource(android.R.color.transparent);
-        final Intent in = getIntent();
-        setImage(in);
-        final Intent out = new Intent();
+        inIntent = getIntent();
+        setImage(inIntent);
+        outIntent = new Intent();
         btnOk = (ImageButton)findViewById(R.id.btnOk);
         btnCancel = (ImageButton)findViewById(R.id.btnCancel);
 
@@ -51,16 +55,16 @@ public class checkPhoto extends Activity {
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //new insertThePhoto().execute();
-                /*setResult(1,out);
-                freeResources();
-                finish();*/
                 insertPhoto();
+                setResult(1,outIntent);
+                freeResources();
+                finish();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setResult(0,out);
+                setResult(0,outIntent);
+                freeResources();
                 finish();
             }
         });
@@ -127,15 +131,13 @@ public class checkPhoto extends Activity {
         imageBitmap = null;
     }
     private void insertPhoto(){
-        Utente user = new Utente(10,"michele","miki426811@gmail.com","123456",0,0);
-        Challenge challenge = new Challenge();
-        challenge.setId(20);
-        ChallengeSession session = new ChallengeSession(30,null,challenge);
-        Photo foto = new Photo(user,session,imageBitmap);
-        String fileName = getIntent().getExtras().get("fileName").toString();
-
+        Utente user = AppInfo.getUtente();
+        ChallengeSession session = new ChallengeSession(inIntent.getExtras().getInt("session"),(Integer)inIntent.getExtras().getInt("challenge"));
+        Photo foto = new Photo(user,session);
+        String fileName = inIntent.getExtras().get("fileName").toString();
         InsertThePhoto insert = new InsertThePhoto(foto,fileName,this);
         insert.execute();
+        outIntent.putExtra("foto",foto);
     }
 }
 

@@ -2,6 +2,10 @@ package androidlab.DB.DAO.implementations;
 
 
 import org.json.*;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import androidlab.DB.DAO.PhotoDAO;
 import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.Photo;
@@ -35,9 +39,12 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
                 JSONObject obj = new JSONObject(response);
                 if(!obj.getBoolean("error")){
                     photo.setId(obj.getInt("idImage"));
+                    photo.setImage(new URL(obj.getString("url")));
                     result = photo;
                 }
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
         }

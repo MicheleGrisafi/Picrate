@@ -1,26 +1,14 @@
 package androidlab.fotografando.assets;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.io.File;
-import java.util.UUID;
 
 import androidlab.DB.DAO.PhotoDAO;
-import androidlab.DB.DAO.UtenteDAO;
 import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
-import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
-import androidlab.DB.MySqlDatabase;
-import androidlab.DB.Objects.Challenge;
-import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
-import androidlab.DB.Objects.Utente;
-import androidlab.fotografando.checkPhoto;
 
 /**
  * Created by Michele Grisafi on 11/05/2017.
