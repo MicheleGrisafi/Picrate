@@ -42,15 +42,22 @@ public class MainActivity extends Activity {
         spec.setIndicator("", getResources().getDrawable(R.drawable.ic_star_black_24dp));
         tabHost.addTab(spec);
 
+
+        /********************* FIRST TAB ************************************/
+
         final Intent openCamera = new Intent(this,cameraActivity.class);
-        Button btn2 = (Button) findViewById(R.id.button2);
+        /*Button btn2 = (Button) findViewById(R.id.button2);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(openCamera);
             }
         });
+*/
 
+
+
+        /************************* THIRD TAB ********************************/
         Button btnZoom = (Button) findViewById(R.id.btnZoom);
         btnZoom.setOnClickListener(new View.OnClickListener(){
             @Override
