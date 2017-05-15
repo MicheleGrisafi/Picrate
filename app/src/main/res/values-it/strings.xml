@@ -15,4 +15,7 @@
     <string name="gps_permission_denied">Permessi GPS necessari!</string>
     <string name="image_storage_error">Salvataggio fallito</string>
     <string name="deletingLocalFileError">L\'immagine non è stata eliminata</string>
+    <string name="expiresIn">Scade tra:</string>
+    <string name="day_abbre">g</string>
+    <string name="hour_abbre">o</string>
 </resources>
