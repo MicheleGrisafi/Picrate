@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidlab.DB.Objects.Utente;
+import androidlab.fotografando.assets.SignUpTask;
 
 public class signup_activity extends Activity {
 
@@ -19,7 +19,7 @@ public class signup_activity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SignUpTask(getApplicationContext()).execute(new Utente("miki426811@gmail.comma","googleKey1"));
+                //new SignUpTask(getApplicationContext()).execute(new Utente("miki426811@gmail.comma","googleKey1"));
             }
         });
     }

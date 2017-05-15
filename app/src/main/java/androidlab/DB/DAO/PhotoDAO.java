@@ -1,5 +1,7 @@
 package androidlab.DB.DAO;
 
+import java.io.File;
+
 import androidlab.DB.Objects.Photo;
 
 /**
@@ -10,7 +12,7 @@ public interface PhotoDAO {
     void open();
     void close();
 
-    Photo insertPhoto(Photo photo);
+    Photo insertPhoto(Photo photo, String imagePath);
     void deletePhoto(Photo photo);
 
 

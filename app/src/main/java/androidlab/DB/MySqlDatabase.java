@@ -3,6 +3,10 @@ package androidlab.DB;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,6 +17,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.DoubleBuffer;
+
+import androidlab.DB.DAO.ChallengeDAO;
+import androidlab.DB.DAO.ChallengeSessionDAO;
 
 /**
  * Created by miki4 on 07/05/2017.
@@ -23,6 +31,8 @@ public class MySqlDatabase {
 
     private static final String urlUtente = "/utente";
     private static final String urlFoto = "/foto";
+    private static final String urlSession = "/session";
+    private static final String urlRating = "/rating";
 
     private static final String urlInsertUtente = "/insertUtente.php";
     private static final String urlGetUtente = "/getUtente.php";
@@ -31,7 +41,13 @@ public class MySqlDatabase {
     private static final String urlGetMoney = "/getMoney.php";
     private static final String urlSetScore = "/setScore.php";
     private static final String urlGetScore = "/getScore.php";
+
     private static final String urlInsertPhoto = "/insertPhoto.php";
+
+    private static final String urlGetSessions = "/getSessions.php";
+
+    private static final String urlInsertRating = "/insertRating.php";
+
 
     public static final int INSERT_UTENTE = 0;
     public static final int SET_USERNAME = 1;
@@ -41,6 +57,8 @@ public class MySqlDatabase {
     public static final int GET_SCORE = 5;
     public static final int GET_UTENTE = 6;
     public static final int INSERT_PHOTO = 7;
+    public static final int GET_SESSIONS = 8;
+    public static final int INSERT_RATING = 9;
 
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
@@ -142,30 +160,137 @@ public class MySqlDatabase {
     }
 
     /********************** OPERAZIONI FOTO ************************/
-    public String insertPhoto(String... param){
-        data = "";
-        try {
-            switch (param.length){
-                case 3:
-                    data =  URLEncoder.encode("owner","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
-                            URLEncoder.encode("challenge","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
-                            URLEncoder.encode("image","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8");
-                    break;
-                default:
-                    data =  URLEncoder.encode("owner","UTF-8")+"="+ URLEncoder.encode(param[0],"UTF-8") +"&" +
-                            URLEncoder.encode("challenge","UTF-8")+"="+ URLEncoder.encode(param[1],"UTF-8") +"&" +
-                            URLEncoder.encode("image","UTF-8")+"="+ URLEncoder.encode(param[2],"UTF-8")+"&" +
-                            URLEncoder.encode("latitudine","UTF-8")+"="+ URLEncoder.encode(param[3],"UTF-8") +"&" +
-                            URLEncoder.encode("longitudine","UTF-8")+"="+ URLEncoder.encode(param[4],"UTF-8");
-                    break;
+    public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
+        String reponse_data = "";
+        httpURLConnection = null;
+        DataOutputStream dos = null;
+        DataInputStream inStream = null;
+
+        String existingFileName = file_path;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary =  "*****";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1*1024*1024;
+        try{
+            //------------------ CLIENT REQUEST
+            File filetoupload = new File(existingFileName);
+            FileInputStream fileInputStream = new FileInputStream(filetoupload.getPath());
+            // open a URL connection to the Servlet
+            URL url = getUrl(INSERT_PHOTO);
+            // Open a HTTP connection to the URL
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            // Allow Inputs
+            httpURLConnection.setDoInput(true);
+            // Allow Outputs
+            httpURLConnection.setDoOutput(true);
+            // Don't use a cached copy.
+            httpURLConnection.setUseCaches(false);
+            // Use a post method.
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
+            httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
+            dos = new DataOutputStream( httpURLConnection.getOutputStream() );
+
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"owner\""+ lineEnd);
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(owner);
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"challenge\""+ lineEnd);
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(session);
+            dos.writeBytes(lineEnd);
+            double tmp = 0;
+            if (latitudine != Double.toString(tmp)){
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"latitudine\""+ lineEnd);
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(latitudine);
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"longitudine\""+ lineEnd);
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(longitudine);
+                dos.writeBytes(lineEnd);
             }
-        } catch (UnsupportedEncodingException e) {
+
+
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\""+filetoupload.getName()+"\"" + lineEnd); // uploaded_file_name is the Name of the File to be uploaded
+
+            dos.writeBytes(lineEnd);
+
+
+            bytesAvailable = fileInputStream.available();
+            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            buffer = new byte[bufferSize];
+            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            while (bytesRead > 0){
+                dos.write(buffer, 0, bufferSize);
+                bytesAvailable = fileInputStream.available();
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            }
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+            fileInputStream.close();
+            dos.flush();
+            dos.close();
+        }
+        catch (MalformedURLException e){
             e.printStackTrace();
         }
-        return openConnection(data,INSERT_PHOTO);
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        //------------------ read the SERVER RESPONSE
+        try {
+            inputStream = httpURLConnection.getInputStream();
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+            String line;
+            while((line = bufferedReader.readLine()) != null){
+                reponse_data += line;
+            }
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return reponse_data;
     }
     //public String getPhoto(String )
 
+    /********************** OPERAZIONI SESSION ************************/
+    public String getSessions(String stato){
+        data = "";
+        try {
+            data =  URLEncoder.encode("stato","UTF-8")+"="+ URLEncoder.encode(stato,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_SESSIONS);
+    }
+
+    /********************** OPERAZIONI RATING ************************/
+    public String insertRating(String user, String foto, String voto, String segnalazione){
+        data="";
+        try {
+            data =  URLEncoder.encode("user","UTF-8")+"="+ URLEncoder.encode(user,"UTF-8") +"&" +
+                    URLEncoder.encode("foto","UTF-8")+"="+ URLEncoder.encode(foto,"UTF-8") +"&" +
+                    URLEncoder.encode("segnalazione","UTF-8")+"="+ URLEncoder.encode(segnalazione,"UTF-8") +"&" +
+                    URLEncoder.encode("voto","UTF-8")+"="+ URLEncoder.encode(voto,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,INSERT_RATING);
+    }
+
+    /********************** CONNESSIONE  ******************************/
     private String openConnection(String data, int action){
         String result = "";
         try {
@@ -223,6 +348,12 @@ public class MySqlDatabase {
                 case INSERT_PHOTO:
                     url = new URL(url_name+urlFoto+urlInsertPhoto);
                     break;
+                case GET_SESSIONS:
+                    url = new URL(url_name+urlSession+urlGetSessions);
+                    break;
+                case INSERT_RATING:
+                    url = new URL(url_name+urlRating+urlInsertRating);
+                    break;
             }
             return url;
         }catch (MalformedURLException e) {
@@ -230,5 +361,107 @@ public class MySqlDatabase {
         }
         return url;
     }
+
+    /*
+     public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
+        String reponse_data = "";
+        HttpURLConnection conn = null;
+        DataOutputStream dos = null;
+        DataInputStream inStream = null;
+        String existingFileName = file_path;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary =  "*****";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1*1024*1024;
+        try{
+            //------------------ CLIENT REQUEST
+            File filetoupload = new File(existingFileName);
+            FileInputStream fileInputStream = new FileInputStream(filetoupload.getPath());
+            // open a URL connection to the Servlet
+            URL url = getUrl(INSERT_PHOTO);
+            // Open a HTTP connection to the URL
+            conn = (HttpURLConnection) url.openConnection();
+            // Allow Inputs
+            conn.setDoInput(true);
+            // Allow Outputs
+            conn.setDoOutput(true);
+            // Don't use a cached copy.
+            conn.setUseCaches(false);
+            // Use a post method.
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Connection", "Keep-Alive");
+            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
+            dos = new DataOutputStream( conn.getOutputStream() );
+
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"owner\""+ lineEnd);
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(owner);
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"challenge\""+ lineEnd);
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(session);
+            dos.writeBytes(lineEnd);
+            if (latitudine != ""){
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"latitudine\""+ lineEnd);
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(latitudine);
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"longitudine\""+ lineEnd);
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(longitudine);
+                dos.writeBytes(lineEnd);
+            }
+
+
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\""+filetoupload.getName()+"\"" + lineEnd); // uploaded_file_name is the Name of the File to be uploaded
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+
+
+            bytesAvailable = fileInputStream.available();
+            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            buffer = new byte[bufferSize];
+            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            while (bytesRead > 0){
+                dos.write(buffer, 0, bufferSize);
+                bytesAvailable = fileInputStream.available();
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            }
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+            fileInputStream.close();
+            dos.flush();
+            dos.close();
+        }
+        catch (MalformedURLException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        //------------------ read the SERVER RESPONSE
+        try {
+            inStream = new DataInputStream ( conn.getInputStream() );
+            String str;
+
+            while (( str = inStream.readLine()) != null){
+
+                reponse_data+=str;
+            }
+            inStream.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        return reponse_data;
+    }
+     */
 
 }

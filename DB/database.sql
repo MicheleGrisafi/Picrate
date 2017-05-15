@@ -20,7 +20,7 @@ CREATE TABLE ChallengeSession(
 	IDSession		INT NOT NULL AUTO_INCREMENT,
 	image			VARCHAR(255) DEFAULT NULL,
 	expiration		DATETIME,
-	stato			INT(1) NOT NULL,
+	stato			INT(1) NOT NULL,	/* 1 = attivo, 0 = valutazione, -1 = scaduto*/
 	IDChallenge		SMALLINT NOT NULL,
 	CONSTRAINT PKChallengeSession PRIMARY KEY(IDSession),
 	CONSTRAINT FKChallengeOfTheSession FOREIGN KEY (IDChallenge) REFERENCES Challenge(IDChallenge)
@@ -48,3 +48,9 @@ CREATE TABLE dataInfo(
 	picturesFolder	VARCHAR(255),
 	version			INT(2)
 );
+
+/* QUERY PROVA */
+INSERT INTO Utente 				VALUES(10,"michele","12345678","miki426811@gmail.com",0,0);
+INSERT INTO Challenge 			VALUES(20,"Descrizione di prova","Panorama","127.0.0.1/challengePictures/panorama1");
+INSERT INTO ChallengeSession 	VALUES(30,NULL,'2008-11-11 23:59:59',1,20);
+

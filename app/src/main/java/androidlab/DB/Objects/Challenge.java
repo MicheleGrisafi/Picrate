@@ -12,22 +12,26 @@ public class Challenge {
     private int id;
     protected String description;
     protected String title;
-    protected URL imageUrl;
-    protected Bitmap image;
+    protected URL image;
 
     public Challenge(){
         id = 0;
         description = title = "";
         image = null;
-        imageUrl = null;
     }
-
-    public Challenge(String description, String title, URL imageUrl, Bitmap image){
+    public Challenge(int id){
+        this();
+        this.id = id;
+    }
+    public Challenge(String description, String title, URL image){
         this();
         this.description = description;
         this.title = title;
-        this.imageUrl = imageUrl;
         this.image = image;
+    }
+    public Challenge(int id,String description, String title, URL image){
+        this(description,title,image);
+        this.id = id;
     }
 
     public int getId() {
@@ -54,18 +58,11 @@ public class Challenge {
         this.title = title;
     }
 
-    public URL getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(URL imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-    public Bitmap getImage() {
+    public URL getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(URL image) {
         this.image = image;
     }
 }

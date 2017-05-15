@@ -1,4 +1,4 @@
-package androidlab.fotografando;
+package androidlab.fotografando.assets;
 
 import android.app.AlertDialog;
 import android.content.Context;

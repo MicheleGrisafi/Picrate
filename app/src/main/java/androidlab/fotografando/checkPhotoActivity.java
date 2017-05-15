@@ -2,6 +2,7 @@ package androidlab.fotografando;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -22,14 +23,18 @@ import androidlab.DB.Objects.Challenge;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
+import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.InsertThePhoto;
 
-public class checkPhoto extends Activity {
+public class checkPhotoActivity extends Activity {
     private ImageView mImageView;
     private ImageButton btnOk;
     private ImageButton btnCancel;
     private RelativeLayout topOverlay,bottomOverlay;
     private RelativeLayout layout;
     private Bitmap imageBitmap;
+    private Intent inIntent;
+    private Intent outIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +43,9 @@ public class checkPhoto extends Activity {
 
         mImageView = (ImageView)findViewById(R.id.imageView);
         mImageView.setImageResource(android.R.color.transparent);
-        final Intent in = getIntent();
-        setImage(in);
-        final Intent out = new Intent();
+        inIntent = getIntent();
+        setImage(inIntent);
+        outIntent = new Intent();
         btnOk = (ImageButton)findViewById(R.id.btnOk);
         btnCancel = (ImageButton)findViewById(R.id.btnCancel);
 
@@ -50,14 +55,16 @@ public class checkPhoto extends Activity {
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new insertThePhoto().execute();
-                //setResult(1,out);
-                //finish();
+                insertPhoto();
+                setResult(1,outIntent);
+                freeResources();
+                finish();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                setResult(0,out);
+                setResult(0,outIntent);
+                freeResources();
                 finish();
             }
         });
@@ -111,62 +118,26 @@ public class checkPhoto extends Activity {
         String name = intent.getExtras().get("fileName").toString();
         File imgFile = new File(name);
         if(imgFile.exists()){
-
-                /*ExifInterface exif = new ExifInterface(name);
-
-                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
-                switch (orientation){
-                    case ExifInterface.ORIENTATION_NORMAL:
-
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_90:
-
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_180:
-
-                        break;
-                    case ExifInterface.ORIENTATION_ROTATE_270:
-
-                        break;
-                }
-                Matrix matrix = new Matrix();
-                matrix.postRotate(90);*/
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                //Bitmap rotatedBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true);
-                mImageView.setImageBitmap(myBitmap);
-                myBitmap = null;
-                return true;
-
+            imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            mImageView.setImageBitmap(imageBitmap);
+            return true;
         }else{
             Toast.makeText(getApplicationContext(),"image not valid: " + name,Toast.LENGTH_SHORT).show();
         }
         return false;
     }
-    class insertThePhoto extends AsyncTask<Photo, Void, Photo> {
-
-
-        @Override
-        protected Photo doInBackground(Photo... params) {
-            PhotoDAO dao = new PhotoDAO_DB_impl();
-            UtenteDAO daoUser = new UtenteDAO_DB_impl();
-            dao.open();
-            daoUser.open();
-            Utente user = new Utente();
-            Challenge challenge = new Challenge();
-            challenge.setId(1);
-            ChallengeSession session = new ChallengeSession(1,null,challenge);
-            user.setUsername("michele");
-            user = daoUser.getUtente(user);
-            Photo thisPhoto = dao.insertPhoto(new Photo(user,session,imageBitmap));
-            return thisPhoto;
-        }
-
-        @Override
-        protected void onPostExecute(Photo photo) {
-            super.onPostExecute(photo);
-            Toast.makeText(checkPhoto.this, "Photo uploaded", Toast.LENGTH_SHORT).show();
-        }
+    private void freeResources(){
+        imageBitmap.recycle();
+        imageBitmap = null;
+    }
+    private void insertPhoto(){
+        Utente user = AppInfo.getUtente();
+        ChallengeSession session = new ChallengeSession(inIntent.getExtras().getInt("session"),(Integer)inIntent.getExtras().getInt("challenge"));
+        Photo foto = new Photo(user,session);
+        String fileName = inIntent.getExtras().get("fileName").toString();
+        InsertThePhoto insert = new InsertThePhoto(foto,fileName,this);
+        insert.execute();
+        outIntent.putExtra("foto",foto);
     }
 }
 
