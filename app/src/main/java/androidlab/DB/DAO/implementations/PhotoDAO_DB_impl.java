@@ -5,14 +5,10 @@ import org.json.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import androidlab.DB.DAO.PhotoDAO;
 import androidlab.DB.MySqlDatabase;
-import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
-import androidlab.DB.Objects.Utente;
 
 /**
  * Created by miki4 on 07/05/2017.
@@ -58,30 +54,5 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
     @Override
     public void deletePhoto(Photo photo) {
 
-    }
-    public List<Photo> getPhotosSession(Utente user, ChallengeSession session){
-        result = null;
-        response = database.getPhoto(Integer.toString(user.getId()),Integer.toString(session.getIDSession()));
-        if (response != "null"){
-            List<Photo> lista = new ArrayList<Photo>();
-            try {
-                JSONArray arr = new JSONArray(response);
-                JSONObject obj;
-                Photo foto;
-                for (int i = 0; i < arr.length(); i++){
-                    obj = arr.getJSONObject(i);
-                    foto = new Photo(user,session);
-                    foto.setId(obj.getInt("IDPhoto"));
-                    foto.setImage(new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_USER_FOLDER).toString() + "/" + Integer.toString(foto.getId()) + ".jpg"));
-                    lista.add(foto);
-                }
-                result = lista;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
-        return (List<Photo>)result;
     }
 }
