@@ -23,7 +23,6 @@
         android:id="@+id/expanded_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorBlack"
         android:contentDescription=""
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
