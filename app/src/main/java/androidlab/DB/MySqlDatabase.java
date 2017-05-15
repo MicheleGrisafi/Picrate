@@ -27,12 +27,16 @@ import androidlab.DB.DAO.ChallengeSessionDAO;
  */
 
 public class MySqlDatabase {
+
+
     private static final String url_name = "http://192.168.1.133";
+    private static final String fotoUtente_folder = "/picturesUsers";
 
     private static final String urlUtente = "/utente";
     private static final String urlFoto = "/foto";
     private static final String urlSession = "/session";
     private static final String urlRating = "/rating";
+    private static final String urlUtilities = "/utilities";
 
     private static final String urlInsertUtente = "/insertUtente.php";
     private static final String urlGetUtente = "/getUtente.php";
@@ -43,10 +47,13 @@ public class MySqlDatabase {
     private static final String urlGetScore = "/getScore.php";
 
     private static final String urlInsertPhoto = "/insertPhoto.php";
+    private static final String urlGetPhoto = "/getPhoto.php";
 
     private static final String urlGetSessions = "/getSessions.php";
 
     private static final String urlInsertRating = "/insertRating.php";
+
+    private static final String urlGetDate = "/getDate.php";
 
 
     public static final int INSERT_UTENTE = 0;
@@ -59,7 +66,9 @@ public class MySqlDatabase {
     public static final int INSERT_PHOTO = 7;
     public static final int GET_SESSIONS = 8;
     public static final int INSERT_RATING = 9;
-
+    public static final int GET_DATE = 10;
+    public static final int GET_PHOTO = 11;
+    public static final int PHOTO_USER_FOLDER = 12;
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
     BufferedWriter bufferedWriter;
@@ -263,7 +272,16 @@ public class MySqlDatabase {
         }
         return reponse_data;
     }
-    //public String getPhoto(String )
+    public String getPhoto(String utente, String session){
+        data="";
+        try {
+            data =  URLEncoder.encode("utente","UTF-8")+"="+ URLEncoder.encode(utente,"UTF-8") + "&" +
+                    URLEncoder.encode("session","UTF-8")+"="+ URLEncoder.encode(session,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_PHOTO);
+    }
 
     /********************** OPERAZIONI SESSION ************************/
     public String getSessions(String stato){
@@ -290,6 +308,11 @@ public class MySqlDatabase {
         return openConnection(data,INSERT_RATING);
     }
 
+    /********************** OPERAZIONI UTILITIES ************************/
+    public String getDate(){
+        data = "";
+        return openConnection(data,GET_DATE);
+    }
     /********************** CONNESSIONE  ******************************/
     private String openConnection(String data, int action){
         String result = "";
@@ -298,12 +321,14 @@ public class MySqlDatabase {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
-            outputStream = httpURLConnection.getOutputStream();
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-            bufferedWriter.write(data);
-            bufferedWriter.flush();
-            bufferedWriter.close();
-            outputStream.close();
+            if (data != "") {
+                outputStream = httpURLConnection.getOutputStream();
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+            }
             inputStream = httpURLConnection.getInputStream();
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
             String line;
@@ -319,10 +344,9 @@ public class MySqlDatabase {
         return result;
     }
 
-    static URL getUrl(int action){
+    static public URL getUrl(int action){
         URL url = null;
         try{
-
             switch (action){
                 case INSERT_UTENTE:
                     url = new URL(url_name+urlUtente+urlInsertUtente);
@@ -354,6 +378,15 @@ public class MySqlDatabase {
                 case INSERT_RATING:
                     url = new URL(url_name+urlRating+urlInsertRating);
                     break;
+                case GET_DATE:
+                    url = new URL(url_name+urlUtilities+urlGetDate);
+                    break;
+                case GET_PHOTO:
+                    url = new URL(url_name+urlFoto+urlGetPhoto);
+                    break;
+                case PHOTO_USER_FOLDER:
+                    url = new URL(url_name+fotoUtente_folder);
+                    break;
             }
             return url;
         }catch (MalformedURLException e) {
@@ -361,107 +394,4 @@ public class MySqlDatabase {
         }
         return url;
     }
-
-    /*
-     public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
-        String reponse_data = "";
-        HttpURLConnection conn = null;
-        DataOutputStream dos = null;
-        DataInputStream inStream = null;
-        String existingFileName = file_path;
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary =  "*****";
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1*1024*1024;
-        try{
-            //------------------ CLIENT REQUEST
-            File filetoupload = new File(existingFileName);
-            FileInputStream fileInputStream = new FileInputStream(filetoupload.getPath());
-            // open a URL connection to the Servlet
-            URL url = getUrl(INSERT_PHOTO);
-            // Open a HTTP connection to the URL
-            conn = (HttpURLConnection) url.openConnection();
-            // Allow Inputs
-            conn.setDoInput(true);
-            // Allow Outputs
-            conn.setDoOutput(true);
-            // Don't use a cached copy.
-            conn.setUseCaches(false);
-            // Use a post method.
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Connection", "Keep-Alive");
-            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
-            dos = new DataOutputStream( conn.getOutputStream() );
-
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"owner\""+ lineEnd);
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(owner);
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"challenge\""+ lineEnd);
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(session);
-            dos.writeBytes(lineEnd);
-            if (latitudine != ""){
-                dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name=\"latitudine\""+ lineEnd);
-                dos.writeBytes(lineEnd);
-                dos.writeBytes(latitudine);
-                dos.writeBytes(lineEnd);
-                dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name=\"longitudine\""+ lineEnd);
-                dos.writeBytes(lineEnd);
-                dos.writeBytes(longitudine);
-                dos.writeBytes(lineEnd);
-            }
-
-
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\""+filetoupload.getName()+"\"" + lineEnd); // uploaded_file_name is the Name of the File to be uploaded
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-
-
-            bytesAvailable = fileInputStream.available();
-            bufferSize = Math.min(bytesAvailable, maxBufferSize);
-            buffer = new byte[bufferSize];
-            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-            while (bytesRead > 0){
-                dos.write(buffer, 0, bufferSize);
-                bytesAvailable = fileInputStream.available();
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-            }
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-            fileInputStream.close();
-            dos.flush();
-            dos.close();
-        }
-        catch (MalformedURLException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        //------------------ read the SERVER RESPONSE
-        try {
-            inStream = new DataInputStream ( conn.getInputStream() );
-            String str;
-
-            while (( str = inStream.readLine()) != null){
-
-                reponse_data+=str;
-            }
-            inStream.close();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        return reponse_data;
-    }
-     */
-
 }
