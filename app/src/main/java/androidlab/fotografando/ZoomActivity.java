@@ -7,8 +7,10 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,7 +28,6 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-// TODO: change image background color to transparent when zooming out
 public class ZoomActivity extends FragmentActivity {
 
     private Animator mCurrentAnimator;
@@ -124,6 +125,7 @@ public class ZoomActivity extends FragmentActivity {
         }
 
         thumbView.setAlpha(0f);
+        expandedImageView.setBackgroundColor(getResources().getColor(android.R.color.black));
         expandedImageView.setVisibility(View.VISIBLE);
         btnBack.setVisibility(View.VISIBLE);
         btnDownload.setVisibility(View.VISIBLE);
@@ -169,6 +171,7 @@ public class ZoomActivity extends FragmentActivity {
                 }
 
                 AnimatorSet set = new AnimatorSet();
+                expandedImageView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 set
                         .play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left))
                         .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top))
