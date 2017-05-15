@@ -2,15 +2,30 @@ package androidlab.fotografando;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TabHost;
 
 public class MainActivity extends Activity {
+    private String[] mDrawerItems;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +35,37 @@ public class MainActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
+        mDrawerItems = new String[]{"Profile", "Active Photos", "Logout", "Settings", "Help & Feedback"};
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // TODO: HEADER LISTVIEW
+        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mDrawerItems));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+        ImageButton btnDrawer = (ImageButton) findViewById(R.id.btnDrawer);
+        btnDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(Gravity.START);
+            }
+        });
 
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost); //Tabhost = tab manager
         tabHost.setup();    //Inizializzo
@@ -39,9 +83,8 @@ public class MainActivity extends Activity {
         //Tab 1
         spec = tabHost.newTabSpec("Ranking Tab");
         spec.setContent(R.id.tabRanking);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.ic_star_black_24dp));
+        spec.setIndicator("", getResources().getDrawable(R.drawable.ic_leaderboard_24dp));
         tabHost.addTab(spec);
-
 
         /********************* FIRST TAB ************************************/
 
@@ -53,9 +96,7 @@ public class MainActivity extends Activity {
                 startActivity(openCamera);
             }
         });
-*/
-
-
+        */
 
         /************************* THIRD TAB ********************************/
         Button btnZoom = (Button) findViewById(R.id.btnZoom);
@@ -68,4 +109,48 @@ public class MainActivity extends Activity {
         });
     }
 
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+
+    private void selectItem(int position) {
+        // Highlight the selected item, and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        //boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+        ConstraintLayout cLayout = (ConstraintLayout) findViewById(R.id.constraint_layout_bar);
+        cLayout.setAlpha(0.75f);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
