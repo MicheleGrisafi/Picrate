@@ -32,7 +32,7 @@ public class MySqlDatabase {
     private static final String url_name = "http://mgdeveloper.com/fotografando";
     private static final String fotoUtente_folder = "/picturesUsers";//hoia
 
-    private static final String urlUtente = "/utente";
+    private static final String urlUtente = "/utente"; //hhahahahha
     private static final String urlFoto = "/foto";
     private static final String urlSession = "/session";
     private static final String urlRating = "/rating";
