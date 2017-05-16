@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,7 +120,7 @@ public class MainActivity extends Activity {
         Map<Integer,Integer> expirationMap = new HashMap<Integer, Integer>();
         List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
 
-        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenges),challengeSessions,picturesMap,expirationMap);
+        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap);
         task.execute();
         /************************* THIRD TAB ********************************/
         Button btnZoom = (Button) findViewById(R.id.btnZoom);
