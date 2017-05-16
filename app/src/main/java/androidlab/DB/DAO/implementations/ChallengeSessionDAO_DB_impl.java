@@ -74,7 +74,12 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
             for(int i = 0; i < arr.length(); i++) {
                 obj = arr.getJSONObject(i);
                 url = new URL(obj.getString("cImage"));
-                DateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+                DateFormat format = null;
+                try {
+                    format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 Date date = format.parse(obj.getString("expiration"));
                 challege = new Challenge(obj.getInt("IDChallenge"),obj.getString("description"),obj.getString("title"),url);
                 session = new ChallengeSession(obj.getInt("IDSession"),date,challege);

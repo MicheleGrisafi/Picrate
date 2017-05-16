@@ -35,6 +35,7 @@ import androidlab.DB.DAO.ChallengeSessionDAO;
 import androidlab.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.fotografando.R;
+import androidlab.fotografando.cameraActivity;
 
 /**
  * Created by Michele Grisafi on 14/05/2017.
@@ -46,15 +47,16 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
     List<ChallengeSession> result;
     Map<Integer,Integer> pictureMap;
     Map<Integer,Integer> expirationMap;
+    int requestCode;
 
-    LinearLayout block;
 
-    public LoadChallengeSessions(Context context,RelativeLayout layout, List<ChallengeSession> result, Map<Integer,Integer> pictureMap,Map<Integer,Integer> expirationMap){
+    public LoadChallengeSessions(Context context,RelativeLayout layout, List<ChallengeSession> result, Map<Integer,Integer> pictureMap,Map<Integer,Integer> expirationMap, int requestCode){
         this.context = context;
         this.result = result;
         this.layout = layout;
         this.pictureMap = pictureMap;
         this.expirationMap = expirationMap;
+        this.requestCode = requestCode;
     }
     @Override
     protected List<ChallengeSession> doInBackground(Void... params) {
@@ -65,13 +67,14 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
     }
 
     @Override
-    protected void onPostExecute(List<ChallengeSession> challengeSessions) {
+    protected void onPostExecute(final List<ChallengeSession> challengeSessions) {
         super.onPostExecute(challengeSessions);
         Collections.sort(challengeSessions);
         List<Integer> idExpiration = new ArrayList<Integer>();
         List<Integer> ids = new ArrayList<Integer>();
-
+        ChallengeSession thisChallenge;
         for (int j = 0; j < challengeSessions.size(); j++){
+            thisChallenge = challengeSessions.get(j);
             TextView data = new TextView(context);
             data.setText("data");
             data.setId(View.generateViewId());
@@ -84,7 +87,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             dataParam.setMargins(0, AppInfo.dpToPixel(8),0,0);
             data.setLayoutParams(dataParam);
 
-            block = new LinearLayout(context);
+            LinearLayout block = new LinearLayout(context);
             block.setId(View.generateViewId());
             block.setOrientation(LinearLayout.HORIZONTAL);
             block.setWeightSum(3);
@@ -92,12 +95,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             linearLayoutParam.addRule(RelativeLayout.BELOW, data.getId());
             block.setLayoutParams(linearLayoutParam);
 
-            int myWidth = 512;
-            int myHeight = 384;
-            URL url = challengeSessions.get(j).getImage();
 
-            Glide.with(MyApp.getAppContext()).load(url).asBitmap().into(
-                    new MySimpleTarget<Bitmap>(myWidth,myHeight,block.getId(),layout));
 
             RelativeLayout firstHalf = new RelativeLayout(context);
             firstHalf.setId(View.generateViewId());
@@ -106,15 +104,17 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             firstHalf.setLayoutParams(firstHalfLayoutParam);
 
             TextView title = new TextView(context);
-            title.setText(challengeSessions.get(j).getTitle());
+            title.setText(thisChallenge.getTitle());
             title.setId(View.generateViewId());
+            title.setTextColor(context.getResources().getColor(R.color.colorBlack));
             RelativeLayout.LayoutParams titleParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             titleParams.setMargins(AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),0,0);
             title.setLayoutParams(titleParams);
 
             TextView desc = new TextView(context);
-            desc.setText(challengeSessions.get(j).getDescription());
+            desc.setText(thisChallenge.getDescription());
             desc.setId(View.generateViewId());
+            desc.setTextColor(context.getResources().getColor(R.color.colorBlack));
             RelativeLayout.LayoutParams descParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             descParams.setMargins(AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),0,AppInfo.dpToPixel(8));
             descParams.addRule(RelativeLayout.BELOW, title.getId());
@@ -134,17 +134,23 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             pictureParams.setMargins(0,AppInfo.dpToPixel(8),0,0);
             picture.setLayoutParams(pictureParams);
 
-            pictureMap.put(challengeSessions.get(j).getIDSession(),picture.getId());
+            pictureMap.put(thisChallenge.getIDSession(),picture.getId());
 
             ImageButton addPhoto = new ImageButton(context);
             addPhoto.setId(View.generateViewId());
             addPhoto.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
             addPhoto.setBackgroundResource(0);
+            addPhoto.setPadding(0,0,0,0);
             RelativeLayout.LayoutParams addPhotoParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
             addPhotoParams.addRule(RelativeLayout.BELOW,picture.getId());
             addPhotoParams.addRule(RelativeLayout.ALIGN_RIGHT,picture.getId());
             addPhotoParams.setMargins(0,AppInfo.dpToPixel(8),0,AppInfo.dpToPixel(8));
             addPhoto.setLayoutParams(addPhotoParams);
+
+            Intent outIntent = new Intent(context,cameraActivity.class);
+            outIntent.putExtra("session",thisChallenge.getId());
+            int requestcode = 0;
+            addPhoto.setOnClickListener(new cameraOnClickListener(outIntent,requestcode));
 
 
             TextView expiration = new TextView(context);
@@ -155,7 +161,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             RelativeLayout.LayoutParams expirationParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             expirationParam.addRule(RelativeLayout.BELOW,block.getId());
             expiration.setLayoutParams(expirationParam);
-            expirationMap.put(challengeSessions.get(j).getIDSession(),expiration.getId());
+            expirationMap.put(thisChallenge.getIDSession(),expiration.getId());
             idExpiration.add(expiration.getId());
 
             layout.addView(data);
@@ -167,6 +173,13 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             secondHalf.addView(picture);
             secondHalf.addView(addPhoto);
             layout.addView(expiration);
+
+            int myWidth = 300;
+            int myHeight = 200;
+            URL url = thisChallenge.getImage();
+
+            Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).centerCrop().into(
+                    new MySimpleTarget<Bitmap>(myWidth,myHeight,block.getId(),layout));
         }
         LoadSessionsExpiration loadExp = new LoadSessionsExpiration(context,expirationMap,challengeSessions,layout);
         loadExp.execute();
