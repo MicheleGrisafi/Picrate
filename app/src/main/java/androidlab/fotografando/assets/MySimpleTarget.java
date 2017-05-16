@@ -15,9 +15,6 @@ import com.bumptech.glide.request.target.SimpleTarget;
  */
 
 public class MySimpleTarget<Bitmap> extends SimpleTarget<Bitmap> {
-    public View getMyTarget() {
-        return myTarget;
-    }
 
     private LinearLayout myTarget;
     public MySimpleTarget() {
@@ -28,14 +25,18 @@ public class MySimpleTarget<Bitmap> extends SimpleTarget<Bitmap> {
         super(width, height);
     }
 
+    public MySimpleTarget(int width, int height, int target, View root) {
+        super(width, height);
+        myTarget = (LinearLayout) root.findViewById(target);
+
+    }
+
     @Override
     public void onResourceReady(Object resource, GlideAnimation glideAnimation) {
         BitmapDrawable ob = new BitmapDrawable(MyApp.getAppContext().getResources(), (android.graphics.Bitmap)resource);
         myTarget.setBackground(ob);
+        myTarget.getBackground().setAlpha(120);
     }
 
-    public MySimpleTarget(int width, int height, int target, View root) {
-        super(width, height);
-        myTarget = (LinearLayout) root.findViewById(target);
-    }
+
 }
