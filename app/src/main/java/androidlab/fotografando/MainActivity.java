@@ -20,8 +20,21 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TabHost;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import androidlab.DB.DAO.UtenteDAO;
+import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
+import androidlab.DB.Objects.ChallengeSession;
+import androidlab.DB.Objects.Utente;
+import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.LoadChallengeSessions;
+import androidlab.fotografando.assets.LoadSessionsExpiration;
 
 public class MainActivity extends Activity {
+        private int REQUEST_CODE = 0;
     private String[] mDrawerItems;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -97,7 +110,17 @@ public class MainActivity extends Activity {
             }
         });
         */
+         Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",0,0);
+        AppInfo.updateUtente(michele,true);
 
+
+
+        Map<Integer,Integer> picturesMap = new HashMap<Integer, Integer>();
+        Map<Integer,Integer> expirationMap = new HashMap<Integer, Integer>();
+        List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
+
+        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenges),challengeSessions,picturesMap,expirationMap);
+        task.execute();
         /************************* THIRD TAB ********************************/
         Button btnZoom = (Button) findViewById(R.id.btnZoom);
         btnZoom.setOnClickListener(new View.OnClickListener(){
@@ -152,5 +175,17 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode ==  REQUEST_CODE){
+            switch (requestCode){
+                case 0:
+                    break;
+                case 1:
+
+                    break;
+            }
+        }
     }
 }
