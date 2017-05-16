@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,31 +8,23 @@
     android:orientation="vertical"
     tools:context="androidlab.fotografando.checkPhotoActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBlack"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:srcCompat="@mipmap/ic_launcher" />
-
     <RelativeLayout
         android:id="@+id/topRelative"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorBlack">
 
-        <ImageButton
-            android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="@null"
-            android:src="@drawable/ic_arrow_back_black_50dp"
-            android:tint="@color/colorWhite" />
+        android:layout_height="48dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/colorBlack"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="50dp"
+        tools:layout_conversion_absoluteWidth="360dp"
+        tools:layout_conversion_absoluteX="0dp"
+        tools:layout_conversion_absoluteY="0dp">
+
     </RelativeLayout>
 
 
@@ -40,21 +32,84 @@
         android:id="@+id/bottomRelative"
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:background="@color/colorBlack"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_conversion_absoluteHeight="70dp"
+        tools:layout_conversion_absoluteWidth="360dp"
+        tools:layout_conversion_absoluteX="0dp"
+        tools:layout_conversion_absoluteY="441dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp">
 
 
-
-        <ImageButton
-            android:id="@+id/btnOk"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:tint="@color/colorWhite"
-            android:src="@drawable/ic_check_black_50dp" />
     </RelativeLayout>
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:layout_conversion_absoluteX="156dp"
+        tools:layout_conversion_absoluteY="231dp"
+        tools:layout_conversion_absoluteWidth="48dp"
+        tools:layout_conversion_absoluteHeight="48dp"
+        tools:layout_editor_absoluteY="231dp"
+        tools:layout_editor_absoluteX="156dp" />
+
+    <ImageButton
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/ic_arrow_back_white_24dp"
+        android:tint="@color/colorWhite"
+        tools:layout_conversion_absoluteX="0dp"
+        tools:layout_conversion_absoluteY="0dp"
+        tools:layout_conversion_absoluteWidth="24dp"
+        tools:layout_conversion_absoluteHeight="24dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp" />
+
+    <ImageButton
+        android:id="@+id/btnOk"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_check_black_50dp"
+        android:tint="@color/colorWhite"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_conversion_absoluteHeight="50dp"
+        tools:layout_conversion_absoluteWidth="50dp"
+        tools:layout_conversion_absoluteX="155dp"
+        tools:layout_conversion_absoluteY="230dp" />
+
+    <ImageButton
+        android:id="@+id/btnFilter"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/rgb" />
+
+
+</android.support.constraint.ConstraintLayout>
