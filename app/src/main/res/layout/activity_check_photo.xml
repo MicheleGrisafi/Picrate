@@ -21,8 +21,8 @@
         android:id="@+id/topRelative"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorBlack"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="@color/colorBlack">
 
         <ImageButton
             android:id="@+id/btnCancel"
@@ -31,10 +31,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:background="@null"
-            android:tint="@color/colorWhite"
-            android:src="@drawable/ic_arrow_back_black_50dp" />
+            android:src="@drawable/ic_arrow_back_black_50dp"
+            android:tint="@color/colorWhite" />
     </RelativeLayout>
-
 
 
     <RelativeLayout
