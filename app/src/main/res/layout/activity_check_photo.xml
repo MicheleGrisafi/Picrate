@@ -11,6 +11,7 @@
     <RelativeLayout
         android:id="@+id/topRelative"
         android:layout_width="match_parent"
+
         android:layout_height="48dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
@@ -25,6 +26,7 @@
         tools:layout_conversion_absoluteY="0dp">
 
     </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/bottomRelative"
