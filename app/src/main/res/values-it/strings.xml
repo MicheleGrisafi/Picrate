@@ -17,4 +17,7 @@
     <string name="deletingLocalFileError">L\'immagine non è stata eliminata</string>
     <string name="drawer_open">Menu laterale aperto</string>
     <string name="drawer_close">Menu laterale chiuso</string>
+    <string name="expiresIn">Scade tra:</string>
+    <string name="day_abbre">g</string>
+    <string name="hour_abbre">o</string>
 </resources>
