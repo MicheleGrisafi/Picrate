@@ -17,6 +17,7 @@ import androidlab.DB.DAO.ChallengeSessionDAO;
 import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.Challenge;
 import androidlab.DB.Objects.ChallengeSession;
+import androidlab.DB.Objects.Photo;
 import androidlab.fotografando.assets.BitmapDownload;
 
 /**
@@ -58,6 +59,7 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
         }
         return lista;
     }
+
 
     private List<ChallengeSession> getSessions(String response){
         List<ChallengeSession> lista = new ArrayList<ChallengeSession>();

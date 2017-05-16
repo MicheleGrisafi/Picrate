@@ -4,6 +4,7 @@ import java.util.List;
 
 import androidlab.DB.Objects.Challenge;
 import androidlab.DB.Objects.ChallengeSession;
+import androidlab.DB.Objects.Photo;
 
 /**
  * Created by Michele Grisafi on 10/05/2017.
