@@ -17,4 +17,7 @@
     <string name="deletingLocalFileError">The local image could not be deleted!</string>
     <string name="drawer_open">Drawer is open</string>
     <string name="drawer_close">Drawer is closed</string>
+    <string name="expiresIn">Expires in:</string>
+    <string name="day_abbre">d</string>
+    <string name="hour_abbre">h</string>
 </resources>
