@@ -7,3 +7,5 @@
 /build
 /captures
 .externalNativeBuild
+app/src/main/java/androidlab/fotografando/MainActivity.java
+app/src/main/res/values-it/strings.xml
