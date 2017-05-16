@@ -10,8 +10,10 @@
 
     <RelativeLayout
         android:id="@+id/topRelative"
+
         android:layout_width="0dp"
         android:layout_height="80dp"
+
         android:background="@color/colorBlack"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,6 +24,7 @@
         tools:layout_conversion_absoluteY="0dp">
 
     </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/bottomRelative"
