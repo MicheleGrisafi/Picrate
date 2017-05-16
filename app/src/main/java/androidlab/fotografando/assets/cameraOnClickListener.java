@@ -16,7 +16,7 @@ public class cameraOnClickListener implements View.OnClickListener {
     public cameraOnClickListener(Intent intent,int requestCode){
         this.intent = intent;
         this.requestcode = requestCode;
-        
+
     }
     @Override
     public void onClick(View v) {

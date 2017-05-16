@@ -30,6 +30,7 @@ public class InsertThePhoto extends AsyncTask<Void, Void, Photo> {
         PhotoDAO photoDAO = new PhotoDAO_DB_impl();
         photoDAO.open();
         fotografia = photoDAO.insertPhoto(fotografia,nameFile);
+        photoDAO.close();
         return fotografia;
     }
 

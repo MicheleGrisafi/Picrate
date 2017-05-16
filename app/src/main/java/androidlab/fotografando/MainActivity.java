@@ -116,6 +116,11 @@ public class MainActivity extends Activity {
 
 
 
+
+
+
+
+
         Map<Integer,Integer> picturesMap = new HashMap<Integer, Integer>();
         Map<Integer,Integer> expirationMap = new HashMap<Integer, Integer>();
         List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
