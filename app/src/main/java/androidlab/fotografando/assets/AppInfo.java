@@ -1,7 +1,20 @@
 package androidlab.fotografando.assets;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.util.TypedValue;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import androidlab.DB.MySqlDatabase;
+import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Utente;
 
 /**
@@ -36,5 +49,28 @@ abstract public class AppInfo {
         editor.putInt("id",utente.getId());
         editor.putInt("money",utente.getMoney());
         editor.putInt("score",utente.getScore());
+        editor.commit();
     }
+    static public int dpToPixel(Integer dp){
+        final float scale = MyApp.getAppContext().getResources().getDisplayMetrics().density;
+        int px  = (int) (dp * scale + 0.5f);
+        return px;
+    }
+    static public Date getDate(){
+        MySqlDatabase database = new MySqlDatabase();
+        String response = database.getDate();
+        JSONObject obj = null;
+        Date date = null;
+        try {
+            obj = new JSONObject(response);
+            DateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+            date = format.parse(obj.getString("date"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
 }

@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
@@ -51,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 
 import androidlab.DB.Objects.Photo;
+import androidlab.fotografando.assets.InsertThePhoto;
 
 public class cameraActivity extends Activity {
 
@@ -64,6 +66,7 @@ public class cameraActivity extends Activity {
     private Intent inIntent;
     private Intent outIntent;
     private Intent checkPhotoIntent;
+    private int sessionID;
 
     private RelativeLayout topOverlay;
     private RelativeLayout bottomOverlay;
@@ -301,6 +304,8 @@ public class cameraActivity extends Activity {
         checkPhotoIntent = new Intent(this,checkPhotoActivity.class);
         inIntent = getIntent();
         outIntent = new Intent();
+        sessionID = inIntent.getIntExtra("session",0);
+
         mTextureView = (TextureView)findViewById(R.id.textureView2);
         mTextureView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -357,8 +362,15 @@ public class cameraActivity extends Activity {
                     |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
         // Get the preview size
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int previewWidth = displayMetrics.heightPixels;
+        int previewHeight = displayMetrics.widthPixels;
+
+        /*
         int previewWidth = mTextureView.getMeasuredWidth();
-        int previewHeight = mTextureView.getMeasuredHeight();
+        int previewHeight = mTextureView.getMeasuredHeight();*/
         int btnDimension = mTakePhotoButton.getMeasuredHeight();
         // Set the height of the overlay so that it makes the preview a square
 
@@ -430,7 +442,9 @@ public class cameraActivity extends Activity {
                 break;
             case 1:
                 Photo foto = data.getExtras().getParcelable("image");
+                InsertThePhoto insertThePhoto = new InsertThePhoto(foto,mPhotoFileName,this);
                 outIntent.putExtra("image",foto);
+                outIntent.putExtra("session",sessionID);
                 setResult(1,outIntent);
                 closeCamera();
                 finish();
