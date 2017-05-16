@@ -122,6 +122,7 @@ public class MainActivity extends Activity {
 
         LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap);
         task.execute();
+
         /************************* THIRD TAB ********************************/
         Button btnZoom = (Button) findViewById(R.id.btnZoom);
         btnZoom.setOnClickListener(new View.OnClickListener(){

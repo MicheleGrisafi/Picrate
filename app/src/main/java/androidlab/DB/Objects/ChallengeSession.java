@@ -3,6 +3,7 @@ package androidlab.DB.Objects;
 
 import android.support.annotation.NonNull;
 
+import java.net.URL;
 import java.util.Date;
 
 /**
@@ -13,6 +14,7 @@ public class ChallengeSession extends Challenge implements Comparable<ChallengeS
     private int IDSession;
     private Date expiration;
     private int stato;
+
 
     static public final int STATO_EXPIRED = 0;
     static public final int STATO_RATING = 1;

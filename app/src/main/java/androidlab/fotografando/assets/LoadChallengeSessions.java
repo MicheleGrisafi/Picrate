@@ -2,6 +2,8 @@ package androidlab.fotografando.assets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
@@ -16,6 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,6 +46,8 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
     List<ChallengeSession> result;
     Map<Integer,Integer> pictureMap;
     Map<Integer,Integer> expirationMap;
+
+    LinearLayout block;
 
     public LoadChallengeSessions(Context context,RelativeLayout layout, List<ChallengeSession> result, Map<Integer,Integer> pictureMap,Map<Integer,Integer> expirationMap){
         this.context = context;
@@ -66,6 +75,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             TextView data = new TextView(context);
             data.setText("data");
             data.setId(View.generateViewId());
+            data.setTextColor(context.getResources().getColor(R.color.colorBlack));
             ids.add(data.getId());
             RelativeLayout.LayoutParams dataParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             if (data.getId() != ids.get(0)) {
@@ -74,7 +84,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             dataParam.setMargins(0, AppInfo.dpToPixel(8),0,0);
             data.setLayoutParams(dataParam);
 
-            LinearLayout block = new LinearLayout(context);
+            block = new LinearLayout(context);
             block.setId(View.generateViewId());
             block.setOrientation(LinearLayout.HORIZONTAL);
             block.setWeightSum(3);
@@ -82,9 +92,16 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             linearLayoutParam.addRule(RelativeLayout.BELOW, data.getId());
             block.setLayoutParams(linearLayoutParam);
 
+            int myWidth = 512;
+            int myHeight = 384;
+            URL url = challengeSessions.get(j).getImage();
+
+            Glide.with(MyApp.getAppContext()).load(url).asBitmap().into(
+                    new MySimpleTarget<Bitmap>(myWidth,myHeight,block.getId(),layout));
+
             RelativeLayout firstHalf = new RelativeLayout(context);
             firstHalf.setId(View.generateViewId());
-            firstHalf.setBackgroundColor(context.getResources().getColor(R.color.colorRed));
+            //firstHalf.setBackgroundColor(context.getResources().getColor(R.color.colorRed));
             LinearLayout.LayoutParams firstHalfLayoutParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,1);
             firstHalf.setLayoutParams(firstHalfLayoutParam);
 
@@ -105,7 +122,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
 
             RelativeLayout secondHalf = new RelativeLayout(context);
             secondHalf.setId(View.generateViewId());
-            secondHalf.setBackgroundColor(context.getResources().getColor(R.color.wallet_holo_blue_light));
+            //secondHalf.setBackgroundColor(context.getResources().getColor(R.color.wallet_holo_blue_light));
             LinearLayout.LayoutParams secondHalfLayoutParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,2);
             secondHalf.setLayoutParams(secondHalfLayoutParam);
 
@@ -134,6 +151,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             expiration.setText(R.string.expiresIn);
             expiration.setId(View.generateViewId());
             expiration.setGravity(Gravity.RIGHT);
+            expiration.setTextColor(context.getResources().getColor(R.color.colorBlack));
             RelativeLayout.LayoutParams expirationParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             expirationParam.addRule(RelativeLayout.BELOW,block.getId());
             expiration.setLayoutParams(expirationParam);
