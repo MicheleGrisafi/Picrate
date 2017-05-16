@@ -8,16 +8,16 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
         android:background="@color/materialOrange400"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/Base.Theme.AppCompat"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TabHost
         android:id="@+id/tabHost"
@@ -33,8 +33,8 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
 
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="1.0">
 
 
         <LinearLayout
@@ -94,6 +94,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="8dp"
+
                                     android:layout_marginTop="8dp"
                                     android:text="TextView" />
 
@@ -104,8 +105,10 @@
                                     android:layout_below="@+id/textView7"
                                     android:layout_marginLeft="8dp"
                                     android:layout_marginTop="8dp"
+
                                     android:text=" hifos iesjfoi jssefijse ofijesi jieosfjoi jfesijofeisojfieso sefjios" />
                             </RelativeLayout>
+
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -130,6 +133,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:src="@drawable/ic_add_a_photo_black_24dp"
                                     android:layout_below="@+id/imageView3" />
+
 
 
                             </RelativeLayout>
@@ -163,7 +167,7 @@
                         android:text="Zoom"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        tools:layout_editor_absoluteY="137dp" />
+                        tools:layout_editor_absoluteY="185dp" />
 
                 </android.support.constraint.ConstraintLayout>
             </FrameLayout>
