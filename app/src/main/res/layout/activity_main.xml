@@ -46,7 +46,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="0dp" />
+            android:layout_marginTop="0dp"
+            android:elevation="4dp"/>
 
         <ImageButton
             android:id="@+id/btnDrawer"
@@ -58,7 +59,8 @@
             android:src="@drawable/ic_menu_white_24dp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/tabHost" />
+            app:layout_constraintBottom_toTopOf="@+id/tabHost"
+            android:elevation="4dp"/>
 
         <TabHost
             android:id="@+id/tabHost"

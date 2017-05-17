@@ -7,4 +7,16 @@
     <color name="colorLightGray">#adadad</color>
     <color name="materialOrange400">#ff7043</color>
     <color name="materialOrange600">#f4511e</color>
+    <color name="materialRed500">#F44336</color>
+    <color name="materialPink500">#E91E63</color>
+    <color name="materialPurple500">#9C27B0</color>
+    <color name="materialDeepPurple500">#673AB7</color>
+    <color name="materialIndigo500">#3F51B5</color>
+    <color name="materialBlue500">#2196F3</color>
+    <color name="materialLightBlue500">#03A9F4</color>
+    <color name="materialCyan500">#00BCD4</color>
+    <color name="materialTeal500">#009688</color>
+    <color name="materialGreen500">#4CAF50</color>
+    <color name="materialYellow500">#FFEB3B</color>
+    <!-- TODO: AGGIUNGERE GLI ALTRI COLORI -->
 </resources>
