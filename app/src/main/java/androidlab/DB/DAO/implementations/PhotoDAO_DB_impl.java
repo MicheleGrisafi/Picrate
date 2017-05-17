@@ -62,7 +62,7 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
     public List<Photo> getPhotosSession(Utente user, ChallengeSession session){
         result = null;
         response = database.getPhoto(Integer.toString(user.getId()),Integer.toString(session.getIDSession()));
-        if (response != "null"){
+        if (response != "null" && response != "" && response != null){
             List<Photo> lista = new ArrayList<Photo>();
             try {
                 JSONArray arr = new JSONArray(response);

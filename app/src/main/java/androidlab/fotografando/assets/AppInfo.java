@@ -63,7 +63,7 @@ abstract public class AppInfo {
         Date date = null;
         try {
             obj = new JSONObject(response);
-            DateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             date = format.parse(obj.getString("date"));
         } catch (JSONException e) {
             e.printStackTrace();

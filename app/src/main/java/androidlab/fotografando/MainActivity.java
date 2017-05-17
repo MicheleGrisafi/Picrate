@@ -35,7 +35,7 @@ import androidlab.fotografando.assets.LoadChallengeSessions;
 import androidlab.fotografando.assets.LoadSessionsExpiration;
 
 public class MainActivity extends Activity {
-        private int REQUEST_CODE = 0;
+    private int REQUEST_CODE = 0;
     private String[] mDrawerItems;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -111,7 +111,7 @@ public class MainActivity extends Activity {
             }
         });
         */
-         Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",0,0);
+        Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",0,0);
         AppInfo.updateUtente(michele,true);
 
 
@@ -120,7 +120,7 @@ public class MainActivity extends Activity {
         Map<Integer,Integer> expirationMap = new HashMap<Integer, Integer>();
         List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
 
-        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap);
+        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE);
         task.execute();
 
         /************************* THIRD TAB ********************************/
