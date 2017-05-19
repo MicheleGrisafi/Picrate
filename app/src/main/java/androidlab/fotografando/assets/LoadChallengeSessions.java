@@ -1,5 +1,6 @@
 package androidlab.fotografando.assets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,7 +9,11 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.CardView;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.google.android.gms.games.multiplayer.realtime.RealTimeMessage;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,18 +51,21 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
     Context context;
     RelativeLayout layout;
     List<ChallengeSession> result;
-    Map<Integer,Integer> pictureMap;
-    Map<Integer,Integer> expirationMap;
+    SparseArray<ArrayList<Integer>> pictureMap;
+    SparseIntArray expirationMap;
     int requestCode;
+    Activity activity;
 
 
-    public LoadChallengeSessions(Context context,RelativeLayout layout, List<ChallengeSession> result, Map<Integer,Integer> pictureMap,Map<Integer,Integer> expirationMap, int requestCode){
+    public LoadChallengeSessions(Context context, RelativeLayout layout, List<ChallengeSession> result, SparseArray<ArrayList<Integer>> pictureMap, SparseIntArray expirationMap, int requestCode,Activity activity){
         this.context = context;
         this.result = result;
         this.layout = layout;
         this.pictureMap = pictureMap;
         this.expirationMap = expirationMap;
         this.requestCode = requestCode;
+        this.requestCode = requestCode;
+        this.activity = activity;
     }
     @Override
     protected List<ChallengeSession> doInBackground(Void... params) {
@@ -70,120 +79,154 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
     protected void onPostExecute(final List<ChallengeSession> challengeSessions) {
         super.onPostExecute(challengeSessions);
         Collections.sort(challengeSessions);
-        List<Integer> idExpiration = new ArrayList<Integer>();
         List<Integer> ids = new ArrayList<Integer>();
         ChallengeSession thisChallenge;
+
+        /*********************************+ CREAZIONE DEL LAYOUT ************************************************/
         for (int j = 0; j < challengeSessions.size(); j++){
             thisChallenge = challengeSessions.get(j);
+
+            /**
+             * SCHEMA =
+             * CARD
+             *      DATA
+             *      BOX
+             *          TITOLO
+             *          DESCRIZIONE
+             *          IMMAGINE 1
+             *          IMMAGINE 2
+             *      EXPIRATION
+             *
+             */
+
+
+
+            /********************************** CARD **********************************************/
+            CardView card = new CardView(context);
+            card.setId(View.generateViewId());
+            card.setRadius(AppInfo.dpToPixel(10));
+            card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
+            RelativeLayout.LayoutParams cardParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            if (j != 0) {
+                cardParams.addRule(RelativeLayout.BELOW, ids.get(j-1));
+            }
+            if (j == challengeSessions.size() -1)
+                cardParams.setMargins(AppInfo.dpToPixel(16),AppInfo.dpToPixel(16),AppInfo.dpToPixel(16),AppInfo.dpToPixel(16));
+            else
+                cardParams.setMargins(AppInfo.dpToPixel(16),AppInfo.dpToPixel(16),AppInfo.dpToPixel(16),0);
+            card.setLayoutParams(cardParams);
+            ids.add(card.getId());
+
+            /******************************** CONTAINER DEL CONTENUTO DELLA CARD **********************/
+            RelativeLayout container = new RelativeLayout(context);
+            container.setId(View.generateViewId());
+            RelativeLayout.LayoutParams containerParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            container.setLayoutParams(containerParam);
+
+            /******************************** DATA DELLA CHALLENGE **********************/
             TextView data = new TextView(context);
             data.setText("data");
             data.setId(View.generateViewId());
-            data.setTextColor(context.getResources().getColor(R.color.colorBlack));
-            ids.add(data.getId());
+            data.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
             RelativeLayout.LayoutParams dataParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            if (data.getId() != ids.get(0)) {
-                dataParam.addRule(RelativeLayout.BELOW, idExpiration.get(idExpiration.size()-1));
-            }
-            dataParam.setMargins(0, AppInfo.dpToPixel(8),0,0);
+            dataParam.setMargins(AppInfo.dpToPixel(8), AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),AppInfo.dpToPixel(8));
             data.setLayoutParams(dataParam);
 
-            LinearLayout block = new LinearLayout(context);
-            block.setId(View.generateViewId());
-            block.setOrientation(LinearLayout.HORIZONTAL);
-            block.setWeightSum(3);
-            RelativeLayout.LayoutParams linearLayoutParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            linearLayoutParam.addRule(RelativeLayout.BELOW, data.getId());
-            block.setLayoutParams(linearLayoutParam);
+            /******************************** SFONDO, NONCHè CONTENITORE DEI DATI, DELLA CHALLENGE - NON CONTIENE DATA ED EXPIRATION **********************/
+            ConstraintLayout box = new ConstraintLayout(context);
+            box.setId(View.generateViewId());
+            RelativeLayout.LayoutParams boxParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            boxParams.addRule(RelativeLayout.BELOW,data.getId());
+            box.setLayoutParams(boxParams);
 
-
-
-            RelativeLayout firstHalf = new RelativeLayout(context);
-            firstHalf.setId(View.generateViewId());
-            //firstHalf.setBackgroundColor(context.getResources().getColor(R.color.colorRed));
-            LinearLayout.LayoutParams firstHalfLayoutParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,1);
-            firstHalf.setLayoutParams(firstHalfLayoutParam);
-
+            /******************************** TITOLO **********************/
             TextView title = new TextView(context);
             title.setText(thisChallenge.getTitle());
             title.setId(View.generateViewId());
-            title.setTextColor(context.getResources().getColor(R.color.colorBlack));
-            RelativeLayout.LayoutParams titleParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            titleParams.setMargins(AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),0,0);
+            title.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
+            ConstraintLayout.LayoutParams titleParams = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            titleParams.setMargins(AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),0);
             title.setLayoutParams(titleParams);
 
+            /******************************** DESCRIZIONE **********************/
             TextView desc = new TextView(context);
             desc.setText(thisChallenge.getDescription());
             desc.setId(View.generateViewId());
-            desc.setTextColor(context.getResources().getColor(R.color.colorBlack));
-            RelativeLayout.LayoutParams descParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            descParams.setMargins(AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),0,AppInfo.dpToPixel(8));
-            descParams.addRule(RelativeLayout.BELOW, title.getId());
+            desc.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
+            ConstraintLayout.LayoutParams descParams = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            descParams.setMargins(AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),0);
             desc.setLayoutParams(descParams);
 
-            RelativeLayout secondHalf = new RelativeLayout(context);
-            secondHalf.setId(View.generateViewId());
-            //secondHalf.setBackgroundColor(context.getResources().getColor(R.color.wallet_holo_blue_light));
-            LinearLayout.LayoutParams secondHalfLayoutParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,2);
-            secondHalf.setLayoutParams(secondHalfLayoutParam);
-
+            /******************************** IMMAGINE **********************/
             ImageView picture = new ImageView(context);
             picture.setId(View.generateViewId());
-            picture.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_no_picture, null));
-            RelativeLayout.LayoutParams pictureParams = new RelativeLayout.LayoutParams(AppInfo.dpToPixel(70),AppInfo.dpToPixel(70));
-            pictureParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            pictureParams.setMargins(0,AppInfo.dpToPixel(8),0,0);
+            picture.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
+            ConstraintLayout.LayoutParams pictureParams = new ConstraintLayout.LayoutParams(AppInfo.dpToPixel(50),AppInfo.dpToPixel(50));
             picture.setLayoutParams(pictureParams);
 
-            pictureMap.put(thisChallenge.getIDSession(),picture.getId());
-
-            ImageButton addPhoto = new ImageButton(context);
-            addPhoto.setId(View.generateViewId());
-            addPhoto.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
-            addPhoto.setBackgroundResource(0);
-            addPhoto.setPadding(0,0,0,0);
-            RelativeLayout.LayoutParams addPhotoParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-            addPhotoParams.addRule(RelativeLayout.BELOW,picture.getId());
-            addPhotoParams.addRule(RelativeLayout.ALIGN_RIGHT,picture.getId());
-            addPhotoParams.setMargins(0,AppInfo.dpToPixel(8),0,AppInfo.dpToPixel(8));
-            addPhoto.setLayoutParams(addPhotoParams);
-
-            Intent outIntent = new Intent(context,cameraActivity.class);
-            outIntent.putExtra("session",thisChallenge.getId());
-            int requestcode = 0;
-            addPhoto.setOnClickListener(new cameraOnClickListener(outIntent,requestcode));
+            /******************************** IMMAGINE **********************/
+            ImageView picture2 = new ImageView(context);
+            picture2.setId(View.generateViewId());
+            picture2.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
+            ConstraintLayout.LayoutParams pictureParams2 = new ConstraintLayout.LayoutParams(AppInfo.dpToPixel(50),AppInfo.dpToPixel(50));
+            picture2.setLayoutParams(pictureParams2);
 
 
+            /******************************** SCADENZA **********************/
             TextView expiration = new TextView(context);
             expiration.setText(R.string.expiresIn);
             expiration.setId(View.generateViewId());
             expiration.setGravity(Gravity.RIGHT);
-            expiration.setTextColor(context.getResources().getColor(R.color.colorBlack));
+            expiration.setTextColor(ContextCompat.getColor(context, R.color.colorBlack));
             RelativeLayout.LayoutParams expirationParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            expirationParam.addRule(RelativeLayout.BELOW,block.getId());
+            expirationParam.addRule(RelativeLayout.BELOW,box.getId());
+            expirationParam.setMargins(AppInfo.dpToPixel(8), AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),AppInfo.dpToPixel(8));
             expiration.setLayoutParams(expirationParam);
+
+
+            /******************************** AGGIUUNGO VIEW ALLA ACTIVITY **********************/
+            container.addView(expiration);
+            box.addView(picture2);
+            box.addView(picture);
+            box.addView(desc);
+            box.addView(title);
+            container.addView(box);
+            container.addView(data);
+            card.addView(container);
+            layout.addView(card);
+
+
+            /*************************************** CONSTRAINT set ***************************************/
+            ConstraintSet set = new ConstraintSet();
+            set.clone(box);
+            set.connect(title.getId(),ConstraintSet.TOP,box.getId(),ConstraintSet.TOP);
+            set.connect(title.getId(),ConstraintSet.LEFT,box.getId(),ConstraintSet.LEFT);
+            set.connect(title.getId(),ConstraintSet.RIGHT,box.getId(),ConstraintSet.RIGHT);
+            set.connect(desc.getId(),ConstraintSet.TOP,title.getId(),ConstraintSet.BOTTOM);
+            set.connect(desc.getId(),ConstraintSet.LEFT,box.getId(),ConstraintSet.LEFT);
+            set.connect(desc.getId(),ConstraintSet.RIGHT,box.getId(),ConstraintSet.RIGHT);
+            set.connect(picture.getId(),ConstraintSet.TOP,desc.getId(),ConstraintSet.BOTTOM);
+            set.connect(picture2.getId(),ConstraintSet.TOP,desc.getId(),ConstraintSet.BOTTOM);
+            set.connect(picture.getId(),ConstraintSet.BOTTOM,box.getId(),ConstraintSet.BOTTOM);
+            set.connect(picture2.getId(),ConstraintSet.BOTTOM,box.getId(),ConstraintSet.BOTTOM);
+            set.createHorizontalChain(box.getId(),ConstraintSet.LEFT,box.getId(),ConstraintSet.RIGHT,new int[]{picture.getId(),picture2.getId()},new float[]{1,1},ConstraintSet.CHAIN_PACKED);
+            set.applyTo(box);
+
+            /******************************** NON TOCCARE ->  struttura dati, operazioni **********************/
             expirationMap.put(thisChallenge.getIDSession(),expiration.getId());
-            idExpiration.add(expiration.getId());
-
-            layout.addView(data);
-            layout.addView(block);
-            block.addView(firstHalf);
-            block.addView(secondHalf);
-            firstHalf.addView(title);
-            firstHalf.addView(desc);
-            secondHalf.addView(picture);
-            secondHalf.addView(addPhoto);
-            layout.addView(expiration);
-
+            ArrayList<Integer> imageViewList = new ArrayList<>(2);
+            imageViewList.add(picture.getId());
+            imageViewList.add(picture2.getId());
+            pictureMap.put(thisChallenge.getIDSession(),imageViewList);
             int myWidth = 300;
             int myHeight = 200;
             URL url = thisChallenge.getImage();
-
             Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).centerCrop().into(
-                    new MySimpleTarget<Bitmap>(myWidth,myHeight,block.getId(),layout));
+                    new MySimpleTarget<Bitmap>(myWidth,myHeight,box.getId(),layout));
         }
         LoadSessionsExpiration loadExp = new LoadSessionsExpiration(context,expirationMap,challengeSessions,layout);
         loadExp.execute();
-        LoadSessionsImages loadImages = new LoadSessionsImages(context,layout,challengeSessions,pictureMap);
+        LoadSessionsImages loadImages = new LoadSessionsImages(context,layout,challengeSessions,pictureMap,requestCode,activity);
         loadImages.execute();
     }
 }

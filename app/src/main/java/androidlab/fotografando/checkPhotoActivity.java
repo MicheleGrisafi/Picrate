@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,7 +32,7 @@ public class checkPhotoActivity extends Activity {
     private ImageButton btnOk;
     private ImageButton btnCancel;
     private RelativeLayout topOverlay,bottomOverlay;
-    private RelativeLayout layout;
+    private ConstraintLayout layout;
     private Bitmap imageBitmap;
     private Intent inIntent;
     private Intent outIntent;
@@ -51,7 +52,7 @@ public class checkPhotoActivity extends Activity {
 
         topOverlay = (RelativeLayout)findViewById(R.id.topRelative);
         bottomOverlay = (RelativeLayout)findViewById(R.id.bottomRelative);
-        layout = (RelativeLayout)findViewById(R.id.layout);
+        layout = (ConstraintLayout)findViewById(R.id.layout);
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -105,10 +106,10 @@ public class checkPhotoActivity extends Activity {
         }
 
 
-        RelativeLayout.LayoutParams overlayTopParams = (RelativeLayout.LayoutParams) topOverlay.getLayoutParams();
+        ConstraintLayout.LayoutParams overlayTopParams = (ConstraintLayout.LayoutParams) topOverlay.getLayoutParams();
         overlayTopParams.height = topLayerHeight;
 
-        RelativeLayout.LayoutParams overlayBottomParams = (RelativeLayout.LayoutParams) bottomOverlay.getLayoutParams();
+        ConstraintLayout.LayoutParams overlayBottomParams = (ConstraintLayout.LayoutParams) bottomOverlay.getLayoutParams();
         overlayBottomParams.height = bottomLayerHeight;
 
         topOverlay.setLayoutParams(overlayTopParams);

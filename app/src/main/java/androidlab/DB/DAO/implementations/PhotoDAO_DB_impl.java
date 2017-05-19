@@ -59,7 +59,7 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
     public void deletePhoto(Photo photo) {
 
     }
-    public List<Photo> getPhotosSession(Utente user, ChallengeSession session){
+    public ArrayList<Photo> getPhotosSession(Utente user, ChallengeSession session){
         result = null;
         response = database.getPhoto(Integer.toString(user.getId()),Integer.toString(session.getIDSession()));
         if (response != "null" && response != "" && response != null){
@@ -82,6 +82,6 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
                 e.printStackTrace();
             }
         }
-        return (List<Photo>)result;
+        return (ArrayList<Photo>)result;
     }
 }

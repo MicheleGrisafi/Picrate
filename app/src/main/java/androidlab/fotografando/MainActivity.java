@@ -1,6 +1,7 @@
 package androidlab.fotografando;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,6 +54,9 @@ public class MainActivity extends Activity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
         }
+
+        //ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(getResources().getString(R.string.app_name), icon, R.color.materialOrange400);
+        //this.setTaskDescription(taskDescription);
 
         mDrawerItems = new String[]{"Profile", "Active Photos", "Logout", "Settings", "Help & Feedback"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -115,17 +121,10 @@ public class MainActivity extends Activity {
         AppInfo.updateUtente(michele,true);
 
 
-
-
-
-
-
-
-        Map<Integer,Integer> picturesMap = new HashMap<Integer, Integer>();
-        Map<Integer,Integer> expirationMap = new HashMap<Integer, Integer>();
+        SparseIntArray expirationMap = new SparseIntArray();
+        SparseArray<ArrayList<Integer>> picturesMap = new SparseArray<>();
         List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
-
-        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE);
+        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE,this);
         task.execute();
 
         /************************* THIRD TAB ********************************/

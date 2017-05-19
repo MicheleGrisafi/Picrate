@@ -3,6 +3,8 @@ package androidlab.fotografando.assets;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,9 +23,9 @@ import androidlab.fotografando.R;
 public class LoadSessionsExpiration extends AsyncTask<Void,Void,Date> {
     Context context;
     List<ChallengeSession> listaSession;
-    Map<Integer,Integer> expirationMap;
+    SparseIntArray expirationMap;
     View rootView;
-    public LoadSessionsExpiration(Context context, Map<Integer,Integer> expirationMap, List<ChallengeSession> listaSession, View rootView){
+    public LoadSessionsExpiration(Context context, SparseIntArray expirationMap, List<ChallengeSession> listaSession, View rootView){
         this.context = context;
         this.expirationMap = expirationMap;
         this.listaSession = listaSession;
@@ -42,6 +44,8 @@ public class LoadSessionsExpiration extends AsyncTask<Void,Void,Date> {
         for (int i = 0; i < listaSession.size(); i++) {
             diffHours = getDateDiff(listaSession.get(i).getExpiration(),data,TimeUnit.HOURS);
             text = (TextView)rootView.findViewById(expirationMap.get(listaSession.get(i).getIDSession()));
+            if (diffHours<0)
+                diffHours *= -1;
             if(diffHours >= 24) {
                 tmp = (int) diffHours / 24;
                 diffHours = (int)diffHours%24;
