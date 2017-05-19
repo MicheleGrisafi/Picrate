@@ -1,6 +1,7 @@
 package androidlab.fotografando;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -53,6 +54,9 @@ public class MainActivity extends Activity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
         }
+
+        //ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(getResources().getString(R.string.app_name), icon, R.color.materialOrange400);
+        //this.setTaskDescription(taskDescription);
 
         mDrawerItems = new String[]{"Profile", "Active Photos", "Logout", "Settings", "Help & Feedback"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
