@@ -105,7 +105,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/rgb" />
+        android:src="@drawable/rgb" />
 
 
 </android.support.constraint.ConstraintLayout>
