@@ -307,13 +307,12 @@ public class cameraActivity extends Activity {
         sessionID = inIntent.getIntExtra("session",0);
 
         mTextureView = (TextureView)findViewById(R.id.textureView2);
-        mTextureView.setOnClickListener(new View.OnClickListener() {
+        /*mTextureView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*lockFocus(false);
-                unLockFocus();*/
+
             }
-        });
+        });*/
 
         mTakePhotoButton = (Button)findViewById(R.id.btnShoot);
         mTakePhotoButton.setOnClickListener(new View.OnClickListener() {
@@ -361,42 +360,7 @@ public class cameraActivity extends Activity {
                     |View.SYSTEM_UI_FLAG_FULLSCREEN
                     |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
-        // Get the preview size
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int previewWidth = displayMetrics.heightPixels;
-        int previewHeight = displayMetrics.widthPixels;
-
-        /*
-        int previewWidth = mTextureView.getMeasuredWidth();
-        int previewHeight = mTextureView.getMeasuredHeight();*/
-        int btnDimension = mTakePhotoButton.getMeasuredHeight();
-        // Set the height of the overlay so that it makes the preview a square
-
-        if (previewHeight-previewWidth >= btnDimension) {
-            if ((previewHeight - previewWidth) / 2 >= btnDimension) {
-                topLayerHeight = (previewHeight - previewWidth) / 2;
-                bottomLayerHeight = (previewHeight - previewWidth) / 2;
-            } else {
-                bottomLayerHeight = previewHeight - previewWidth;
-                topLayerHeight = 0;
-            }
-        }else{
-            /*
-            btnDimension = previewHeight - previewWidth;
-            mTakePhotoButton.getLayoutParams().height = btnDimension;
-            mTakePhotoButton.getLayoutParams().width = btnDimension;*/
-        }
-
-        RelativeLayout.LayoutParams overlayTopParams = (RelativeLayout.LayoutParams) topOverlay.getLayoutParams();
-        overlayTopParams.height = topLayerHeight;
-
-        RelativeLayout.LayoutParams overlayBottomParams = (RelativeLayout.LayoutParams) bottomOverlay.getLayoutParams();
-        overlayBottomParams.height = bottomLayerHeight;
-
-        topOverlay.setLayoutParams(overlayTopParams);
-        bottomOverlay.setLayoutParams(overlayBottomParams);
+        resizeOverlay();
     }
 
     @Override
@@ -680,5 +644,48 @@ public class cameraActivity extends Activity {
         checkWriteStoragePermission();
 
         lockFocus(true);
+    }
+    private void resizeOverlay(){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int previewWidth = displayMetrics.heightPixels;
+        int previewHeight = displayMetrics.widthPixels;
+        if (previewHeight < previewWidth){
+            int tmp = previewHeight;
+            previewHeight = previewWidth;
+            previewWidth = tmp;
+        }
+        /*
+        int previewWidth = mTextureView.getMeasuredWidth();
+        int previewHeight = mTextureView.getMeasuredHeight();*/
+        int btnDimension = mTakePhotoButton.getMeasuredHeight();
+        // Set the height of the overlay so that it makes the preview a square
+
+        if (previewHeight-previewWidth >= btnDimension) {
+            if ((previewHeight - previewWidth) / 2 >= btnDimension) {
+                topLayerHeight = (previewHeight - previewWidth) / 2;
+                bottomLayerHeight = (previewHeight - previewWidth) / 2;
+            } else {
+                bottomLayerHeight = previewHeight - previewWidth;
+                topLayerHeight = 0;
+            }
+        }else{
+            /*
+            btnDimension = previewHeight - previewWidth;
+            mTakePhotoButton.getLayoutParams().height = btnDimension;
+            mTakePhotoButton.getLayoutParams().width = btnDimension;*/
+        }
+
+        RelativeLayout.LayoutParams overlayTopParams = (RelativeLayout.LayoutParams) topOverlay.getLayoutParams();
+        overlayTopParams.height = topLayerHeight;
+
+        RelativeLayout.LayoutParams overlayBottomParams = (RelativeLayout.LayoutParams) bottomOverlay.getLayoutParams();
+        overlayBottomParams.height = bottomLayerHeight;
+
+        topOverlay.setLayoutParams(overlayTopParams);
+        bottomOverlay.setLayoutParams(overlayBottomParams);
+
+        topOverlay.bringToFront();
+        bottomOverlay.bringToFront();
     }
 }

@@ -3,8 +3,10 @@ package androidlab.fotografando.assets;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -16,7 +18,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 
 public class MySimpleTarget<Bitmap> extends SimpleTarget<Bitmap> {
 
-    private LinearLayout myTarget;
+    private ConstraintLayout myTarget;
     public MySimpleTarget() {
         super();
     }
@@ -27,7 +29,7 @@ public class MySimpleTarget<Bitmap> extends SimpleTarget<Bitmap> {
 
     public MySimpleTarget(int width, int height, int target, View root) {
         super(width, height);
-        myTarget = (LinearLayout) root.findViewById(target);
+        myTarget = (ConstraintLayout) root.findViewById(target);
 
     }
 
