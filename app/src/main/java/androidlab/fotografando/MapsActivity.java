@@ -39,8 +39,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.List;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -117,7 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (myLatLng != null) {
 
                     myFAB.setImageResource(R.drawable.ic_my_location_orange_24dp);
-                    imageFAB.setImageResource(R.drawable.ic_image_gray_24dp);
+                    imageFAB.setImageResource(R.drawable.ic_image_grey_24dp);
                     setCurrPosLocator();
                     moveToMyPosition();
 
