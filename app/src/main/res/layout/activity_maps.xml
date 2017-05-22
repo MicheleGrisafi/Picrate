@@ -107,16 +107,15 @@
 
     <ImageButton
         android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@android:color/transparent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/button_style"
+        android:elevation="4dp"
         android:src="@drawable/ic_arrow_back_white_24dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_constraintLeft_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:elevation="4dp"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintLeft_creator="1" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightGray"
+    android:elevation="4dp"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="128dp"
+        android:background="@color/materialOrange400"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Base.Theme.AppCompat"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintTop_creator="1" />
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
+        android:src="@drawable/ic_arrow_back_white_24dp"
+        app:layout_constraintLeft_toLeftOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        tools:layout_constraintLeft_creator="1" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/profilePic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/medal_title"
+        app:layout_constraintLeft_toLeftOf="@+id/toolbar"
+        android:layout_marginLeft="16dp">
+
+        <ImageView
+            android:id="@+id/profilePicCircle"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/circular_profile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/profilePicText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/profilePicCircle"
+            app:layout_constraintLeft_toLeftOf="@+id/profilePicCircle"
+            app:layout_constraintRight_toRightOf="@+id/profilePicCircle"
+            app:layout_constraintTop_toTopOf="@+id/profilePicCircle"
+            tools:text="U" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp"
+        tools:text="Username"
+        app:layout_constraintLeft_toRightOf="@+id/profilePic"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/stars" />
+
+    <TextView
+        android:id="@+id/stars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@+id/profilePic"
+        tools:text="0"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/medal_title" />
+
+    <ImageView
+        android:id="@+id/starIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_star_yellow_24dp"
+        app:layout_constraintLeft_toRightOf="@+id/stars"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <TextView
+        android:id="@+id/currency"
+        android:layout_width="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/medal_title"
+        tools:text="0"
+        app:layout_constraintLeft_toRightOf="@+id/starIcon"
+        android:layout_marginLeft="8dp" />
+
+    <ImageView
+        android:id="@+id/currency_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_star_yellow_24dp"
+        app:layout_constraintLeft_toRightOf="@+id/currency"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:srcCompat="@drawable/ic_audiotrack_light" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingMyPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        android:src="@drawable/ic_edit_orange_24dp"
+        app:backgroundTint="@color/colorWhite"
+        app:fabSize="normal"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        android:layout_marginTop="100dp" />
+
+    <TextView
+        android:id="@+id/medal_title"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@color/colorWhite"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:text="Your medals"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medal_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

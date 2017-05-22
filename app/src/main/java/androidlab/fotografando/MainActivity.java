@@ -1,7 +1,6 @@
 package androidlab.fotografando;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -9,6 +8,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Gravity;
@@ -25,17 +25,12 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import androidlab.DB.DAO.UtenteDAO;
-import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
 import androidlab.fotografando.assets.LoadChallengeSessions;
-import androidlab.fotografando.assets.LoadSessionsExpiration;
 
 public class MainActivity extends Activity {
     private int REQUEST_CODE = 0;
@@ -43,6 +38,7 @@ public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +50,9 @@ public class MainActivity extends Activity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
         }
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("Challenges");
 
         //ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(getResources().getString(R.string.app_name), icon, R.color.materialOrange400);
         //this.setTaskDescription(taskDescription);
@@ -79,7 +78,7 @@ public class MainActivity extends Activity {
         };
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        ImageButton btnDrawer = (ImageButton) findViewById(R.id.btnDrawer);
+        final ImageButton btnDrawer = (ImageButton) findViewById(R.id.btnDrawer);
         btnDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,24 +86,43 @@ public class MainActivity extends Activity {
             }
         });
 
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost); //Tabhost = tab manager
+        final TabHost tabHost = (TabHost) findViewById(R.id.tabHost); //Tabhost = tab manager
         tabHost.setup();    //Inizializzo
 
         //Tab 1
         TabHost.TabSpec spec = tabHost.newTabSpec("Challenges Tab");    //Una spec è una componente del tabhost, la creo con un identificatore
         spec.setContent(R.id.tabChallenges);    //Setto la mia tab. Volendo potrei impostare una nuova INTENT invece di una tab
-        spec.setIndicator("", getResources().getDrawable(R.drawable.ic_check_box_black_24dp)); //Dichiaro l'icona
+        spec.setIndicator("", getResources().getDrawable(R.drawable.challenges_tab_selector)); //Dichiaro l'icona
         tabHost.addTab(spec);   //aggiungo la spec al mio host
         //Tab 1
         spec = tabHost.newTabSpec("Rating Tab");
         spec.setContent(R.id.tabRating);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.ic_star_black_24dp));
+        spec.setIndicator("", getResources().getDrawable(R.drawable.rating_tab_selector));
         tabHost.addTab(spec);
         //Tab 1
         spec = tabHost.newTabSpec("Ranking Tab");
         spec.setContent(R.id.tabRanking);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.ic_leaderboard_24dp));
+        spec.setIndicator("", getResources().getDrawable(R.drawable.leaderboards_tab_selector));
         tabHost.addTab(spec);
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                switch (tabId){
+                    case "Challenges Tab":
+                        mToolbar.setTitle("Challenges");
+                        break;
+                    case "Rating Tab":
+                        mToolbar.setTitle("Rate");
+                        break;
+                    case "Ranking Tab":
+                        mToolbar.setTitle("Leaderboards");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         /********************* FIRST TAB ************************************/
 

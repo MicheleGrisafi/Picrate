@@ -64,34 +64,28 @@
 
     <ImageButton
         android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:background="@null"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
         android:src="@drawable/ic_arrow_back_white_24dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_conversion_absoluteHeight="24dp"
-        tools:layout_conversion_absoluteWidth="24dp"
         app:layout_constraintTop_toTopOf="@+id/topRelative"
-        android:layout_marginTop="16dp" />
+        tools:layout_conversion_absoluteHeight="24dp"
+        tools:layout_conversion_absoluteWidth="24dp" />
 
     <ImageButton
         android:id="@+id/btnOk"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_check_black_50dp"
-        android:tint="@color/colorWhite"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_conversion_absoluteHeight="50dp"
-        tools:layout_conversion_absoluteWidth="50dp"
-        tools:layout_conversion_absoluteX="155dp"
-        tools:layout_conversion_absoluteY="230dp"
-        app:layout_constraintTop_toTopOf="@+id/topRelative"
-        android:layout_marginTop="4dp" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
+        android:src="@drawable/ic_check_white_24dp"
+        android:tint="@android:color/white"
+        app:layout_constraintRight_toRightOf="@+id/topRelative"
+        app:layout_constraintTop_toTopOf="@+id/topRelative" />
 
     <ImageButton
         android:id="@+id/btnFilter"

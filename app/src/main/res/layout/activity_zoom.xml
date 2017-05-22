@@ -37,51 +37,42 @@
 
     <ImageButton
         android:id="@+id/btnBack"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
         android:src="@drawable/ic_arrow_back_white_24dp"
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:clickable="false"
-        tools:layout_conversion_absoluteHeight="24dp"
-        tools:layout_conversion_absoluteWidth="24dp"
-        tools:layout_conversion_absoluteX="16dp"
-        tools:layout_conversion_absoluteY="28dp" />
+        tools:clickable="false" />
 
     <ImageButton
         android:id="@+id/btnDownload"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
         android:src="@drawable/ic_file_download_24dp"
         android:visibility="invisible"
         app:layout_constraintLeft_toRightOf="@+id/btnBack"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_conversion_absoluteHeight="24dp"
-        tools:layout_conversion_absoluteWidth="24dp"
-        tools:clickable="false"
-        android:layout_marginStart="24dp" />
+        tools:clickable="false" />
 
     <ImageButton
         android:id="@+id/btnMap"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_style"
         android:src="@drawable/ic_location_on_24dp"
         android:visibility="invisible"
         app:layout_constraintLeft_toRightOf="@+id/btnDownload"
         app:layout_constraintTop_toTopOf="parent"
-        tools:clickable="false"
-        android:layout_marginStart="24dp" />
+        tools:clickable="false" />
 
 
 </android.support.constraint.ConstraintLayout>
