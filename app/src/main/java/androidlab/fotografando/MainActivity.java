@@ -149,7 +149,7 @@ public class MainActivity extends Activity {
         SparseIntArray expirationMap = new SparseIntArray();
         SparseArray<ArrayList<Integer>> picturesMap = new SparseArray<>();
         List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
-        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE_CAMERA,this);
+        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE_CAMERA);
         task.execute();
 
         /************************* THIRD TAB ********************************/
