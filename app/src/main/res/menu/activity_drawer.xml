@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile_grey_24dp"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/nav_photos"
+            android:icon="@drawable/ic_photos_grey_24dp"
+            android:title="@string/active_photos" />
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_notifications_grey_24dp"
+            android:title="@string/notifications" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout_grey_24dp"
+            android:title="@string/logout" />
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings_24dp"
+                android:title="@string/settings" />
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_help_24dp"
+                android:title="@string/help_amp_feedback" />
+    </group>
+</menu>

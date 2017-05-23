@@ -1,14 +1,17 @@
 package androidlab.fotografando;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Gravity;
@@ -25,28 +28,28 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import android.widget.TextView;
 
-import androidlab.DB.DAO.UtenteDAO;
-import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
 import androidlab.fotografando.assets.InsertThePhoto;
 import androidlab.fotografando.assets.LoadChallengeSessions;
-import androidlab.fotografando.assets.LoadSessionsExpiration;
 
 public class MainActivity extends Activity {
+
     private int REQUEST_CODE_CAMERA = 0;
-    private String[] mDrawerItems;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private View rootLayout;
+
+
+    private Toolbar mToolbar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,56 +61,83 @@ public class MainActivity extends Activity {
             window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
         }
 
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle("Challenges");
+
         //ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(getResources().getString(R.string.app_name), icon, R.color.materialOrange400);
         //this.setTaskDescription(taskDescription);
 
-        mDrawerItems = new String[]{"Profile", "Active Photos", "Logout", "Settings", "Help & Feedback"};
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
 
-        // TODO: HEADER LISTVIEW
-        mDrawerList.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, mDrawerItems));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-
-        ImageButton btnDrawer = (ImageButton) findViewById(R.id.btnDrawer);
-        btnDrawer.setOnClickListener(new View.OnClickListener() {
+        NavigationView mDrawerView = (NavigationView) findViewById(R.id.nav_drawer);
+        mDrawerView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                mDrawerLayout.openDrawer(Gravity.START);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                // Handle navigation view item clicks here.
+                int id = item.getItemId();
+
+                if (id == R.id.nav_profile) {
+                    Intent intent = new Intent(MainActivity.this, MyProfileActivity.class);
+                    startActivity(new Intent(intent));
+                } else if (id == R.id.nav_photos) {
+
+                } else if (id == R.id.nav_notifications) {
+
+                } else if (id == R.id.nav_logout) {
+
+                } else if (id == R.id.nav_settings) {
+
+                } else if (id == R.id.nav_help) {
+
+                }
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
             }
         });
 
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost); //Tabhost = tab manager
+        final TabHost tabHost = (TabHost) findViewById(R.id.tabHost); //Tabhost = tab manager
         tabHost.setup();    //Inizializzo
 
         //Tab 1
         TabHost.TabSpec spec = tabHost.newTabSpec("Challenges Tab");    //Una spec è una componente del tabhost, la creo con un identificatore
         spec.setContent(R.id.tabChallenges);    //Setto la mia tab. Volendo potrei impostare una nuova INTENT invece di una tab
-        spec.setIndicator("", getResources().getDrawable(R.drawable.ic_check_box_black_24dp)); //Dichiaro l'icona
+        spec.setIndicator("", getResources().getDrawable(R.drawable.challenges_tab_selector)); //Dichiaro l'icona
         tabHost.addTab(spec);   //aggiungo la spec al mio host
         //Tab 1
         spec = tabHost.newTabSpec("Rating Tab");
         spec.setContent(R.id.tabRating);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.ic_star_black_24dp));
+        spec.setIndicator("", getResources().getDrawable(R.drawable.rating_tab_selector));
         tabHost.addTab(spec);
         //Tab 1
         spec = tabHost.newTabSpec("Ranking Tab");
         spec.setContent(R.id.tabRanking);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.ic_leaderboard_24dp));
+        spec.setIndicator("", getResources().getDrawable(R.drawable.leaderboards_tab_selector));
         tabHost.addTab(spec);
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                switch (tabId){
+                    case "Challenges Tab":
+                        mToolbar.setTitle("Challenges");
+                        break;
+                    case "Rating Tab":
+                        mToolbar.setTitle("Rate");
+                        break;
+                    case "Ranking Tab":
+                        mToolbar.setTitle("Leaderboards");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         /********************* FIRST TAB ************************************/
 
@@ -133,20 +163,17 @@ public class MainActivity extends Activity {
         });
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 
-    private void selectItem(int position) {
-        // Highlight the selected item, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
-
-    @Override
+    /*@Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
         //boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
@@ -154,29 +181,8 @@ public class MainActivity extends Activity {
         ConstraintLayout cLayout = (ConstraintLayout) findViewById(R.id.constraint_layout_bar);
         cLayout.setAlpha(0.75f);
         return super.onPrepareOptionsMenu(menu);
-    }
+    }*/
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode ==  REQUEST_CODE_CAMERA){
