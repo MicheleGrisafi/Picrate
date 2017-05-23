@@ -30,9 +30,9 @@ public class MySqlDatabase {
 
 
     private static final String url_name = "http://mgdeveloper.com/fotografando";
-    private static final String fotoUtente_folder = "/picturesUsers";//hoia
+    private static final String fotoUtente_folder = "/picturesUsers";
 
-    private static final String urlUtente = "/utente"; //hhahahahhacesesefe
+    private static final String urlUtente = "/utente";
     private static final String urlFoto = "/foto";
     private static final String urlSession = "/session";
     private static final String urlRating = "/rating";
@@ -171,14 +171,14 @@ public class MySqlDatabase {
     /********************** OPERAZIONI FOTO ************************/
     public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
         String reponse_data = "";
-        httpURLConnection = null;
+        HttpURLConnection connection = null;
         DataOutputStream dos = null;
         DataInputStream inStream = null;
 
         String existingFileName = file_path;
         String lineEnd = "\r\n";
         String twoHyphens = "--";
-        String boundary =  "*****";
+        String boundary =  "*****" + Long.toString(System.currentTimeMillis()) + "*****";
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         int maxBufferSize = 1*1024*1024;
@@ -186,51 +186,45 @@ public class MySqlDatabase {
             //------------------ CLIENT REQUEST
             File filetoupload = new File(existingFileName);
             FileInputStream fileInputStream = new FileInputStream(filetoupload.getPath());
-            // open a URL connection to the Servlet
             URL url = getUrl(INSERT_PHOTO);
-            // Open a HTTP connection to the URL
-            httpURLConnection = (HttpURLConnection) url.openConnection();
-            // Allow Inputs
-            httpURLConnection.setDoInput(true);
-            // Allow Outputs
-            httpURLConnection.setDoOutput(true);
-            // Don't use a cached copy.
-            httpURLConnection.setUseCaches(false);
-            // Use a post method.
-            httpURLConnection.setRequestMethod("POST");
-            httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
-            httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
-            dos = new DataOutputStream( httpURLConnection.getOutputStream() );
+            connection  = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("User-Agent", "Android Multipart HTTP Client 1.0");
+            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+            dos = new DataOutputStream( connection.getOutputStream() );
+
 
             dos.writeBytes(twoHyphens + boundary + lineEnd);
             dos.writeBytes("Content-Disposition: form-data; name=\"owner\""+ lineEnd);
             dos.writeBytes(lineEnd);
             dos.writeBytes(owner);
-            dos.writeBytes(lineEnd);
             dos.writeBytes(twoHyphens + boundary + lineEnd);
             dos.writeBytes("Content-Disposition: form-data; name=\"challenge\""+ lineEnd);
             dos.writeBytes(lineEnd);
             dos.writeBytes(session);
-            dos.writeBytes(lineEnd);
-            double tmp = 0;
-            if (latitudine != Double.toString(tmp)){
+            /*
+            if (latitudine != "0.0"){
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"latitudine\""+ lineEnd);
                 dos.writeBytes(lineEnd);
                 dos.writeBytes(latitudine);
-                dos.writeBytes(lineEnd);
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"longitudine\""+ lineEnd);
                 dos.writeBytes(lineEnd);
                 dos.writeBytes(longitudine);
-                dos.writeBytes(lineEnd);
-            }
-
-
+            }*/
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\""+filetoupload.getName()+"\"" + lineEnd); // uploaded_file_name is the Name of the File to be uploaded
-
+            dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\""+filetoupload.getName()+"\"" + lineEnd);
+            dos.writeBytes("Content-Type: image/jpeg" + lineEnd);
+            dos.writeBytes("Content-Transfer-Encoding: binary" + lineEnd);
             dos.writeBytes(lineEnd);
+
+
+
 
 
             bytesAvailable = fileInputStream.available();
@@ -257,7 +251,7 @@ public class MySqlDatabase {
         }
         //------------------ read the SERVER RESPONSE
         try {
-            inputStream = httpURLConnection.getInputStream();
+            inputStream = connection.getInputStream();
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
             String line;
             while((line = bufferedReader.readLine()) != null){
@@ -265,11 +259,12 @@ public class MySqlDatabase {
             }
             bufferedReader.close();
             inputStream.close();
-            httpURLConnection.disconnect();
         }
         catch (IOException e){
             e.printStackTrace();
         }
+
+        connection.disconnect();
         return reponse_data;
     }
     public String getPhoto(String utente, String session){

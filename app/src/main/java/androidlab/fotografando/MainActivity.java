@@ -1,6 +1,7 @@
 package androidlab.fotografando;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -20,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
@@ -31,18 +33,20 @@ import java.util.Map;
 import androidlab.DB.DAO.UtenteDAO;
 import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
+import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.InsertThePhoto;
 import androidlab.fotografando.assets.LoadChallengeSessions;
 import androidlab.fotografando.assets.LoadSessionsExpiration;
 
 public class MainActivity extends Activity {
-    private int REQUEST_CODE = 0;
+    private int REQUEST_CODE_CAMERA = 0;
     private String[] mDrawerItems;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
+    private View rootLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,9 @@ public class MainActivity extends Activity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
         }
+
+        //ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(getResources().getString(R.string.app_name), icon, R.color.materialOrange400);
+        //this.setTaskDescription(taskDescription);
 
         mDrawerItems = new String[]{"Profile", "Active Photos", "Logout", "Settings", "Help & Feedback"};
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -104,23 +111,15 @@ public class MainActivity extends Activity {
 
         /********************* FIRST TAB ************************************/
 
-        final Intent openCamera = new Intent(this,cameraActivity.class);
-        /*Button btn2 = (Button) findViewById(R.id.button2);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(openCamera);
-            }
-        });
-        */
+
         Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",0,0);
         AppInfo.updateUtente(michele,true);
 
 
-        SparseArray<ArrayList<Integer>> picturesMap = new SparseArray<>();
         SparseIntArray expirationMap = new SparseIntArray();
+        SparseArray<ArrayList<Integer>> picturesMap = new SparseArray<>();
         List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
-        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE,this);
+        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE_CAMERA,this);
         task.execute();
 
         /************************* THIRD TAB ********************************/
@@ -180,11 +179,15 @@ public class MainActivity extends Activity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode ==  REQUEST_CODE){
-            switch (requestCode){
+        if(requestCode ==  REQUEST_CODE_CAMERA){
+            switch (resultCode){
                 case 0:
                     break;
                 case 1:
+                    Photo foto = new Photo(AppInfo.getUtente().getId(),data.getIntExtra("sessionID",0));
+                    InsertThePhoto insertThePhoto = new InsertThePhoto(foto,data.getStringExtra("fileName"),
+                            this,(ImageView) findViewById(data.getIntExtra("imageView",0)));
+                    insertThePhoto.execute();
 
                     break;
             }
