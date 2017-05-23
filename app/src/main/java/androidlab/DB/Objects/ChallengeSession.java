@@ -1,6 +1,8 @@
 package androidlab.DB.Objects;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.net.URL;
@@ -72,4 +74,6 @@ public class ChallengeSession extends Challenge implements Comparable<ChallengeS
         }
         return res;
     }
+
+
 }

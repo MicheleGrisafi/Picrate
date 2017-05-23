@@ -56,7 +56,6 @@ public class checkPhotoActivity extends Activity {
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                insertPhoto();
                 setResult(1,outIntent);
                 freeResources();
                 finish();
@@ -130,15 +129,6 @@ public class checkPhotoActivity extends Activity {
     private void freeResources(){
         imageBitmap.recycle();
         imageBitmap = null;
-    }
-    private void insertPhoto(){
-        Utente user = AppInfo.getUtente();
-        ChallengeSession session = new ChallengeSession(inIntent.getExtras().getInt("session"),(Integer)inIntent.getExtras().getInt("challenge"));
-        Photo foto = new Photo(user,session);
-        String fileName = inIntent.getExtras().get("fileName").toString();
-        InsertThePhoto insert = new InsertThePhoto(foto,fileName,this);
-        insert.execute();
-        outIntent.putExtra("foto",foto);
     }
 }
 

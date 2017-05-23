@@ -1,5 +1,6 @@
 
-USE mgdevelo97522;
+CREATE DATABASE foto;
+USE foto;
 CREATE TABLE Utente(
 	IDUser			INT NOT NULL AUTO_INCREMENT,
 	username		VARCHAR(20) NULL,

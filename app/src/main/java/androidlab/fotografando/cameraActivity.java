@@ -66,7 +66,7 @@ public class cameraActivity extends Activity {
     private Intent inIntent;
     private Intent outIntent;
     private Intent checkPhotoIntent;
-    private int sessionID;
+
 
     private RelativeLayout topOverlay;
     private RelativeLayout bottomOverlay;
@@ -198,11 +198,8 @@ public class cameraActivity extends Activity {
                         bitmap.getWidth(),matrix,true
                 );
             }
-
-
             bitmap.recycle();
             bitmap = null;
-
             FileOutputStream out = null;
             try {
                 out = new FileOutputStream(mPhotoFileName);
@@ -223,24 +220,6 @@ public class cameraActivity extends Activity {
             cropped = null;
             checkPhotoIntent.putExtra("fileName",mPhotoFileName);
             startActivityForResult(checkPhotoIntent,REQUEST_CODE);
-            //fine
-            /*
-            FileOutputStream fileOutputStream = null;
-            try {
-                fileOutputStream = new FileOutputStream(mPhotoFileName);
-                fileOutputStream.write(bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }finally{
-                mImage.close();
-                if(fileOutputStream != null) {
-                    try {
-                        fileOutputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }*/
         }
     }
 
@@ -304,7 +283,6 @@ public class cameraActivity extends Activity {
         checkPhotoIntent = new Intent(this,checkPhotoActivity.class);
         inIntent = getIntent();
         outIntent = new Intent();
-        sessionID = inIntent.getIntExtra("session",0);
 
         mTextureView = (TextureView)findViewById(R.id.textureView2);
         /*mTextureView.setOnClickListener(new View.OnClickListener() {
@@ -403,12 +381,12 @@ public class cameraActivity extends Activity {
                 }
                 else
                     Toast.makeText(this, R.string.deletingLocalFileError, Toast.LENGTH_LONG).show();
+
                 break;
             case 1:
-                Photo foto = data.getExtras().getParcelable("image");
-                InsertThePhoto insertThePhoto = new InsertThePhoto(foto,mPhotoFileName,this);
-                outIntent.putExtra("image",foto);
-                outIntent.putExtra("session",sessionID);
+                outIntent.putExtra("imageView",inIntent.getIntExtra("imageView",0));
+                outIntent.putExtra("fileName",mPhotoFileName);
+                outIntent.putExtra("sessionID",inIntent.getIntExtra("sessionID",0));
                 setResult(1,outIntent);
                 closeCamera();
                 finish();

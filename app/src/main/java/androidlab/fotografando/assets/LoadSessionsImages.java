@@ -87,13 +87,10 @@ public class LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<ArrayLis
             for (int i = 0; i<tags.length;i++){
                 if (!tags[i]){
                     ImageView image = (ImageView) layoutRoot.findViewById(picturesMap.get(session.getIDSession()).get(i));
-                    image.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context,cameraActivity.class);
-                            activity.startActivityForResult(intent,requestCode);
-                        }
-                    });
+                    Intent intent = new Intent(context,cameraActivity.class);
+                    intent.putExtra("imageView",picturesMap.get(session.getIDSession()).get(i));
+                    intent.putExtra("sessionID",session.getIDSession());
+                    image.setOnClickListener(new cameraOnClickListener(intent,requestCode,(Activity)context));
                 }else {
                     ImageView image = (ImageView) layoutRoot.findViewById(picturesMap.get(session.getIDSession()).get(i));
                     image.setOnClickListener(null);
