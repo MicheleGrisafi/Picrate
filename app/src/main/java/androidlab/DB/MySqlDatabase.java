@@ -21,6 +21,12 @@ import java.nio.DoubleBuffer;
 
 import androidlab.DB.DAO.ChallengeDAO;
 import androidlab.DB.DAO.ChallengeSessionDAO;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by miki4 on 07/05/2017.
@@ -29,7 +35,7 @@ import androidlab.DB.DAO.ChallengeSessionDAO;
 public class MySqlDatabase {
 
 
-    private static final String url_name = "http://mgdeveloper.com/fotografando";
+    private static final String url_name = "http://fotografandoapp.altervista.org";
     private static final String fotoUtente_folder = "/picturesUsers";
 
     private static final String urlUtente = "/utente";
@@ -169,7 +175,7 @@ public class MySqlDatabase {
     }
 
     /********************** OPERAZIONI FOTO ************************/
-    public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
+   /* public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
         String reponse_data = "";
         HttpURLConnection connection = null;
         DataOutputStream dos = null;
@@ -206,7 +212,7 @@ public class MySqlDatabase {
             dos.writeBytes("Content-Disposition: form-data; name=\"challenge\""+ lineEnd);
             dos.writeBytes(lineEnd);
             dos.writeBytes(session);
-            /*
+
             if (latitudine != "0.0"){
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"latitudine\""+ lineEnd);
@@ -216,7 +222,7 @@ public class MySqlDatabase {
                 dos.writeBytes("Content-Disposition: form-data; name=\"longitudine\""+ lineEnd);
                 dos.writeBytes(lineEnd);
                 dos.writeBytes(longitudine);
-            }*/
+            }
             dos.writeBytes(twoHyphens + boundary + lineEnd);
             dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\""+filetoupload.getName()+"\"" + lineEnd);
             dos.writeBytes("Content-Type: image/jpeg" + lineEnd);
@@ -266,7 +272,7 @@ public class MySqlDatabase {
 
         connection.disconnect();
         return reponse_data;
-    }
+    }*/
     public String getPhoto(String utente, String session){
         data="";
         try {
@@ -388,5 +394,41 @@ public class MySqlDatabase {
             e.printStackTrace();
         }
         return url;
+    }
+
+    public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
+        File image = new File(file_path);
+        String result = null;
+        try {
+            final MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
+            RequestBody req = null;
+            if(latitudine != "0.0"){
+                req = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("owner", owner)
+                        .addFormDataPart("challenge", session)
+                        .addFormDataPart("latitudine", latitudine)
+                        .addFormDataPart("longitudine", longitudine)
+                        .addFormDataPart("image","profile.jpg", RequestBody.create(MEDIA_TYPE_JPG, image))
+                        .build();
+            }else{
+                 req = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("owner", owner)
+                        .addFormDataPart("challenge", session)
+                        .addFormDataPart("image","profile.png", RequestBody.create(MEDIA_TYPE_JPG, image))
+                        .build();
+            }
+
+            Request request = new Request.Builder()
+                    .url(getUrl(INSERT_PHOTO))
+                    .post(req)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            result=  response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

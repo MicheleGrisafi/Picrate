@@ -75,7 +75,8 @@ public class LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<ArrayLis
             if(lista != null) {
                 for (int i = 0; i < lista.size(); i++){
                     foto = lista.get(i);
-                    ImageView image = (ImageView) layoutRoot.findViewById(picturesMap.get(session.getIDSession()).get(i));
+                    ArrayList<Integer> tmp = picturesMap.get(session.getIDSession());
+                    ImageView image = (ImageView) layoutRoot.findViewById(tmp.get(i));
                     if (foto != null) {
                         Glide.with(context)
                                 .load(foto.getImage())
