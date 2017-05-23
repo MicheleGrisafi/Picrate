@@ -28,10 +28,12 @@ public class Photo implements Parcelable{
         id = ownerID = sessionID = 0;
         image = null;
     }
+    public Photo(int ownerID, int sessionID){
+        this.ownerID = ownerID;
+        this.sessionID = sessionID;
+    }
     public Photo(Utente user,ChallengeSession session){
-        this();
-        ownerID = user.getId();
-        sessionID = session.getIDSession();
+        this(user.getId(),session.getIDSession());
     }
     public Photo( double longitudine, double latitudine, Utente user,ChallengeSession session, URL image){
         this(user,session);
@@ -84,7 +86,12 @@ public class Photo implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeInt(this.id);
+        dest.writeInt(this.ownerID);
+        dest.writeInt(this.sessionID);
+        dest.writeString(this.image.toString());
+        dest.writeDouble(latitudine);
+        dest.writeDouble(longitudine);
     }
     public static final Parcelable.Creator<Photo> CREATOR = new Parcelable.Creator<Photo>() {
         public Photo createFromParcel(Parcel in) {

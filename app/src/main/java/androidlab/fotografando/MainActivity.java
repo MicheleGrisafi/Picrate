@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
@@ -35,13 +36,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidlab.DB.Objects.ChallengeSession;
+import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.InsertThePhoto;
 import androidlab.fotografando.assets.LoadChallengeSessions;
 
 public class MainActivity extends Activity {
-    private int REQUEST_CODE = 0;
+
+    private int REQUEST_CODE_CAMERA = 0;
+
+
     private Toolbar mToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,23 +141,15 @@ public class MainActivity extends Activity {
 
         /********************* FIRST TAB ************************************/
 
-        final Intent openCamera = new Intent(this,cameraActivity.class);
-        /*Button btn2 = (Button) findViewById(R.id.button2);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(openCamera);
-            }
-        });
-        */
+
         Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",0,0);
         AppInfo.updateUtente(michele,true);
 
 
-        SparseArray<ArrayList<Integer>> picturesMap = new SparseArray<>();
         SparseIntArray expirationMap = new SparseIntArray();
+        SparseArray<ArrayList<Integer>> picturesMap = new SparseArray<>();
         List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
-        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE,this);
+        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE_CAMERA,this);
         task.execute();
 
         /************************* THIRD TAB ********************************/
@@ -186,11 +185,15 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode ==  REQUEST_CODE){
-            switch (requestCode){
+        if(requestCode ==  REQUEST_CODE_CAMERA){
+            switch (resultCode){
                 case 0:
                     break;
                 case 1:
+                    Photo foto = new Photo(AppInfo.getUtente().getId(),data.getIntExtra("sessionID",0));
+                    InsertThePhoto insertThePhoto = new InsertThePhoto(foto,data.getStringExtra("fileName"),
+                            this,(ImageView) findViewById(data.getIntExtra("imageView",0)));
+                    insertThePhoto.execute();
 
                     break;
             }
