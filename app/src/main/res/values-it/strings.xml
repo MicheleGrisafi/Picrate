@@ -20,4 +20,10 @@
     <string name="expiresIn">Scade tra:</string>
     <string name="day_abbre">g</string>
     <string name="hour_abbre">o</string>
+    <string name="profile">Profilo</string>
+    <string name="active_photos">Foto Attive</string>
+    <string name="notifications">Notifiche</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Impostazioni</string>
+    <string name="help_amp_feedback"><![CDATA[Aiuto & Feedback]]></string>
 </resources>
