@@ -38,9 +38,6 @@ public class InsertThePhoto extends AsyncTask<Void, Void, Photo> {
         photoDAO.open();
         fotografia = photoDAO.insertPhoto(fotografia,nameFile);
         photoDAO.close();
-        if (fotografia != null){
-            Glide.with(context).load(fotografia.getImage()).into(imageView);
-        }
         return fotografia;
     }
 
@@ -51,7 +48,8 @@ public class InsertThePhoto extends AsyncTask<Void, Void, Photo> {
 
     @Override
     protected void onPostExecute(Photo photo) {
-        if(photo == null) {
+        if(photo != null && fotografia != null) {
+            Glide.with(context).load(fotografia.getImage()).into(imageView);
             File file = new File(nameFile);
             boolean deleted = file.delete();
         }

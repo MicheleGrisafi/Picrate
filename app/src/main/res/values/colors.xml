@@ -4,7 +4,7 @@
     <color name="colorDarkGray">#424242</color>
     <color name="colorRed">#d50000</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorLightGray">#adadad</color>
+    <color name="colorLightGray">#F0F0F0</color>
     <color name="materialOrange400">#ff7043</color>
     <color name="materialOrange600">#f4511e</color>
     <color name="materialRed500">#F44336</color>
@@ -18,5 +18,7 @@
     <color name="materialTeal500">#009688</color>
     <color name="materialGreen500">#4CAF50</color>
     <color name="materialYellow500">#FFEB3B</color>
+    <color name="materialOrange900">#BF360C</color>
+    <color name="materialGrey600">#757575</color>
     <!-- TODO: AGGIUNGERE GLI ALTRI COLORI -->
 </resources>
