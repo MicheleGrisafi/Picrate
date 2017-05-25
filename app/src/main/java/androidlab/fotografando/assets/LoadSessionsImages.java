@@ -3,7 +3,10 @@ package androidlab.fotografando.assets;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.util.SparseArray;
 import android.view.View;
@@ -22,6 +25,7 @@ import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.MainActivity;
+import androidlab.fotografando.R;
 import androidlab.fotografando.cameraActivity;
 
 /**
@@ -29,23 +33,24 @@ import androidlab.fotografando.cameraActivity;
  */
 
 public class LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<ArrayList<Photo>>> {
+
     private List<ChallengeSession> sessionList;
+    //List containing all the imageViews' ids: at picturesMap.get(i) there is the list of avaible pictures, expressed as an array of ids
+    private SparseArray<ArrayList<Integer>> picturesMap;
+
     private Context context;
     private View layoutRoot;
-    private SparseArray<ArrayList<Integer>> picturesMap;
     private Utente user;
     private PhotoDAO dao;
     private int requestCode;
-    private Activity activity;
 
-    public LoadSessionsImages(Context context, View layoutRoot, List<ChallengeSession> sessionList, SparseArray<ArrayList<Integer>> picturesMap,int requestCode,Activity activity){
+    public LoadSessionsImages(Context context, View layoutRoot, List<ChallengeSession> sessionList, SparseArray<ArrayList<Integer>> picturesMap,int requestCode){
         this.sessionList = sessionList;
         this.context = context;
         this.picturesMap = picturesMap;
         this.layoutRoot = layoutRoot;
         user = AppInfo.getUtente();
         this.requestCode = requestCode;
-        this.activity = activity;
     }
     @Override
     protected void onPreExecute() {
@@ -66,37 +71,46 @@ public class LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<ArrayLis
     @Override
     protected void onPostExecute(SparseArray<ArrayList<Photo>> allPics) {
         Photo foto = null;
-        List<Photo> lista;
-
-        boolean[] tags;
+        ArrayList<Photo> lista;
+        ArrayList<Integer> imageViewIds;
+        ImageView image;
+        Intent intent;
         for (ChallengeSession session:sessionList){
-            tags = new boolean[]{false,false};
             lista = allPics.get(session.getIDSession());
+            imageViewIds = picturesMap.get(session.getIDSession());
+
             if(lista != null) {
                 for (int i = 0; i < lista.size(); i++){
                     foto = lista.get(i);
-                    ImageView image = (ImageView) layoutRoot.findViewById(picturesMap.get(session.getIDSession()).get(i));
+
+                    image = (ImageView) layoutRoot.findViewById(imageViewIds.get(i));
                     if (foto != null) {
                         Glide.with(context)
                                 .load(foto.getImage())
                                 .into(image);
-                        tags[i] = true;
+
                     }
                 }
             }
-            for (int i = 0; i<tags.length;i++){
-                if (!tags[i]){
-                    ImageView image = (ImageView) layoutRoot.findViewById(picturesMap.get(session.getIDSession()).get(i));
-                    image.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context,cameraActivity.class);
-                            activity.startActivityForResult(intent,requestCode);
-                        }
-                    });
-                }else {
-                    ImageView image = (ImageView) layoutRoot.findViewById(picturesMap.get(session.getIDSession()).get(i));
+            ArrayList<Boolean> tags = new ArrayList<>(imageViewIds.size());
+            for (int i = 0; i<imageViewIds.size();i++){
+                image = (ImageView) layoutRoot.findViewById(picturesMap.get(session.getIDSession()).get(i));
+                if(lista != null && !lista.isEmpty()){
+                    //Zoom immagine!!!
                     image.setOnClickListener(null);
+                    lista.remove(0);
+                    tags.add(new Boolean(true));
+                }else{
+                    tags.add(new Boolean(false));
+                    if ( i> 0 && tags.get(i-1) == false){
+                        image.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRed));
+                        image.setOnClickListener(null);
+                    }else{
+                        intent = new Intent(context,cameraActivity.class);
+                        intent.putExtra("imageView",picturesMap.get(session.getIDSession()).get(i));
+                        intent.putExtra("sessionID",session.getIDSession());
+                        image.setOnClickListener(new cameraOnClickListener(intent,requestCode,(Activity)context));
+                    }
                 }
             }
         }

@@ -54,10 +54,10 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
     SparseArray<ArrayList<Integer>> pictureMap;
     SparseIntArray expirationMap;
     int requestCode;
-    Activity activity;
 
 
-    public LoadChallengeSessions(Context context, RelativeLayout layout, List<ChallengeSession> result, SparseArray<ArrayList<Integer>> pictureMap, SparseIntArray expirationMap, int requestCode,Activity activity){
+
+    public LoadChallengeSessions(Context context, RelativeLayout layout, List<ChallengeSession> result, SparseArray<ArrayList<Integer>> pictureMap, SparseIntArray expirationMap, int requestCode){
         this.context = context;
         this.result = result;
         this.layout = layout;
@@ -65,7 +65,6 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
         this.expirationMap = expirationMap;
         this.requestCode = requestCode;
         this.requestCode = requestCode;
-        this.activity = activity;
     }
     @Override
     protected List<ChallengeSession> doInBackground(Void... params) {
@@ -162,6 +161,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             picture.setId(View.generateViewId());
             picture.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
             ConstraintLayout.LayoutParams pictureParams = new ConstraintLayout.LayoutParams(AppInfo.dpToPixel(50),AppInfo.dpToPixel(50));
+            pictureParams.setMargins(AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),0);
             picture.setLayoutParams(pictureParams);
 
             /******************************** IMMAGINE **********************/
@@ -169,6 +169,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             picture2.setId(View.generateViewId());
             picture2.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
             ConstraintLayout.LayoutParams pictureParams2 = new ConstraintLayout.LayoutParams(AppInfo.dpToPixel(50),AppInfo.dpToPixel(50));
+            pictureParams2.setMargins(0,AppInfo.dpToPixel(8),AppInfo.dpToPixel(8),0);
             picture2.setLayoutParams(pictureParams2);
 
 
@@ -226,7 +227,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
         }
         LoadSessionsExpiration loadExp = new LoadSessionsExpiration(context,expirationMap,challengeSessions,layout);
         loadExp.execute();
-        LoadSessionsImages loadImages = new LoadSessionsImages(context,layout,challengeSessions,pictureMap,requestCode,activity);
+        LoadSessionsImages loadImages = new LoadSessionsImages(context,layout,challengeSessions,pictureMap,requestCode);
         loadImages.execute();
     }
 }
