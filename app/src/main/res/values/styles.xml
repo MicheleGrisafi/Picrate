@@ -12,5 +12,6 @@
 
     <style name="ToolbarTheme">
         <item name="android:textColorSecondary">@color/colorWhite</item>
+        <item name="android:buttonBarButtonStyle">@drawable/button_style</item>
     </style>
 </resources>

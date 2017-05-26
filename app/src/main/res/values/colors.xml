@@ -20,5 +20,6 @@
     <color name="materialYellow500">#FFEB3B</color>
     <color name="materialOrange900">#BF360C</color>
     <color name="materialGrey600">#757575</color>
+    <color name="materialGrey500">#9E9E9E</color>
     <!-- TODO: AGGIUNGERE GLI ALTRI COLORI -->
 </resources>

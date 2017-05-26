@@ -1,8 +1,14 @@
 package androidlab.fotografando;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,12 +50,10 @@ import androidlab.fotografando.assets.InsertThePhoto;
 import androidlab.fotografando.assets.LoadChallengeSessions;
 
 public class MainActivity extends Activity {
-
     private int REQUEST_CODE_CAMERA = 0;
-
-
     private Toolbar mToolbar;
-
+    private static Animator mCurrentAnimator;
+    private static int mShortAnimationDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +144,7 @@ public class MainActivity extends Activity {
             }
         });
 
+        // TODO: sostituire ImageButton con TouchHighlightImageButton
         /********************* FIRST TAB ************************************/
 
 
@@ -157,8 +163,9 @@ public class MainActivity extends Activity {
         btnZoom.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent zoomIntent = new Intent(MainActivity.this, ZoomActivity.class);
-                startActivity(new Intent(zoomIntent));
+                Intent photoZoomIntent = new Intent(MainActivity.this, ZoomActivity.class);
+                startActivity(new Intent(photoZoomIntent));
+                //overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
             }
         });
     }
@@ -199,4 +206,132 @@ public class MainActivity extends Activity {
             }
         }
     }
+/*
+    public void zoomImageFromThumb(View thumbView, int imageResId) {
+        if (mCurrentAnimator != null) {
+            mCurrentAnimator.cancel();
+        }
+
+        final ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
+        expandedImageView.setImageResource(imageResId);
+        final ImageButton btnBack = (ImageButton) findViewById(R.id.btnBack);
+        final ImageButton btnDownload = (ImageButton) findViewById(R.id.btnDownload);
+        final ImageButton btnMap = (ImageButton) findViewById(R.id.btnMap);
+
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+
+        thumbView.getGlobalVisibleRect(startBounds);
+        findViewById(R.id.container).getGlobalVisibleRect(finalBounds, globalOffset);
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
+        float startScale;
+        if ((float) finalBounds.width() / finalBounds.height()
+                > (float) startBounds.width() / startBounds.height()) {
+            startScale = (float) startBounds.height() / finalBounds.height();
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width()) / 2;
+            startBounds.left -= deltaWidth;
+            startBounds.right += deltaWidth;
+        } else {
+            startScale = (float) startBounds.width() / finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height()) / 2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom += deltaHeight;
+        }
+
+        thumbView.setAlpha(0f);
+        expandedImageView.setBackgroundColor(getResources().getColor(android.R.color.black));
+        expandedImageView.setVisibility(View.VISIBLE);
+        btnBack.setVisibility(View.VISIBLE);
+        btnDownload.setVisibility(View.VISIBLE);
+        btnMap.setVisibility(View.VISIBLE);
+        btnBack.setClickable(true);
+        btnDownload.setClickable(true);
+        btnMap.setClickable(true);
+        thumbView.setClickable(false);
+
+        expandedImageView.setPivotX(0f);
+        expandedImageView.setPivotY(0f);
+
+        AnimatorSet set = new AnimatorSet();
+        set
+                .play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left,
+                        finalBounds.left))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top,
+                        finalBounds.top))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X, startScale, 1f))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_Y, startScale, 1f));
+        set.setDuration(mShortAnimationDuration);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mCurrentAnimator = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                mCurrentAnimator = null;
+            }
+        });
+        set.start();
+        mCurrentAnimator = set;
+
+        final float startScaleFinal = startScale;
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCurrentAnimator != null) {
+                    mCurrentAnimator.cancel();
+                }
+
+                AnimatorSet set = new AnimatorSet();
+                expandedImageView.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                set
+                        .play(ObjectAnimator.ofFloat(expandedImageView, View.X, startBounds.left))
+                        .with(ObjectAnimator.ofFloat(expandedImageView, View.Y, startBounds.top))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView, View.SCALE_X, startScaleFinal))
+                        .with(ObjectAnimator
+                                .ofFloat(expandedImageView, View.SCALE_Y, startScaleFinal));
+                set.setDuration(mShortAnimationDuration);
+                set.setInterpolator(new DecelerateInterpolator());
+                set.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        thumbView.setAlpha(1f);
+                        expandedImageView.setVisibility(View.GONE);
+                        btnBack.setVisibility(View.GONE);
+                        btnDownload.setVisibility(View.GONE);
+                        btnMap.setVisibility(View.GONE);
+                        btnBack.setClickable(false);
+                        btnDownload.setClickable(false);
+                        btnMap.setClickable(false);
+                        thumbView.setClickable(true);
+                        mCurrentAnimator = null;
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        thumbView.setAlpha(1f);
+                        expandedImageView.setVisibility(View.GONE);
+                        btnBack.setVisibility(View.GONE);
+                        btnDownload.setVisibility(View.GONE);
+                        btnMap.setVisibility(View.GONE);
+                        btnBack.setClickable(false);
+                        btnDownload.setClickable(false);
+                        btnMap.setClickable(false);
+                        thumbView.setClickable(true);
+                        mCurrentAnimator = null;
+                    }
+                });
+                set.start();
+                mCurrentAnimator = set;
+            }
+        });
+    }*/
 }
