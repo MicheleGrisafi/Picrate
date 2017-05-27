@@ -70,6 +70,7 @@ public class LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<ArrayLis
 
     @Override
     protected void onPostExecute(SparseArray<ArrayList<Photo>> allPics) {
+        // TODO: provare a scaricare l'immagine bitmap in formato grande per implementare lo zoom
         Photo foto = null;
         ArrayList<Photo> lista;
         ArrayList<Integer> imageViewIds;
