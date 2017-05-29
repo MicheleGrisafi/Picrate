@@ -51,9 +51,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import androidlab.DB.Objects.Photo;
-import androidlab.fotografando.assets.InsertThePhoto;
-
 public class cameraActivity extends Activity {
 
     private static final int REQUEST_CODE = 0;

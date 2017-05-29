@@ -19,18 +19,18 @@ import com.bumptech.glide.request.target.SimpleTarget;
 public class MySimpleTarget<Bitmap> extends SimpleTarget<Bitmap> {
 
     private ConstraintLayout myTarget;
-    public MySimpleTarget() {
-        super();
-    }
 
     public MySimpleTarget(int width, int height) {
         super(width, height);
     }
 
     public MySimpleTarget(int width, int height, int target, View root) {
-        super(width, height);
+        this(width, height);
         myTarget = (ConstraintLayout) root.findViewById(target);
-
+    }
+    public MySimpleTarget(int width, int height, ConstraintLayout target) {
+        this(width, height);
+        myTarget = target;
     }
 
     @Override

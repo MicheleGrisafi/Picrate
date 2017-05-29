@@ -1,59 +1,43 @@
 package androidlab.fotografando;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TabHost;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.InsertThePhoto;
-import androidlab.fotografando.assets.LoadChallengeSessions;
+import androidlab.fotografando.assets.AsyncResponse;
+import androidlab.fotografando.assets.InsertThePhotoTask;
+import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
+import androidlab.fotografando.assets.sessionList.LoadSessionsTask;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AsyncResponse {
     private int REQUEST_CODE_CAMERA = 0;
     private Toolbar mToolbar;
     private static Animator mCurrentAnimator;
     private static int mShortAnimationDuration;
+    private ChallengeSessionAdapter challengeSessionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,12 +135,17 @@ public class MainActivity extends Activity {
         Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",0,0);
         AppInfo.updateUtente(michele,true);
 
-
+        /*
         SparseIntArray expirationMap = new SparseIntArray();
         SparseArray<ArrayList<Integer>> picturesMap = new SparseArray<>();
         List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
         LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE_CAMERA);
-        task.execute();
+        task.execute();*/
+
+        ListView listView = (ListView) findViewById(R.id.listViewSessions);
+        LoadSessionsTask loadSessionsTask = new LoadSessionsTask(this,listView,REQUEST_CODE_CAMERA);
+        loadSessionsTask.delegate = this;
+        loadSessionsTask.execute();
 
         /************************* THIRD TAB ********************************/
         Button btnZoom = (Button) findViewById(R.id.btnZoom);
@@ -198,13 +187,22 @@ public class MainActivity extends Activity {
                     break;
                 case 1:
                     Photo foto = new Photo(AppInfo.getUtente().getId(),data.getIntExtra("sessionID",0));
-                    InsertThePhoto insertThePhoto = new InsertThePhoto(foto,data.getStringExtra("fileName"),
-                            this,(ImageView) findViewById(data.getIntExtra("imageView",0)));
-                    insertThePhoto.execute();
+                    ArrayList<ImageView> imageViews = challengeSessionAdapter.getImageViews(data.getIntExtra("sessionID",0));
+                    //ImageView imageView = challengeSessionAdapter.getImageView(data.getIntExtra("sessionID",0),data.getIntExtra("imageView",0));
+                    /*InsertThePhotoTask InsertThePhotoTask = new InsertThePhotoTask(foto,data.getStringExtra("fileName"),
+                            this,(ImageView) findViewById(data.getIntExtra("imageView",0)));*/
+                    InsertThePhotoTask insertThePhotoTask = new InsertThePhotoTask
+                            (foto,data.getStringExtra("fileName"),this,imageViews,requestCode,challengeSessionAdapter.getSession(data.getIntExtra("sessionID",0)));
+                    insertThePhotoTask.execute();
 
                     break;
             }
         }
+    }
+
+    @Override
+    public void processFinish(ChallengeSessionAdapter output) {
+        challengeSessionAdapter = output;
     }
 /*
     public void zoomImageFromThumb(View thumbView, int imageResId) {
