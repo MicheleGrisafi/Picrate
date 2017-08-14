@@ -54,6 +54,7 @@ public class MySqlDatabase {
 
     private static final String urlInsertPhoto = "/insertPhoto.php";
     private static final String urlGetPhoto = "/getPhoto.php";
+    private static final String urlDeletePhoto = "/deletePhoto.php";
 
     private static final String urlGetSessions = "/getSessions.php";
 
@@ -75,6 +76,8 @@ public class MySqlDatabase {
     public static final int GET_DATE = 10;
     public static final int GET_PHOTO = 11;
     public static final int PHOTO_USER_FOLDER = 12;
+    public static final int DELETE_PHOTO = 13;
+
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
     BufferedWriter bufferedWriter;
@@ -283,7 +286,15 @@ public class MySqlDatabase {
         }
         return openConnection(data,GET_PHOTO);
     }
-
+    public String deletePhoto(String photoId){
+        data="";
+        try {
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(photoId,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,DELETE_PHOTO);
+    }
     /********************** OPERAZIONI SESSION ************************/
     public String getSessions(String stato){
         data = "";
@@ -384,6 +395,9 @@ public class MySqlDatabase {
                     break;
                 case GET_PHOTO:
                     url = new URL(url_name+urlFoto+urlGetPhoto);
+                    break;
+                case DELETE_PHOTO:
+                    url = new URL(url_name+urlFoto+urlDeletePhoto);
                     break;
                 case PHOTO_USER_FOLDER:
                     url = new URL(url_name+fotoUtente_folder);
