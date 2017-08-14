@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -21,14 +22,12 @@ import android.widget.ListView;
 import android.widget.TabHost;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
 import androidlab.fotografando.assets.AsyncResponse;
-import androidlab.fotografando.assets.InsertThePhotoTask;
+import androidlab.fotografando.assets.Camera.InsertThePhotoTask;
 import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
 import androidlab.fotografando.assets.sessionList.LoadSessionsTask;
 
@@ -38,6 +37,7 @@ public class MainActivity extends Activity implements AsyncResponse {
     private static Animator mCurrentAnimator;
     private static int mShortAnimationDuration;
     private ChallengeSessionAdapter challengeSessionAdapter;
+    private SwipeRefreshLayout swipeRefreshLayoutSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,13 +139,21 @@ public class MainActivity extends Activity implements AsyncResponse {
         SparseIntArray expirationMap = new SparseIntArray();
         SparseArray<ArrayList<Integer>> picturesMap = new SparseArray<>();
         List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
-        LoadChallengeSessions task = new LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE_CAMERA);
+        OLD_LoadChallengeSessions task = new OLD_LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE_CAMERA);
         task.execute();*/
-
-        ListView listView = (ListView) findViewById(R.id.listViewSessions);
+        //TODO Implementare zoom sulle foto delle challenge
+        final ListView listView = (ListView) findViewById(R.id.listViewSessions);
         LoadSessionsTask loadSessionsTask = new LoadSessionsTask(this,listView,REQUEST_CODE_CAMERA);
         loadSessionsTask.delegate = this;
         loadSessionsTask.execute();
+
+        swipeRefreshLayoutSession = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshSessions);
+        swipeRefreshLayoutSession.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                challengeSessionAdapter.updateList(swipeRefreshLayoutSession);
+            }
+        });
 
         /************************* THIRD TAB ********************************/
         Button btnZoom = (Button) findViewById(R.id.btnZoom);

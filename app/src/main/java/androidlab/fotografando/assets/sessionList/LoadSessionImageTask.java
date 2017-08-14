@@ -6,14 +6,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
-import android.util.SparseArray;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidlab.DB.DAO.PhotoDAO;
 import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
@@ -22,8 +19,8 @@ import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.cameraOnClickListener;
-import androidlab.fotografando.cameraActivity;
+import androidlab.fotografando.assets.Camera.cameraOnClickListener;
+import androidlab.fotografando.CameraActivity;
 
 /**
  * Created by miki4 on 29/05/2017.
@@ -94,7 +91,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                     imageView.setOnClickListener(null);
                 }else{
                     imageView.setBackgroundColor(Color.TRANSPARENT);
-                    intent = new Intent(context,cameraActivity.class);
+                    intent = new Intent(context,CameraActivity.class);
                     intent.putExtra("imageView",i);
                     intent.putExtra("sessionID",session.getIDSession());
                     imageView.setOnClickListener(new cameraOnClickListener(intent,requestCode,(Activity)context));

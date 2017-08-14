@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import androidlab.DB.Objects.ChallengeSession;
+import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AppInfo;
 
 /**
@@ -42,9 +43,12 @@ public class LoadSessionExpirationTask extends AsyncTask<Void,Void,Date> {
         if(diffHours >= 24) {
             tmp = (int) diffHours / 24;
             diffHours = (int)diffHours%24;
+            expiration.setText(R.string.expiresIn);
             expiration.setText(expiration.getText() + Integer.toString(tmp) + "d " + Long.toString(diffHours) + "h");
-        }else
+        }else {
+            expiration.setText(R.string.expiresIn);
             expiration.setText(expiration.getText() + Long.toString(diffHours) + "h");
+        }
     }
 
     private static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {

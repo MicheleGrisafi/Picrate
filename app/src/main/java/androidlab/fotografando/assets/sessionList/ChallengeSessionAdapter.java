@@ -3,6 +3,7 @@ package androidlab.fotografando.assets.sessionList;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class ChallengeSessionAdapter extends BaseAdapter {
     Context ctx;
     SparseArray<ArrayList<ImageView>> imageViewMap;
     int requestCode;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public ChallengeSessionAdapter(List<ChallengeSession> sessions, Context ctx,int requestCode) {
         this.sessions = sessions;
@@ -56,6 +58,23 @@ public class ChallengeSessionAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return 0;
     }
+    public void updateList(SwipeRefreshLayout swipeRefreshLayout){
+        //Esegue l'update della lista delle sessioni attraverso un'ulteriore task.
+        this.swipeRefreshLayout = swipeRefreshLayout;
+        UpdateSessionsTask updateSessionsTask = new UpdateSessionsTask(this);
+        updateSessionsTask.execute();
+    }
+    public void taskResponse(List<ChallengeSession> sessions){
+        //Riceve la nuova lista di challengeSessions dal task chiamato in update, e procede con la segnalazione del cambiamento.
+        this.sessions = sessions;
+        notifyDataSetChanged();
+    }
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
 
     static class ViewHolder{
         private TextView data,expiration,title,description;
