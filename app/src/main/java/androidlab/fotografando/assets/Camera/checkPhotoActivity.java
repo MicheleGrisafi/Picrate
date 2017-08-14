@@ -1,4 +1,4 @@
-package androidlab.fotografando;
+package androidlab.fotografando.assets.Camera;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.File;
+
+import androidlab.fotografando.R;
 
 public class checkPhotoActivity extends Activity {
     private ImageView mImageView;

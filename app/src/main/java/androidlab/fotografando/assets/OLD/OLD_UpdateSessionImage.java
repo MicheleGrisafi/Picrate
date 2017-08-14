@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets;
+package androidlab.fotografando.assets.OLD;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -12,11 +12,11 @@ import androidlab.DB.Objects.Photo;
  * Created by miki4 on 19/05/2017.
  */
 
-public class UpdateSessionImage extends AsyncTask<Void,Void,Void> {
+public class OLD_UpdateSessionImage extends AsyncTask<Void,Void,Void> {
     private Photo foto;
     private ImageView imageView;
     private Context context;
-    public UpdateSessionImage(Photo foto, ImageView imageView, Context context){
+    public OLD_UpdateSessionImage(Photo foto, ImageView imageView, Context context){
         this.foto = foto;
         this.imageView = imageView;
         this.context = context;

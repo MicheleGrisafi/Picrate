@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets;
+package androidlab.fotografando.assets.OLD;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -27,12 +27,15 @@ import androidlab.DB.DAO.ChallengeSessionDAO;
 import androidlab.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.fotografando.R;
+import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.MyApp;
+import androidlab.fotografando.assets.MySimpleTarget;
 
 /**
  * Created by Michele Grisafi on 14/05/2017.
  */
 
-public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSession>> {
+public class OLD_LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSession>> {
     Context context;
     RelativeLayout layout;
     List<ChallengeSession> result;
@@ -42,7 +45,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
 
 
 
-    public LoadChallengeSessions(Context context, RelativeLayout layout, List<ChallengeSession> result, SparseArray<ArrayList<Integer>> pictureMap, SparseIntArray expirationMap, int requestCode){
+    public OLD_LoadChallengeSessions(Context context, RelativeLayout layout, List<ChallengeSession> result, SparseArray<ArrayList<Integer>> pictureMap, SparseIntArray expirationMap, int requestCode){
         this.context = context;
         this.result = result;
         this.layout = layout;
@@ -210,9 +213,9 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).centerCrop().into(
                     new MySimpleTarget<Bitmap>(myWidth,myHeight,box.getId(),layout));
         }
-        LoadSessionsExpiration loadExp = new LoadSessionsExpiration(context,expirationMap,challengeSessions,layout);
+        OLD_LoadSessionsExpiration loadExp = new OLD_LoadSessionsExpiration(context,expirationMap,challengeSessions,layout);
         loadExp.execute();
-        LoadSessionsImages loadImages = new LoadSessionsImages(context,layout,challengeSessions,pictureMap,requestCode);
+        OLD_LoadSessionsImages loadImages = new OLD_LoadSessionsImages(context,layout,challengeSessions,pictureMap,requestCode);
         loadImages.execute();
     }
 }
