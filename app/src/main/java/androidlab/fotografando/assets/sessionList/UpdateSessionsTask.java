@@ -18,7 +18,7 @@ public class UpdateSessionsTask extends AsyncTask<Void,Void,List<ChallengeSessio
 
 
     private ChallengeSessionAdapter adapter;
-
+    private ChallengeSessionDAO sessionDAO;
 
     public UpdateSessionsTask( ChallengeSessionAdapter adapter){
         this.adapter = adapter;
@@ -26,7 +26,7 @@ public class UpdateSessionsTask extends AsyncTask<Void,Void,List<ChallengeSessio
 
     @Override
     protected List<ChallengeSession> doInBackground(Void... params) {
-        ChallengeSessionDAO sessionDAO = new ChallengeSessionDAO_DB_impl();
+        sessionDAO = new ChallengeSessionDAO_DB_impl();
         sessionDAO.open();
         List<ChallengeSession> result = sessionDAO.getActiveSessions();
         return result;
@@ -35,5 +35,6 @@ public class UpdateSessionsTask extends AsyncTask<Void,Void,List<ChallengeSessio
     @Override
     protected void onPostExecute(List<ChallengeSession> challengeSessions) {
         adapter.taskResponse(challengeSessions);
+        sessionDAO.close();
     }
 }

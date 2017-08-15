@@ -59,6 +59,7 @@ public class MySqlDatabase {
     private static final String urlGetSessions = "/getSessions.php";
 
     private static final String urlInsertRating = "/insertRating.php";
+    private static final String urlGetRatings = "/getRatings.php";
 
     private static final String urlGetDate = "/getDate.php";
 
@@ -77,6 +78,7 @@ public class MySqlDatabase {
     public static final int GET_PHOTO = 11;
     public static final int PHOTO_USER_FOLDER = 12;
     public static final int DELETE_PHOTO = 13;
+    public static final int GET_RATINGS = 14;
 
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
@@ -320,6 +322,15 @@ public class MySqlDatabase {
         return openConnection(data,INSERT_RATING);
     }
 
+    public String getRatings(String user){
+        data = "";
+        try {
+            data =  URLEncoder.encode("user","UTF-8")+"="+ URLEncoder.encode(user,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_RATINGS);
+    }
     /********************** OPERAZIONI UTILITIES ************************/
     public String getDate(){
         data = "";
@@ -389,6 +400,9 @@ public class MySqlDatabase {
                     break;
                 case INSERT_RATING:
                     url = new URL(url_name+urlRating+urlInsertRating);
+                    break;
+                case GET_RATINGS:
+                    url = new URL(url_name+urlRating+urlGetRatings);
                     break;
                 case GET_DATE:
                     url = new URL(url_name+urlUtilities+urlGetDate);

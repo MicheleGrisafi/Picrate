@@ -16,9 +16,10 @@ import androidlab.fotografando.assets.AsyncResponse;
  */
 
 public class LoadSessionsTask extends AsyncTask<Void,Void,List<ChallengeSession>> {
-    Context context;
-    ListView listView;
-    List<ChallengeSession> result;
+    private Context context;
+    private ListView listView;
+    private List<ChallengeSession> result;
+    private ChallengeSessionDAO sessionDAO;
     int requestCode;
 
     public AsyncResponse delegate = null;
@@ -31,7 +32,7 @@ public class LoadSessionsTask extends AsyncTask<Void,Void,List<ChallengeSession>
 
     @Override
     protected List<ChallengeSession> doInBackground(Void... params) {
-        ChallengeSessionDAO sessionDAO = new ChallengeSessionDAO_DB_impl();
+        sessionDAO = new ChallengeSessionDAO_DB_impl();
         sessionDAO.open();
         result = sessionDAO.getActiveSessions();
         return result;
@@ -42,6 +43,7 @@ public class LoadSessionsTask extends AsyncTask<Void,Void,List<ChallengeSession>
         ChallengeSessionAdapter myAdapter = new ChallengeSessionAdapter(challengeSessions,context,requestCode);
         listView.setAdapter(myAdapter);
         delegate.processFinish(myAdapter);
+        sessionDAO.close();
     }
 
 }

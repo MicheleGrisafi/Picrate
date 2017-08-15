@@ -98,7 +98,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                 }
             }
         }
-
+        dao.close();
     }
 }
 
