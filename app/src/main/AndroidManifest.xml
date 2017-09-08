@@ -41,8 +41,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".cameraActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".checkPhotoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".CameraActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".assets.Camera.checkPhotoActivity" android:screenOrientation="portrait"/>
         <activity android:name=".signup_activity" android:screenOrientation="portrait"></activity>
         <activity android:name=".MyProfileActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".MapsActivity" android:screenOrientation="portrait"></activity>

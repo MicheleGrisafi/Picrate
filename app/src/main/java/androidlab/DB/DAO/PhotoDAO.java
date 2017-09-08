@@ -17,7 +17,7 @@ public interface PhotoDAO {
     void close();
 
     Photo insertPhoto(Photo photo, String imagePath);
-    void deletePhoto(Photo photo);
+    boolean deletePhoto(Photo photo);
     ArrayList<Photo> getPhotosSession(Utente user, ChallengeSession session);
 
 

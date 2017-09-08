@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets;
+package androidlab.fotografando.assets.OLD;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,17 +15,18 @@ import java.util.concurrent.TimeUnit;
 
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.fotografando.R;
+import androidlab.fotografando.assets.AppInfo;
 
 /**
  * Created by miki4 on 15/05/2017.
  */
 
-public class LoadSessionsExpiration extends AsyncTask<Void,Void,Date> {
+public class OLD_LoadSessionsExpiration extends AsyncTask<Void,Void,Date> {
     Context context;
     List<ChallengeSession> listaSession;
     SparseIntArray expirationMap;
     View rootView;
-    public LoadSessionsExpiration(Context context, SparseIntArray expirationMap, List<ChallengeSession> listaSession, View rootView){
+    public OLD_LoadSessionsExpiration(Context context, SparseIntArray expirationMap, List<ChallengeSession> listaSession, View rootView){
         this.context = context;
         this.expirationMap = expirationMap;
         this.listaSession = listaSession;

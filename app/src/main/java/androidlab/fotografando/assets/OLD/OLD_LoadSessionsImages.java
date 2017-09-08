@@ -1,13 +1,10 @@
-package androidlab.fotografando.assets;
+package androidlab.fotografando.assets.OLD;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,24 +12,23 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import androidlab.DB.DAO.PhotoDAO;
 import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
-import androidlab.fotografando.MainActivity;
+import androidlab.fotografando.CameraActivity;
 import androidlab.fotografando.R;
-import androidlab.fotografando.cameraActivity;
+import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.Camera.cameraOnClickListener;
 
 /**
  * Created by miki4 on 15/05/2017.
  */
 
-public class LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<ArrayList<Photo>>> {
+public class OLD_LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<ArrayList<Photo>>> {
 
     private List<ChallengeSession> sessionList;
     //List containing all the imageViews' ids: at picturesMap.get(i) there is the list of avaible pictures, expressed as an array of ids
@@ -44,7 +40,7 @@ public class LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<ArrayLis
     private PhotoDAO dao;
     private int requestCode;
 
-    public LoadSessionsImages(Context context, View layoutRoot, List<ChallengeSession> sessionList, SparseArray<ArrayList<Integer>> picturesMap,int requestCode){
+    public OLD_LoadSessionsImages(Context context, View layoutRoot, List<ChallengeSession> sessionList, SparseArray<ArrayList<Integer>> picturesMap, int requestCode){
         this.sessionList = sessionList;
         this.context = context;
         this.picturesMap = picturesMap;
@@ -107,7 +103,7 @@ public class LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<ArrayLis
                         image.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRed));
                         image.setOnClickListener(null);
                     }else{
-                        intent = new Intent(context,cameraActivity.class);
+                        intent = new Intent(context,CameraActivity.class);
                         intent.putExtra("imageView",picturesMap.get(session.getIDSession()).get(i));
                         intent.putExtra("sessionID",session.getIDSession());
                         image.setOnClickListener(new cameraOnClickListener(intent,requestCode,(Activity)context));

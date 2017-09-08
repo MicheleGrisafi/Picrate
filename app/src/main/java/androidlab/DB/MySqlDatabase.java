@@ -54,10 +54,12 @@ public class MySqlDatabase {
 
     private static final String urlInsertPhoto = "/insertPhoto.php";
     private static final String urlGetPhoto = "/getPhoto.php";
+    private static final String urlDeletePhoto = "/deletePhoto.php";
 
     private static final String urlGetSessions = "/getSessions.php";
 
     private static final String urlInsertRating = "/insertRating.php";
+    private static final String urlGetRatings = "/getRatings.php";
 
     private static final String urlGetDate = "/getDate.php";
 
@@ -75,6 +77,9 @@ public class MySqlDatabase {
     public static final int GET_DATE = 10;
     public static final int GET_PHOTO = 11;
     public static final int PHOTO_USER_FOLDER = 12;
+    public static final int DELETE_PHOTO = 13;
+    public static final int GET_RATINGS = 14;
+
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
     BufferedWriter bufferedWriter;
@@ -283,7 +288,15 @@ public class MySqlDatabase {
         }
         return openConnection(data,GET_PHOTO);
     }
-
+    public String deletePhoto(String photoId){
+        data="";
+        try {
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(photoId,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,DELETE_PHOTO);
+    }
     /********************** OPERAZIONI SESSION ************************/
     public String getSessions(String stato){
         data = "";
@@ -309,6 +322,15 @@ public class MySqlDatabase {
         return openConnection(data,INSERT_RATING);
     }
 
+    public String getRatings(String user){
+        data = "";
+        try {
+            data =  URLEncoder.encode("user","UTF-8")+"="+ URLEncoder.encode(user,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_RATINGS);
+    }
     /********************** OPERAZIONI UTILITIES ************************/
     public String getDate(){
         data = "";
@@ -379,11 +401,17 @@ public class MySqlDatabase {
                 case INSERT_RATING:
                     url = new URL(url_name+urlRating+urlInsertRating);
                     break;
+                case GET_RATINGS:
+                    url = new URL(url_name+urlRating+urlGetRatings);
+                    break;
                 case GET_DATE:
                     url = new URL(url_name+urlUtilities+urlGetDate);
                     break;
                 case GET_PHOTO:
                     url = new URL(url_name+urlFoto+urlGetPhoto);
+                    break;
+                case DELETE_PHOTO:
+                    url = new URL(url_name+urlFoto+urlDeletePhoto);
                     break;
                 case PHOTO_USER_FOLDER:
                     url = new URL(url_name+fotoUtente_folder);

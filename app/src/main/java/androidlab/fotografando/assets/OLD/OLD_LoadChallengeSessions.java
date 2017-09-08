@@ -1,53 +1,41 @@
-package androidlab.fotografando.assets;
+package androidlab.fotografando.assets.OLD;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.CardView;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.google.android.gms.games.multiplayer.realtime.RealTimeMessage;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import androidlab.DB.DAO.ChallengeDAO;
 import androidlab.DB.DAO.ChallengeSessionDAO;
 import androidlab.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.fotografando.R;
-import androidlab.fotografando.cameraActivity;
+import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.MyApp;
+import androidlab.fotografando.assets.MySimpleTarget;
 
 /**
  * Created by Michele Grisafi on 14/05/2017.
  */
 
-public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSession>> {
+public class OLD_LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSession>> {
     Context context;
     RelativeLayout layout;
     List<ChallengeSession> result;
@@ -57,7 +45,7 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
 
 
 
-    public LoadChallengeSessions(Context context, RelativeLayout layout, List<ChallengeSession> result, SparseArray<ArrayList<Integer>> pictureMap, SparseIntArray expirationMap, int requestCode){
+    public OLD_LoadChallengeSessions(Context context, RelativeLayout layout, List<ChallengeSession> result, SparseArray<ArrayList<Integer>> pictureMap, SparseIntArray expirationMap, int requestCode){
         this.context = context;
         this.result = result;
         this.layout = layout;
@@ -225,9 +213,9 @@ public class LoadChallengeSessions extends AsyncTask<Void,Void,List<ChallengeSes
             Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).centerCrop().into(
                     new MySimpleTarget<Bitmap>(myWidth,myHeight,box.getId(),layout));
         }
-        LoadSessionsExpiration loadExp = new LoadSessionsExpiration(context,expirationMap,challengeSessions,layout);
+        OLD_LoadSessionsExpiration loadExp = new OLD_LoadSessionsExpiration(context,expirationMap,challengeSessions,layout);
         loadExp.execute();
-        LoadSessionsImages loadImages = new LoadSessionsImages(context,layout,challengeSessions,pictureMap,requestCode);
+        OLD_LoadSessionsImages loadImages = new OLD_LoadSessionsImages(context,layout,challengeSessions,pictureMap,requestCode);
         loadImages.execute();
     }
 }

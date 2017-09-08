@@ -1,11 +1,9 @@
-package androidlab.fotografando;
+package androidlab.fotografando.assets.Camera;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -16,16 +14,7 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import androidlab.DB.DAO.PhotoDAO;
-import androidlab.DB.DAO.UtenteDAO;
-import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
-import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
-import androidlab.DB.Objects.Challenge;
-import androidlab.DB.Objects.ChallengeSession;
-import androidlab.DB.Objects.Photo;
-import androidlab.DB.Objects.Utente;
-import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.InsertThePhoto;
+import androidlab.fotografando.R;
 
 public class checkPhotoActivity extends Activity {
     private ImageView mImageView;

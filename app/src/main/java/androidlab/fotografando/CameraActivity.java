@@ -51,10 +51,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import androidlab.DB.Objects.Photo;
-import androidlab.fotografando.assets.InsertThePhoto;
+import androidlab.fotografando.assets.Camera.checkPhotoActivity;
 
-public class cameraActivity extends Activity {
+public class CameraActivity extends Activity {
 
     private static final int REQUEST_CODE = 0;
     private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
@@ -103,14 +102,14 @@ public class cameraActivity extends Activity {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
-            Toast.makeText(cameraActivity.this, "cameraActivity opened", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CameraActivity.this, "CameraActivity opened", Toast.LENGTH_SHORT).show();
             startPreview();
         }
 
         @Override
         public void onClosed(@NonNull CameraDevice camera) {
             super.onClosed(camera);
-            Toast.makeText(cameraActivity.this, "Camera closed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CameraActivity.this, "Camera closed", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -124,19 +123,19 @@ public class cameraActivity extends Activity {
             camera.close();
             switch (error){
                 case CameraDevice.StateCallback.ERROR_CAMERA_DEVICE:
-                    Toast.makeText(cameraActivity.this, "ERROR_CAMERA_DEVICE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraActivity.this, "ERROR_CAMERA_DEVICE", Toast.LENGTH_SHORT).show();
                     break;
                 case CameraDevice.StateCallback.ERROR_CAMERA_DISABLED:
-                    Toast.makeText(cameraActivity.this, "ERROR_CAMERA_DISABLED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraActivity.this, "ERROR_CAMERA_DISABLED", Toast.LENGTH_SHORT).show();
                     break;
                 case CameraDevice.StateCallback.ERROR_CAMERA_IN_USE:
-                    Toast.makeText(cameraActivity.this, "ERROR_CAMERA_IN_USE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraActivity.this, "ERROR_CAMERA_IN_USE", Toast.LENGTH_SHORT).show();
                     break;
                 case CameraDevice.StateCallback.ERROR_CAMERA_SERVICE:
-                    Toast.makeText(cameraActivity.this, "ERROR_CAMERA_SERVICE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraActivity.this, "ERROR_CAMERA_SERVICE", Toast.LENGTH_SHORT).show();
                     break;
                 case CameraDevice.StateCallback.ERROR_MAX_CAMERAS_IN_USE:
-                    Toast.makeText(cameraActivity.this, "ERROR_MAX_CAMERAS_IN_USE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraActivity.this, "ERROR_MAX_CAMERAS_IN_USE", Toast.LENGTH_SHORT).show();
                     break;
             }
             mCameraDevice = null;
@@ -232,7 +231,7 @@ public class cameraActivity extends Activity {
                 case STATE_PREVIEW:
                     break;
                 case STATE_WAIT_LOCK:
-                    //Toast.makeText(cameraActivity.this, "SATE WAIT LOCK", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(CameraActivity.this, "SATE WAIT LOCK", Toast.LENGTH_SHORT).show();
                    // mCaptureState = STATE_PREVIEW;
                     Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
                     if (afState == CaptureRequest.CONTROL_AF_STATE_FOCUSED_LOCKED /*|| afState == CaptureRequest.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED*/){
@@ -240,7 +239,7 @@ public class cameraActivity extends Activity {
                         Toast.makeText(getApplicationContext(),"AF locked!",Toast.LENGTH_LONG).show();
                         startStillCaptureRequest();
                     }else{
-                        //Toast.makeText(cameraActivity.this, "af state WRONG", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(CameraActivity.this, "af state WRONG", Toast.LENGTH_SHORT).show();
                         //lockFocus(true);
                     }
                     break;
@@ -520,7 +519,7 @@ public class cameraActivity extends Activity {
                 @Override
                 public void onCaptureFailed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull CaptureFailure failure) {
                     super.onCaptureFailed(session, request, failure);
-                    Toast.makeText(cameraActivity.this, "Captured failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraActivity.this, "Captured failed", Toast.LENGTH_SHORT).show();
                 }
             };
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),stillCaptureCallback,null);

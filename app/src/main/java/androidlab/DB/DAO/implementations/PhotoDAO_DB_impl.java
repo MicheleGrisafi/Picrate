@@ -56,8 +56,22 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
     }
 
     @Override
-    public void deletePhoto(Photo photo) {
+    public boolean deletePhoto(Photo photo) {
+        //TODO collegare il delete della photo all'azione;
+        result = false;
+        response = database.deletePhoto(Integer.toString(photo.getId()));
 
+        if (response != "null"){
+            try {
+                JSONObject obj = new JSONObject(response);
+                if(!obj.getBoolean("error")){
+                    result = true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return (boolean)result;
     }
     public ArrayList<Photo> getPhotosSession(Utente user, ChallengeSession session){
         result = null;
