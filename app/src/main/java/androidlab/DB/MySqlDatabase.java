@@ -41,7 +41,7 @@ public class MySqlDatabase {
     private static final String urlUtente = "/utente";
     private static final String urlFoto = "/foto";
     private static final String urlSession = "/session";
-    private static final String urlRating = "/rating";
+    private static final String urlRating = "/ratings";
     private static final String urlUtilities = "/utilities";
 
     private static final String urlInsertUtente = "/insertUtente.php";
@@ -55,6 +55,7 @@ public class MySqlDatabase {
     private static final String urlInsertPhoto = "/insertPhoto.php";
     private static final String urlGetPhoto = "/getPhoto.php";
     private static final String urlDeletePhoto = "/deletePhoto.php";
+    private static final String urlGetRatingPhotos = "/getRatingPhotos.php";
 
     private static final String urlGetSessions = "/getSessions.php";
 
@@ -79,6 +80,7 @@ public class MySqlDatabase {
     public static final int PHOTO_USER_FOLDER = 12;
     public static final int DELETE_PHOTO = 13;
     public static final int GET_RATINGS = 14;
+    public static final int GET_RATING_PHOTOS = 15;
 
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
@@ -180,104 +182,41 @@ public class MySqlDatabase {
     }
 
     /********************** OPERAZIONI FOTO ************************/
-   /* public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
-        String reponse_data = "";
-        HttpURLConnection connection = null;
-        DataOutputStream dos = null;
-        DataInputStream inStream = null;
-
-        String existingFileName = file_path;
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary =  "*****" + Long.toString(System.currentTimeMillis()) + "*****";
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1*1024*1024;
-        try{
-            //------------------ CLIENT REQUEST
-            File filetoupload = new File(existingFileName);
-            FileInputStream fileInputStream = new FileInputStream(filetoupload.getPath());
-            URL url = getUrl(INSERT_PHOTO);
-            connection  = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setUseCaches(false);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("User-Agent", "Android Multipart HTTP Client 1.0");
-            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
-            dos = new DataOutputStream( connection.getOutputStream() );
-
-
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"owner\""+ lineEnd);
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(owner);
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"challenge\""+ lineEnd);
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(session);
-
-            if (latitudine != "0.0"){
-                dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name=\"latitudine\""+ lineEnd);
-                dos.writeBytes(lineEnd);
-                dos.writeBytes(latitudine);
-                dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name=\"longitudine\""+ lineEnd);
-                dos.writeBytes(lineEnd);
-                dos.writeBytes(longitudine);
-            }
-            dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\""+filetoupload.getName()+"\"" + lineEnd);
-            dos.writeBytes("Content-Type: image/jpeg" + lineEnd);
-            dos.writeBytes("Content-Transfer-Encoding: binary" + lineEnd);
-            dos.writeBytes(lineEnd);
-
-
-
-
-
-            bytesAvailable = fileInputStream.available();
-            bufferSize = Math.min(bytesAvailable, maxBufferSize);
-            buffer = new byte[bufferSize];
-            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-            while (bytesRead > 0){
-                dos.write(buffer, 0, bufferSize);
-                bytesAvailable = fileInputStream.available();
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-            }
-            dos.writeBytes(lineEnd);
-            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-            fileInputStream.close();
-            dos.flush();
-            dos.close();
-        }
-        catch (MalformedURLException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        //------------------ read the SERVER RESPONSE
+    public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
+        File image = new File(file_path);
+        String result = null;
         try {
-            inputStream = connection.getInputStream();
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
-            String line;
-            while((line = bufferedReader.readLine()) != null){
-                reponse_data += line;
+            final MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
+            RequestBody req = null;
+            if(latitudine != "0.0"){
+                req = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("owner", owner)
+                        .addFormDataPart("challenge", session)
+                        .addFormDataPart("latitudine", latitudine)
+                        .addFormDataPart("longitudine", longitudine)
+                        .addFormDataPart("image","profile.jpg", RequestBody.create(MEDIA_TYPE_JPG, image))
+                        .build();
+            }else{
+                req = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                        .addFormDataPart("owner", owner)
+                        .addFormDataPart("challenge", session)
+                        .addFormDataPart("image","profile.png", RequestBody.create(MEDIA_TYPE_JPG, image))
+                        .build();
             }
-            bufferedReader.close();
-            inputStream.close();
-        }
-        catch (IOException e){
+
+            Request request = new Request.Builder()
+                    .url(getUrl(INSERT_PHOTO))
+                    .post(req)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            result=  response.body().string();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-        connection.disconnect();
-        return reponse_data;
-    }*/
+        return result;
+    }
     public String getPhoto(String utente, String session){
         data="";
         try {
@@ -296,6 +235,15 @@ public class MySqlDatabase {
             e.printStackTrace();
         }
         return openConnection(data,DELETE_PHOTO);
+    }
+    public String getRatingPhotos(String utente){
+        data="";
+        try {
+            data =  URLEncoder.encode("user","UTF-8")+"="+ URLEncoder.encode(utente,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_RATING_PHOTOS);
     }
     /********************** OPERAZIONI SESSION ************************/
     public String getSessions(String stato){
@@ -410,6 +358,9 @@ public class MySqlDatabase {
                 case GET_PHOTO:
                     url = new URL(url_name+urlFoto+urlGetPhoto);
                     break;
+                case GET_RATING_PHOTOS:
+                    url = new URL(url_name+urlFoto+urlGetRatingPhotos);
+                    break;
                 case DELETE_PHOTO:
                     url = new URL(url_name+urlFoto+urlDeletePhoto);
                     break;
@@ -424,39 +375,5 @@ public class MySqlDatabase {
         return url;
     }
 
-    public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
-        File image = new File(file_path);
-        String result = null;
-        try {
-            final MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
-            RequestBody req = null;
-            if(latitudine != "0.0"){
-                req = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("owner", owner)
-                        .addFormDataPart("challenge", session)
-                        .addFormDataPart("latitudine", latitudine)
-                        .addFormDataPart("longitudine", longitudine)
-                        .addFormDataPart("image","profile.jpg", RequestBody.create(MEDIA_TYPE_JPG, image))
-                        .build();
-            }else{
-                 req = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("owner", owner)
-                        .addFormDataPart("challenge", session)
-                        .addFormDataPart("image","profile.png", RequestBody.create(MEDIA_TYPE_JPG, image))
-                        .build();
-            }
 
-            Request request = new Request.Builder()
-                    .url(getUrl(INSERT_PHOTO))
-                    .post(req)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-            Response response = client.newCall(request).execute();
-            result=  response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 }

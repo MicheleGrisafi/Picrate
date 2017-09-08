@@ -39,10 +39,12 @@ CREATE TABLE Photo(
 	CONSTRAINT FKPhotoChallenge FOREIGN KEY (challenge) REFERENCES ChallengeSession(IDSession)
 );
 CREATE TABLE Rating(
+	IDRating		SMALLINT NOT NULL AUTO_INCREMENT,
 	IDPhoto			INTEGER(10) NOT NULL,
 	IDUser			INT	NOT NULL,
 	Rating			INT(1) DEFAULT NULL,
 	
+	CONSTRAINT PKRating		PRIMARY KEY (IDRating),
 	CONSTRAINT FKRatingPhoto FOREIGN KEY (IDPhoto) REFERENCES Photo(IDPhoto),
 	CONSTRAINT FKRatingUser FOREIGN KEY (IDUser) REFERENCES Utente(IDUser)
 );
@@ -60,4 +62,11 @@ INSERT INTO Challenge 			VALUES(3,"Immortale la più bella scena pubblica che ci
 INSERT INTO ChallengeSession 	VALUES(1,NULL,'2017-05-30 23:59:59',1,1);
 INSERT INTO ChallengeSession 	VALUES(2,NULL,'2017-06-30 23:59:59',1,2);
 INSERT INTO ChallengeSession 	VALUES(3,NULL,'2017-06-15 23:59:59',1,3);
+
+INSERT INTO Utente				VALUES(1,"Caterina",12345679,"caterina@gmail");
+INSERT INTO Utente				VALUES(2,"Francesco",12345671,"francesco@gmail");
+
+INSERT INTO Photo				VALUES(1,0,0,1,1);
+INSERT INTO Photo				VALUES(2,0,0,1,2);
+INSERT INTO Photo				VALUES(3,0,0,1,3);
 

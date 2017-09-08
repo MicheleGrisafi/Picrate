@@ -42,7 +42,7 @@ public class LoadSessionsTask extends AsyncTask<Void,Void,List<ChallengeSession>
     protected void onPostExecute(List<ChallengeSession> challengeSessions) {
         ChallengeSessionAdapter myAdapter = new ChallengeSessionAdapter(challengeSessions,context,requestCode);
         listView.setAdapter(myAdapter);
-        delegate.processFinish(myAdapter);
+        delegate.processSessionsFinish(myAdapter);
         sessionDAO.close();
     }
 

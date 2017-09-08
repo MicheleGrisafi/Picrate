@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
 import androidlab.fotografando.assets.AsyncResponse;
 import androidlab.fotografando.assets.Camera.InsertThePhotoTask;
+import androidlab.fotografando.assets.ratings.LoadRatingPhotoTask;
+import androidlab.fotografando.assets.ratings.RatingPhotosAdapter;
 import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
 import androidlab.fotografando.assets.sessionList.LoadSessionsTask;
 
@@ -37,6 +40,8 @@ public class MainActivity extends Activity implements AsyncResponse {
     private static Animator mCurrentAnimator;
     private static int mShortAnimationDuration;
     private ChallengeSessionAdapter challengeSessionAdapter;
+    private RatingPhotosAdapter ratinhPhotosAdapter;
+
     private SwipeRefreshLayout swipeRefreshLayoutSession;
 
     @Override
@@ -98,12 +103,12 @@ public class MainActivity extends Activity implements AsyncResponse {
         spec.setContent(R.id.tabChallenges);    //Setto la mia tab. Volendo potrei impostare una nuova INTENT invece di una tab
         spec.setIndicator("", getResources().getDrawable(R.drawable.challenges_tab_selector)); //Dichiaro l'icona
         tabHost.addTab(spec);   //aggiungo la spec al mio host
-        //Tab 1
+        //Tab 2
         spec = tabHost.newTabSpec("Rating Tab");
         spec.setContent(R.id.tabRating);
         spec.setIndicator("", getResources().getDrawable(R.drawable.rating_tab_selector));
         tabHost.addTab(spec);
-        //Tab 1
+        //Tab 3
         spec = tabHost.newTabSpec("Ranking Tab");
         spec.setContent(R.id.tabRanking);
         spec.setIndicator("", getResources().getDrawable(R.drawable.leaderboards_tab_selector));
@@ -125,8 +130,16 @@ public class MainActivity extends Activity implements AsyncResponse {
                     default:
                         break;
                 }
+                int i = tabHost.getCurrentTab();
+                switch (i){
+                    case 1:
+                        //TODO: far partire il carimento dei rating da qua
+                }
             }
         });
+
+
+
 
         // TODO: sostituire ImageButton con TouchHighlightImageButton
         /********************* FIRST TAB ************************************/
@@ -154,6 +167,11 @@ public class MainActivity extends Activity implements AsyncResponse {
                 challengeSessionAdapter.updateList(swipeRefreshLayoutSession);
             }
         });
+        /************************* SECOND TAB *******************************/
+        RelativeLayout tabRating = (RelativeLayout) findViewById(R.id.tabRating);
+        LoadRatingPhotoTask loadRatingPhotoTask = new LoadRatingPhotoTask(this,tabRating);
+        loadRatingPhotoTask.delegate = this;
+        loadRatingPhotoTask.execute();
 
         /************************* THIRD TAB ********************************/
         Button btnZoom = (Button) findViewById(R.id.btnZoom);
@@ -209,8 +227,12 @@ public class MainActivity extends Activity implements AsyncResponse {
     }
 
     @Override
-    public void processFinish(ChallengeSessionAdapter output) {
+    public void processSessionsFinish(ChallengeSessionAdapter output) {
         challengeSessionAdapter = output;
+    }
+    @Override
+    public void processRatingFinish(RatingPhotosAdapter output) {
+        ratinhPhotosAdapter = output;
     }
 /*
     public void zoomImageFromThumb(View thumbView, int imageResId) {

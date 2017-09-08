@@ -1,8 +1,6 @@
 package androidlab.DB.DAO;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
@@ -18,7 +16,9 @@ public interface PhotoDAO {
 
     Photo insertPhoto(Photo photo, String imagePath);
     boolean deletePhoto(Photo photo);
+    //TODO: *facoltativo* creare metodo privato getPhotos usato dagli altri metodi
     ArrayList<Photo> getPhotosSession(Utente user, ChallengeSession session);
+    ArrayList<Photo> getRatingPhotos(Utente user);
 
 
 }
