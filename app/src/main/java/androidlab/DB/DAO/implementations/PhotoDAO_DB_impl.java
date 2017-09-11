@@ -98,4 +98,40 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
         }
         return (ArrayList<Photo>)result;
     }
+
+    @Override
+    public ArrayList<Photo> getRatingPhotos(Utente user) {
+        result = null;
+        response = database.getRatingPhotos(Integer.toString(user.getId()));
+        List<Photo> lista = new ArrayList<Photo>();
+        JSONArray arr = null;
+        Photo photo = null;
+        ChallengeSession challengeSession = null;
+        JSONObject obj = null;
+        URL url = null;
+        try {
+            arr = new JSONArray(response);
+            List<String> list = new ArrayList<String>();
+            for(int i = 0; i < arr.length(); i++) {
+                obj = arr.getJSONObject(i);
+                url = new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_USER_FOLDER).toString() + "/" + obj.getString("IDPhoto") + ".jpg");
+                challengeSession = new ChallengeSession();
+                challengeSession.setIDSession(obj.getInt("IDSession"));
+                challengeSession.setTitle(obj.getString("title"));
+                challengeSession.setDescription(obj.getString("description"));
+                photo = new Photo();
+                photo.setId(obj.getInt("IDPhoto"));
+                photo.setSession(challengeSession);
+                photo.setImage(url);
+                lista.add(photo);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        if(!lista.isEmpty())
+            result = lista;
+        return (ArrayList<Photo>)result;
+    }
 }

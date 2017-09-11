@@ -1,5 +1,8 @@
 package androidlab.DB.DAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidlab.DB.Objects.Utente;
 
 /**
@@ -18,6 +21,6 @@ public interface UtenteDAO {
     Utente setScore(Utente user,int score,boolean increment);
     Utente getScore(Utente user);
     Utente getUtente(Utente user);
-
+    ArrayList<Utente> getTopUsers();
 
 }

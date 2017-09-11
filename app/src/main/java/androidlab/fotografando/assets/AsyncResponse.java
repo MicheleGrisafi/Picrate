@@ -1,5 +1,6 @@
 package androidlab.fotografando.assets;
 
+import androidlab.fotografando.assets.ratings.RatingPhotosAdapter;
 import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
 
 /**
@@ -7,5 +8,6 @@ import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
  */
 
 public interface AsyncResponse {
-    void processFinish(ChallengeSessionAdapter output);
+    void processSessionsFinish(ChallengeSessionAdapter output);
+    void processRatingFinish(RatingPhotosAdapter output);
 }

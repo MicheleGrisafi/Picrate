@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -19,7 +21,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -28,6 +32,9 @@ import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
 import androidlab.fotografando.assets.AsyncResponse;
 import androidlab.fotografando.assets.Camera.InsertThePhotoTask;
+import androidlab.fotografando.assets.Leaderboards.LoadTopUsersTask;
+import androidlab.fotografando.assets.ratings.LoadRatingPhotoTask;
+import androidlab.fotografando.assets.ratings.RatingPhotosAdapter;
 import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
 import androidlab.fotografando.assets.sessionList.LoadSessionsTask;
 
@@ -37,12 +44,18 @@ public class MainActivity extends Activity implements AsyncResponse {
     private static Animator mCurrentAnimator;
     private static int mShortAnimationDuration;
     private ChallengeSessionAdapter challengeSessionAdapter;
+    private RatingPhotosAdapter ratinhPhotosAdapter;
+
     private SwipeRefreshLayout swipeRefreshLayoutSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /** Inizializzo utente **/
+        Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",0,0);
+        AppInfo.updateUtente(michele,true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -56,6 +69,7 @@ public class MainActivity extends Activity implements AsyncResponse {
         //ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(getResources().getString(R.string.app_name), icon, R.color.materialOrange400);
         //this.setTaskDescription(taskDescription);
 
+        /** Inializazione del menù laterale **/
         final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
@@ -90,6 +104,16 @@ public class MainActivity extends Activity implements AsyncResponse {
             }
         });
 
+        View navHeaderView= mDrawerView.getHeaderView(0);
+        TextView tvNavheaderUsername= (TextView) navHeaderView.findViewById(R.id.navheader_username);
+        tvNavheaderUsername.setText(AppInfo.getUtente().getUsername());
+
+        if(true){
+            TextView tvNavheaderUserInitial = (TextView) navHeaderView.findViewById(R.id.navheader_userInitial);
+            tvNavheaderUserInitial.setText(String.valueOf(Character.toUpperCase(AppInfo.getUtente().getUsername().charAt(0))));
+        }
+
+        /** Inizializzazione del tabhost principale **/
         final TabHost tabHost = (TabHost) findViewById(R.id.tabHost); //Tabhost = tab manager
         tabHost.setup();    //Inizializzo
 
@@ -98,12 +122,12 @@ public class MainActivity extends Activity implements AsyncResponse {
         spec.setContent(R.id.tabChallenges);    //Setto la mia tab. Volendo potrei impostare una nuova INTENT invece di una tab
         spec.setIndicator("", getResources().getDrawable(R.drawable.challenges_tab_selector)); //Dichiaro l'icona
         tabHost.addTab(spec);   //aggiungo la spec al mio host
-        //Tab 1
+        //Tab 2
         spec = tabHost.newTabSpec("Rating Tab");
         spec.setContent(R.id.tabRating);
         spec.setIndicator("", getResources().getDrawable(R.drawable.rating_tab_selector));
         tabHost.addTab(spec);
-        //Tab 1
+        //Tab 3
         spec = tabHost.newTabSpec("Ranking Tab");
         spec.setContent(R.id.tabRanking);
         spec.setIndicator("", getResources().getDrawable(R.drawable.leaderboards_tab_selector));
@@ -128,12 +152,15 @@ public class MainActivity extends Activity implements AsyncResponse {
             }
         });
 
+
+
+
+
         // TODO: sostituire ImageButton con TouchHighlightImageButton
         /********************* FIRST TAB ************************************/
 
 
-        Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",0,0);
-        AppInfo.updateUtente(michele,true);
+
 
         /*
         SparseIntArray expirationMap = new SparseIntArray();
@@ -154,8 +181,32 @@ public class MainActivity extends Activity implements AsyncResponse {
                 challengeSessionAdapter.updateList(swipeRefreshLayoutSession);
             }
         });
+        /************************* SECOND TAB *******************************/
+        RelativeLayout tabRating = (RelativeLayout) findViewById(R.id.tabRating);
+        LoadRatingPhotoTask loadRatingPhotoTask = new LoadRatingPhotoTask(this,tabRating);
+        loadRatingPhotoTask.delegate = this;
+        loadRatingPhotoTask.execute();
 
         /************************* THIRD TAB ********************************/
+        final TabHost tabHostLeaderboard = (TabHost) findViewById(R.id.tabHostLeaderboard);
+        tabHostLeaderboard.setup();
+
+        spec = tabHostLeaderboard.newTabSpec("Leaderboard Top Users Tab");
+        spec.setContent(R.id.tabLeaderboardUsers);
+        spec.setIndicator(getString(R.string.tab_leaderboard_topusers));
+        tabHostLeaderboard.addTab(spec);
+
+        spec = tabHostLeaderboard.newTabSpec("Leaderboard Challenges Tab");
+        spec.setContent(R.id.tabLeaderboardChallenges);
+        spec.setIndicator(getString(R.string.tab_leaderboard_challenges));
+        tabHostLeaderboard.addTab(spec);
+
+        RelativeLayout tabLeaderboardTopUsers = (RelativeLayout) findViewById(R.id.tabLeaderboardUsers);
+        LoadTopUsersTask loadTopUsersTask = new LoadTopUsersTask(this,tabLeaderboardTopUsers);
+        loadTopUsersTask.execute();
+
+
+        /*
         Button btnZoom = (Button) findViewById(R.id.btnZoom);
         btnZoom.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -164,8 +215,10 @@ public class MainActivity extends Activity implements AsyncResponse {
                 startActivity(new Intent(photoZoomIntent));
                 //overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
             }
-        });
+        });*/
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -208,9 +261,14 @@ public class MainActivity extends Activity implements AsyncResponse {
         }
     }
 
+    /** Metodi per ricevere gli adapter delle varie liste **/
     @Override
-    public void processFinish(ChallengeSessionAdapter output) {
+    public void processSessionsFinish(ChallengeSessionAdapter output) {
         challengeSessionAdapter = output;
+    }
+    @Override
+    public void processRatingFinish(RatingPhotosAdapter output) {
+        ratinhPhotosAdapter = output;
     }
 /*
     public void zoomImageFromThumb(View thumbView, int imageResId) {

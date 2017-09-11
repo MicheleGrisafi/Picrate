@@ -17,6 +17,7 @@ public class Photo implements Parcelable{
     private int id;
     private int ownerID;
     private int sessionID;
+    private ChallengeSession session;
     private URL image;
     private double latitudine;
     private double longitudine;
@@ -41,6 +42,7 @@ public class Photo implements Parcelable{
         this.longitudine = longitudine;
         this.latitudine = latitudine;
     }
+
 
     public int getId() {
         return id;
@@ -73,10 +75,21 @@ public class Photo implements Parcelable{
         this.image = image;
     }
     public int getSessionID() {
-        return sessionID;
+        int res = 0;
+        if(sessionID != 0)
+            res = sessionID;
+        else if(session.getIDSession() != 0)
+            res = session.getIDSession();
+        return  res;
     }
     public void setSessionID(int sessionID) {
         this.sessionID = sessionID;
+    }
+    public ChallengeSession getSession() {
+        return session;
+    }
+    public void setSession(ChallengeSession session) {
+        this.session = session;
     }
 
     @Override

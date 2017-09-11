@@ -22,7 +22,6 @@
             android:id="@+id/toolbar"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:layout_marginTop="0dp"
             android:background="@color/materialOrange400"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ToolbarTheme"
@@ -63,21 +62,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <android.support.constraint.ConstraintLayout
+                    <RelativeLayout
                         android:id="@+id/tabRating"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/holo_green_dark"
                         android:orientation="vertical">
 
-                    </android.support.constraint.ConstraintLayout>
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerViewRatings"
+                            android:scrollbars="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="8dp"/>
 
-                    <android.support.constraint.ConstraintLayout
+                    </RelativeLayout>
+
+                    <RelativeLayout
                         android:id="@+id/tabRanking"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent">
 
+                        <!--
                         <Button
                             android:id="@+id/btnZoom"
                             android:layout_width="wrap_content"
@@ -85,27 +91,61 @@
                             android:text="Zoom"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toBottomOf="parent" />
+                            app:layout_constraintTop_toBottomOf="parent" />-->
 
-                    </android.support.constraint.ConstraintLayout>
-                    <!--
-                    <ScrollView
-                        android:id="@+id/tabChallenges"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:id="@+id/relativeLayoutChallenge"
+                        <TabHost
+                            android:id="@+id/tabHostLeaderboard"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/wallet_bright_foreground_disabled_holo_light"
-                            android:orientation="horizontal">
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="parent">
 
-                        </RelativeLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
 
-                    </ScrollView>-->
+                                <TabWidget
+                                    android:id="@android:id/tabs"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                </TabWidget>
+
+                                <FrameLayout
+                                    android:id="@android:id/tabcontent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <RelativeLayout
+                                        android:id="@+id/tabLeaderboardUsers"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/colorWhite">
+
+                                        <android.support.v7.widget.RecyclerView
+                                            android:id="@+id/recyclerViewLeaderboardUsers"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:scrollbars="vertical" />
+
+                                    </RelativeLayout>
+
+                                    <RelativeLayout
+                                        android:id="@+id/tabLeaderboardChallenges"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                    </RelativeLayout>
+
+                                </FrameLayout>
+                            </LinearLayout>
+                        </TabHost>
+                    </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/tabChallenges"
                         android:layout_width="match_parent"
@@ -151,7 +191,9 @@
             android:visibility="invisible"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:clickable="false" />
+            tools:clickable="false"
+            android:layout_marginStart="8dp"
+            tools:ignore="RtlHardcoded" />
 
         <ImageButton
             android:id="@+id/btnDownload"
@@ -164,7 +206,9 @@
             android:visibility="invisible"
             app:layout_constraintLeft_toRightOf="@+id/btnBack"
             app:layout_constraintTop_toTopOf="parent"
-            tools:clickable="false" />
+            tools:clickable="false"
+            android:layout_marginStart="4dp"
+            tools:ignore="RtlHardcoded" />
 
         <ImageButton
             android:id="@+id/btnMap"
@@ -177,7 +221,9 @@
             android:visibility="invisible"
             app:layout_constraintLeft_toRightOf="@+id/btnDownload"
             app:layout_constraintTop_toTopOf="parent"
-            tools:clickable="false" />
+            tools:clickable="false"
+            android:layout_marginStart="4dp"
+            tools:ignore="RtlHardcoded" />
 
     </android.support.constraint.ConstraintLayout>
 
