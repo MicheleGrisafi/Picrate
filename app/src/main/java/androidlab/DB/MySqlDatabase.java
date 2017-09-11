@@ -51,6 +51,7 @@ public class MySqlDatabase {
     private static final String urlGetMoney = "/getMoney.php";
     private static final String urlSetScore = "/setScore.php";
     private static final String urlGetScore = "/getScore.php";
+    private static final String urlGetTopUsers = "/getTopUsers.php";
 
     private static final String urlInsertPhoto = "/insertPhoto.php";
     private static final String urlGetPhoto = "/getPhoto.php";
@@ -81,6 +82,7 @@ public class MySqlDatabase {
     public static final int DELETE_PHOTO = 13;
     public static final int GET_RATINGS = 14;
     public static final int GET_RATING_PHOTOS = 15;
+    public static final int GET_TOP_USERS = 16;
 
     HttpURLConnection httpURLConnection;
     OutputStream outputStream;
@@ -179,6 +181,10 @@ public class MySqlDatabase {
             e.printStackTrace();
         }
         return openConnection(data,GET_SCORE);
+    }
+    public String getTopUsers(){
+        data="";
+        return openConnection(data,GET_TOP_USERS);
     }
 
     /********************** OPERAZIONI FOTO ************************/
@@ -366,6 +372,9 @@ public class MySqlDatabase {
                     break;
                 case PHOTO_USER_FOLDER:
                     url = new URL(url_name+fotoUtente_folder);
+                    break;
+                case GET_TOP_USERS:
+                    url = new URL(url_name+urlUtente+urlGetTopUsers);
                     break;
             }
             return url;

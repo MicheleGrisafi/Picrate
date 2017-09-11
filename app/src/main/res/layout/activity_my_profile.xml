@@ -135,7 +135,7 @@
             android:id="@+id/currency_icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_audiotrack_light"
+            android:src="@drawable/ic_attach_money_yellow_24dp"
             app:layout_constraintLeft_toRightOf="@+id/currency"
             android:layout_marginLeft="4dp"
             app:layout_constraintBottom_toBottomOf="@+id/profilePicCircle"

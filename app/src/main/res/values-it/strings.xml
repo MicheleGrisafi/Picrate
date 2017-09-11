@@ -26,4 +26,10 @@
     <string name="logout">Logout</string>
     <string name="settings">Impostazioni</string>
     <string name="help_amp_feedback"><![CDATA[Aiuto & feedback]]></string>
+    <string name="no_more_photos">Nessun\'altra foto</string>
+    <string name="report_message">Segnala questa foto se è inadatta per la sua sfida o in generale</string>
+    <string name="report_thanks">Grazie per la segnalazione</string>
+    <string name="report_button">Segnala</string>
+    <string name="tab_leaderboard_topusers">Utenti</string>
+    <string name="tab_leaderboard_challenges">SFIDE</string>
 </resources>

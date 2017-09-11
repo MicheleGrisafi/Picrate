@@ -13,7 +13,9 @@
         android:id="@+id/activeRatingPhotoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:paddingBottom="0dp">
+
+
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/activeRatingPhotoTitleLayout"
@@ -30,16 +32,7 @@
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1">
 
-            <ImageButton
-                android:id="@+id/activeRatingPhotoChallengeInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/activeRatingPhotoChallenge"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_info_details" />
+
 
             <TextView
                 android:id="@+id/activeRatingPhotoChallenge"
@@ -51,7 +44,21 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/activeRatingPhotoChallengeInfo"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.466" />
+                app:layout_constraintVertical_bias="0.466"
+                app:layout_constraintHorizontal_chainStyle="packed" />
+
+            <ImageButton
+                android:id="@+id/activeRatingPhotoChallengeInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/ic_help_outline_black_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/activeRatingPhotoChallenge"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_help_outline_black_24dp" />
+
         </android.support.constraint.ConstraintLayout>
 
         <RatingBar
@@ -59,28 +66,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:background="@color/cast_intro_overlay_button_background_color"
+            android:background="@color/colorBlack"
             android:numStars="3"
+            android:stepSize="1.0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1" />
+
+        <ImageButton
+            android:id="@+id/activeRatingPhotoReportButon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@null"
+            android:src="@drawable/ic_warning_red_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+            app:layout_constraintLeft_toRightOf="@+id/ratingBar"
+            app:layout_constraintTop_toTopOf="@+id/ratingBar"
+            app:srcCompat="@drawable/ic_warning_red_24dp" />
+
         <ImageView
             android:id="@+id/activeRatingPhoto"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activeRatingPhotoTitleLayout"
             app:srcCompat="@color/cardview_light_background"
             tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintRight_creator="1"
-            app:layout_constraintBottom_toTopOf="@+id/ratingBar" />
-
-
+            tools:layout_constraintRight_creator="1" />
 
 
     </android.support.constraint.ConstraintLayout>

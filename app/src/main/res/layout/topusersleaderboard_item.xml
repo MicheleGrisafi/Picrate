@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topUsersLeaderboardItem_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+
+    <TextView
+        android:id="@+id/topUsersLeaderboardItem_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/topUsersLeaderboardItem_userLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <RelativeLayout
+        android:id="@+id/topUsersLeaderboardItem_userLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/topUsersLeaderboardItem_position"
+        app:layout_constraintRight_toLeftOf="@+id/topUsersLeaderboardItem_scoreLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/topUsersLeaderboardItem_layoutPicUser">
+
+            <ImageView
+                android:id="@+id/topUsersLeaderboardItem_userIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/circular_profile"
+                app:srcCompat="@drawable/circular_profile" />
+
+            <TextView
+                android:id="@+id/topUsersLeaderboardItem_userInitial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:text="U" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/topUsersLeaderboardItem_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toEndOf="@+id/topUsersLeaderboardItem_layoutPicUser"
+            android:text="TextView"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintLeft_toRightOf="@+id/topUsersLeaderboardItem_layoutPicUser"
+            app:layout_constraintTop_toTopOf="@+id/topUsersLeaderboardItem_layoutPicUser"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/topUsersLeaderboardItem_scoreLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/topUsersLeaderboardItem_userLayout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/topUsersLeaderboardItem_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="TextView"
+            android:textColor="@color/colorBlack" />
+
+        <ImageView
+            android:id="@+id/topUsersLeaderboardItem_starImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/topUsersLeaderboardItem_score"
+            android:src="@drawable/ic_star_yellow_24dp"
+            app:srcCompat="@drawable/ic_star_yellow_24dp" />
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

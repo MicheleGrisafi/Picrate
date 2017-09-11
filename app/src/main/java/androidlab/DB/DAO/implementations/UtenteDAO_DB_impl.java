@@ -1,8 +1,12 @@
 package androidlab.DB.DAO.implementations;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import androidlab.DB.DAO.UtenteDAO;
 import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.Utente;
@@ -115,5 +119,30 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
             result = user;
         }
         return (Utente)result;
+    }
+
+    @Override
+    public ArrayList<Utente> getTopUsers(){
+        result = null;
+        ArrayList<Utente> lista;
+        JSONArray arr;
+        JSONObject obj;
+        response = database.getTopUsers();
+        if (response != "null"){
+            lista = new ArrayList<Utente>();
+            try {
+                arr = new JSONArray(response);
+                //List<String> list = new ArrayList<String>();
+                for(int i = 0; i < arr.length(); i++) {
+                    obj = arr.getJSONObject(i);
+                    Utente user = new Utente(obj.getInt("IDUser"),obj.getString("username"),obj.getInt("score"));
+                    lista.add(user);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            result = lista;
+        }
+        return (ArrayList<Utente>) result;
     }
 }

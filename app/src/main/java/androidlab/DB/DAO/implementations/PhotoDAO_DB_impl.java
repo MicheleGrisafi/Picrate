@@ -118,6 +118,7 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
                 challengeSession = new ChallengeSession();
                 challengeSession.setIDSession(obj.getInt("IDSession"));
                 challengeSession.setTitle(obj.getString("title"));
+                challengeSession.setDescription(obj.getString("description"));
                 photo = new Photo();
                 photo.setId(obj.getInt("IDPhoto"));
                 photo.setSession(challengeSession);

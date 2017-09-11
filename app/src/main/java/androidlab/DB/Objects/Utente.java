@@ -19,6 +19,11 @@ public class Utente {
     public Utente(String username){
         this.username = username;
     }
+    public Utente(int id, String username, int score){
+        this(username);
+        this.id = id;
+        this.score = score;
+    }
     public Utente(String email, String googleKey){
         this();
         this.email = email;
