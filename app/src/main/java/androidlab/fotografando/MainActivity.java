@@ -193,6 +193,9 @@ public class MainActivity extends FragmentActivity  {
                     InsertThePhotoTask insertThePhotoTask = new InsertThePhotoTask
                             (foto,data.getStringExtra("fileName"),this,imageViews,requestCode,challengeSessionAdapter.getSession(data.getIntExtra("sessionID",0)),this);
                     insertThePhotoTask.execute();
+                    Utente user = AppInfo.getUtente();
+                    user.setMoney(AppInfo.costo_seconda_foto * -1,true);
+                    AppInfo.updateUtente(user,false);
                     break;
             }
         }

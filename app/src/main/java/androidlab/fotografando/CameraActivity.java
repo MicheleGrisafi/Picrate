@@ -390,6 +390,7 @@ public class CameraActivity extends Activity {
                 outIntent.putExtra("imageView",inIntent.getIntExtra("imageView",0));
                 outIntent.putExtra("fileName",mPhotoFileName);
                 outIntent.putExtra("sessionID",inIntent.getIntExtra("sessionID",0));
+                outIntent.putExtra("secondPhoto",true);
                 setResult(1,outIntent);
                 closeCamera();
                 finish();

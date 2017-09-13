@@ -1,5 +1,6 @@
 package androidlab.fotografando.assets.Camera;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -13,13 +14,21 @@ public class cameraOnClickListener implements View.OnClickListener {
     private Intent intent;
     private FragmentActivity activity;
     private int requestcode;
+    private Dialog dialog;
     public cameraOnClickListener(Intent intent,int requestCode, FragmentActivity activity){
         this.intent = intent;
         this.requestcode = requestCode;
         this.activity = activity;
     }
-    @Override
+    public cameraOnClickListener(Intent intent,int requestCode, FragmentActivity activity,Dialog dialog) {
+        this(intent,requestCode,activity);
+        this.dialog = dialog;
+    }
+
+        @Override
     public void onClick(View v) {
         activity.startActivityForResult(intent,requestcode);
+        if(dialog != null)
+            dialog.dismiss();
     }
 }

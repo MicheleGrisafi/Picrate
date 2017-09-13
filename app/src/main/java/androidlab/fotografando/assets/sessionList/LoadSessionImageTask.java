@@ -68,7 +68,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
         // TODO: provare a scaricare l'immagine bitmap in formato grande per implementare lo zoom
         Photo foto;
         ImageView imageView;
-        Intent intent;
+        final Intent intent = new Intent(context,CameraActivity.class);
 
         //Carica le foto nelle imageView
         if(pictures != null) {
@@ -103,10 +103,10 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                     imageView.setOnClickListener(null);
                 }else{
                     imageView.setBackgroundColor(Color.TRANSPARENT);
-                    intent = new Intent(context,CameraActivity.class);
                     intent.putExtra("imageView",i);
                     intent.putExtra("sessionID",session.getIDSession());
-                    //new cameraOnClickListener(intent,requestCode,activity)
+                    intent.putExtra("secondPhoto",true);
+                    //new
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -129,20 +129,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                             if(AppInfo.getUtente().getMoney() < AppInfo.costo_seconda_foto)
                                 btnDialog.setClickable(false);
                             // if button is clicked, close the custom dialog
-                            btnDialog.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-
-                                    Rating rating = new Rating(AppInfo.getUtente(),items.get(0),Math.round(voto),true);
-                                    items.remove(0);
-                                    notifyItemRemoved(0);
-                                    InsertRatingTask insertRating = new InsertRatingTask(rating);
-                                    insertRating.execute();
-                                    dialog.dismiss();
-                                    Toast.makeText(mContext, R.string.report_thanks, Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            btnDialog.setOnClickListener(new cameraOnClickListener(intent,requestCode,activity,dialog));
                             dialog.show();
                         }
                     });
