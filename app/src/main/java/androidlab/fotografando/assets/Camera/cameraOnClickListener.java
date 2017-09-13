@@ -1,19 +1,19 @@
 package androidlab.fotografando.assets.Camera;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 /**
  * Created by miki4 on 16/05/2017.
  */
 
+/** Listener per fotocamera sulla challenge **/
 public class cameraOnClickListener implements View.OnClickListener {
-    Intent intent;
-    Activity activity;
-    int requestcode;
-    public cameraOnClickListener(Intent intent,int requestCode, Activity activity){
+    private Intent intent;
+    private FragmentActivity activity;
+    private int requestcode;
+    public cameraOnClickListener(Intent intent,int requestCode, FragmentActivity activity){
         this.intent = intent;
         this.requestcode = requestCode;
         this.activity = activity;

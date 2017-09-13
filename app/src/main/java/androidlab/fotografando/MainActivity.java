@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,16 +41,17 @@ import androidlab.fotografando.assets.ratings.LoadRatingPhotoTask;
 import androidlab.fotografando.assets.ratings.RatingPhotosAdapter;
 import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
 import androidlab.fotografando.assets.sessionList.LoadSessionsTask;
+import androidlab.fotografando.tabFragments.ChallengeFragment;
+import androidlab.fotografando.tabFragments.LeadeboardFragment;
+import androidlab.fotografando.tabFragments.RatingFragment;
 
-public class MainActivity extends Activity implements AsyncResponse {
-    private int REQUEST_CODE_CAMERA = 0;
+public class MainActivity extends FragmentActivity  {
+    public int REQUEST_CODE_CAMERA = 0;
     private Toolbar mToolbar;
     private static Animator mCurrentAnimator;
     private static int mShortAnimationDuration;
-    private ChallengeSessionAdapter challengeSessionAdapter;
-    private RatingPhotosAdapter ratinhPhotosAdapter;
-
-    private SwipeRefreshLayout swipeRefreshLayoutSession;
+    public ChallengeSessionAdapter challengeSessionAdapter;
+    public RatingPhotosAdapter ratingPhotosAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +59,7 @@ public class MainActivity extends Activity implements AsyncResponse {
         setContentView(R.layout.activity_main);
 
         /** Inizializzo utente **/
-        Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",0,0);
+        Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",30,60);
         AppInfo.updateUtente(michele,true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -63,6 +68,7 @@ public class MainActivity extends Activity implements AsyncResponse {
             window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
         }
 
+        /** Imposto titolo prima scheda **/
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle("Challenges");
 
@@ -73,7 +79,7 @@ public class MainActivity extends Activity implements AsyncResponse {
         final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView mDrawerView = (NavigationView) findViewById(R.id.nav_drawer);
@@ -103,120 +109,51 @@ public class MainActivity extends Activity implements AsyncResponse {
                 return true;
             }
         });
-
+        //Imposto la scritta Utente
         View navHeaderView= mDrawerView.getHeaderView(0);
         TextView tvNavheaderUsername= (TextView) navHeaderView.findViewById(R.id.navheader_username);
         tvNavheaderUsername.setText(AppInfo.getUtente().getUsername());
-
+        //Imposto l'immagine Utente TODO: impostare immagine utente o alias
         if(true){
             TextView tvNavheaderUserInitial = (TextView) navHeaderView.findViewById(R.id.navheader_userInitial);
             tvNavheaderUserInitial.setText(String.valueOf(Character.toUpperCase(AppInfo.getUtente().getUsername().charAt(0))));
         }
 
         /** Inizializzazione del tabhost principale **/
-        final TabHost tabHost = (TabHost) findViewById(R.id.tabHost); //Tabhost = tab manager
-        tabHost.setup();    //Inizializzo
-
+        final FragmentTabHost tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        tabHost.setup(this,getSupportFragmentManager(),android.R.id.tabcontent);
         //Tab 1
-        TabHost.TabSpec spec = tabHost.newTabSpec("Challenges Tab");    //Una spec è una componente del tabhost, la creo con un identificatore
-        spec.setContent(R.id.tabChallenges);    //Setto la mia tab. Volendo potrei impostare una nuova INTENT invece di una tab
-        spec.setIndicator("", getResources().getDrawable(R.drawable.challenges_tab_selector)); //Dichiaro l'icona
-        tabHost.addTab(spec);   //aggiungo la spec al mio host
+        TabHost.TabSpec spec = tabHost.newTabSpec("Challenges Tab");
+        spec.setIndicator("", ResourcesCompat.getDrawable(getResources(), R.drawable.challenges_tab_selector, null)); //Dichiaro l'icona//aggiungo la spec al mio host
+        tabHost.addTab(spec,ChallengeFragment.class, null);
         //Tab 2
         spec = tabHost.newTabSpec("Rating Tab");
-        spec.setContent(R.id.tabRating);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.rating_tab_selector));
-        tabHost.addTab(spec);
+        spec.setIndicator("",ResourcesCompat.getDrawable(getResources(), R.drawable.rating_tab_selector, null));
+        tabHost.addTab(spec, RatingFragment.class,null);
         //Tab 3
         spec = tabHost.newTabSpec("Ranking Tab");
-        spec.setContent(R.id.tabRanking);
-        spec.setIndicator("", getResources().getDrawable(R.drawable.leaderboards_tab_selector));
-        tabHost.addTab(spec);
+        spec.setIndicator("", ResourcesCompat.getDrawable(getResources(), R.drawable.leaderboards_tab_selector, null));
+        tabHost.addTab(spec, LeadeboardFragment.class,null);
 
+        //Cambio titolo ad ogni tab switch
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
                 switch (tabId){
                     case "Challenges Tab":
-                        mToolbar.setTitle("Challenges");
+                        mToolbar.setTitle(R.string.tab_title_challenges);
                         break;
                     case "Rating Tab":
-                        mToolbar.setTitle("Rate");
+                        mToolbar.setTitle(R.string.tab_title_rating);
                         break;
                     case "Ranking Tab":
-                        mToolbar.setTitle("Leaderboards");
+                        mToolbar.setTitle(R.string.tab_title_leaderboards);
                         break;
                     default:
                         break;
                 }
             }
         });
-
-
-
-
-
-        // TODO: sostituire ImageButton con TouchHighlightImageButton
-        /********************* FIRST TAB ************************************/
-
-
-
-
-        /*
-        SparseIntArray expirationMap = new SparseIntArray();
-        SparseArray<ArrayList<Integer>> picturesMap = new SparseArray<>();
-        List<ChallengeSession> challengeSessions = new ArrayList<ChallengeSession>();
-        OLD_LoadChallengeSessions task = new OLD_LoadChallengeSessions(this,(RelativeLayout)findViewById(R.id.relativeLayoutChallenge),challengeSessions,picturesMap,expirationMap,REQUEST_CODE_CAMERA);
-        task.execute();*/
-        //TODO Implementare zoom sulle foto delle challenge
-        final ListView listView = (ListView) findViewById(R.id.listViewSessions);
-        LoadSessionsTask loadSessionsTask = new LoadSessionsTask(this,listView,REQUEST_CODE_CAMERA);
-        loadSessionsTask.delegate = this;
-        loadSessionsTask.execute();
-
-        swipeRefreshLayoutSession = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshSessions);
-        swipeRefreshLayoutSession.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                challengeSessionAdapter.updateList(swipeRefreshLayoutSession);
-            }
-        });
-        /************************* SECOND TAB *******************************/
-        RelativeLayout tabRating = (RelativeLayout) findViewById(R.id.tabRating);
-        LoadRatingPhotoTask loadRatingPhotoTask = new LoadRatingPhotoTask(this,tabRating);
-        loadRatingPhotoTask.delegate = this;
-        loadRatingPhotoTask.execute();
-
-        /************************* THIRD TAB ********************************/
-        final TabHost tabHostLeaderboard = (TabHost) findViewById(R.id.tabHostLeaderboard);
-        tabHostLeaderboard.setup();
-
-        spec = tabHostLeaderboard.newTabSpec("Leaderboard Top Users Tab");
-        spec.setContent(R.id.tabLeaderboardUsers);
-        spec.setIndicator(getString(R.string.tab_leaderboard_topusers));
-        tabHostLeaderboard.addTab(spec);
-
-        spec = tabHostLeaderboard.newTabSpec("Leaderboard Challenges Tab");
-        spec.setContent(R.id.tabLeaderboardChallenges);
-        spec.setIndicator(getString(R.string.tab_leaderboard_challenges));
-        tabHostLeaderboard.addTab(spec);
-
-        RelativeLayout tabLeaderboardTopUsers = (RelativeLayout) findViewById(R.id.tabLeaderboardUsers);
-        LoadTopUsersTask loadTopUsersTask = new LoadTopUsersTask(this,tabLeaderboardTopUsers);
-        loadTopUsersTask.execute();
-
-
-        /*
-        Button btnZoom = (Button) findViewById(R.id.btnZoom);
-        btnZoom.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent photoZoomIntent = new Intent(MainActivity.this, ZoomActivity.class);
-                startActivity(new Intent(photoZoomIntent));
-                //overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
-            }
-        });*/
-
     }
 
 
@@ -243,33 +180,25 @@ public class MainActivity extends Activity implements AsyncResponse {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode ==  REQUEST_CODE_CAMERA){
+            /** Gestisco l'inserzione della foto scattata **/
             switch (resultCode){
                 case 0:
                     break;
                 case 1:
+                    //Creo la foto
                     Photo foto = new Photo(AppInfo.getUtente().getId(),data.getIntExtra("sessionID",0));
+                    //Ottengo le imageView relative alla challenge dall'adapter
                     ArrayList<ImageView> imageViews = challengeSessionAdapter.getImageViews(data.getIntExtra("sessionID",0));
-                    //ImageView imageView = challengeSessionAdapter.getImageView(data.getIntExtra("sessionID",0),data.getIntExtra("imageView",0));
-                    /*InsertThePhotoTask InsertThePhotoTask = new InsertThePhotoTask(foto,data.getStringExtra("fileName"),
-                            this,(ImageView) findViewById(data.getIntExtra("imageView",0)));*/
+                    //Avvio il task per l'inserzione della foto
                     InsertThePhotoTask insertThePhotoTask = new InsertThePhotoTask
-                            (foto,data.getStringExtra("fileName"),this,imageViews,requestCode,challengeSessionAdapter.getSession(data.getIntExtra("sessionID",0)));
+                            (foto,data.getStringExtra("fileName"),this,imageViews,requestCode,challengeSessionAdapter.getSession(data.getIntExtra("sessionID",0)),this);
                     insertThePhotoTask.execute();
-
                     break;
             }
         }
     }
 
-    /** Metodi per ricevere gli adapter delle varie liste **/
-    @Override
-    public void processSessionsFinish(ChallengeSessionAdapter output) {
-        challengeSessionAdapter = output;
-    }
-    @Override
-    public void processRatingFinish(RatingPhotosAdapter output) {
-        ratinhPhotosAdapter = output;
-    }
+
 /*
     public void zoomImageFromThumb(View thumbView, int imageResId) {
         if (mCurrentAnimator != null) {

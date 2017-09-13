@@ -3,19 +3,14 @@ package androidlab.fotografando.assets.ratings;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,7 +82,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
         //inflate a viewholder
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View ratingPhotoView = inflater.inflate(R.layout.rating_photo_item, parent, false);
+        View ratingPhotoView = inflater.inflate(R.layout.item_rating_photo, parent, false);
         ViewHolder viewHolder = new ViewHolder(ratingPhotoView);
         return viewHolder;
     }
@@ -128,7 +123,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
                     //Toast.makeText(mContext, "ciao", Toast.LENGTH_SHORT).show();
                     // custom dialog
                     final Dialog dialog = new Dialog(mContext);
-                    dialog.setContentView(R.layout.challengesession_info_dialog);
+                    dialog.setContentView(R.layout.dialog_challengesession_info);
 
                     // set the custom dialog components - text, image and button
                     TextView text = (TextView) dialog.findViewById(R.id.challengeSessionInfoDialogText);
@@ -152,7 +147,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
                 @Override
                 public void onClick(View v) {
                     final Dialog dialog = new Dialog(mContext);
-                    dialog.setContentView(R.layout.report_photo_dialog);
+                    dialog.setContentView(R.layout.dialog_report_photo);
 
                     // set the custom dialog components - text, image and button
                     TextView text = (TextView) dialog.findViewById(R.id.reportPhotoDialogText);

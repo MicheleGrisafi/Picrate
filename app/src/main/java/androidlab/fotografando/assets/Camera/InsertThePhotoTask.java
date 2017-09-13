@@ -2,6 +2,7 @@ package androidlab.fotografando.assets.Camera;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -24,28 +25,19 @@ public class InsertThePhotoTask extends AsyncTask<Void, Void, Photo> {
     private Photo fotografia;
     private String nameFile;
     private Context context;
-    private ImageView imageView;
     private ArrayList<ImageView> imageViews;
     private int requestCode;
     private ChallengeSession session;
+    private FragmentActivity activity;
 
-    public InsertThePhotoTask(Photo fotografia, String namefile, Context context, ImageView imageView){
-        this.fotografia = fotografia;
-        this.nameFile = namefile;
-        this.context = context;
-        this.imageView = imageView;
-        this.imageViews = null;
-        this.requestCode = -1;
-        this.session = null;
-    }
-    public InsertThePhotoTask(Photo fotografia, String namefile, Context context, ArrayList<ImageView> imageViews, int requestCode, ChallengeSession session){
+    public InsertThePhotoTask(Photo fotografia, String namefile, Context context, ArrayList<ImageView> imageViews, int requestCode, ChallengeSession session, FragmentActivity activity){
         this.fotografia = fotografia;
         this.nameFile = namefile;
         this.context = context;
         this.imageViews = imageViews;
         this.session = session;
-        this.imageView = null;
         this.requestCode = requestCode;
+        this.activity = activity;
     }
 
     @Override
@@ -59,17 +51,14 @@ public class InsertThePhotoTask extends AsyncTask<Void, Void, Photo> {
 
     @Override
     protected void onPostExecute(Photo photo) {
-        //TODO: ripulire metodo inutile una volta deciso quale sistema utilizzare
         if(photo != null && fotografia != null) {
-            if(requestCode == -1)
-                Glide.with(context).load(fotografia.getImage()).into(imageView);
-            else{
-                LoadSessionImageTask loadSessionImageTask = new LoadSessionImageTask(context,session,imageViews,requestCode);
-                loadSessionImageTask.execute();
-            }
+            //Avvio caricamento foto
+            LoadSessionImageTask loadSessionImageTask = new LoadSessionImageTask(context,session,imageViews,requestCode,activity);
+            loadSessionImageTask.execute();
 
+            //Cancello file locale
             File file = new File(nameFile);
-            boolean deleted = file.delete();
+            file.delete();
         }
     }
 }

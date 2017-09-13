@@ -21,9 +21,11 @@ import androidlab.DB.Objects.Utente;
  * Created by miki4 on 13/05/2017.
  */
 
+/** Classe usata per gestire dati comuni a tutte le attività **/
 abstract public class AppInfo {
     static public final String user_shared_preferences = "user-preferences";
-
+    static public final int costo_seconda_foto = 5;
+    /** Ottiene utente loggato nell'app **/
     static public Utente getUtente(){
         Utente user = null;
         SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(user_shared_preferences, 0);
@@ -38,6 +40,7 @@ abstract public class AppInfo {
         }
         return user;
     }
+    /** Aggiorna utente **/
     static public void updateUtente(Utente utente, boolean full){
         SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(user_shared_preferences, 0);
         SharedPreferences.Editor editor = settings.edit();
@@ -49,14 +52,16 @@ abstract public class AppInfo {
         editor.putInt("id",utente.getId());
         editor.putInt("money",utente.getMoney());
         editor.putInt("score",utente.getScore());
-        editor.commit();
+        editor.apply();
     }
     static public int dpToPixel(Integer dp){
         final float scale = MyApp.getAppContext().getResources().getDisplayMetrics().density;
-        int px  = (int) (dp * scale + 0.5f);
-        return px;
+        return  (int) (dp * scale + 0.5f);
     }
+
+    /** Ottiene data giornaliera dal database **/
     static public Date getDate(){
+        //TODO: creare task separato per getDate
         MySqlDatabase database = new MySqlDatabase();
         String response = database.getDate();
         JSONObject obj = null;
@@ -65,9 +70,7 @@ abstract public class AppInfo {
             obj = new JSONObject(response);
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             date = format.parse(obj.getString("date"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (JSONException | ParseException e ) {
             e.printStackTrace();
         }
         return date;

@@ -85,6 +85,6 @@ public class LoadRatingPhotoTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
             }
         });
 
-        delegate.processRatingFinish(adapter);
+//        delegate.processRatingFinish(adapter);
     }
 }

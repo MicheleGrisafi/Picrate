@@ -3,6 +3,7 @@ package androidlab.fotografando.assets.sessionList;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -23,25 +24,27 @@ import androidlab.DB.Objects.ChallengeSession;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.MyApp;
 import androidlab.fotografando.assets.MySimpleTarget;
-import androidlab.fotografando.assets.sessionList.LoadSessionExpirationTask;
-import androidlab.fotografando.assets.sessionList.LoadSessionImageTask;
 
 /**
  * Created by miki4 on 27/05/2017.
  */
 
+/** Adapter per la lista delle challenges **/
 public class ChallengeSessionAdapter extends BaseAdapter {
-    List<ChallengeSession> sessions;
-    Context ctx;
-    SparseArray<ArrayList<ImageView>> imageViewMap;
-    int requestCode;
+    private List<ChallengeSession> sessions;
+    private Context ctx;
+    private SparseArray<ArrayList<ImageView>> imageViewMap;
+    private int requestCode;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FragmentActivity activity;
 
-    public ChallengeSessionAdapter(List<ChallengeSession> sessions, Context ctx,int requestCode) {
+    public ChallengeSessionAdapter(List<ChallengeSession> sessions, Context ctx,int requestCode,FragmentActivity activity,SwipeRefreshLayout swipeRefreshLayout) {
         this.sessions = sessions;
         this.ctx = ctx;
         imageViewMap = new SparseArray<>(sessions.size());
         this.requestCode = requestCode;
+        this.activity = activity;
+        this.swipeRefreshLayout = swipeRefreshLayout;
     }
 
     @Override
@@ -51,16 +54,15 @@ public class ChallengeSessionAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return sessions.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return ((ChallengeSession)getItem(position)).getIDSession();
     }
-    public void updateList(SwipeRefreshLayout swipeRefreshLayout){
+    public void updateList(){
         //Esegue l'update della lista delle sessioni attraverso un'ulteriore task.
-        this.swipeRefreshLayout = swipeRefreshLayout;
         UpdateSessionsTask updateSessionsTask = new UpdateSessionsTask(this);
         updateSessionsTask.execute();
     }
@@ -71,12 +73,13 @@ public class ChallengeSessionAdapter extends BaseAdapter {
     }
     @Override
     public void notifyDataSetChanged() {
+        //Notifica cambio dati e ferma il refresh
         super.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
     }
 
-
-    static class ViewHolder{
+    /** viewholder per il riciclo delle view **/
+    private static class ViewHolder{
         private TextView data,expiration,title,description;
         private ImageView img1,img2;
         private ConstraintLayout box;
@@ -84,15 +87,14 @@ public class ChallengeSessionAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder mViewHolder = null;
-        ChallengeSession session = sessions.get(position);
-
+        ViewHolder mViewHolder;
+        ChallengeSession session = (ChallengeSession)getItem(position);
 
         if(convertView == null){
+            //Instazio nuova view
             mViewHolder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.challenge_session_item, parent, false);
+            convertView = inflater.inflate(R.layout.item_challenge_session, parent, false);
             mViewHolder.data = (TextView)convertView.findViewById(R.id.data);
             mViewHolder.expiration = (TextView)convertView.findViewById(R.id.expiration);
             mViewHolder.title = (TextView)convertView.findViewById(R.id.titolo);
@@ -102,6 +104,7 @@ public class ChallengeSessionAdapter extends BaseAdapter {
             mViewHolder.img2 = (ImageView)convertView.findViewById(R.id.imgSession2);
             convertView.setTag(mViewHolder);
         }else{
+            //Riciclo la view
             mViewHolder = (ViewHolder) convertView.getTag();
         }
 
@@ -109,18 +112,21 @@ public class ChallengeSessionAdapter extends BaseAdapter {
         mViewHolder.title.setText(session.getTitle());
         mViewHolder.description.setText(session.getDescription());
 
-        imageViewMap.append(session.getIDSession(),new ArrayList<ImageView>(Arrays.asList(mViewHolder.img1, mViewHolder.img2)));
+        //Mi segno le due imageView per poterle rintracciare dopo
+        imageViewMap.append(session.getIDSession(),new ArrayList<>(Arrays.asList(mViewHolder.img1, mViewHolder.img2)));
 
+        //Carico sfondo della sessione
         int myWidth = 300;
-        int myHeight = 200;
+        int myHeight = 150;//200
         URL url = session.getImage();
-        Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).centerCrop().into(
+        Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150 /*150*/).centerCrop().into(
                 new MySimpleTarget<Bitmap>(myWidth,myHeight,mViewHolder.box));
 
 
+        //Carico in maniera asincrona le scadenze delle sessioni e le immagini dell'utente
         LoadSessionExpirationTask loadExp = new LoadSessionExpirationTask(ctx,session,mViewHolder.expiration);
         loadExp.execute();
-        LoadSessionImageTask loadImages = new LoadSessionImageTask(ctx,session,imageViewMap.get(session.getIDSession()),requestCode);
+        LoadSessionImageTask loadImages = new LoadSessionImageTask(ctx,session,imageViewMap.get(session.getIDSession()),requestCode,activity);
         loadImages.execute();
 
         return convertView;

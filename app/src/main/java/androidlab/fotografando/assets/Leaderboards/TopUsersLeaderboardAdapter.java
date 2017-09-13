@@ -1,20 +1,15 @@
 package androidlab.fotografando.assets.Leaderboards;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import androidlab.DB.Objects.Utente;
@@ -70,7 +65,7 @@ public class TopUsersLeaderboardAdapter extends RecyclerView.Adapter<TopUsersLea
         //inflate a viewholder
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View leaderboardTopUsers = inflater.inflate(R.layout.topusersleaderboard_item, parent, false);
+        View leaderboardTopUsers = inflater.inflate(R.layout.item_topusersleaderboard, parent, false);
         ViewHolder viewHolder = new ViewHolder(leaderboardTopUsers);
         return viewHolder;
     }
