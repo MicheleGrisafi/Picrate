@@ -16,6 +16,8 @@ import java.util.List;
 import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Utente;
+import androidlab.fotografando.assets.camera.checkPhotoActivity;
+import androidlab.fotografando.assets.generalTasks.TaskUpdateUtente;
 
 /**
  * Created by miki4 on 13/05/2017.
@@ -53,6 +55,8 @@ abstract public class AppInfo {
         editor.putInt("money",utente.getMoney());
         editor.putInt("score",utente.getScore());
         editor.apply();
+        TaskUpdateUtente task = new TaskUpdateUtente(utente);
+        task.execute();
     }
     static public int dpToPixel(Integer dp){
         final float scale = MyApp.getAppContext().getResources().getDisplayMetrics().density;

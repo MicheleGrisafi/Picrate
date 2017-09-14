@@ -51,7 +51,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import androidlab.fotografando.assets.Camera.checkPhotoActivity;
+import androidlab.fotografando.assets.camera.checkPhotoActivity;
 
 public class CameraActivity extends Activity {
 
@@ -224,6 +224,7 @@ public class CameraActivity extends Activity {
             cropped = null;
 
             //Inserisco l'immagine nell'intent da passare al controllo fotografico
+
             checkPhotoIntent.putExtra("fileName",mPhotoFileName);
             startActivityForResult(checkPhotoIntent,REQUEST_CODE);
         }
@@ -421,26 +422,25 @@ public class CameraActivity extends Activity {
             for(String cameraId : cameraManager.getCameraIdList()){
                 CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId);
                 if (cameraCharacteristics.get(CameraCharacteristics.LENS_FACING) == CameraCharacteristics.LENS_FACING_FRONT){
-                    //Camera frontale
-                    StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                    int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
-                    mTotalrotation = sensorToDeviceRotation(cameraCharacteristics,deviceOrientation);
-                    boolean swapRotation = mTotalrotation == 90 || mTotalrotation == 270;
-                    int rotatedWidth = width;
-                    int rotatedHeight = height;
-                    if (swapRotation){
-                        rotatedWidth = height;
-                        rotatedHeight = width;
-                    }
-                    mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),rotatedWidth,rotatedHeight);
-                    mImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.JPEG),rotatedWidth,rotatedHeight);
-                    mImageReader = ImageReader.newInstance(mImageSize.getWidth(),mImageSize.getHeight(),ImageFormat.JPEG,1);
-                    mImageReader.setOnImageAvailableListener(mOnImageAvaiableListener,mBackgroundHandler);
-                    mCameraId = cameraId;
-                }else{
-                    //TODO: supporto per camera anteriore
-                    Toast.makeText(this, R.string.front_camera_not_supported, Toast.LENGTH_SHORT).show();
+                    continue;
                 }
+                StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
+                mTotalrotation = sensorToDeviceRotation(cameraCharacteristics,deviceOrientation);
+                boolean swapRotation = mTotalrotation == 90 || mTotalrotation == 270;
+                int rotatedWidth = width;
+                int rotatedHeight = height;
+                if (swapRotation){
+                    rotatedWidth = height;
+                    rotatedHeight = width;
+                }
+                mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),rotatedWidth,rotatedHeight);
+                mImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.JPEG),rotatedWidth,rotatedHeight);
+                mImageReader = ImageReader.newInstance(mImageSize.getWidth(),mImageSize.getHeight(),ImageFormat.JPEG,1);
+                mImageReader.setOnImageAvailableListener(mOnImageAvaiableListener,mBackgroundHandler);
+
+                mCameraId = cameraId;
+                return;
             }
         } catch (CameraAccessException e) {
             e.printStackTrace();

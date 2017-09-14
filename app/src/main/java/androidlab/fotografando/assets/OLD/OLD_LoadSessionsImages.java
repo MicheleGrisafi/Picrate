@@ -23,7 +23,7 @@ import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.CameraActivity;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.Camera.cameraOnClickListener;
+import androidlab.fotografando.assets.camera.cameraOnClickListener;
 
 /**
  * Created by miki4 on 15/05/2017.

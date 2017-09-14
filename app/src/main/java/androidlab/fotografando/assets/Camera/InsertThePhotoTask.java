@@ -1,18 +1,15 @@
-package androidlab.fotografando.assets.Camera;
+package androidlab.fotografando.assets.camera;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-
 import java.io.File;
 import java.util.ArrayList;
 
 import androidlab.DB.DAO.PhotoDAO;
 import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
-import androidlab.DB.Objects.Challenge;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.fotografando.assets.sessionList.LoadSessionImageTask;
@@ -30,6 +27,8 @@ public class InsertThePhotoTask extends AsyncTask<Void, Void, Photo> {
     private ChallengeSession session;
     private FragmentActivity activity;
 
+    private PhotoDAO photoDAO;
+
     public InsertThePhotoTask(Photo fotografia, String namefile, Context context, ArrayList<ImageView> imageViews, int requestCode, ChallengeSession session, FragmentActivity activity){
         this.fotografia = fotografia;
         this.nameFile = namefile;
@@ -42,11 +41,14 @@ public class InsertThePhotoTask extends AsyncTask<Void, Void, Photo> {
 
     @Override
     protected Photo doInBackground(Void... params) {
-        PhotoDAO photoDAO = new PhotoDAO_DB_impl();
-        photoDAO.open();
         fotografia = photoDAO.insertPhoto(fotografia,nameFile);
-        photoDAO.close();
         return fotografia;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        photoDAO = new PhotoDAO_DB_impl();
+        photoDAO.open();
     }
 
     @Override
@@ -60,5 +62,6 @@ public class InsertThePhotoTask extends AsyncTask<Void, Void, Photo> {
             File file = new File(nameFile);
             file.delete();
         }
+        photoDAO.close();
     }
 }

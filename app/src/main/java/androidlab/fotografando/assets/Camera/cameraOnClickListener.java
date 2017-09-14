@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.Camera;
+package androidlab.fotografando.assets.camera;
 
 import android.app.Dialog;
 import android.content.Intent;

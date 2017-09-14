@@ -52,6 +52,7 @@ public class MySqlDatabase {
     private static final String urlSetScore = "/setScore.php";
     private static final String urlGetScore = "/getScore.php";
     private static final String urlGetTopUsers = "/getTopUsers.php";
+    private static final String urlUpdateUtente = "/updateUtente.php";
 
     private static final String urlInsertPhoto = "/insertPhoto.php";
     private static final String urlGetPhoto = "/getPhoto.php";
@@ -83,13 +84,15 @@ public class MySqlDatabase {
     public static final int GET_RATINGS = 14;
     public static final int GET_RATING_PHOTOS = 15;
     public static final int GET_TOP_USERS = 16;
+    public static final int UPDATE_UTENTE = 17;
 
-    HttpURLConnection httpURLConnection;
-    OutputStream outputStream;
-    BufferedWriter bufferedWriter;
-    InputStream inputStream;
-    BufferedReader bufferedReader;
-    String data = "";
+
+    private HttpURLConnection httpURLConnection;
+    private OutputStream outputStream;
+    private BufferedWriter bufferedWriter;
+    private InputStream inputStream;
+    private BufferedReader bufferedReader;
+    private String data = "";
     public MySqlDatabase(){
 
     }
@@ -185,6 +188,19 @@ public class MySqlDatabase {
     public String getTopUsers(){
         data="";
         return openConnection(data,GET_TOP_USERS);
+    }
+    public String updateUtente(String id, String username, String money, String score){
+        data = "";
+        try {
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8") +"&" +
+                    URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(username,"UTF-8") +"&" +
+                    URLEncoder.encode("score","UTF-8")+"="+ URLEncoder.encode(score,"UTF-8") +"&" +
+                    URLEncoder.encode("money","UTF-8")+"="+ URLEncoder.encode(money,"UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,UPDATE_UTENTE);
     }
 
     /********************** OPERAZIONI FOTO ************************/
@@ -375,6 +391,9 @@ public class MySqlDatabase {
                     break;
                 case GET_TOP_USERS:
                     url = new URL(url_name+urlUtente+urlGetTopUsers);
+                    break;
+                case UPDATE_UTENTE:
+                    url = new URL(url_name+urlUtente+urlUpdateUtente);
                     break;
             }
             return url;

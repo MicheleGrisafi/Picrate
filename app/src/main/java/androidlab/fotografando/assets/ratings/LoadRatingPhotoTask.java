@@ -3,6 +3,7 @@ package androidlab.fotografando.assets.ratings;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -33,10 +34,12 @@ public class LoadRatingPhotoTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
     private Context context;
     private View rootview;
     public AsyncResponse delegate = null;
+    FragmentActivity activity;
 
-    public LoadRatingPhotoTask(Context context, View rootview) {
+    public LoadRatingPhotoTask(Context context, View rootview, FragmentActivity activity) {
         this.context = context;
         this.rootview = rootview;
+        this.activity = activity;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class LoadRatingPhotoTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
         // Lookup the recyclerview in activity layout
         RecyclerView recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerViewRatings);
         // Create adapter passing in the sample user data
-        RatingPhotosAdapter adapter = new RatingPhotosAdapter(context,photos);
+        RatingPhotosAdapter adapter = new RatingPhotosAdapter(context,photos,activity);
         // Attach the adapter to the recyclerview to populate items
         recyclerView.setAdapter(adapter);
         // Set layout manager to position the items

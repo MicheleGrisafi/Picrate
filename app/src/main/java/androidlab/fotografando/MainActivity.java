@@ -1,31 +1,23 @@
 package androidlab.fotografando;
 
 import android.animation.Animator;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -34,13 +26,9 @@ import java.util.ArrayList;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.AsyncResponse;
-import androidlab.fotografando.assets.Camera.InsertThePhotoTask;
-import androidlab.fotografando.assets.Leaderboards.LoadTopUsersTask;
-import androidlab.fotografando.assets.ratings.LoadRatingPhotoTask;
+import androidlab.fotografando.assets.camera.InsertThePhotoTask;
 import androidlab.fotografando.assets.ratings.RatingPhotosAdapter;
 import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
-import androidlab.fotografando.assets.sessionList.LoadSessionsTask;
 import androidlab.fotografando.tabFragments.ChallengeFragment;
 import androidlab.fotografando.tabFragments.LeadeboardFragment;
 import androidlab.fotografando.tabFragments.RatingFragment;
@@ -190,6 +178,7 @@ public class MainActivity extends FragmentActivity  {
                     //Ottengo le imageView relative alla challenge dall'adapter
                     ArrayList<ImageView> imageViews = challengeSessionAdapter.getImageViews(data.getIntExtra("sessionID",0));
                     //Avvio il task per l'inserzione della foto
+
                     InsertThePhotoTask insertThePhotoTask = new InsertThePhotoTask
                             (foto,data.getStringExtra("fileName"),this,imageViews,requestCode,challengeSessionAdapter.getSession(data.getIntExtra("sessionID",0)),this);
                     insertThePhotoTask.execute();

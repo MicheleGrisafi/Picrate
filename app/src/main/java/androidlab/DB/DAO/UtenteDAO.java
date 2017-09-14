@@ -22,5 +22,7 @@ public interface UtenteDAO {
     Utente getScore(Utente user);
     Utente getUtente(Utente user);
     ArrayList<Utente> getTopUsers();
+    Utente updateUtente(Utente user);
+
 
 }

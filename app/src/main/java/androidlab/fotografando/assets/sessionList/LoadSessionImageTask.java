@@ -24,7 +24,7 @@ import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.Camera.cameraOnClickListener;
+import androidlab.fotografando.assets.camera.cameraOnClickListener;
 import androidlab.fotografando.CameraActivity;
 
 /**
@@ -110,7 +110,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            final Dialog dialog = new Dialog(context);
+                            final Dialog dialog = new Dialog(activity);
                             dialog.setContentView(R.layout.dialog_second_picture);
 
                             // set the custom dialog components - text, image and button

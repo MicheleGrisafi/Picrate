@@ -1,8 +1,10 @@
 package androidlab.fotografando.assets.ratings;
 
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,10 +36,12 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
     private List<Photo> items;
     private Context mContext;
     public AsyncResponse delegate = null;
+    FragmentActivity activity;
 
-    public RatingPhotosAdapter( Context mContext,List<Photo> items) {
+    public RatingPhotosAdapter( Context mContext,List<Photo> items, FragmentActivity activity) {
         this.items = items;
         this.mContext = mContext;
+        this.activity = activity;
         //Crea una foto farlocca per fine lista
         Photo foto = new Photo(-1,-1);
         if(this.items != null)
@@ -122,7 +126,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
                 public void onClick(View v) {
                     //Toast.makeText(mContext, "ciao", Toast.LENGTH_SHORT).show();
                     // custom dialog
-                    final Dialog dialog = new Dialog(mContext);
+                    final Dialog dialog = new Dialog(activity);
                     dialog.setContentView(R.layout.dialog_challengesession_info);
 
                     // set the custom dialog components - text, image and button

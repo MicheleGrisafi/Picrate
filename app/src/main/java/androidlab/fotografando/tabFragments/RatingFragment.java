@@ -31,7 +31,7 @@ public class RatingFragment extends Fragment {
         RelativeLayout tabRating = (RelativeLayout) view.findViewById(R.id.tabRating);
 
         //Avvio task per il caricamento delle foto
-        LoadRatingPhotoTask loadRatingPhotoTask = new LoadRatingPhotoTask(getActivity().getApplicationContext(),tabRating);
+        LoadRatingPhotoTask loadRatingPhotoTask = new LoadRatingPhotoTask(getActivity().getApplicationContext(),tabRating,getActivity());
         loadRatingPhotoTask.execute();
         return view;
     }
