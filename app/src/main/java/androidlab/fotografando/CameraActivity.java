@@ -226,6 +226,7 @@ public class CameraActivity extends Activity {
             //Inserisco l'immagine nell'intent da passare al controllo fotografico
 
             checkPhotoIntent.putExtra("fileName",mPhotoFileName);
+            checkPhotoIntent.putExtra("secondPhoto",inIntent.getBooleanExtra("secondPhoto",false));
             startActivityForResult(checkPhotoIntent,REQUEST_CODE);
         }
     }
@@ -391,7 +392,8 @@ public class CameraActivity extends Activity {
                 outIntent.putExtra("imageView",inIntent.getIntExtra("imageView",0));
                 outIntent.putExtra("fileName",mPhotoFileName);
                 outIntent.putExtra("sessionID",inIntent.getIntExtra("sessionID",0));
-                outIntent.putExtra("secondPhoto",true);
+                if(data.getBooleanExtra("secondPhoto",false))
+                    outIntent.putExtra("secondPhoto",true);
                 setResult(1,outIntent);
                 closeCamera();
                 finish();

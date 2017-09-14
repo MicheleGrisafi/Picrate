@@ -100,23 +100,23 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
     }
 
     @Override
-    public Utente getUtente(Utente user) {
+    public Utente getUtente(String googleKey) {
         result = null;
-        response = database.getUtente(user.getUsername());
+        response = database.getUtente(googleKey);
+        JSONArray arr;
         if (response != "null"){
             try {
-                JSONObject obj = new JSONObject(response);
+                arr = new JSONArray(response);
+                JSONObject obj = arr.getJSONObject(0);
                 int IDUser = obj.getInt("IDUser");
                 String username = obj.getString("username");
-                String googleKey = obj.getString("googleKey");
                 String mail = obj.getString("mail");
                 int money = obj.getInt("money");
                 int score = obj.getInt("score");
-                user = new Utente(IDUser,username,mail,googleKey,money,score);
+                result = new Utente(IDUser,username,mail,googleKey,money,score);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            result = user;
         }
         return (Utente)result;
     }

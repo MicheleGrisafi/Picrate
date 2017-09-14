@@ -126,10 +126,10 @@ public class MySqlDatabase {
         }
         return openConnection(data,INSERT_UTENTE);
     }
-    public String getUtente(String username){
+    public String getUtente(String googleKey){
         data="";
         try {
-            data =  URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(username,"UTF-8");
+            data =  URLEncoder.encode("googleKey","UTF-8")+"="+ URLEncoder.encode(googleKey,"UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

@@ -1,8 +1,6 @@
 package androidlab.fotografando.assets;
 
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.util.TypedValue;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,12 +9,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import androidlab.DB.MySqlDatabase;
-import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Utente;
-import androidlab.fotografando.assets.camera.checkPhotoActivity;
+import androidlab.fotografando.assets.generalTasks.TaskLogInUtente;
 import androidlab.fotografando.assets.generalTasks.TaskUpdateUtente;
 
 /**
@@ -27,6 +23,11 @@ import androidlab.fotografando.assets.generalTasks.TaskUpdateUtente;
 abstract public class AppInfo {
     static public final String user_shared_preferences = "user-preferences";
     static public final int costo_seconda_foto = 5;
+    /**Inizializzo utente prendendolo dal database **/
+    static public void loginUser(String googleKey){
+        TaskLogInUtente logIn = new TaskLogInUtente(googleKey);
+        logIn.execute();
+    }
     /** Ottiene utente loggato nell'app **/
     static public Utente getUtente(){
         Utente user = null;
@@ -43,15 +44,10 @@ abstract public class AppInfo {
         return user;
     }
     /** Aggiorna utente **/
-    static public void updateUtente(Utente utente, boolean full){
+    static public void updateUtente(Utente utente){
         SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(user_shared_preferences, 0);
         SharedPreferences.Editor editor = settings.edit();
-        if (full) {
-            editor.putString("name", utente.getUsername());
-            editor.putString("email", utente.getEmail());
-            editor.putString("google", utente.getGoogleKey());
-        }
-        editor.putInt("id",utente.getId());
+        editor.putString("name", utente.getUsername());
         editor.putInt("money",utente.getMoney());
         editor.putInt("score",utente.getScore());
         editor.apply();

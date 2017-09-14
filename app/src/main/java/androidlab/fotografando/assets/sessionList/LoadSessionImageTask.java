@@ -105,34 +105,38 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                     imageView.setBackgroundColor(Color.TRANSPARENT);
                     intent.putExtra("imageView",i);
                     intent.putExtra("sessionID",session.getIDSession());
-                    intent.putExtra("secondPhoto",true);
-                    //new
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            final Dialog dialog = new Dialog(activity);
-                            dialog.setContentView(R.layout.dialog_second_picture);
 
-                            // set the custom dialog components - text, image and button
-                            TextView tvMoney = (TextView) dialog.findViewById(R.id.textView_dialog_second_picture_money);
-                            tvMoney.setText(Integer.toString(AppInfo.costo_seconda_foto));
-                            ImageButton dialogCloseButton = (ImageButton) dialog.findViewById(R.id.imageButton_dialog_second_picture_closeButton);
-                            // if button is clicked, close the custom dialog
-                            dialogCloseButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            Button btnDialog = (Button) dialog.findViewById(R.id.button_dialog_second_picture_buy);
+                    //imposto la dialog per il pagamento
+                    if(i == 1) {
+                        intent.putExtra("secondPhoto",true);
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final Dialog dialog = new Dialog(activity);
+                                dialog.setContentView(R.layout.dialog_second_picture);
 
-                            if(AppInfo.getUtente().getMoney() < AppInfo.costo_seconda_foto)
-                                btnDialog.setClickable(false);
-                            // if button is clicked, close the custom dialog
-                            btnDialog.setOnClickListener(new cameraOnClickListener(intent,requestCode,activity,dialog));
-                            dialog.show();
-                        }
-                    });
+                                // set the custom dialog components - text, image and button
+                                TextView tvMoney = (TextView) dialog.findViewById(R.id.textView_dialog_second_picture_money);
+                                tvMoney.setText(Integer.toString(AppInfo.costo_seconda_foto));
+                                ImageButton dialogCloseButton = (ImageButton) dialog.findViewById(R.id.imageButton_dialog_second_picture_closeButton);
+                                // if button is clicked, close the custom dialog
+                                dialogCloseButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                Button btnDialog = (Button) dialog.findViewById(R.id.button_dialog_second_picture_buy);
+
+                                if (AppInfo.getUtente().getMoney() < AppInfo.costo_seconda_foto)
+                                    btnDialog.setClickable(false);
+                                // if button is clicked, close the custom dialog
+                                btnDialog.setOnClickListener(new cameraOnClickListener(intent, requestCode, activity, dialog));
+                                dialog.show();
+                            }
+                        });
+                    }else
+                        imageView.setOnClickListener(new cameraOnClickListener(intent,requestCode,activity));
                 }
             }
         }

@@ -20,7 +20,7 @@ public interface UtenteDAO {
     Utente getMoney(Utente user);
     Utente setScore(Utente user,int score,boolean increment);
     Utente getScore(Utente user);
-    Utente getUtente(Utente user);
+    Utente getUtente(String googleKey);
     ArrayList<Utente> getTopUsers();
     Utente updateUtente(Utente user);
 

@@ -47,8 +47,7 @@ public class MainActivity extends FragmentActivity  {
         setContentView(R.layout.activity_main);
 
         /** Inizializzo utente **/
-        Utente michele = new Utente(10,"michele","miki426811@gmail.com","12345678",30,60);
-        AppInfo.updateUtente(michele,true);
+        AppInfo.loginUser("12345678");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -182,9 +181,11 @@ public class MainActivity extends FragmentActivity  {
                     InsertThePhotoTask insertThePhotoTask = new InsertThePhotoTask
                             (foto,data.getStringExtra("fileName"),this,imageViews,requestCode,challengeSessionAdapter.getSession(data.getIntExtra("sessionID",0)),this);
                     insertThePhotoTask.execute();
-                    Utente user = AppInfo.getUtente();
-                    user.setMoney(AppInfo.costo_seconda_foto * -1,true);
-                    AppInfo.updateUtente(user,false);
+                    if(data.getBooleanExtra("secondPhoto",false)) {
+                        Utente user = AppInfo.getUtente();
+                        user.setMoney(AppInfo.costo_seconda_foto * -1, true);
+                        AppInfo.updateUtente(user);
+                    }
                     break;
             }
         }

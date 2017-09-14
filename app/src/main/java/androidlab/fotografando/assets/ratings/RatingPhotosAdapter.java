@@ -150,7 +150,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
             imageButtonReport.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final Dialog dialog = new Dialog(mContext);
+                    final Dialog dialog = new Dialog(activity);
                     dialog.setContentView(R.layout.dialog_report_photo);
 
                     // set the custom dialog components - text, image and button
