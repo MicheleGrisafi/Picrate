@@ -149,13 +149,13 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
     public Utente updateUtente(Utente user) {
         result = null;
         response = database.updateUtente(Integer.toString(user.getId()),user.getUsername(),Integer.toString(user.getMoney()),Integer.toString(user.getScore()));
-
-        try {
-            JSONObject obj = new JSONObject(response);
-            if(!obj.getBoolean("error"))
+        if(response != "null") {
+            try {
+                JSONObject obj = new JSONObject(response);
                 result = user;
-        } catch (JSONException e) {
-            e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         return (Utente)result;

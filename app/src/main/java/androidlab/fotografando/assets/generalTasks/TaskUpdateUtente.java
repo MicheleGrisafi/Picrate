@@ -1,11 +1,14 @@
 package androidlab.fotografando.assets.generalTasks;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 
 import androidlab.DB.DAO.UtenteDAO;
 import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
 import androidlab.DB.Objects.Utente;
+import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.MyApp;
 
 
 /**
@@ -25,6 +28,7 @@ public class TaskUpdateUtente extends AsyncTask<Void,Void,Void> {
     protected void onPreExecute() {
         dao = new UtenteDAO_DB_impl();
         dao.open();
+
     }
 
     @Override
@@ -35,5 +39,12 @@ public class TaskUpdateUtente extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         dao.close();
+        //Applico le modifiche anche nelle sharedPreferences
+        SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(AppInfo.user_shared_preferences, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("name", user.getUsername());
+        editor.putInt("money",user.getMoney());
+        editor.putInt("score",user.getScore());
+        editor.apply();
     }
 }

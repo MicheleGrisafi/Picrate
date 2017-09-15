@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -47,7 +48,7 @@ public class MainActivity extends FragmentActivity  {
         setContentView(R.layout.activity_main);
 
         /** Inizializzo utente **/
-        AppInfo.loginUser("12345678");
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -182,10 +183,12 @@ public class MainActivity extends FragmentActivity  {
                             (foto,data.getStringExtra("fileName"),this,imageViews,requestCode,challengeSessionAdapter.getSession(data.getIntExtra("sessionID",0)),this);
                     insertThePhotoTask.execute();
                     if(data.getBooleanExtra("secondPhoto",false)) {
+                        Toast.makeText(this, "Updating user", Toast.LENGTH_SHORT).show();
                         Utente user = AppInfo.getUtente();
                         user.setMoney(AppInfo.costo_seconda_foto * -1, true);
                         AppInfo.updateUtente(user);
-                    }
+                    }else
+                        Toast.makeText(this, "NO UPDATE", Toast.LENGTH_SHORT).show();
                     break;
             }
         }

@@ -1,5 +1,7 @@
 package androidlab.fotografando.assets;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import org.json.JSONException;
@@ -10,6 +12,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import androidlab.DB.DAO.UtenteDAO;
+import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
 import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.generalTasks.TaskLogInUtente;
@@ -24,8 +28,8 @@ abstract public class AppInfo {
     static public final String user_shared_preferences = "user-preferences";
     static public final int costo_seconda_foto = 5;
     /**Inizializzo utente prendendolo dal database **/
-    static public void loginUser(String googleKey){
-        TaskLogInUtente logIn = new TaskLogInUtente(googleKey);
+    static public void loginUser(String googleKey, Intent intent, Activity activity){
+        TaskLogInUtente logIn = new TaskLogInUtente(googleKey,intent,activity);
         logIn.execute();
     }
     /** Ottiene utente loggato nell'app **/
@@ -41,6 +45,11 @@ abstract public class AppInfo {
             int money       = settings.getInt("money",0);
             user = new Utente(id,name,email,google,money,score);
         }
+        return user;
+    }
+    static public Utente getUtente(int id){
+        Utente user = null;
+
         return user;
     }
     /** Aggiorna utente **/

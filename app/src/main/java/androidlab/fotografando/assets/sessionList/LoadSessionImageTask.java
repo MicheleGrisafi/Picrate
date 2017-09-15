@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -106,7 +107,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                     intent.putExtra("imageView",i);
                     intent.putExtra("sessionID",session.getIDSession());
 
-                    //imposto la dialog per il pagamento
+                    //imposto la dialog per il pagamento della seconda foto
                     if(i == 1) {
                         intent.putExtra("secondPhoto",true);
                         imageView.setOnClickListener(new View.OnClickListener() {
@@ -128,10 +129,17 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                                 });
                                 Button btnDialog = (Button) dialog.findViewById(R.id.button_dialog_second_picture_buy);
 
-                                if (AppInfo.getUtente().getMoney() < AppInfo.costo_seconda_foto)
-                                    btnDialog.setClickable(false);
-                                // if button is clicked, close the custom dialog
-                                btnDialog.setOnClickListener(new cameraOnClickListener(intent, requestCode, activity, dialog));
+                                if (AppInfo.getUtente().getMoney() < AppInfo.costo_seconda_foto) {
+                                    btnDialog.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Toast.makeText(activity, R.string.not_enough_money, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }else {
+                                    // if button is clicked, close the custom dialog
+                                    btnDialog.setOnClickListener(new cameraOnClickListener(intent, requestCode, activity, dialog));
+                                }
                                 dialog.show();
                             }
                         });

@@ -39,4 +39,5 @@
     <string name="tab_title_rating">Rating</string>
     <string name="tab_title_leaderboards">Leaderboards</string>
     <string name="button_second_picture">Buy it</string>
+    <string name="not_enough_money">Not enough money!</string>
 </resources>
