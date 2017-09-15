@@ -120,6 +120,25 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
         }
         return (Utente)result;
     }
+    public Utente getUtente(int id) {
+        result = null;
+        response = database.getUtente(id);
+        JSONArray arr;
+        if (response != "null"){
+            try {
+                arr = new JSONArray(response);
+                JSONObject obj = arr.getJSONObject(0);
+                String username = obj.getString("username");
+                String mail = obj.getString("mail");
+                int money = obj.getInt("money");
+                int score = obj.getInt("score");
+                result = new Utente(id,username,null,null,money,score);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return (Utente)result;
+    }
 
     @Override
     public ArrayList<Utente> getTopUsers(){

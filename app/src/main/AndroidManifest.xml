@@ -49,6 +49,7 @@
         <activity android:name=".MapsActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".ZoomActivity" android:screenOrientation="portrait"/>
         <activity android:name=".PhotoZoomActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ActivityProfile" android:screenOrientation="portrait"/>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

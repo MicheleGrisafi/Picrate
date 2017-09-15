@@ -13,9 +13,15 @@ import androidlab.DB.Objects.Utente;
 public class TaskGetUtente extends AsyncTask<Void,Void,Utente> {
     private UtenteDAO dao;
     private int id;
+
+    public TaskGetUtente(int id) {
+        this.id = id;
+    }
+
     @Override
     protected Utente doInBackground(Void... params) {
-        Utente user = dao.getUtente();
+        Utente user = dao.getUtente(id);
+        return user;
     }
 
     @Override

@@ -21,6 +21,7 @@ public interface UtenteDAO {
     Utente setScore(Utente user,int score,boolean increment);
     Utente getScore(Utente user);
     Utente getUtente(String googleKey);
+    Utente getUtente(int id);
     ArrayList<Utente> getTopUsers();
     Utente updateUtente(Utente user);
 

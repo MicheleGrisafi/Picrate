@@ -1,6 +1,8 @@
 package androidlab.fotografando.assets.Leaderboards;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,12 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AsyncResponse;
+import androidlab.fotografando.assets.listeners.UserOnClickListener;
 
 /**
  * Created by miki4 on 10/09/2017.
@@ -24,15 +28,19 @@ public class TopUsersLeaderboardAdapter extends RecyclerView.Adapter<TopUsersLea
     private List<Utente> items;
     private Context mContext;
     public AsyncResponse delegate = null;
+    private Activity activity;
+    private Intent intent;
 
-    public TopUsersLeaderboardAdapter( Context mContext,List<Utente> items) {
+    public TopUsersLeaderboardAdapter( Context mContext,List<Utente> items, Activity activity, Intent intent) {
         this.items = items;
         this.mContext = mContext;
+        this.activity = activity;
+        this.intent = intent;
     }
     public Context getContext(){
         return mContext;
     }
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public ConstraintLayout layoutParent;
@@ -59,6 +67,7 @@ public class TopUsersLeaderboardAdapter extends RecyclerView.Adapter<TopUsersLea
             textViewScore = (TextView) itemView.findViewById(R.id.topUsersLeaderboardItem_score);
             imageViewScore = (ImageView) itemView.findViewById(R.id.topUsersLeaderboardItem_starImage);
         }
+
     }
     @Override
     public TopUsersLeaderboardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -91,6 +100,8 @@ public class TopUsersLeaderboardAdapter extends RecyclerView.Adapter<TopUsersLea
         TextView textViewScore = holder.textViewScore;
         textViewScore.setText(Integer.toString(user.getScore()));
 
+        RelativeLayout rlUser = holder.layoutUser;
+        rlUser.setOnClickListener(new UserOnClickListener(intent,activity,user));
     }
 
     @Override

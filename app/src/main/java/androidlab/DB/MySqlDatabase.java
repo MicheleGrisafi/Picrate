@@ -135,6 +135,15 @@ public class MySqlDatabase {
         }
         return openConnection(data,GET_UTENTE);
     }
+    public String getUtente(int id){
+        data="";
+        try {
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(Integer.toString(id),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_UTENTE);
+    }
     public String setUsername(String id, String username){
         data ="";
         try {
