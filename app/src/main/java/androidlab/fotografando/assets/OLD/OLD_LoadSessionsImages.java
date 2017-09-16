@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
 import android.view.View;
@@ -22,7 +23,7 @@ import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.CameraActivity;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.Camera.cameraOnClickListener;
+import androidlab.fotografando.assets.camera.cameraOnClickListener;
 
 /**
  * Created by miki4 on 15/05/2017.
@@ -106,7 +107,7 @@ public class OLD_LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<Arra
                         intent = new Intent(context,CameraActivity.class);
                         intent.putExtra("imageView",picturesMap.get(session.getIDSession()).get(i));
                         intent.putExtra("sessionID",session.getIDSession());
-                        image.setOnClickListener(new cameraOnClickListener(intent,requestCode,(Activity)context));
+                        image.setOnClickListener(new cameraOnClickListener(intent,requestCode,(FragmentActivity) context));
                     }
                 }
             }

@@ -1,21 +1,18 @@
 package androidlab.fotografando.assets.ratings;
 
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,10 +36,12 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
     private List<Photo> items;
     private Context mContext;
     public AsyncResponse delegate = null;
+    FragmentActivity activity;
 
-    public RatingPhotosAdapter( Context mContext,List<Photo> items) {
+    public RatingPhotosAdapter( Context mContext,List<Photo> items, FragmentActivity activity) {
         this.items = items;
         this.mContext = mContext;
+        this.activity = activity;
         //Crea una foto farlocca per fine lista
         Photo foto = new Photo(-1,-1);
         if(this.items != null)
@@ -87,7 +86,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
         //inflate a viewholder
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View ratingPhotoView = inflater.inflate(R.layout.rating_photo_item, parent, false);
+        View ratingPhotoView = inflater.inflate(R.layout.item_rating_photo, parent, false);
         ViewHolder viewHolder = new ViewHolder(ratingPhotoView);
         return viewHolder;
     }
@@ -120,15 +119,14 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
             ImageView imageView = holder.imageView;
             TextView textView = holder.challengeTextView;
             textView.setText(photo.getSession().getTitle());
-            //TODO: implementare anche il messaggio di descrizione della challenge
             ImageButton imageButtonInfo = holder.imageButtonInfo;
             imageButtonInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(mContext, "ciao", Toast.LENGTH_SHORT).show();
                     // custom dialog
-                    final Dialog dialog = new Dialog(mContext);
-                    dialog.setContentView(R.layout.challengesession_info_dialog);
+                    final Dialog dialog = new Dialog(activity);
+                    dialog.setContentView(R.layout.dialog_challengesession_info);
 
                     // set the custom dialog components - text, image and button
                     TextView text = (TextView) dialog.findViewById(R.id.challengeSessionInfoDialogText);
@@ -151,8 +149,8 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
             imageButtonReport.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final Dialog dialog = new Dialog(mContext);
-                    dialog.setContentView(R.layout.report_photo_dialog);
+                    final Dialog dialog = new Dialog(activity);
+                    dialog.setContentView(R.layout.dialog_report_photo);
 
                     // set the custom dialog components - text, image and button
                     TextView text = (TextView) dialog.findViewById(R.id.reportPhotoDialogText);
@@ -170,8 +168,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
                     dialogReportButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            float voto = ratingBar.getRating();
-                            Rating rating = new Rating(AppInfo.getUtente(),items.get(0),Math.round(voto),true);
+                            Rating rating = new Rating(AppInfo.getUtente(),items.get(0),0,true);
                             items.remove(0);
                             notifyItemRemoved(0);
                             InsertRatingTask insertRating = new InsertRatingTask(rating);

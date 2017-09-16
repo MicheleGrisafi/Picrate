@@ -18,11 +18,12 @@ import androidlab.fotografando.assets.AppInfo;
  * Created by miki4 on 29/05/2017.
  */
 
-
+/** Caricamento asincorno delle scadenze per le varie sfide **/
 public class LoadSessionExpirationTask extends AsyncTask<Void,Void,Date> {
-    Context context;
-    ChallengeSession session;
-    TextView expiration;
+    private Context context;
+    private ChallengeSession session;
+    private TextView expiration;
+
     public LoadSessionExpirationTask(Context context, ChallengeSession session, TextView expiration){
         this.context = context;
         this.session = session;
@@ -30,11 +31,12 @@ public class LoadSessionExpirationTask extends AsyncTask<Void,Void,Date> {
     }
     @Override
     protected Date doInBackground(Void... params) {
-        Date data = AppInfo.getDate();
-        return data;
+        //TODO modificare get date
+        return AppInfo.getDate();
     }
     @Override
     protected void onPostExecute(Date data) {
+        //Calcolo differenza tra scadenza e data attuale
         long diffHours;
         int tmp;
         diffHours = getDateDiff(session.getExpiration(),data, TimeUnit.HOURS);

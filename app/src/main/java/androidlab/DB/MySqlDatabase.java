@@ -35,61 +35,57 @@ import okhttp3.Response;
 public class MySqlDatabase {
 
 
-    private static final String url_name = "http://fotografandoapp.altervista.org";
-    private static final String fotoUtente_folder = "/picturesUsers";
+    private static final String url_name                    = "http://fotografandoapp.altervista.org";
+    private static final String fotoUtente_folder           = "/picturesUsers";
+    private static final String fotoChallenge_folder        = "/picturesChallenge";
+    public static final String photo_extension              = ".jpg";
 
-    private static final String urlUtente = "/utente";
-    private static final String urlFoto = "/foto";
-    private static final String urlSession = "/session";
-    private static final String urlRating = "/ratings";
-    private static final String urlUtilities = "/utilities";
+    private static final String urlUtente                   = "/utente";
+    private static final String urlFoto                     = "/foto";
+    private static final String urlSession                  = "/session";
+    private static final String urlRating                   = "/ratings";
+    private static final String urlUtilities                = "/utilities";
 
-    private static final String urlInsertUtente = "/insertUtente.php";
-    private static final String urlGetUtente = "/getUtente.php";
-    private static final String urlSetUsername = "/setUsername.php";
-    private static final String urlSetMoney = "/setMoney.php";
-    private static final String urlGetMoney = "/getMoney.php";
-    private static final String urlSetScore = "/setScore.php";
-    private static final String urlGetScore = "/getScore.php";
-    private static final String urlGetTopUsers = "/getTopUsers.php";
+    private static final String urlInsertUtente             = "/insertUtente.php";
+    private static final String urlGetUtente                = "/getUtente.php";
+    private static final String urlGetTopUsers              = "/getTopUsers.php";
+    private static final String urlUpdateUtente             = "/updateUtente.php";
 
-    private static final String urlInsertPhoto = "/insertPhoto.php";
-    private static final String urlGetPhoto = "/getPhoto.php";
-    private static final String urlDeletePhoto = "/deletePhoto.php";
-    private static final String urlGetRatingPhotos = "/getRatingPhotos.php";
+    private static final String urlInsertPhoto              = "/insertPhoto.php";
+    private static final String urlGetPhoto                 = "/getPhoto.php";
+    private static final String urlDeletePhoto              = "/deletePhoto.php";
+    private static final String urlGetRatingPhotos          = "/getRatingPhotos.php";
 
-    private static final String urlGetSessions = "/getSessions.php";
+    private static final String urlGetSessions              = "/getSessions.php";
 
-    private static final String urlInsertRating = "/insertRating.php";
-    private static final String urlGetRatings = "/getRatings.php";
+    private static final String urlInsertRating             = "/insertRating.php";
+    private static final String urlGetRatings               = "/getRatings.php";
 
-    private static final String urlGetDate = "/getDate.php";
+    private static final String urlGetDate                  = "/getDate.php";
 
 
-    public static final int INSERT_UTENTE = 0;
-    public static final int SET_USERNAME = 1;
-    public static final int SET_MONEY = 2;
-    public static final int GET_MONEY = 3;
-    public static final int SET_SCORE = 4;
-    public static final int GET_SCORE = 5;
-    public static final int GET_UTENTE = 6;
-    public static final int INSERT_PHOTO = 7;
-    public static final int GET_SESSIONS = 8;
-    public static final int INSERT_RATING = 9;
-    public static final int GET_DATE = 10;
-    public static final int GET_PHOTO = 11;
-    public static final int PHOTO_USER_FOLDER = 12;
-    public static final int DELETE_PHOTO = 13;
-    public static final int GET_RATINGS = 14;
-    public static final int GET_RATING_PHOTOS = 15;
-    public static final int GET_TOP_USERS = 16;
+    public static final int INSERT_UTENTE           = 0;
+    public static final int GET_UTENTE              = 1;
+    public static final int INSERT_PHOTO            = 2;
+    public static final int GET_SESSIONS            = 3;
+    public static final int INSERT_RATING           = 4;
+    public static final int GET_DATE                = 5;
+    public static final int GET_PHOTO               = 6;
+    public static final int PHOTO_USER_FOLDER       = 7;
+    public static final int DELETE_PHOTO            = 8;
+    public static final int GET_RATINGS             = 9;
+    public static final int GET_RATING_PHOTOS       = 10;
+    public static final int GET_TOP_USERS           = 11;
+    public static final int UPDATE_UTENTE           = 12;
+    public static final int PHOTO_CHALLENGE_FOLDER  = 13;
 
-    HttpURLConnection httpURLConnection;
-    OutputStream outputStream;
-    BufferedWriter bufferedWriter;
-    InputStream inputStream;
-    BufferedReader bufferedReader;
-    String data = "";
+
+    private HttpURLConnection httpURLConnection;
+    private OutputStream outputStream;
+    private BufferedWriter bufferedWriter;
+    private InputStream inputStream;
+    private BufferedReader bufferedReader;
+    private String data = "";
     public MySqlDatabase(){
 
     }
@@ -123,68 +119,40 @@ public class MySqlDatabase {
         }
         return openConnection(data,INSERT_UTENTE);
     }
-    public String getUtente(String username){
+    public String getUtente(String googleKey){
         data="";
         try {
-            data =  URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(username,"UTF-8");
+            data =  URLEncoder.encode("googleKey","UTF-8")+"="+ URLEncoder.encode(googleKey,"UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return openConnection(data,GET_UTENTE);
     }
-    public String setUsername(String id, String username){
-        data ="";
-        try {
-            data =  URLEncoder.encode("email","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8") +"&" +
-                    URLEncoder.encode("googleKey","UTF-8")+"="+ URLEncoder.encode(username,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return openConnection(data,SET_USERNAME);
-    }
-    public String setMoney(String id, String money, String increment){
+    public String getUtente(int id){
         data="";
         try {
-            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8") +"&" +
-                    URLEncoder.encode("money","UTF-8")+"="+ URLEncoder.encode(money,"UTF-8") +"&" +
-                    URLEncoder.encode("increment","UTF-8")+"="+ URLEncoder.encode(increment,"UTF-8");
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(Integer.toString(id),"UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return openConnection(data,SET_MONEY);
-    }
-    public String getMoney(String id){
-        data="";
-        try {
-            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return openConnection(data,GET_MONEY);
-    }
-    public String setScore(String id, String score, String increment){
-        data="";
-        try {
-            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8") +"&" +
-                    URLEncoder.encode("score","UTF-8")+"="+ URLEncoder.encode(score,"UTF-8") +"&" +
-                    URLEncoder.encode("increment","UTF-8")+"="+ URLEncoder.encode(increment,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return openConnection(data,SET_SCORE);
-    }
-    public String getScore(String id){
-        data="";
-        try {
-            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return openConnection(data,GET_SCORE);
+        return openConnection(data,GET_UTENTE);
     }
     public String getTopUsers(){
         data="";
         return openConnection(data,GET_TOP_USERS);
+    }
+    public String updateUtente(String id, String username, String money, String score){
+        data = "";
+        try {
+            data =  URLEncoder.encode("id","UTF-8")+"="+ URLEncoder.encode(id,"UTF-8") +"&" +
+                    URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(username,"UTF-8") +"&" +
+                    URLEncoder.encode("score","UTF-8")+"="+ URLEncoder.encode(score,"UTF-8") +"&" +
+                    URLEncoder.encode("money","UTF-8")+"="+ URLEncoder.encode(money,"UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,UPDATE_UTENTE);
     }
 
     /********************** OPERAZIONI FOTO ************************/
@@ -328,21 +296,6 @@ public class MySqlDatabase {
                 case INSERT_UTENTE:
                     url = new URL(url_name+urlUtente+urlInsertUtente);
                 break;
-                case SET_USERNAME:
-                    url = new URL(url_name+urlUtente+urlSetUsername);
-                    break;
-                case GET_MONEY:
-                    url = new URL(url_name+urlUtente+urlGetMoney);
-                    break;
-                case SET_MONEY:
-                    url = new URL(url_name+urlUtente+urlSetMoney);
-                    break;
-                case GET_SCORE:
-                    url = new URL(url_name+urlUtente+urlGetScore);
-                    break;
-                case SET_SCORE:
-                    url = new URL(url_name+urlUtente+urlSetScore);
-                    break;
                 case GET_UTENTE:
                     url = new URL(url_name+urlUtente+urlGetUtente);
                     break;
@@ -373,11 +326,16 @@ public class MySqlDatabase {
                 case PHOTO_USER_FOLDER:
                     url = new URL(url_name+fotoUtente_folder);
                     break;
+                case PHOTO_CHALLENGE_FOLDER:
+                    url = new URL(url_name+fotoChallenge_folder);
+                    break;
                 case GET_TOP_USERS:
                     url = new URL(url_name+urlUtente+urlGetTopUsers);
                     break;
+                case UPDATE_UTENTE:
+                    url = new URL(url_name+urlUtente+urlUpdateUtente);
+                    break;
             }
-            return url;
         }catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -16,9 +16,9 @@ import androidlab.DB.Objects.Utente;
  */
 
 public class UtenteDAO_DB_impl implements UtenteDAO {
-    MySqlDatabase database;
-    Object result;
-    String response;
+    private MySqlDatabase database;
+    private Object result;
+    private String response;
     @Override
     public void open() {
         database = new MySqlDatabase();
@@ -44,79 +44,44 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
 
     }
 
-    @Override
-    public Utente setUsername(Utente user,String username) {
-        result = null;
-        response = database.setUsername(Integer.toString(user.getId()),username);
-        if(Integer.parseInt(response) == 1){
-            user.setUsername(username);
-            result = user;
-        }
-        return (Utente)result;
-    }
 
     @Override
-    public Utente setMoney(Utente user, int money, boolean increment) {
+    public Utente getUtente(String googleKey) {
         result = null;
-        response = database.setMoney(Integer.toString(user.getId()),Integer.toString(money),Boolean.toString(increment));
-        if (Integer.parseInt(response) == 1){
-            user.setMoney(money,increment);
-            result = user;
-        }
-        return (Utente)result;
-    }
-
-    @Override
-    public Utente getMoney(Utente user) {
-        result = null;
-        response = database.getMoney(Integer.toString(user.getId()));
-        if (response != "null"){
-            user.setMoney(Integer.parseInt(response),false);
-            result = user;
-        }
-        return (Utente)result;
-    }
-
-    @Override
-    public Utente setScore(Utente user, int score, boolean increment) {
-        result = null;
-        response = database.setMoney(Integer.toString(user.getId()),Integer.toString(score),Boolean.toString(increment));
-        if (Integer.parseInt(response) == 1){
-            user.setScore(score,increment);
-            result = user;
-        }
-        return (Utente)result;
-    }
-
-    @Override
-    public Utente getScore(Utente user) {
-        result = null;
-        response = database.getMoney(Integer.toString(user.getId()));
-        if (response != "null"){
-            user.setScore(Integer.parseInt(response),false);
-            result = user;
-        }
-        return (Utente)result;
-    }
-
-    @Override
-    public Utente getUtente(Utente user) {
-        result = null;
-        response = database.getUtente(user.getUsername());
+        response = database.getUtente(googleKey);
+        JSONArray arr;
         if (response != "null"){
             try {
-                JSONObject obj = new JSONObject(response);
+                arr = new JSONArray(response);
+                JSONObject obj = arr.getJSONObject(0);
                 int IDUser = obj.getInt("IDUser");
                 String username = obj.getString("username");
-                String googleKey = obj.getString("googleKey");
                 String mail = obj.getString("mail");
                 int money = obj.getInt("money");
                 int score = obj.getInt("score");
-                user = new Utente(IDUser,username,mail,googleKey,money,score);
+                result = new Utente(IDUser,username,mail,googleKey,money,score);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            result = user;
+        }
+        return (Utente)result;
+    }
+    public Utente getUtente(int id) {
+        result = null;
+        response = database.getUtente(id);
+        JSONArray arr;
+        if (response != "null"){
+            try {
+                arr = new JSONArray(response);
+                JSONObject obj = arr.getJSONObject(0);
+                String username = obj.getString("username");
+                String mail = obj.getString("mail");
+                int money = obj.getInt("money");
+                int score = obj.getInt("score");
+                result = new Utente(id,username,null,null,money,score);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         return (Utente)result;
     }
@@ -144,5 +109,20 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
             result = lista;
         }
         return (ArrayList<Utente>) result;
+    }
+    @Override
+    public Utente updateUtente(Utente user) {
+        result = null;
+        response = database.updateUtente(Integer.toString(user.getId()),user.getUsername(),Integer.toString(user.getMoney()),Integer.toString(user.getScore()));
+        if(response != "null") {
+            try {
+                JSONObject obj = new JSONObject(response);
+                result = user;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return (Utente)result;
     }
 }

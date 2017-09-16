@@ -1,14 +1,9 @@
 package androidlab.fotografando.assets;
 
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
@@ -16,6 +11,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
  * Created by Michele Grisafi on 16/05/2017.
  */
 
+/** Classe di sostegno a Glide **/
 public class MySimpleTarget<Bitmap> extends SimpleTarget<Bitmap> {
 
     private ConstraintLayout myTarget;

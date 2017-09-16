@@ -32,4 +32,12 @@
     <string name="report_button">Report</string>
     <string name="tab_leaderboard_topusers">USERS</string>
     <string name="tab_leaderboard_challenges">CHALLENGES</string>
+    <string name="front_camera_not_supported">The front camera is not supported!</string>
+    <string name="photo_folder_not_created">The folder could not be created</string>
+    <string name="buy_second_picture">Do you wish to buy a second photo slot for this challenge?</string>
+    <string name="tab_title_challenges">Challenges</string>
+    <string name="tab_title_rating">Rating</string>
+    <string name="tab_title_leaderboards">Leaderboards</string>
+    <string name="button_second_picture">Buy it</string>
+    <string name="not_enough_money">Not enough money!</string>
 </resources>

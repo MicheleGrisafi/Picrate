@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets;
+package androidlab.fotografando.assets.OLD;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.Camera;
+package androidlab.fotografando.assets.camera;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,6 +36,7 @@ public class checkPhotoActivity extends Activity {
         inIntent = getIntent();
         setImage(inIntent);
         outIntent = new Intent();
+        outIntent.putExtra("secondPhoto",inIntent.getBooleanExtra("secondPhoto",false));
         btnOk = (ImageButton)findViewById(R.id.btnOk);
         btnCancel = (ImageButton)findViewById(R.id.btnCancel);
 

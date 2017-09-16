@@ -38,8 +38,6 @@ public class MyProfileActivity extends Activity {
             }
         });
 
-
-
         TextView tvUsername = (TextView) findViewById(R.id.username);
         // nome utente
         tvUsername.setText(AppInfo.getUtente().getUsername());

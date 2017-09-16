@@ -17,17 +17,16 @@ import androidlab.DB.DAO.ChallengeSessionDAO;
 import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.Challenge;
 import androidlab.DB.Objects.ChallengeSession;
-import androidlab.DB.Objects.Photo;
-import androidlab.fotografando.assets.BitmapDownload;
+
 
 /**
  * Created by Michele Grisafi on 10/05/2017.
  */
 
 public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
-    MySqlDatabase database;
-    Object result;
-    String response;
+    private MySqlDatabase database;
+    private Object result;
+    private String response;
     @Override
     public void open() {
         database = new MySqlDatabase();
@@ -63,37 +62,30 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
 
     private List<ChallengeSession> getSessions(String response){
         List<ChallengeSession> lista = new ArrayList<ChallengeSession>();
-        JSONArray arr = null;
-        ChallengeSession session = null;
-        Challenge challege = null;
-        JSONObject obj = null;
-        URL url = null;
+        JSONArray arr;
+        ChallengeSession session;
+        Challenge challege;
+        JSONObject obj;
+        URL url;
         try {
             arr = new JSONArray(response);
-            List<String> list = new ArrayList<String>();
             for(int i = 0; i < arr.length(); i++) {
                 obj = arr.getJSONObject(i);
-                url = new URL(obj.getString("cImage"));
-                DateFormat format = null;
-                try {
-                    format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                URL tmp = MySqlDatabase.getUrl(MySqlDatabase.PHOTO_CHALLENGE_FOLDER);
+                String tmp2 = tmp.toString() + "/" + obj.getString("cImage")+MySqlDatabase.photo_extension;
+                url = new URL(tmp2);
+                DateFormat format;
+                format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = format.parse(obj.getString("expiration"));
                 challege = new Challenge(obj.getInt("IDChallenge"),obj.getString("description"),obj.getString("title"),url);
                 session = new ChallengeSession(obj.getInt("IDSession"),date,challege);
                 String sImage = obj.getString("sImage");
-                if(sImage != "null"){
-                    session.setImage(new URL(obj.getString("sImage")));
+                if(!sImage.equals("null")){
+                    session.setImage(new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_CHALLENGE_FOLDER),obj.getString("sImage")+MySqlDatabase.photo_extension));
                 }
                 lista.add(session);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (JSONException |MalformedURLException | ParseException  e ) {
             e.printStackTrace();
         }
         return lista;

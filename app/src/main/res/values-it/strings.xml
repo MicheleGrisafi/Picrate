@@ -30,6 +30,14 @@
     <string name="report_message">Segnala questa foto se è inadatta per la sua sfida o in generale</string>
     <string name="report_thanks">Grazie per la segnalazione</string>
     <string name="report_button">Segnala</string>
-    <string name="tab_leaderboard_topusers">Utenti</string>
+    <string name="tab_leaderboard_topusers">UTENTI</string>
     <string name="tab_leaderboard_challenges">SFIDE</string>
+    <string name="front_camera_not_supported">La fotocamera anteriore non è supportata!</string>
+    <string name="photo_folder_not_created">Impossibile creare cartella foto</string>
+    <string name="buy_second_picture">Vuoi comprare una seconda foto per questa sfida?</string>
+    <string name="tab_title_challenges">Sfide</string>
+    <string name="tab_title_rating">Valutazioni</string>
+    <string name="tab_title_leaderboards">Classifiche</string>
+    <string name="button_second_picture">Compra</string>
+    <string name="not_enough_money">Soldi insufficienti</string>
 </resources>

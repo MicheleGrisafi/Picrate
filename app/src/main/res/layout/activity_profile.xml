@@ -33,7 +33,7 @@
         tools:layout_constraintLeft_creator="1" />
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/tv_activity_profile_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -48,7 +48,7 @@
         tools:text="Username" />
 
     <TextView
-        android:id="@+id/stars"
+        android:id="@+id/tv_activity_profile_stars"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -70,7 +70,7 @@
         android:layout_marginStart="4dp"
         android:src="@drawable/ic_star_yellow_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintLeft_toRightOf="@+id/stars"
+        app:layout_constraintLeft_toRightOf="@+id/tv_activity_profile_stars"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <android.support.constraint.ConstraintLayout

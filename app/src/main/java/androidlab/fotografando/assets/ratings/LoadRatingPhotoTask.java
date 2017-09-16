@@ -3,6 +3,7 @@ package androidlab.fotografando.assets.ratings;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -21,6 +22,7 @@ import androidlab.DB.DAO.PhotoDAO;
 import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Rating;
+import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AppInfo;
 import androidlab.fotografando.assets.AsyncResponse;
@@ -33,10 +35,12 @@ public class LoadRatingPhotoTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
     private Context context;
     private View rootview;
     public AsyncResponse delegate = null;
+    FragmentActivity activity;
 
-    public LoadRatingPhotoTask(Context context, View rootview) {
+    public LoadRatingPhotoTask(Context context, View rootview, FragmentActivity activity) {
         this.context = context;
         this.rootview = rootview;
+        this.activity = activity;
     }
 
     @Override
@@ -52,7 +56,7 @@ public class LoadRatingPhotoTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
         // Lookup the recyclerview in activity layout
         RecyclerView recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerViewRatings);
         // Create adapter passing in the sample user data
-        RatingPhotosAdapter adapter = new RatingPhotosAdapter(context,photos);
+        RatingPhotosAdapter adapter = new RatingPhotosAdapter(context,photos,activity);
         // Attach the adapter to the recyclerview to populate items
         recyclerView.setAdapter(adapter);
         // Set layout manager to position the items
@@ -62,7 +66,6 @@ public class LoadRatingPhotoTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
         recyclerView.setHasFixedSize(true);
         final SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
-        //TODO: votazione obbligatoria per scorrere?
 
         //Rimozione ed invio voto
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -80,11 +83,18 @@ public class LoadRatingPhotoTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
                         recyclerView.getAdapter().notifyItemRemoved(0);
                         InsertRatingTask insertRating = new InsertRatingTask(rating);
                         insertRating.execute();
+                        //Se voto non è nullo allora dò dei soldi
+                        if(rating.getVoto() != 0){
+                            Utente user = AppInfo.getUtente();
+                            user.setMoney(AppInfo.retribuzione_votazione,true);
+                            AppInfo.updateUtente(user);
+                            Toast.makeText(context, "1 dollar earned!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
         });
 
-        delegate.processRatingFinish(adapter);
+//        delegate.processRatingFinish(adapter);
     }
 }

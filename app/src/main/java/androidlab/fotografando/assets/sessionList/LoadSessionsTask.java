@@ -2,6 +2,8 @@ package androidlab.fotografando.assets.sessionList;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ListView;
 
 import java.util.List;
@@ -20,14 +22,18 @@ public class LoadSessionsTask extends AsyncTask<Void,Void,List<ChallengeSession>
     private ListView listView;
     private List<ChallengeSession> result;
     private ChallengeSessionDAO sessionDAO;
-    int requestCode;
+    private FragmentActivity activity;
+    private int requestCode;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public AsyncResponse delegate = null;
 
-    public LoadSessionsTask(Context context, ListView listView, int requestcode){
+    public LoadSessionsTask(Context context, ListView listView, int requestcode, FragmentActivity activity,SwipeRefreshLayout swipeRefreshLayout){
         this.context = context;
         this.listView = listView;
         this.requestCode = requestcode;
+        this.activity = activity;
+        this.swipeRefreshLayout = swipeRefreshLayout;
     }
 
     @Override
@@ -40,9 +46,9 @@ public class LoadSessionsTask extends AsyncTask<Void,Void,List<ChallengeSession>
 
     @Override
     protected void onPostExecute(List<ChallengeSession> challengeSessions) {
-        ChallengeSessionAdapter myAdapter = new ChallengeSessionAdapter(challengeSessions,context,requestCode);
+        ChallengeSessionAdapter myAdapter = new ChallengeSessionAdapter(challengeSessions,context,requestCode,activity,swipeRefreshLayout);
         listView.setAdapter(myAdapter);
-        delegate.processSessionsFinish(myAdapter);
+        delegate.processFinish(myAdapter);
         sessionDAO.close();
     }
 

@@ -15,13 +15,14 @@ import androidlab.fotografando.R;
  * Created by Cate on 26/05/2017.
  */
 
+/** Nuovo click listener personalizzato per le imageview delle challenge **/
 public class ImageViewOnClickListener implements View.OnClickListener {
-    Intent intent;
-    MainActivity activity;
-    int requestcode;
-    Context ctx;
-    ImageView thumbImg;
-    Bitmap bitmap;
+    private Intent intent;
+    private MainActivity activity;
+    private int requestcode;
+    private Context ctx;
+    private ImageView thumbImg;
+    private Bitmap bitmap;
     public ImageViewOnClickListener(Intent intent, int requestCode, MainActivity activity, Context ctx, ImageView thumbImg, Bitmap bitmap){
         this.intent = intent;
         this.requestcode = requestCode;

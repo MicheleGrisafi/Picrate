@@ -1,6 +1,8 @@
 package androidlab.fotografando.assets.Leaderboards;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,10 +23,14 @@ import androidlab.fotografando.R;
 public class LoadTopUsersTask extends AsyncTask<Void,Void,ArrayList<Utente>> {
     private Context context;
     private View rootview;
+    private Activity activity;
+    private Intent intent;
 
-    public LoadTopUsersTask(Context context, View rootview) {
+    public LoadTopUsersTask(Context context, View rootview, Activity activity, Intent intent) {
         this.context = context;
         this.rootview = rootview;
+        this.activity = activity;
+        this.intent = intent;
     }
 
     @Override
@@ -41,7 +47,7 @@ public class LoadTopUsersTask extends AsyncTask<Void,Void,ArrayList<Utente>> {
         // Lookup the recyclerview in activity layout
         RecyclerView recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerViewLeaderboardUsers);
         // Create adapter passing in the sample user data
-        TopUsersLeaderboardAdapter adapter = new TopUsersLeaderboardAdapter(context,items);
+        TopUsersLeaderboardAdapter adapter = new TopUsersLeaderboardAdapter(context,items,activity,intent);
         // Attach the adapter to the recyclerview to populate items
         recyclerView.setAdapter(adapter);
         // Set layout manager to position the items
