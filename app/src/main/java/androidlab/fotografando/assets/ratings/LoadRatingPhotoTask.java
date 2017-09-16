@@ -22,6 +22,7 @@ import androidlab.DB.DAO.PhotoDAO;
 import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Rating;
+import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AppInfo;
 import androidlab.fotografando.assets.AsyncResponse;
@@ -65,7 +66,6 @@ public class LoadRatingPhotoTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
         recyclerView.setHasFixedSize(true);
         final SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
-        //TODO: votazione obbligatoria per scorrere?
 
         //Rimozione ed invio voto
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -83,6 +83,13 @@ public class LoadRatingPhotoTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
                         recyclerView.getAdapter().notifyItemRemoved(0);
                         InsertRatingTask insertRating = new InsertRatingTask(rating);
                         insertRating.execute();
+                        //Se voto non è nullo allora dò dei soldi
+                        if(rating.getVoto() != 0){
+                            Utente user = AppInfo.getUtente();
+                            user.setMoney(AppInfo.retribuzione_votazione,true);
+                            AppInfo.updateUtente(user);
+                            Toast.makeText(context, "1 dollar earned!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }

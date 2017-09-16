@@ -119,7 +119,6 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
             ImageView imageView = holder.imageView;
             TextView textView = holder.challengeTextView;
             textView.setText(photo.getSession().getTitle());
-            //TODO: implementare anche il messaggio di descrizione della challenge
             ImageButton imageButtonInfo = holder.imageButtonInfo;
             imageButtonInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -169,8 +168,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
                     dialogReportButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            float voto = ratingBar.getRating();
-                            Rating rating = new Rating(AppInfo.getUtente(),items.get(0),Math.round(voto),true);
+                            Rating rating = new Rating(AppInfo.getUtente(),items.get(0),0,true);
                             items.remove(0);
                             notifyItemRemoved(0);
                             InsertRatingTask insertRating = new InsertRatingTask(rating);

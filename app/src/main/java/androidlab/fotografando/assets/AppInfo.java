@@ -26,7 +26,10 @@ import androidlab.fotografando.assets.generalTasks.TaskUpdateUtente;
 /** Classe usata per gestire dati comuni a tutte le attività **/
 abstract public class AppInfo {
     static public final String user_shared_preferences = "user-preferences";
-    static public final int costo_seconda_foto = 5;
+
+    static public final int costo_seconda_foto = 40;
+    static public final int retribuzione_votazione = 1;
+
     /**Inizializzo utente prendendolo dal database **/
     static public void loginUser(String googleKey, Intent intent, Activity activity){
         TaskLogInUtente logIn = new TaskLogInUtente(googleKey,intent,activity);
@@ -49,7 +52,6 @@ abstract public class AppInfo {
     }
     static public Utente getUtente(int id){
         Utente user = null;
-
         return user;
     }
     /** Aggiorna utente **/
@@ -70,7 +72,6 @@ abstract public class AppInfo {
 
     /** Ottiene data giornaliera dal database **/
     static public Date getDate(){
-        //TODO: creare task separato per getDate
         MySqlDatabase database = new MySqlDatabase();
         String response = database.getDate();
         JSONObject obj = null;

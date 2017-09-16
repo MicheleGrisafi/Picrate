@@ -71,7 +71,9 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
             arr = new JSONArray(response);
             for(int i = 0; i < arr.length(); i++) {
                 obj = arr.getJSONObject(i);
-                url = new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_CHALLENGE_FOLDER),obj.getString("cImage")+MySqlDatabase.photo_extension);
+                URL tmp = MySqlDatabase.getUrl(MySqlDatabase.PHOTO_CHALLENGE_FOLDER);
+                String tmp2 = tmp.toString() + "/" + obj.getString("cImage")+MySqlDatabase.photo_extension;
+                url = new URL(tmp2);
                 DateFormat format;
                 format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = format.parse(obj.getString("expiration"));

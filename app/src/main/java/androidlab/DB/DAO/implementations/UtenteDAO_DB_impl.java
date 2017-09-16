@@ -16,9 +16,9 @@ import androidlab.DB.Objects.Utente;
  */
 
 public class UtenteDAO_DB_impl implements UtenteDAO {
-    MySqlDatabase database;
-    Object result;
-    String response;
+    private MySqlDatabase database;
+    private Object result;
+    private String response;
     @Override
     public void open() {
         database = new MySqlDatabase();
@@ -44,60 +44,6 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
 
     }
 
-    @Override
-    public Utente setUsername(Utente user,String username) {
-        result = null;
-        response = database.setUsername(Integer.toString(user.getId()),username);
-        if(Integer.parseInt(response) == 1){
-            user.setUsername(username);
-            result = user;
-        }
-        return (Utente)result;
-    }
-
-    @Override
-    public Utente setMoney(Utente user, int money, boolean increment) {
-        result = null;
-        response = database.setMoney(Integer.toString(user.getId()),Integer.toString(money),Boolean.toString(increment));
-        if (Integer.parseInt(response) == 1){
-            user.setMoney(money,increment);
-            result = user;
-        }
-        return (Utente)result;
-    }
-
-    @Override
-    public Utente getMoney(Utente user) {
-        result = null;
-        response = database.getMoney(Integer.toString(user.getId()));
-        if (response != "null"){
-            user.setMoney(Integer.parseInt(response),false);
-            result = user;
-        }
-        return (Utente)result;
-    }
-
-    @Override
-    public Utente setScore(Utente user, int score, boolean increment) {
-        result = null;
-        response = database.setMoney(Integer.toString(user.getId()),Integer.toString(score),Boolean.toString(increment));
-        if (Integer.parseInt(response) == 1){
-            user.setScore(score,increment);
-            result = user;
-        }
-        return (Utente)result;
-    }
-
-    @Override
-    public Utente getScore(Utente user) {
-        result = null;
-        response = database.getMoney(Integer.toString(user.getId()));
-        if (response != "null"){
-            user.setScore(Integer.parseInt(response),false);
-            result = user;
-        }
-        return (Utente)result;
-    }
 
     @Override
     public Utente getUtente(String googleKey) {
