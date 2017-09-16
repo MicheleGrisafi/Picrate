@@ -37,6 +37,8 @@ public class MySqlDatabase {
 
     private static final String url_name = "http://fotografandoapp.altervista.org";
     private static final String fotoUtente_folder = "/picturesUsers";
+    private static final String fotoChallenge_folder = "/picturesChallnge";
+    public static final String photo_extension = ".jpg";
 
     private static final String urlUtente = "/utente";
     private static final String urlFoto = "/foto";
@@ -85,6 +87,7 @@ public class MySqlDatabase {
     public static final int GET_RATING_PHOTOS = 15;
     public static final int GET_TOP_USERS = 16;
     public static final int UPDATE_UTENTE = 17;
+    public static final int PHOTO_CHALLENGE_FOLDER = 18;
 
 
     private HttpURLConnection httpURLConnection;
@@ -397,6 +400,9 @@ public class MySqlDatabase {
                     break;
                 case PHOTO_USER_FOLDER:
                     url = new URL(url_name+fotoUtente_folder);
+                    break;
+                case PHOTO_CHALLENGE_FOLDER:
+                    url = new URL(url_name+fotoChallenge_folder);
                     break;
                 case GET_TOP_USERS:
                     url = new URL(url_name+urlUtente+urlGetTopUsers);
