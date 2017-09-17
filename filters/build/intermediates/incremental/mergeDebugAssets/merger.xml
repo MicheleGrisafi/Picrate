@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\miki4\Documents\GitKraken\Progetto-Fotografando\filters\src\main\assets"/><source path="D:\miki4\Documents\GitKraken\Progetto-Fotografando\filters\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\miki4\Documents\GitKraken\Progetto-Fotografando\filters\src\debug\assets"/></dataSet></merger>

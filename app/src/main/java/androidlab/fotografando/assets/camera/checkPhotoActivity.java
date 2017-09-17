@@ -34,12 +34,10 @@ public class checkPhotoActivity extends Activity {
         mImageView = (ImageView)findViewById(R.id.imageView);
         mImageView.setImageResource(android.R.color.transparent);
         inIntent = getIntent();
-        setImage(inIntent);
         outIntent = new Intent();
         outIntent.putExtra("secondPhoto",inIntent.getBooleanExtra("secondPhoto",false));
         btnOk = (ImageButton)findViewById(R.id.btnOk);
         btnCancel = (ImageButton)findViewById(R.id.btnCancel);
-
         topOverlay = (RelativeLayout)findViewById(R.id.topRelative);
         bottomOverlay = (RelativeLayout)findViewById(R.id.bottomRelative);
         layout = (ConstraintLayout)findViewById(R.id.layout);
@@ -47,19 +45,40 @@ public class checkPhotoActivity extends Activity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(1,outIntent);
-                freeResources();
                 finish();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(0,outIntent);
-                freeResources();
                 finish();
             }
         });
 
+        ImageButton imageButtonfilter = (ImageButton) findViewById(R.id.btnFilter);
+        final Intent filterIntent = new Intent(this,ActivityImageFilter.class);
+        filterIntent.putExtra("fileName",inIntent.getStringExtra("fileName"));
+        imageButtonfilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(filterIntent);
+            }
+        });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setImage(inIntent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        freeResources();
+        System.gc();
+    }
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus){
         super.onWindowFocusChanged(hasFocus);
@@ -105,20 +124,21 @@ public class checkPhotoActivity extends Activity {
         bottomOverlay.setLayoutParams(overlayBottomParams);
     }
     private boolean setImage(Intent intent){
-        String name = intent.getExtras().get("fileName").toString();
+        String name = intent.getStringExtra("fileName");
         File imgFile = new File(name);
+        boolean result = false;
         if(imgFile.exists()){
             imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
             mImageView.setImageBitmap(imageBitmap);
-            return true;
+            result = true;
         }else{
             Toast.makeText(getApplicationContext(),"image not valid: " + name,Toast.LENGTH_SHORT).show();
         }
-        return false;
+        return result;
     }
     private void freeResources(){
+        mImageView.setImageBitmap(null);
         imageBitmap.recycle();
-        imageBitmap = null;
     }
 }
 

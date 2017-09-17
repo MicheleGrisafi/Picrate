@@ -172,6 +172,9 @@ public class CameraActivity extends Activity {
 
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
+            mImage.close();
+            byteBuffer.clear();
+
             //Ritaglio l'immagine secondo il quadrato
             int destHeight;
             Matrix matrix = new Matrix();
@@ -199,7 +202,6 @@ public class CameraActivity extends Activity {
             }
             //Elimino il bitmap per salvare memoria
             bitmap.recycle();
-            bitmap = null;
 
             //Scrivo l'immagine su un file JPEG
             FileOutputStream out = null;
@@ -209,7 +211,7 @@ public class CameraActivity extends Activity {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                mImage.close();
+                //mImage.close();
                 try {
                     if (out != null) {
                         out.close();
@@ -221,7 +223,6 @@ public class CameraActivity extends Activity {
 
             //Reciclo l'immagine ritagliata
             cropped.recycle();
-            cropped = null;
 
             //Inserisco l'immagine nell'intent da passare al controllo fotografico
 
@@ -325,6 +326,7 @@ public class CameraActivity extends Activity {
     protected void onPause(){
         closeCamera();
         stopBackgroundThread();
+        System.gc();
         super.onPause();
     }
 
