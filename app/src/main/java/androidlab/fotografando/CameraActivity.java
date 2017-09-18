@@ -170,10 +170,11 @@ public class CameraActivity extends Activity {
             byte[] bytes = new byte[byteBuffer.remaining()];
             byteBuffer.get(bytes);
 
-            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length,options);
 
-            mImage.close();
-            byteBuffer.clear();
+
 
             //Ritaglio l'immagine secondo il quadrato
             int destHeight;
@@ -224,6 +225,8 @@ public class CameraActivity extends Activity {
             //Reciclo l'immagine ritagliata
             cropped.recycle();
 
+            bitmap = null;
+            cropped = null;
             //Inserisco l'immagine nell'intent da passare al controllo fotografico
 
             checkPhotoIntent.putExtra("fileName",mPhotoFileName);

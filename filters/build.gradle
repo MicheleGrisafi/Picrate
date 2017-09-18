@@ -35,11 +35,6 @@ android {
 
     clean.dependsOn cleanJni
 
-    externalNativeBuild {
-        ndkBuild {
-            path 'jni/Android.mk'
-        }
-    }
 }
 
 def getNdkPath() {

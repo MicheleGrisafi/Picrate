@@ -74,9 +74,9 @@ public class checkPhotoActivity extends Activity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         freeResources();
         System.gc();
+        super.onPause();
     }
 
     @Override
@@ -128,7 +128,9 @@ public class checkPhotoActivity extends Activity {
         File imgFile = new File(name);
         boolean result = false;
         if(imgFile.exists()){
-            imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+            imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath(),options);
             mImageView.setImageBitmap(imageBitmap);
             result = true;
         }else{
@@ -139,6 +141,7 @@ public class checkPhotoActivity extends Activity {
     private void freeResources(){
         mImageView.setImageBitmap(null);
         imageBitmap.recycle();
+        imageBitmap = null;
     }
 }
 
