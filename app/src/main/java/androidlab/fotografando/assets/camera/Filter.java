@@ -6,12 +6,17 @@ package androidlab.fotografando.assets.camera;
 
 public class Filter {
     private String name;
+    private int cost;
+
+    public Filter(String name, int cost) {
+        this.name = name;
+        this.cost = cost;
+    }
 
     public int getCost() {
         return cost;
     }
 
-    private int cost;
 
     @Override
     public String toString() {

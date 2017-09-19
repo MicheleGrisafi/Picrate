@@ -170,8 +170,12 @@ public class CameraActivity extends Activity {
             byte[] bytes = new byte[byteBuffer.remaining()];
             byteBuffer.get(bytes);
 
+
+
+
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.RGB_565;
+            options.inSampleSize = 2;
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length,options);
 
 
@@ -180,6 +184,8 @@ public class CameraActivity extends Activity {
             int destHeight;
             Matrix matrix = new Matrix();
             Bitmap cropped;
+            int actualWidth = bitmap.getWidth();
+            int actualHeight = bitmap.getHeight();
             if (bitmap.getWidth() >= bitmap.getHeight()){
                 matrix.postRotate(90);
                 destHeight = bitmap.getWidth() - (bitmap.getWidth() * topLayerHeight) / mTextureView.getHeight();
@@ -201,8 +207,6 @@ public class CameraActivity extends Activity {
                         bitmap.getWidth(),matrix,true
                 );
             }
-            //Elimino il bitmap per salvare memoria
-            bitmap.recycle();
 
             //Scrivo l'immagine su un file JPEG
             FileOutputStream out = null;
@@ -216,13 +220,14 @@ public class CameraActivity extends Activity {
                 try {
                     if (out != null) {
                         out.close();
+                        out = null;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-
             //Reciclo l'immagine ritagliata
+            bitmap.recycle();
             cropped.recycle();
 
             bitmap = null;
@@ -232,6 +237,7 @@ public class CameraActivity extends Activity {
             checkPhotoIntent.putExtra("fileName",mPhotoFileName);
             checkPhotoIntent.putExtra("secondPhoto",inIntent.getBooleanExtra("secondPhoto",false));
             startActivityForResult(checkPhotoIntent,REQUEST_CODE);
+            //finish();
         }
     }
 

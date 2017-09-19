@@ -15,7 +15,7 @@ public class GothamFilter {
 		bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
 		
 		int[] returnPixles = NativeFilterFunc.gothamFilter(pixels, width, height);
-		Bitmap returnBitmap = Bitmap.createBitmap(returnPixles, width, height, Bitmap.Config.ARGB_8888);
+		Bitmap returnBitmap = Bitmap.createBitmap(returnPixles, width, height, Bitmap.Config.RGB_565);
 		
 		return returnBitmap;
 	}

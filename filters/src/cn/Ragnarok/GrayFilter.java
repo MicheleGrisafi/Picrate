@@ -12,10 +12,10 @@ public class GrayFilter {
 		width = bitmap.getWidth();
 		height = bitmap.getHeight();
 			
-		Bitmap grayBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+		Bitmap grayBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
 		Canvas canvas = new Canvas(grayBitmap);
 		Paint paint = new Paint();
-		paint.setAntiAlias(true); // 设置抗锯齿
+		paint.setAntiAlias(true); //
 			
 		ColorMatrix colorMatrix = new ColorMatrix();
 		colorMatrix.setSaturation(0);

@@ -20,6 +20,7 @@ import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AsyncResponse;
 import androidlab.fotografando.assets.listeners.UserOnClickListener;
+import cn.Ragnarok.BitmapFilter;
 import cn.Ragnarok.GrayFilter;
 
 /**
@@ -35,14 +36,21 @@ public class AdapterFilters extends RecyclerView.Adapter<AdapterFilters.ViewHold
     private Bitmap bitmap;
     private Bitmap filterBitmap;
 
-    public AdapterFilters( Context mContext,List<Filter> items, Activity activity, Intent intent, ImageView canvas, Bitmap bitmap) {
+    public AdapterFilters( Context mContext,List<Filter> items, ImageView canvas) {
         this.items = items;
         this.mContext = mContext;
         this.activity = activity;
         this.intent = intent;
         this.canvas = canvas;
+    }
+    public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
+
+    public void setFilterBitmap(Bitmap filterBitmap) {
+        this.filterBitmap = filterBitmap;
+    }
+
     public Context getContext(){
         return mContext;
     }
@@ -91,11 +99,66 @@ public class AdapterFilters extends RecyclerView.Adapter<AdapterFilters.ViewHold
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                canvas.setImageBitmap(null);
+                canvas.setImageResource(0);
+                canvas.setImageDrawable(null);
+                if(filterBitmap != null)
+                    filterBitmap.recycle();
                 switch (filter.toString()){
                     case "Grayscale":
-                        filterBitmap = GrayFilter.changeToGray(bitmap);
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.GRAY_STYLE);
+                        break;
+                    case "Gotham":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.GOTHAM_STYLE);
+                        break;
+                    case "Oil":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.OIL_STYLE);
+                        break;
+                    case "Block":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.BLOCK_STYLE);
+                        break;
+                    case "Blur":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.AVERAGE_BLUR_STYLE);
+                        break;
+                    case "HDR":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.HDR_STYLE);
+                        break;
+                    case "Invert":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.INVERT_STYLE);
+                        break;
+                    case "Light":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.LIGHT_STYLE);
+                        break;
+                    case "Lomo":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.LOMO_STYLE);
+                        break;
+                    case "Neon":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.NEON_STYLE);
+                        break;
+                    case "Old":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.OLD_STYLE);
+                        break;
+                    case "Pixel":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.PIXELATE_STYLE);
+                        break;
+                    case "Relief":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.RELIEF_STYLE);
+                        break;
+                    case "Sharpen":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.SHARPEN_STYLE);
+                        break;
+                    case "Sketch":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.SKETCH_STYLE);
+                        break;
+                    case "Glow":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.SOFT_GLOW_STYLE);
+                        break;
+                    case "TV":
+                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.TV_STYLE);
                         break;
                 }
+
+                canvas.setImageBitmap(filterBitmap);
             }
         });
     }
