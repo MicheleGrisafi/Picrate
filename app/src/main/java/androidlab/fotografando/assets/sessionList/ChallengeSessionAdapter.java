@@ -22,6 +22,7 @@ import java.util.List;
 
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.fotografando.R;
+import androidlab.fotografando.assets.ImageViewChallenge;
 import androidlab.fotografando.assets.MyApp;
 import androidlab.fotografando.assets.MySimpleTarget;
 
@@ -33,7 +34,7 @@ import androidlab.fotografando.assets.MySimpleTarget;
 public class ChallengeSessionAdapter extends BaseAdapter {
     private List<ChallengeSession> sessions;
     private Context ctx;
-    private SparseArray<ArrayList<ImageView>> imageViewMap;
+    private SparseArray<ArrayList<ImageViewChallenge>> imageViewMap;
     private int requestCode;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FragmentActivity activity;
@@ -81,7 +82,7 @@ public class ChallengeSessionAdapter extends BaseAdapter {
     /** viewholder per il riciclo delle view **/
     private static class ViewHolder{
         private TextView data,expiration,title,description;
-        private ImageView img1,img2;
+        private ImageViewChallenge img1,img2;
         private ConstraintLayout box;
     }
 
@@ -100,8 +101,8 @@ public class ChallengeSessionAdapter extends BaseAdapter {
             mViewHolder.title = (TextView)convertView.findViewById(R.id.titolo);
             mViewHolder.description = (TextView)convertView.findViewById(R.id.descrizione);
             mViewHolder.box = (ConstraintLayout)convertView.findViewById(R.id.box);
-            mViewHolder.img1 = (ImageView)convertView.findViewById(R.id.imgSession1);
-            mViewHolder.img2 = (ImageView)convertView.findViewById(R.id.imgSession2);
+            mViewHolder.img1 = (ImageViewChallenge)convertView.findViewById(R.id.imgSession1);
+            mViewHolder.img2 = (ImageViewChallenge)convertView.findViewById(R.id.imgSession2);
             convertView.setTag(mViewHolder);
         }else{
             //Riciclo la view
@@ -132,8 +133,8 @@ public class ChallengeSessionAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public ImageView getImageView(int sessionId, int pos){
-        ImageView res = null;
+    public ImageViewChallenge getImageView(int sessionId, int pos){
+        ImageViewChallenge res = null;
         try {
             res = imageViewMap.get(sessionId).get(pos);
         } catch (Exception e) {
@@ -141,8 +142,8 @@ public class ChallengeSessionAdapter extends BaseAdapter {
         }
         return res;
     }
-    public ArrayList<ImageView> getImageViews(int sessionId){
-        ArrayList<ImageView> res = null;
+    public ArrayList<ImageViewChallenge> getImageViews(int sessionId){
+        ArrayList<ImageViewChallenge> res = null;
         try {
             res = imageViewMap.get(sessionId);
         } catch (Exception e) {

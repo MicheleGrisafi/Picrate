@@ -236,6 +236,7 @@ public class CameraActivity extends Activity {
 
             checkPhotoIntent.putExtra("fileName",mPhotoFileName);
             checkPhotoIntent.putExtra("secondPhoto",inIntent.getBooleanExtra("secondPhoto",false));
+            checkPhotoIntent.putExtra("price",inIntent.getIntExtra("price",0));
             startActivityForResult(checkPhotoIntent,REQUEST_CODE);
             //finish();
         }
@@ -403,8 +404,7 @@ public class CameraActivity extends Activity {
                 outIntent.putExtra("imageView",inIntent.getIntExtra("imageView",0));
                 outIntent.putExtra("fileName",mPhotoFileName);
                 outIntent.putExtra("sessionID",inIntent.getIntExtra("sessionID",0));
-                if(data.getBooleanExtra("secondPhoto",false))
-                    outIntent.putExtra("secondPhoto",true);
+                outIntent.putExtra("price",data.getIntExtra("price",0));
                 setResult(1,outIntent);
                 closeCamera();
                 finish();

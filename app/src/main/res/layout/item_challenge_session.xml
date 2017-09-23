@@ -62,7 +62,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/titolo" />
 
 
-            <ImageView
+            <androidlab.fotografando.assets.ImageViewChallenge
                 android:id="@+id/imgSession1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -82,7 +82,7 @@
                 app:srcCompat="@drawable/beautiful_photography" />
 
 
-            <ImageView
+            <androidlab.fotografando.assets.ImageViewChallenge
                 android:id="@+id/imgSession2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import androidlab.DB.DAO.PhotoDAO;
 import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
+import androidlab.fotografando.R;
+import androidlab.fotografando.assets.ImageViewChallenge;
 import androidlab.fotografando.assets.sessionList.LoadSessionImageTask;
 
 /**
@@ -22,14 +25,14 @@ public class InsertThePhotoTask extends AsyncTask<Void, Void, Photo> {
     private Photo fotografia;
     private String nameFile;
     private Context context;
-    private ArrayList<ImageView> imageViews;
+    private ArrayList<ImageViewChallenge> imageViews;
     private int requestCode;
     private ChallengeSession session;
     private FragmentActivity activity;
 
     private PhotoDAO photoDAO;
 
-    public InsertThePhotoTask(Photo fotografia, String namefile, Context context, ArrayList<ImageView> imageViews, int requestCode, ChallengeSession session, FragmentActivity activity){
+    public InsertThePhotoTask(Photo fotografia, String namefile, Context context, ArrayList<ImageViewChallenge> imageViews, int requestCode, ChallengeSession session, FragmentActivity activity){
         this.fotografia = fotografia;
         this.nameFile = namefile;
         this.context = context;
@@ -59,8 +62,10 @@ public class InsertThePhotoTask extends AsyncTask<Void, Void, Photo> {
             loadSessionImageTask.execute();
 
             //Cancello file locale
+            //TODO: mantengo la foto se voglio
             File file = new File(nameFile);
-            file.delete();
+            if(!file.delete())
+                Toast.makeText(context, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
         }
         photoDAO.close();
     }

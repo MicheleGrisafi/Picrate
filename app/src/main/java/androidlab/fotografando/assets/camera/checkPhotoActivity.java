@@ -25,6 +25,9 @@ public class checkPhotoActivity extends Activity {
     private Bitmap imageBitmap;
     private Intent inIntent;
     private Intent outIntent;
+    public int CODE_FILTERS = 5;
+
+    private boolean result_sent = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +47,14 @@ public class checkPhotoActivity extends Activity {
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                result_sent =true;
                 setResult(1,outIntent);
                 finish();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                result_sent =true;
                 setResult(0,outIntent);
                 finish();
             }
@@ -58,10 +63,11 @@ public class checkPhotoActivity extends Activity {
         ImageButton imageButtonfilter = (ImageButton) findViewById(R.id.btnFilter);
         final Intent filterIntent = new Intent(this,ActivityImageFilter.class);
         filterIntent.putExtra("fileName",inIntent.getStringExtra("fileName"));
+        filterIntent.putExtra("price",inIntent.getIntExtra("price",0));
         imageButtonfilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(filterIntent);
+                startActivityForResult(filterIntent,CODE_FILTERS);
             }
         });
     }
@@ -77,6 +83,13 @@ public class checkPhotoActivity extends Activity {
         freeResources();
         System.gc();
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (!result_sent)
+            setResult(0,outIntent);
+        super.onDestroy();
     }
 
     @Override
@@ -123,6 +136,19 @@ public class checkPhotoActivity extends Activity {
         topOverlay.setLayoutParams(overlayTopParams);
         bottomOverlay.setLayoutParams(overlayBottomParams);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CODE_FILTERS){
+            if(resultCode == 1){
+                outIntent.putExtra("price",data.getIntExtra("price",0) + inIntent.getIntExtra("price",0));
+            }else{
+
+            }
+        }
+    }
+
     private boolean setImage(Intent intent){
         String name = intent.getStringExtra("fileName");
         File imgFile = new File(name);

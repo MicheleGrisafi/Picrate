@@ -27,8 +27,22 @@ import androidlab.fotografando.assets.generalTasks.TaskUpdateUtente;
 abstract public class AppInfo {
     static public final String user_shared_preferences = "user-preferences";
 
+    /** COSTI VARI **/
     static public final int costo_seconda_foto = 40;
     static public final int retribuzione_votazione = 1;
+
+    static public final int filter_grayscale = 20;
+    static public final int filter_gotham = 10;
+    static public final int filter_oil = 30;
+    static public final int filter_block = 10;
+    static public final int filter_blur = 10;
+    static public final int filter_hdr = 30;
+    static public final int filter_seppia = 30;
+    static public final int filter_sharpen = 20;
+    static public final int filter_sketch = 30;
+    static public final int filter_glow = 20;
+
+
 
     /**Inizializzo utente prendendolo dal database **/
     static public void loginUser(String googleKey, Intent intent, Activity activity){

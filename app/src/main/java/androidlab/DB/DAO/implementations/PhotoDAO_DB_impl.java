@@ -90,9 +90,7 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
                     lista.add(foto);
                 }
                 result = lista;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
+            } catch (JSONException | MalformedURLException e) {
                 e.printStackTrace();
             }
         }

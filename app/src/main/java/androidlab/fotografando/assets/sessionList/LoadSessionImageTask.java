@@ -25,6 +25,7 @@ import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.ImageViewChallenge;
 import androidlab.fotografando.assets.camera.cameraOnClickListener;
 import androidlab.fotografando.CameraActivity;
 
@@ -36,7 +37,7 @@ import androidlab.fotografando.CameraActivity;
 public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> {
 
     private ChallengeSession session;
-    private ArrayList<ImageView> imageViews;
+    private ArrayList<ImageViewChallenge> imageViews;
     private Context context;
     private FragmentActivity activity;
 
@@ -44,7 +45,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
     private PhotoDAO dao;
     private int requestCode;
 
-    public LoadSessionImageTask(Context context, ChallengeSession session, ArrayList<ImageView> imageViews, int requestCode, FragmentActivity activity){
+    public LoadSessionImageTask(Context context, ChallengeSession session, ArrayList<ImageViewChallenge> imageViews, int requestCode, FragmentActivity activity){
         this.session = session;
         this.context = context;
         this.imageViews = imageViews;
@@ -68,7 +69,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
     protected void onPostExecute(ArrayList<Photo> pictures) {
         // TODO: provare a scaricare l'immagine bitmap in formato grande per implementare lo zoom
         Photo foto;
-        ImageView imageView;
+        ImageViewChallenge imageView;
         final Intent intent = new Intent(context,CameraActivity.class);
 
         //Carica le foto nelle imageView
@@ -80,6 +81,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                     Glide.with(context)
                             .load(foto.getImage())
                             .into(imageView);
+                    imageView.setPhoto(foto);
                 }
             }
         }
@@ -97,13 +99,12 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
             }else{
                 //immagine vuota
                 tags.add(false);
-                imageView.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
-                //TODO: inserire costo per seconda foto
+
                 if ( i> 0 && !tags.get(i-1)){
-                    imageView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRed));
+                    imageView.setImageResource(R.drawable.ic_add_a_photo_gray_24dp);
                     imageView.setOnClickListener(null);
                 }else{
-                    imageView.setBackgroundColor(Color.TRANSPARENT);
+                    imageView.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
                     intent.putExtra("imageView",i);
                     intent.putExtra("sessionID",session.getIDSession());
 
@@ -138,6 +139,7 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                                     });
                                 }else {
                                     // if button is clicked, close the custom dialog
+                                    intent.putExtra("price",AppInfo.costo_seconda_foto);
                                     btnDialog.setOnClickListener(new cameraOnClickListener(intent, requestCode, activity, dialog));
                                 }
                                 dialog.show();

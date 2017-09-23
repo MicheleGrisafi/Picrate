@@ -36,10 +36,9 @@ public class AdapterFilters extends RecyclerView.Adapter<AdapterFilters.ViewHold
     private Bitmap bitmap;
     private Bitmap filterBitmap;
 
-    public AdapterFilters( Context mContext,List<Filter> items, ImageView canvas) {
+    public AdapterFilters( Context mContext,List<Filter> items, ImageView canvas,Intent intent) {
         this.items = items;
         this.mContext = mContext;
-        this.activity = activity;
         this.intent = intent;
         this.canvas = canvas;
     }
@@ -102,8 +101,6 @@ public class AdapterFilters extends RecyclerView.Adapter<AdapterFilters.ViewHold
                 canvas.setImageBitmap(null);
                 canvas.setImageResource(0);
                 canvas.setImageDrawable(null);
-                if(filterBitmap != null)
-                    filterBitmap.recycle();
                 switch (filter.toString()){
                     case "Grayscale":
                         filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.GRAY_STYLE);
@@ -123,9 +120,6 @@ public class AdapterFilters extends RecyclerView.Adapter<AdapterFilters.ViewHold
                     case "HDR":
                         filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.HDR_STYLE);
                         break;
-                    case "Invert":
-                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.INVERT_STYLE);
-                        break;
                     case "Light":
                         filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.LIGHT_STYLE);
                         break;
@@ -135,7 +129,7 @@ public class AdapterFilters extends RecyclerView.Adapter<AdapterFilters.ViewHold
                     case "Neon":
                         filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.NEON_STYLE);
                         break;
-                    case "Old":
+                    case "Seppia":
                         filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.OLD_STYLE);
                         break;
                     case "Pixel":
@@ -153,11 +147,10 @@ public class AdapterFilters extends RecyclerView.Adapter<AdapterFilters.ViewHold
                     case "Glow":
                         filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.SOFT_GLOW_STYLE);
                         break;
-                    case "TV":
-                        filterBitmap = BitmapFilter.changeStyle(bitmap,BitmapFilter.TV_STYLE);
-                        break;
+                    default:
+                        filterBitmap = Bitmap.createBitmap(bitmap);
                 }
-
+                intent.putExtra("price",Integer.toString(filter.getCost()));
                 canvas.setImageBitmap(filterBitmap);
             }
         });

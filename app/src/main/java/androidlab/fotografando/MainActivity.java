@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.ImageViewChallenge;
 import androidlab.fotografando.assets.camera.InsertThePhotoTask;
 import androidlab.fotografando.assets.ratings.RatingPhotosAdapter;
 import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
@@ -176,19 +177,17 @@ public class MainActivity extends FragmentActivity  {
                     //Creo la foto
                     Photo foto = new Photo(AppInfo.getUtente().getId(),data.getIntExtra("sessionID",0));
                     //Ottengo le imageView relative alla challenge dall'adapter
-                    ArrayList<ImageView> imageViews = challengeSessionAdapter.getImageViews(data.getIntExtra("sessionID",0));
+                    ArrayList<ImageViewChallenge> imageViews = challengeSessionAdapter.getImageViews(data.getIntExtra("sessionID",0));
                     //Avvio il task per l'inserzione della foto
 
                     InsertThePhotoTask insertThePhotoTask = new InsertThePhotoTask
                             (foto,data.getStringExtra("fileName"),this,imageViews,requestCode,challengeSessionAdapter.getSession(data.getIntExtra("sessionID",0)),this);
                     insertThePhotoTask.execute();
-                    if(data.getBooleanExtra("secondPhoto",false)) {
-                        Toast.makeText(this, "Updating user", Toast.LENGTH_SHORT).show();
+                    if(data.getIntExtra("price",0)>0) {
                         Utente user = AppInfo.getUtente();
-                        user.setMoney(AppInfo.costo_seconda_foto * -1, true);
+                        user.setMoney(data.getIntExtra("price",0) * -1, true);
                         AppInfo.updateUtente(user);
-                    }else
-                        Toast.makeText(this, "NO UPDATE", Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }

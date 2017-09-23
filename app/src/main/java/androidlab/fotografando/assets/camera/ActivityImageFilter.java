@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import androidlab.fotografando.R;
+import androidlab.fotografando.assets.AppInfo;
 import cn.Ragnarok.GrayFilter;
 
 /**
@@ -30,9 +31,11 @@ import cn.Ragnarok.GrayFilter;
 public class ActivityImageFilter extends Activity {
     private ImageView imageView;
     private Intent inIntent;
+    private Intent outIntent;
     private Bitmap bitmap;
     private Bitmap filterBitmap;
     AdapterFilters adapter;
+    private boolean set_result = false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,38 +46,38 @@ public class ActivityImageFilter extends Activity {
         ImageButton btnOk = (ImageButton)findViewById(R.id.btnOk);
         ImageButton btnCancel = (ImageButton)findViewById(R.id.btnCancel);
 
-        Filter grayscale = new Filter("Grayscale",20);
-        Filter gotham = new Filter("Gotham",30);
-        Filter oil = new Filter("Oil",40);
-        Filter block = new Filter("Block",20);
-        Filter blur = new Filter("Blur",20);
-        Filter hdr = new Filter("HDR",20);
-        Filter invert = new Filter("Invert",20);
-        Filter light = new Filter("Light",20);
-        Filter lomo = new Filter("Lomo",20);
-        Filter neon = new Filter("Neon",20);
-        Filter old = new Filter("Old",20);
-        Filter pixel = new Filter("Pixel",20);
-        Filter relief = new Filter("Relief",20);
-        Filter sharpen = new Filter("Sharpen",20);
-        Filter sketch = new Filter("Sketch",20);
-        Filter glow = new Filter("Glow",20);
-        Filter tv = new Filter("Tv",20);
+        Filter none = new Filter("None", 0);
+        Filter grayscale = new Filter("Grayscale",AppInfo.filter_grayscale);
+        Filter gotham = new Filter("Gotham",AppInfo.filter_gotham);
+        Filter oil = new Filter("Oil",AppInfo.filter_oil);
+        Filter block = new Filter("Block",AppInfo.filter_block);
+        Filter blur = new Filter("Blur",AppInfo.filter_blur);
+        Filter hdr = new Filter("HDR",AppInfo.filter_hdr);
+        //Filter light = new Filter("Light",20);
+        //Filter lomo = new Filter("Lomo",20);
+        //Filter neon = new Filter("Neon",20);
+        Filter old = new Filter("Seppia",AppInfo.filter_seppia);
+        //Filter pixel = new Filter("Pixel",20);
+        //Filter relief = new Filter("Relief",20);
+        Filter sharpen = new Filter("Sharpen",AppInfo.filter_sharpen);
+        Filter sketch = new Filter("Sketch",AppInfo.filter_sketch);
+        Filter glow = new Filter("Glow",AppInfo.filter_glow);
+
 
 
         ArrayList<Filter> filterList = new ArrayList<>();
 
+        filterList.add(none);
         filterList.add(grayscale);
         filterList.add(gotham);
         filterList.add(oil);filterList.add(block);filterList.add(blur);
-        filterList.add(hdr);filterList.add(invert);filterList.add(light);filterList.add(lomo);filterList.add(neon
-        );filterList.add(old);filterList.add(pixel);filterList.add(relief);filterList.add(sharpen);filterList.add(sketch);
-        filterList.add(glow);filterList.add(tv);
+        filterList.add(hdr);filterList.add(old);filterList.add(sharpen);filterList.add(sketch);
+        filterList.add(glow);
 
-
+        outIntent = new Intent();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView_activity_filters);
         // Create adapter passing in the sample user data
-        adapter = new AdapterFilters(getApplicationContext(),filterList,imageView);
+        adapter = new AdapterFilters(getApplicationContext(),filterList,imageView,outIntent);
         // Attach the adapter to the recyclerview to populate items
         recyclerView.setAdapter(adapter);
         // Set layout manager to position the items
@@ -85,13 +88,20 @@ public class ActivityImageFilter extends Activity {
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //setResult(1,outIntent);
-                finish();
+                if (AppInfo.getUtente().getMoney() < inIntent.getIntExtra("price",0) + outIntent.getIntExtra("price",0)) {
+                    set_result = true;
+                    setResult(1, outIntent);
+                    finish();
+                }
+                else
+                    Toast.makeText(ActivityImageFilter.this, Integer.toString(inIntent.getIntExtra("price",0)) + Integer.toString(outIntent.getIntExtra("price",0)), Toast.LENGTH_LONG).show();
             }
         });
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //setResult(0,outIntent);
+                outIntent.putExtra("price",0);
+                set_result = true;
+                setResult(0,outIntent);
                 finish();
             }
         });
@@ -109,6 +119,15 @@ public class ActivityImageFilter extends Activity {
     protected void onPause() {
         freeResources();
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(!set_result) {
+            outIntent.putExtra("price", 0);
+            setResult(0, outIntent);
+        }
+        super.onDestroy();
     }
 
     private void setImage(Intent intent){
