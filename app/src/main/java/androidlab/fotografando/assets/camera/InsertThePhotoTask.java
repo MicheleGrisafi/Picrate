@@ -14,6 +14,7 @@ import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.fotografando.R;
+import androidlab.fotografando.assets.AppInfo;
 import androidlab.fotografando.assets.ImageViewChallenge;
 import androidlab.fotografando.assets.sessionList.LoadSessionImageTask;
 
@@ -63,9 +64,11 @@ public class InsertThePhotoTask extends AsyncTask<Void, Void, Photo> {
 
             //Cancello file locale
             //TODO: mantengo la foto se voglio
-            File file = new File(nameFile);
-            if(!file.delete())
-                Toast.makeText(context, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
+            if(!(boolean)AppInfo.getSetting(AppInfo.SAVE_PHOTOS)){
+                File file = new File(nameFile);
+                if(!file.delete())
+                    Toast.makeText(context, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
+            }
         }
         photoDAO.close();
     }

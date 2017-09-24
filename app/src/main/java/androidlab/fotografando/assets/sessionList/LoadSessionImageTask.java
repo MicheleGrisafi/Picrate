@@ -11,11 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 import androidlab.DB.DAO.PhotoDAO;
@@ -40,18 +45,22 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
     private ArrayList<ImageViewChallenge> imageViews;
     private Context context;
     private FragmentActivity activity;
+    private ProgressBar progressBar1,progressBar2;
 
     private Utente user;
     private PhotoDAO dao;
     private int requestCode;
 
-    public LoadSessionImageTask(Context context, ChallengeSession session, ArrayList<ImageViewChallenge> imageViews, int requestCode, FragmentActivity activity){
+    public LoadSessionImageTask(Context context, ChallengeSession session, ArrayList<ImageViewChallenge> imageViews,
+                                int requestCode, FragmentActivity activity,ProgressBar progressBar1, ProgressBar progressBar2){
         this.session = session;
         this.context = context;
         this.imageViews = imageViews;
         this.requestCode = requestCode;
         user = AppInfo.getUtente();
         this.activity = activity;
+        this.progressBar1 = progressBar1;
+        this.progressBar2 = progressBar2;
     }
     @Override
     protected void onPreExecute() {
@@ -78,8 +87,14 @@ public class LoadSessionImageTask extends AsyncTask<Void,Void,ArrayList<Photo>> 
                 foto = pictures.get(i);
                 imageView = imageViews.get(i);
                 if (foto != null) {
+                    GlideRequestListenerChallengeImage requestListener;
+                    if (i == 0)
+                        requestListener = new GlideRequestListenerChallengeImage(progressBar1);
+                    else
+                        requestListener = new GlideRequestListenerChallengeImage(progressBar2);
                     Glide.with(context)
                             .load(foto.getImage())
+                            .listener(requestListener)
                             .into(imageView);
                     imageView.setPhoto(foto);
                 }

@@ -257,7 +257,7 @@ public class CameraActivity extends Activity {
                     Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
                     if (afState == CaptureRequest.CONTROL_AF_STATE_FOCUSED_LOCKED /*|| afState == CaptureRequest.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED*/){
                         unLockFocus();
-                        Toast.makeText(getApplicationContext(),"AF locked!",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"AF locked!",Toast.LENGTH_SHORT).show();
                         //Avvio cattura immagine
                         startStillCaptureRequest();
                     }else{

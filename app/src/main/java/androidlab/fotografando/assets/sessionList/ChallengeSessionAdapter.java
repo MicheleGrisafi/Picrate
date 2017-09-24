@@ -5,12 +5,14 @@ import android.graphics.Bitmap;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +20,9 @@ import com.bumptech.glide.Glide;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.fotografando.R;
@@ -31,106 +35,118 @@ import androidlab.fotografando.assets.MySimpleTarget;
  */
 
 /** Adapter per la lista delle challenges **/
-public class ChallengeSessionAdapter extends BaseAdapter {
+public class ChallengeSessionAdapter extends RecyclerView.Adapter<ChallengeSessionAdapter.ViewHolder> {
+
+
+
+
     private List<ChallengeSession> sessions;
-    private Context ctx;
+    private Context context;
     private SparseArray<ArrayList<ImageViewChallenge>> imageViewMap;
     private int requestCode;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FragmentActivity activity;
 
-    public ChallengeSessionAdapter(List<ChallengeSession> sessions, Context ctx,int requestCode,FragmentActivity activity,SwipeRefreshLayout swipeRefreshLayout) {
+    public List<ChallengeSession> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<ChallengeSession> sessions) {
         this.sessions = sessions;
-        this.ctx = ctx;
         imageViewMap = new SparseArray<>(sessions.size());
+    }
+
+
+    public ChallengeSessionAdapter(Context context, int requestCode, SwipeRefreshLayout swipeRefreshLayout, FragmentActivity activity) {
+        this.context = context;
         this.requestCode = requestCode;
-        this.activity = activity;
         this.swipeRefreshLayout = swipeRefreshLayout;
+        this.activity = activity;
+        sessions = new ArrayList<>();
     }
 
-    @Override
-    public int getCount() {
-        return sessions.size();
-    }
 
-    @Override
-    public Object getItem(int position) {
-        return sessions.get(position);
-    }
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+        public TextView data,expiration,title,description;
+        public ImageViewChallenge img1,img2;
+        public ConstraintLayout box;
+        public ProgressBar progressBar1,progressBar2;
 
-    @Override
-    public long getItemId(int position) {
-        return ((ChallengeSession)getItem(position)).getIDSession();
-    }
-    public void updateList(){
-        //Esegue l'update della lista delle sessioni attraverso un'ulteriore task.
-        UpdateSessionsTask updateSessionsTask = new UpdateSessionsTask(this);
-        updateSessionsTask.execute();
-    }
-    public void taskResponse(List<ChallengeSession> sessions){
-        //Riceve la nuova lista di challengeSessions dal task chiamato in update, e procede con la segnalazione del cambiamento.
-        this.sessions = sessions;
-        notifyDataSetChanged();
-    }
-    @Override
-    public void notifyDataSetChanged() {
-        //Notifica cambio dati e ferma il refresh
-        super.notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
-    }
+        // We also create a constructor that accepts the entire item row
+        // and does the view lookups to find each subview
+        public ViewHolder(View itemView) {
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+            super(itemView);
 
-    /** viewholder per il riciclo delle view **/
-    private static class ViewHolder{
-        private TextView data,expiration,title,description;
-        private ImageViewChallenge img1,img2;
-        private ConstraintLayout box;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder mViewHolder;
-        ChallengeSession session = (ChallengeSession)getItem(position);
-
-        if(convertView == null){
-            //Instazio nuova view
-            mViewHolder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_challenge_session, parent, false);
-            mViewHolder.data = (TextView)convertView.findViewById(R.id.data);
-            mViewHolder.expiration = (TextView)convertView.findViewById(R.id.expiration);
-            mViewHolder.title = (TextView)convertView.findViewById(R.id.titolo);
-            mViewHolder.description = (TextView)convertView.findViewById(R.id.descrizione);
-            mViewHolder.box = (ConstraintLayout)convertView.findViewById(R.id.box);
-            mViewHolder.img1 = (ImageViewChallenge)convertView.findViewById(R.id.imgSession1);
-            mViewHolder.img2 = (ImageViewChallenge)convertView.findViewById(R.id.imgSession2);
-            convertView.setTag(mViewHolder);
-        }else{
-            //Riciclo la view
-            mViewHolder = (ViewHolder) convertView.getTag();
+            data = (TextView) itemView.findViewById(R.id.data);
+            expiration = (TextView) itemView.findViewById(R.id.expiration);
+            title = (TextView) itemView.findViewById(R.id.titolo);
+            description = (TextView) itemView.findViewById(R.id.descrizione);
+            img1 = (ImageViewChallenge) itemView.findViewById(R.id.imgSession1);
+            img2 = (ImageViewChallenge) itemView.findViewById(R.id.imgSession2);
+            box = (ConstraintLayout) itemView.findViewById(R.id.box);
+            progressBar1 = (ProgressBar) itemView.findViewById(R.id.progressBar_item_challenge_img1);
+            progressBar2 = (ProgressBar) itemView.findViewById(R.id.progressBar_item_challenge_img2);
         }
+    }
 
+    @Override
+    public ChallengeSessionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
 
-        mViewHolder.title.setText(session.getTitle());
-        mViewHolder.description.setText(session.getDescription());
+        // Inflate the custom layout
+        View challengeView = inflater.inflate(R.layout.item_challenge_session, parent, false);
+
+        // Return a new holder instance
+        ViewHolder viewHolder = new ViewHolder(challengeView);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        ChallengeSession session = sessions.get(position);
+
+        // Set item views based on your views and data model
+        TextView tvTitle = holder.title;
+        tvTitle.setText(session.getTitle());
+
+        TextView tvDesc = holder.description;
+        tvDesc.setText(session.getDescription());
 
         //Mi segno le due imageView per poterle rintracciare dopo
-        imageViewMap.append(session.getIDSession(),new ArrayList<>(Arrays.asList(mViewHolder.img1, mViewHolder.img2)));
+        imageViewMap.append(session.getIDSession(),new ArrayList<>(Arrays.asList(holder.img1, holder.img2)));
 
         //Carico sfondo della sessione
         int myWidth = 300;
-        int myHeight = 150;//200
+        int myHeight = 150;
         URL url = session.getImage();
-        Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150 /*150*/).centerCrop().into(
-                new MySimpleTarget<Bitmap>(myWidth,myHeight,mViewHolder.box));
+        Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).centerCrop().into(
+                new MySimpleTarget<Bitmap>(myWidth,myHeight,holder.box));
 
+        ProgressBar progressBar1 = holder.progressBar1;
+        ProgressBar progressBar2 = holder.progressBar2;
 
+        progressBar1.setVisibility(ProgressBar.VISIBLE);
+        progressBar2.setVisibility(ProgressBar.VISIBLE);
         //Carico in maniera asincrona le scadenze delle sessioni e le immagini dell'utente
-        LoadSessionExpirationTask loadExp = new LoadSessionExpirationTask(ctx,session,mViewHolder.expiration);
+        LoadSessionExpirationTask loadExp = new LoadSessionExpirationTask(context,session,holder.expiration);
         loadExp.execute();
-        LoadSessionImageTask loadImages = new LoadSessionImageTask(ctx,session,imageViewMap.get(session.getIDSession()),requestCode,activity);
+        LoadSessionImageTask loadImages = new LoadSessionImageTask(context,session,imageViewMap.get(session.getIDSession()),requestCode,activity,progressBar1,progressBar2);
         loadImages.execute();
 
-        return convertView;
+    }
+
+    @Override
+    public int getItemCount() {
+        return sessions.size();
+    }
+
+    private Context getContext() {
+        return context;
     }
 
     public ImageViewChallenge getImageView(int sessionId, int pos){

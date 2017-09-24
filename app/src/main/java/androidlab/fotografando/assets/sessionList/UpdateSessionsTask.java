@@ -16,7 +16,6 @@ import androidlab.DB.Objects.ChallengeSession;
 
 public class UpdateSessionsTask extends AsyncTask<Void,Void,List<ChallengeSession>> {
 
-
     private ChallengeSessionAdapter adapter;
     private ChallengeSessionDAO sessionDAO;
 
@@ -34,7 +33,7 @@ public class UpdateSessionsTask extends AsyncTask<Void,Void,List<ChallengeSessio
 
     @Override
     protected void onPostExecute(List<ChallengeSession> challengeSessions) {
-        adapter.taskResponse(challengeSessions);
+
         sessionDAO.close();
     }
 }

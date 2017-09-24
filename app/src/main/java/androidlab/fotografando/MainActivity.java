@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -31,6 +33,7 @@ import androidlab.fotografando.assets.ImageViewChallenge;
 import androidlab.fotografando.assets.camera.InsertThePhotoTask;
 import androidlab.fotografando.assets.ratings.RatingPhotosAdapter;
 import androidlab.fotografando.assets.sessionList.ChallengeSessionAdapter;
+import androidlab.fotografando.assets.settings.ActivitySettings;
 import androidlab.fotografando.tabFragments.ChallengeFragment;
 import androidlab.fotografando.tabFragments.LeadeboardFragment;
 import androidlab.fotografando.tabFragments.RatingFragment;
@@ -88,7 +91,8 @@ public class MainActivity extends FragmentActivity  {
                 } else if (id == R.id.nav_logout) {
 
                 } else if (id == R.id.nav_settings) {
-
+                    Intent intent = new Intent(MainActivity.this, ActivitySettings.class);
+                    startActivity(new Intent(intent));
                 } else if (id == R.id.nav_help) {
 
                 }
@@ -143,6 +147,10 @@ public class MainActivity extends FragmentActivity  {
                 }
             }
         });
+
+
+
+
     }
 
 
@@ -192,6 +200,7 @@ public class MainActivity extends FragmentActivity  {
             }
         }
     }
+
 
 
 /*

@@ -40,4 +40,6 @@
     <string name="tab_title_leaderboards">Classifiche</string>
     <string name="button_second_picture">Compra</string>
     <string name="not_enough_money">Soldi insufficienti</string>
+    <string name="setting_save_photo">Salva foto scattate</string>
+    <string name="setting_sum_save_photo">Salva sulla memoria le foto che scatti</string>
 </resources>

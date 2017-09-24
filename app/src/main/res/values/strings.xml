@@ -40,4 +40,6 @@
     <string name="tab_title_leaderboards">Leaderboards</string>
     <string name="button_second_picture">Buy it</string>
     <string name="not_enough_money">Not enough money!</string>
+    <string name="setting_save_photo">Save taken pictures</string>
+    <string name="setting_sum_save_photo">Save on the phone\'s memory the pictures you take</string>
 </resources>

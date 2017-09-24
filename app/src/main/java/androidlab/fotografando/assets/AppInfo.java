@@ -3,6 +3,7 @@ package androidlab.fotografando.assets;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.assets.generalTasks.TaskLogInUtente;
 import androidlab.fotografando.assets.generalTasks.TaskUpdateUtente;
+import androidlab.fotografando.assets.settings.ActivitySettings;
 
 /**
  * Created by miki4 on 13/05/2017.
@@ -26,6 +28,7 @@ import androidlab.fotografando.assets.generalTasks.TaskUpdateUtente;
 /** Classe usata per gestire dati comuni a tutte le attività **/
 abstract public class AppInfo {
     static public final String user_shared_preferences = "user-preferences";
+    static public final String settings_shared_preferences = "settings-preferences";
 
     /** COSTI VARI **/
     static public final int costo_seconda_foto = 40;
@@ -42,6 +45,8 @@ abstract public class AppInfo {
     static public final int filter_sketch = 30;
     static public final int filter_glow = 20;
 
+    /** SETTINGS **/
+    static public final int SAVE_PHOTOS = 0;
 
 
     /**Inizializzo utente prendendolo dal database **/
@@ -100,4 +105,14 @@ abstract public class AppInfo {
         return date;
     }
 
+    static public Object getSetting(int setting){
+        Object result = null;
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MyApp.getAppContext());
+        switch (setting){
+            case SAVE_PHOTOS:
+                result = sharedPref.getBoolean(ActivitySettings.KEY_SAVE_PICTURES, false);
+                break;
+        }
+        return result;
+    }
 }
