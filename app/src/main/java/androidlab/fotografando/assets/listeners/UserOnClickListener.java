@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.view.View;
 
 import androidlab.DB.Objects.Utente;
-import androidlab.fotografando.MyProfileActivity;
-import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.activities.ActivityMyProfile;
+import androidlab.fotografando.assets.objects.AppInfo;
 
 /**
  * Created by Michele Grisafi on 15/09/2017.
@@ -29,7 +29,7 @@ public class UserOnClickListener implements View.OnClickListener {
         intent.putExtra("score",user.getScore());
         intent.putExtra("username",user.getUsername());
         if(intent.getIntExtra("id",0) == AppInfo.getUtente().getId())
-            activity.startActivity(new Intent(activity, MyProfileActivity.class));
+            activity.startActivity(new Intent(activity, ActivityMyProfile.class));
         else
             activity.startActivity(intent);
     }

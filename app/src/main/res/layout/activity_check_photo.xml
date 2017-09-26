@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="androidlab.fotografando.assets.camera.checkPhotoActivity">
+    tools:context="androidlab.fotografando.activities.ActivityCheckPhoto">
 
     <RelativeLayout
         android:id="@+id/topRelative"
@@ -47,7 +47,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorBlack"
-        app:srcCompat="@mipmap/ic_launcher"
         tools:layout_conversion_absoluteX="156dp"
         tools:layout_conversion_absoluteY="231dp"
         tools:layout_conversion_absoluteWidth="48dp"
@@ -99,7 +98,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/rgb" />
+        android:src="@drawable/ic_photo_filter_white_40dp" />
 
 
 </android.support.constraint.ConstraintLayout>

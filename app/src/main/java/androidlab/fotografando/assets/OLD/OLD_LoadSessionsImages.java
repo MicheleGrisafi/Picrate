@@ -1,6 +1,5 @@
 package androidlab.fotografando.assets.OLD;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,10 +19,10 @@ import androidlab.DB.DAO.implementations.PhotoDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
-import androidlab.fotografando.CameraActivity;
+import androidlab.fotografando.activities.ActivityCamera;
 import androidlab.fotografando.R;
-import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.camera.cameraOnClickListener;
+import androidlab.fotografando.assets.objects.AppInfo;
+import androidlab.fotografando.assets.listeners.OnClickListenerCamera;
 
 /**
  * Created by miki4 on 15/05/2017.
@@ -104,10 +103,10 @@ public class OLD_LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<Arra
                         image.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRed));
                         image.setOnClickListener(null);
                     }else{
-                        intent = new Intent(context,CameraActivity.class);
+                        intent = new Intent(context,ActivityCamera.class);
                         intent.putExtra("imageView",picturesMap.get(session.getIDSession()).get(i));
                         intent.putExtra("sessionID",session.getIDSession());
-                        image.setOnClickListener(new cameraOnClickListener(intent,requestCode,(FragmentActivity) context));
+                        image.setOnClickListener(new OnClickListenerCamera(intent,requestCode,(FragmentActivity) context));
                     }
                 }
             }
