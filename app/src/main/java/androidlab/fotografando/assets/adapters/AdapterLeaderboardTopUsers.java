@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.Leaderboards;
+package androidlab.fotografando.assets.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,27 +11,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
-import androidlab.fotografando.assets.AsyncResponse;
+import androidlab.fotografando.assets.interfaces.AsyncResponse;
 import androidlab.fotografando.assets.listeners.UserOnClickListener;
 
 /**
  * Created by miki4 on 10/09/2017.
  */
 
-public class TopUsersLeaderboardAdapter extends RecyclerView.Adapter<TopUsersLeaderboardAdapter.ViewHolder>{
+public class AdapterLeaderboardTopUsers extends RecyclerView.Adapter<AdapterLeaderboardTopUsers.ViewHolder>{
     private List<Utente> items;
     private Context mContext;
     public AsyncResponse delegate = null;
     private Activity activity;
     private Intent intent;
 
-    public TopUsersLeaderboardAdapter( Context mContext,List<Utente> items, Activity activity, Intent intent) {
+    public AdapterLeaderboardTopUsers(Context mContext, List<Utente> items, Activity activity, Intent intent) {
         this.items = items;
         this.mContext = mContext;
         this.activity = activity;
@@ -70,7 +69,7 @@ public class TopUsersLeaderboardAdapter extends RecyclerView.Adapter<TopUsersLea
 
     }
     @Override
-    public TopUsersLeaderboardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdapterLeaderboardTopUsers.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflate a viewholder
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -80,7 +79,7 @@ public class TopUsersLeaderboardAdapter extends RecyclerView.Adapter<TopUsersLea
     }
 
     @Override
-    public void onBindViewHolder(TopUsersLeaderboardAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(AdapterLeaderboardTopUsers.ViewHolder holder, int position) {
         // Get the data model based on position
         final Utente user = items.get(position);
 

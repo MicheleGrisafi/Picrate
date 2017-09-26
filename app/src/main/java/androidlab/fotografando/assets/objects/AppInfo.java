@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets;
+package androidlab.fotografando.assets.objects;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,13 +13,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import androidlab.DB.DAO.UtenteDAO;
-import androidlab.DB.DAO.implementations.UtenteDAO_DB_impl;
 import androidlab.DB.MySqlDatabase;
 import androidlab.DB.Objects.Utente;
-import androidlab.fotografando.assets.generalTasks.TaskLogInUtente;
-import androidlab.fotografando.assets.generalTasks.TaskUpdateUtente;
-import androidlab.fotografando.assets.settings.ActivitySettings;
+import androidlab.fotografando.assets.tasks.TaskLogInUtente;
+import androidlab.fotografando.assets.tasks.TaskUpdateUtente;
+import androidlab.fotografando.activities.ActivitySettings;
 
 /**
  * Created by miki4 on 13/05/2017.

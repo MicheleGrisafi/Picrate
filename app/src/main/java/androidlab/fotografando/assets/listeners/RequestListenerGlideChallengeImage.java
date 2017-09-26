@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.sessionList;
+package androidlab.fotografando.assets.listeners;
 
 import android.widget.ProgressBar;
 
@@ -12,10 +12,10 @@ import java.net.URL;
  * Created by miki4 on 24/09/2017.
  */
 
-public class GlideRequestListenerChallengeImage implements RequestListener<URL, GlideDrawable> {
+public class RequestListenerGlideChallengeImage implements RequestListener<URL, GlideDrawable> {
     private ProgressBar progressBar;
 
-    public GlideRequestListenerChallengeImage(ProgressBar progressBar) {
+    public RequestListenerGlideChallengeImage(ProgressBar progressBar) {
         this.progressBar = progressBar;
     }
 

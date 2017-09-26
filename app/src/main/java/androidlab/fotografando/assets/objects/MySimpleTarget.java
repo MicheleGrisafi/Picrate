@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets;
+package androidlab.fotografando.assets.objects;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.support.constraint.ConstraintLayout;
@@ -6,6 +6,8 @@ import android.view.View;
 
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+
+import androidlab.fotografando.assets.objects.MyApp;
 
 /**
  * Created by Michele Grisafi on 16/05/2017.

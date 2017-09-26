@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.sessionList;
+package androidlab.fotografando.assets.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,8 +10,6 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,29 +18,32 @@ import com.bumptech.glide.Glide;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.fotografando.R;
-import androidlab.fotografando.assets.ImageViewChallenge;
-import androidlab.fotografando.assets.MyApp;
-import androidlab.fotografando.assets.MySimpleTarget;
+import androidlab.fotografando.assets.views.ImageViewChallenge;
+import androidlab.fotografando.assets.objects.MyApp;
+import androidlab.fotografando.assets.objects.MySimpleTarget;
+import androidlab.fotografando.assets.tasks.TaskLoadSessionExpiration;
+import androidlab.fotografando.assets.tasks.TaskLoadSessionImage;
 
 /**
  * Created by miki4 on 27/05/2017.
  */
 
 /** Adapter per la lista delle challenges **/
-public class ChallengeSessionAdapter extends RecyclerView.Adapter<ChallengeSessionAdapter.ViewHolder> {
+public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallengeSession.ViewHolder> {
 
 
 
 
     private List<ChallengeSession> sessions;
     private Context context;
-    private SparseArray<ArrayList<ImageViewChallenge>> imageViewMap;
+    private HashMap<Integer,ArrayList<ImageViewChallenge>> imageViewMap;
+    //private SparseArray<ArrayList<ImageViewChallenge>> imageViewMap2;
+    private SparseArray<ArrayList<ProgressBar>> progressBarMap;
     private int requestCode;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FragmentActivity activity;
@@ -53,16 +54,20 @@ public class ChallengeSessionAdapter extends RecyclerView.Adapter<ChallengeSessi
 
     public void setSessions(List<ChallengeSession> sessions) {
         this.sessions = sessions;
-        imageViewMap = new SparseArray<>(sessions.size());
+        imageViewMap = new HashMap<>();
+        progressBarMap = new SparseArray<>();
     }
 
 
-    public ChallengeSessionAdapter(Context context, int requestCode, SwipeRefreshLayout swipeRefreshLayout, FragmentActivity activity) {
+    public AdapterChallengeSession(Context context, int requestCode, SwipeRefreshLayout swipeRefreshLayout,
+                                   FragmentActivity activity) {
         this.context = context;
         this.requestCode = requestCode;
         this.swipeRefreshLayout = swipeRefreshLayout;
         this.activity = activity;
-        sessions = new ArrayList<>();
+        this.sessions = new ArrayList<>();
+        imageViewMap = new HashMap<>();
+        progressBarMap = new SparseArray<>();
     }
 
 
@@ -94,7 +99,7 @@ public class ChallengeSessionAdapter extends RecyclerView.Adapter<ChallengeSessi
     }
 
     @Override
-    public ChallengeSessionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdapterChallengeSession.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -118,24 +123,27 @@ public class ChallengeSessionAdapter extends RecyclerView.Adapter<ChallengeSessi
         tvDesc.setText(session.getDescription());
 
         //Mi segno le due imageView per poterle rintracciare dopo
-        imageViewMap.append(session.getIDSession(),new ArrayList<>(Arrays.asList(holder.img1, holder.img2)));
-
+        imageViewMap.put(session.getIDSession(),new ArrayList<>(Arrays.asList(holder.img1, holder.img2)));
+        //Mi segno le progress bar per passarle al task LoadSessionImage al di fuori dell'adapter
+        progressBarMap.put(session.getIDSession(),new ArrayList<>(Arrays.asList(holder.progressBar1,holder.progressBar2)));
         //Carico sfondo della sessione
+        //imageViewMap2 = imageViewMap.clone();
+
         int myWidth = 300;
         int myHeight = 150;
         URL url = session.getImage();
         Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).centerCrop().into(
                 new MySimpleTarget<Bitmap>(myWidth,myHeight,holder.box));
 
-        ProgressBar progressBar1 = holder.progressBar1;
-        ProgressBar progressBar2 = holder.progressBar2;
 
-        progressBar1.setVisibility(ProgressBar.VISIBLE);
-        progressBar2.setVisibility(ProgressBar.VISIBLE);
+
+
+
+
         //Carico in maniera asincrona le scadenze delle sessioni e le immagini dell'utente
-        LoadSessionExpirationTask loadExp = new LoadSessionExpirationTask(context,session,holder.expiration);
+        TaskLoadSessionExpiration loadExp = new TaskLoadSessionExpiration(context,session,holder.expiration);
         loadExp.execute();
-        LoadSessionImageTask loadImages = new LoadSessionImageTask(context,session,imageViewMap.get(session.getIDSession()),requestCode,activity,progressBar1,progressBar2);
+        TaskLoadSessionImage loadImages = new TaskLoadSessionImage(context,session,imageViewMap.get(session.getIDSession()),requestCode,activity,holder.progressBar1,holder.progressBar2);
         loadImages.execute();
 
     }
@@ -167,6 +175,15 @@ public class ChallengeSessionAdapter extends RecyclerView.Adapter<ChallengeSessi
         }
         return res;
     }
+    public ArrayList<ProgressBar> getProgressBars(int sessionId){
+        ArrayList<ProgressBar> res = null;
+        try {
+            res = progressBarMap.get(sessionId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
     public ChallengeSession getSession(int id){
         ChallengeSession session = null;
         for (ChallengeSession s:sessions){
@@ -175,4 +192,5 @@ public class ChallengeSessionAdapter extends RecyclerView.Adapter<ChallengeSessi
         }
         return session;
     }
+
 }

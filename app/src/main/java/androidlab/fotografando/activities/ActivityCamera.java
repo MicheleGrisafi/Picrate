@@ -61,6 +61,7 @@ public class ActivityCamera extends Activity {
     private static final int STATE_PREVIEW = 0;
     private static final int STATE_WAIT_LOCK = 1;
     private int mCaptureState;
+    private boolean shooting = false;
 
     private Intent inIntent;
     private Intent outIntent;
@@ -388,6 +389,8 @@ public class ActivityCamera extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //riabilito la fotocamera
+        shooting = false;
         switch (resultCode){
             case 0:
                 //Immagine scartata
@@ -639,8 +642,12 @@ public class ActivityCamera extends Activity {
         }
     }
     private void shootPhoto() {
-        checkWriteStoragePermission();
-        lockFocus(true);
+        //se già cliccato allora non faccio nulla
+        if(!shooting) {
+            shooting = true;
+            checkWriteStoragePermission();
+            lockFocus(true);
+        }
     }
 
     /** Gestisco l'overlay per rendere la fotocamera quadrata **/

@@ -1,7 +1,6 @@
-package androidlab.fotografando.assets.ratings;
+package androidlab.fotografando.assets.adapters;
 
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
@@ -24,21 +23,22 @@ import java.util.List;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Rating;
 import androidlab.fotografando.R;
-import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.AsyncResponse;
+import androidlab.fotografando.assets.objects.AppInfo;
+import androidlab.fotografando.assets.interfaces.AsyncResponse;
+import androidlab.fotografando.assets.tasks.TaskInsertRating;
 
 /**
  * Created by miki4 on 27/08/2017.
  */
 
-public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapter.ViewHolder> {
+public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhotos.ViewHolder> {
 
     private List<Photo> items;
     private Context mContext;
     public AsyncResponse delegate = null;
     FragmentActivity activity;
 
-    public RatingPhotosAdapter( Context mContext,List<Photo> items, FragmentActivity activity) {
+    public AdapterRatingPhotos(Context mContext, List<Photo> items, FragmentActivity activity) {
         this.items = items;
         this.mContext = mContext;
         this.activity = activity;
@@ -82,7 +82,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
         }
     }
     @Override
-    public RatingPhotosAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdapterRatingPhotos.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflate a viewholder
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -92,7 +92,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
     }
 
     @Override
-    public void onBindViewHolder(RatingPhotosAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(AdapterRatingPhotos.ViewHolder holder, int position) {
         // Get the data model based on position
         final Photo photo = items.get(position);
         //check if it's the last item
@@ -171,7 +171,7 @@ public class RatingPhotosAdapter extends RecyclerView.Adapter<RatingPhotosAdapte
                             Rating rating = new Rating(AppInfo.getUtente(),items.get(0),0,true);
                             items.remove(0);
                             notifyItemRemoved(0);
-                            InsertRatingTask insertRating = new InsertRatingTask(rating);
+                            TaskInsertRating insertRating = new TaskInsertRating(rating);
                             insertRating.execute();
                             dialog.dismiss();
                             Toast.makeText(mContext, R.string.report_thanks, Toast.LENGTH_LONG).show();

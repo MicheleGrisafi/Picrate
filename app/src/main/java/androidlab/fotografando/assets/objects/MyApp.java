@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets;
+package androidlab.fotografando.assets.objects;
 
 import android.app.Application;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.camera;
+package androidlab.fotografando.assets.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,17 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
-import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
-import androidlab.fotografando.assets.AsyncResponse;
-import androidlab.fotografando.assets.listeners.UserOnClickListener;
+import androidlab.fotografando.assets.objects.Filter;
 import cn.Ragnarok.BitmapFilter;
-import cn.Ragnarok.GrayFilter;
 
 /**
  * Created by miki4 on 18/09/2017.

@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.camera;
+package androidlab.fotografando.assets.listeners;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -10,17 +10,17 @@ import android.view.View;
  */
 
 /** Listener per fotocamera sulla challenge **/
-public class cameraOnClickListener implements View.OnClickListener {
+public class OnClickListenerCamera implements View.OnClickListener {
     private Intent intent;
     private FragmentActivity activity;
     private int requestcode;
     private Dialog dialog;
-    public cameraOnClickListener(Intent intent,int requestCode, FragmentActivity activity){
+    public OnClickListenerCamera(Intent intent, int requestCode, FragmentActivity activity){
         this.intent = intent;
         this.requestcode = requestCode;
         this.activity = activity;
     }
-    public cameraOnClickListener(Intent intent,int requestCode, FragmentActivity activity,Dialog dialog) {
+    public OnClickListenerCamera(Intent intent, int requestCode, FragmentActivity activity, Dialog dialog) {
         this(intent,requestCode,activity);
         this.dialog = dialog;
     }

@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.camera;
+package androidlab.fotografando.assets.objects;
 
 /**
  * Created by miki4 on 18/09/2017.
