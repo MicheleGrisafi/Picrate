@@ -1,21 +1,17 @@
 package androidlab.fotografando.assets.OLD;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import androidlab.DB.Objects.ChallengeSession;
-import androidlab.fotografando.R;
-import androidlab.fotografando.assets.AppInfo;
+import androidlab.fotografando.assets.objects.AppInfo;
 
 /**
  * Created by miki4 on 15/05/2017.

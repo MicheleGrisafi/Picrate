@@ -27,9 +27,9 @@ import androidlab.DB.DAO.ChallengeSessionDAO;
 import androidlab.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
 import androidlab.DB.Objects.ChallengeSession;
 import androidlab.fotografando.R;
-import androidlab.fotografando.assets.AppInfo;
-import androidlab.fotografando.assets.MyApp;
-import androidlab.fotografando.assets.MySimpleTarget;
+import androidlab.fotografando.assets.objects.AppInfo;
+import androidlab.fotografando.assets.objects.MyApp;
+import androidlab.fotografando.assets.objects.MySimpleTarget;
 
 /**
  * Created by Michele Grisafi on 14/05/2017.

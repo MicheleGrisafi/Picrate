@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
-        tools:context="androidlab.fotografando.MainActivity">
+        tools:context="androidlab.fotografando.activities.ActivityMain">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -61,27 +61,28 @@
                     android:id="@android:id/tabcontent"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
+                    <!--
                     <fragment
-                        android:name="androidlab.fotografando.tabFragments.ChallengeFragment"
-                        class="androidlab.fotografando.tabFragments.ChallengeFragment"
+                        android:name="androidlab.fotografando.fragments.FragmentTabChallenge"
+                        class="androidlab.fotografando.fragments.FragmentTabChallenge"
                         android:id="@+id/fragmentChallenge"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         tools:layout="@layout/fragment_challenge_tab" />
                     <fragment
-                        android:name="androidlab.fotografando.tabFragments.RatingFragment"
-                        class="androidlab.fotografando.tabFragments.RatingFragment"
+                        android:name="androidlab.fotografando.fragments.FragmentTabRating"
+                        class="androidlab.fotografando.fragments.FragmentTabRating"
                         android:id="@+id/fragmentRating"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         tools:layout="@layout/fragment_rating_tab" />
 
                     <fragment
-                        android:name="androidlab.fotografando.tabFragments.LeadeboardFragment"
+                        android:name="androidlab.fotografando.fragments.FragmentTabLeadeboard"
                         android:id="@+id/fragmentLeaderboard"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        tools:layout="@layout/fragment_leaderboard_tab" />
+                        tools:layout="@layout/fragment_leaderboard_tab" />-->
                 </FrameLayout>
             </LinearLayout>
         </android.support.v4.app.FragmentTabHost>

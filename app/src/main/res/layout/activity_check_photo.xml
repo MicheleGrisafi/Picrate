@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="androidlab.fotografando.assets.camera.checkPhotoActivity">
+    tools:context="androidlab.fotografando.activities.ActivityCheckPhoto">
 
     <RelativeLayout
         android:id="@+id/topRelative"

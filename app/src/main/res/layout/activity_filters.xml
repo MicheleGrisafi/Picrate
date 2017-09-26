@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBlack"
-    tools:context="androidlab.fotografando.assets.camera.checkPhotoActivity">
+    tools:context="androidlab.fotografando.activities.ActivityCheckPhoto">
 
 
 
