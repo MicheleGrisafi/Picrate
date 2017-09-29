@@ -56,6 +56,7 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         this.sessions = sessions;
         imageViewMap = new HashMap<>();
         progressBarMap = new SparseArray<>();
+        notifyDataSetChanged();
     }
 
 

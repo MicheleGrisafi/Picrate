@@ -33,15 +33,23 @@ import androidlab.fotografando.assets.tasks.TaskInsertRating;
 
 public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhotos.ViewHolder> {
 
+
     private List<Photo> items;
     private Context mContext;
     public AsyncResponse delegate = null;
     FragmentActivity activity;
 
-    public AdapterRatingPhotos(Context mContext, List<Photo> items, FragmentActivity activity) {
-        this.items = items;
+    public AdapterRatingPhotos(Context mContext, FragmentActivity activity) {
         this.mContext = mContext;
         this.activity = activity;
+        this.items = new ArrayList<>();
+    }
+    public List<Photo> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Photo> items) {
+        this.items = items;
         //Crea una foto farlocca per fine lista
         Photo foto = new Photo(-1,-1);
         if(this.items != null)
@@ -50,7 +58,11 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
             this.items = new ArrayList<Photo>();
             this.items.add(foto);
         }
-
+        notifyDataSetChanged();
+    }
+    public void removeItem(int pos){
+        items.remove(pos);
+        notifyItemRemoved(pos);
     }
     public Context getContext(){
         return mContext;

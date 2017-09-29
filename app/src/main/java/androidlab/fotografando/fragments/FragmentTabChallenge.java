@@ -93,7 +93,6 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
     public void onLoadFinished(Loader<List<ChallengeSession>> loader, List<ChallengeSession> data) {
 
         adapter.setSessions(data);
-        adapter.notifyDataSetChanged();
         progressBar.setVisibility(ProgressBar.GONE);
         swipeRefreshLayoutChallenges.setRefreshing(false);
     }
