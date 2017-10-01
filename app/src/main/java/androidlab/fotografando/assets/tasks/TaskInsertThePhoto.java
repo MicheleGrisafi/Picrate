@@ -15,6 +15,7 @@ import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.fotografando.R;
 import androidlab.fotografando.assets.objects.AppInfo;
+import androidlab.fotografando.assets.objects.BitmapHelper;
 import androidlab.fotografando.assets.views.ImageViewChallenge;
 
 /**
@@ -72,7 +73,7 @@ public class TaskInsertThePhoto extends AsyncTask<Void, Void, Photo> {
             //TODO: mantengo la foto se voglio
             if(!(boolean)AppInfo.getSetting(AppInfo.SAVE_PHOTOS)){
                 File file = new File(nameFile);
-                if(!file.delete())
+                if(!BitmapHelper.deleteFile(file))
                     Toast.makeText(context, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
             }
         }

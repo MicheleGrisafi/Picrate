@@ -12,10 +12,10 @@ import java.net.URL;
  * Created by miki4 on 24/09/2017.
  */
 
-public class RequestListenerGlideChallengeImage implements RequestListener<URL, GlideDrawable> {
+public class RequestListenerGlideProgressBar implements RequestListener<URL, GlideDrawable> {
     private ProgressBar progressBar;
 
-    public RequestListenerGlideChallengeImage(ProgressBar progressBar) {
+    public RequestListenerGlideProgressBar(ProgressBar progressBar) {
         this.progressBar = progressBar;
     }
 

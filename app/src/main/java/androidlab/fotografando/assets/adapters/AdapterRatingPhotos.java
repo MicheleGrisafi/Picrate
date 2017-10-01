@@ -2,6 +2,8 @@ package androidlab.fotografando.assets.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import java.util.List;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Rating;
 import androidlab.fotografando.R;
+import androidlab.fotografando.assets.listeners.RequestListenerGlideProgressBar;
 import androidlab.fotografando.assets.objects.AppInfo;
 import androidlab.fotografando.assets.interfaces.AsyncResponse;
 import androidlab.fotografando.assets.tasks.TaskInsertRating;
@@ -78,6 +82,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
         public ImageView imageView;
         public ImageButton imageButtonInfo;
         public ImageButton imageButtonReport;
+        public ProgressBar progressBar;
 
         public ViewHolder(View itemView) {
             // Stores the itemView in a public final member variable that can be used
@@ -90,7 +95,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
             imageView = (ImageView) itemView.findViewById(R.id.activeRatingPhoto);
             imageButtonInfo = (ImageButton) itemView.findViewById(R.id.activeRatingPhotoChallengeInfo);
             imageButtonReport = (ImageButton) itemView.findViewById(R.id.activeRatingPhotoReportButon);
-
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar_item_ratingPhoto);
         }
     }
     @Override
@@ -131,6 +136,9 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
             ImageView imageView = holder.imageView;
             TextView textView = holder.challengeTextView;
             textView.setText(photo.getSession().getTitle());
+            ProgressBar progressBar = holder.progressBar;
+            progressBar.getIndeterminateDrawable().setColorFilter(Color.YELLOW, PorterDuff.Mode.MULTIPLY);
+            progressBar.setVisibility(ProgressBar.VISIBLE);
             ImageButton imageButtonInfo = holder.imageButtonInfo;
             imageButtonInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -195,6 +203,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
 
             Glide.with(mContext)
                     .load(photo.getImage())
+                    .listener(new RequestListenerGlideProgressBar(progressBar))
                     .into(imageView);
         }
     }

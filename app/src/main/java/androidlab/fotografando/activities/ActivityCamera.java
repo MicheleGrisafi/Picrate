@@ -52,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 
 import androidlab.fotografando.R;
+import androidlab.fotografando.assets.objects.MyApp;
 
 public class ActivityCamera extends Activity {
 
@@ -120,7 +121,7 @@ public class ActivityCamera extends Activity {
 
         @Override
         public void onError(@NonNull CameraDevice camera,  int error) {
-            /** Gestisco i vari errori **/
+            // Gestisco i vari errori
             camera.close();
             switch (error){
                 case CameraDevice.StateCallback.ERROR_CAMERA_DEVICE:
@@ -172,8 +173,6 @@ public class ActivityCamera extends Activity {
             byteBuffer.get(bytes);
 
 
-
-
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.RGB_565;
             options.inSampleSize = 2;
@@ -185,8 +184,6 @@ public class ActivityCamera extends Activity {
             int destHeight;
             Matrix matrix = new Matrix();
             Bitmap cropped;
-            int actualWidth = bitmap.getWidth();
-            int actualHeight = bitmap.getHeight();
             if (bitmap.getWidth() >= bitmap.getHeight()){
                 matrix.postRotate(90);
                 destHeight = bitmap.getWidth() - (bitmap.getWidth() * topLayerHeight) / mTextureView.getHeight();
@@ -227,6 +224,7 @@ public class ActivityCamera extends Activity {
                     e.printStackTrace();
                 }
             }
+
             //Reciclo l'immagine ritagliata
             bitmap.recycle();
             cropped.recycle();
@@ -275,7 +273,7 @@ public class ActivityCamera extends Activity {
         @Override
         public void onCaptureFailed(CameraCaptureSession session, CaptureRequest request, CaptureFailure failure){
             super.onCaptureFailed(session,request,failure);
-            Toast.makeText(getApplicationContext(),"Focus Lock Unsuccessful",Toast.LENGTH_LONG).show();
+            Toast.makeText(MyApp.getAppContext(),"Focus Lock Unsuccessful",Toast.LENGTH_LONG).show();
         }
     };
 
@@ -364,7 +362,7 @@ public class ActivityCamera extends Activity {
             case REQUEST_CAMERA_PERMISSION_RESULT:
                 try {
                     if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
-                        Toast.makeText(getApplicationContext(), R.string.camera_permission_denied, Toast.LENGTH_LONG).show();
+                        Toast.makeText(MyApp.getAppContext(), R.string.camera_permission_denied, Toast.LENGTH_LONG).show();
                     }
                 } catch (Resources.NotFoundException e) {
                     e.printStackTrace();
@@ -394,17 +392,12 @@ public class ActivityCamera extends Activity {
         switch (resultCode){
             case 0:
                 //Immagine scartata
-                File image = new File(mPhotoFileName);
-                boolean deleted = image.delete();
-                if (deleted)
-                    mPhotoFileName = null;
-                else
-                    Toast.makeText(this, R.string.deletingLocalFileError, Toast.LENGTH_LONG).show();
+
                 break;
             case 1:
                 //Invio l'immagine all'activity principale per essere messa nell'imageview
                 outIntent.putExtra("imageView",inIntent.getIntExtra("imageView",0));
-                outIntent.putExtra("fileName",mPhotoFileName);
+                outIntent.putExtra("fileName",data.getStringExtra("fileName"));
                 outIntent.putExtra("sessionID",inIntent.getIntExtra("sessionID",0));
                 outIntent.putExtra("price",data.getIntExtra("price",0));
                 setResult(1,outIntent);
@@ -505,7 +498,7 @@ public class ActivityCamera extends Activity {
                 }
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-                    Toast.makeText(getApplicationContext(),R.string.generic_camera_error,Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyApp.getAppContext(),R.string.generic_camera_error,Toast.LENGTH_LONG).show();
                 }
             },null);
         } catch (CameraAccessException e) {

@@ -6,41 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBlack"
     tools:context="androidlab.fotografando.activities.ActivityCheckPhoto">
 
-    <RelativeLayout
-        android:id="@+id/topRelative"
-
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-
-        android:background="@color/colorBlack"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_conversion_absoluteHeight="50dp"
-        tools:layout_conversion_absoluteWidth="360dp"
-        tools:layout_conversion_absoluteX="0dp"
-        tools:layout_conversion_absoluteY="0dp">
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/bottomRelative"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:background="@color/colorBlack"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_conversion_absoluteHeight="70dp"
-        tools:layout_conversion_absoluteWidth="360dp"
-        tools:layout_conversion_absoluteX="0dp"
-        tools:layout_conversion_absoluteY="441dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-
-    </RelativeLayout>
 
     <ImageView
         android:id="@+id/imageView"
@@ -63,28 +31,28 @@
 
     <ImageButton
         android:id="@+id/btnCancel"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="8dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_style"
         android:src="@drawable/ic_arrow_back_white_24dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/topRelative"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_conversion_absoluteHeight="24dp"
-        tools:layout_conversion_absoluteWidth="24dp" />
+        tools:layout_conversion_absoluteWidth="24dp"
+        android:layout_marginStart="8dp" />
 
     <ImageButton
         android:id="@+id/btnOk"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/button_style"
         android:src="@drawable/ic_check_white_24dp"
         android:tint="@android:color/white"
-        app:layout_constraintRight_toRightOf="@+id/topRelative"
-        app:layout_constraintTop_toTopOf="@+id/topRelative" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="8dp" />
 
     <ImageButton
         android:id="@+id/btnFilter"
