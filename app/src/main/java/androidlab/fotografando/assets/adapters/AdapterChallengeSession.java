@@ -37,13 +37,9 @@ import androidlab.fotografando.assets.tasks.TaskLoadSessionImage;
 /** Adapter per la lista delle challenges **/
 public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallengeSession.ViewHolder> {
 
-
-
-
     private List<ChallengeSession> sessions;
     private Context context;
     private SparseArray<ArrayList<ImageViewChallenge>> imageViewMap;
-    //private SparseArray<ArrayList<ImageViewChallenge>> imageViewMap2;
     private SparseArray<ArrayList<ProgressBar>> progressBarMap;
     private int requestCode;
     private SwipeRefreshLayout swipeRefreshLayout;

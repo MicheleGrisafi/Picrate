@@ -1,7 +1,6 @@
 package androidlab.DB.Objects;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -18,6 +17,7 @@ public class Photo implements Parcelable{
     private int ownerID;
     private int sessionID;
     private ChallengeSession session;
+    private Utente utente;
     private URL image;
     private double latitudine;
     private double longitudine;
@@ -28,6 +28,8 @@ public class Photo implements Parcelable{
         longitudine = 0;
         id = ownerID = sessionID = 0;
         image = null;
+        utente = null;
+        session = null;
     }
     public Photo(int ownerID, int sessionID){
         this.ownerID = ownerID;
@@ -35,6 +37,8 @@ public class Photo implements Parcelable{
     }
     public Photo(Utente user,ChallengeSession session){
         this(user.getId(),session.getIDSession());
+        this.session = session;
+        this.utente = user;
     }
     public Photo( double longitudine, double latitudine, Utente user,ChallengeSession session, URL image){
         this(user,session);

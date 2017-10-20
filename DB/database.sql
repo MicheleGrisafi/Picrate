@@ -67,14 +67,26 @@ INSERT INTO `Challenge` (`IDChallenge`, `description`, `title`,`image`) VALUES
 (1, 'Questo challenge prevede la fotografia di un panorama', 'Panorama','1'),
 (2, 'Fai una foto al tuo cane preferito', 'Cani','2'),
 (3, 'Immortale la più bella scena pubblica che ci sia', 'Scena pubblica','3'),
-(4, 'Scarpe di ogni tipo e colore!', 'Scarpe','4');
+(4, 'Scarpe di ogni tipo e colore!', 'Scarpe','4'),
+(5, 'Aspetta ad usare le posate, usa la fotocamera prima!','Cibo','5'),
+(6, "Immortala l'eleganza di qualcosa!",'Eleganza','6');
 
 TRUNCATE TABLE `ChallengeSession`;
 INSERT INTO `ChallengeSession` (`IDSession`, `image`, `expiration`, `stato`, `IDChallenge`) VALUES
 (1, NULL, '2017-05-30 23:59:59', 0, 1),
 (2, NULL, '2017-06-30 23:59:59', 0, 2),
 (3, NULL, '2017-09-28 23:59:59', 1, 3),
-(4, NULL, '2017-10-01 23:59:59', 1, 4);
+(4, NULL, '2017-10-01 23:59:59', 1, 4),
+(5, NULL, '2017-9-01 23:59:59', 2, 5),
+(6, NULL, '2017-9-01 23:59:59', 2, 6);
+
+TRUNCATE TABLE `Utente`;
+INSERT INTO `Utente` (`IDUser`, `username`, `googleKey`, `mail`, `score`, `money`) VALUES
+(1, 'michele', '12345678', 'miki426811@gmail.com', 70, 60),
+(2, 'caterina', '12312345', 'caterina.battisti@studenti.unitn.it', 20, 3),
+(3, 'Francesco', '87654321', 'franci@gmail.com', 10, 20),
+(4, 'Filippo', '525253523awd', 'filippo.nardin@gmail.com', 40, 10),
+(5, 'Lorenzo', 'awdawdwad', 'lorenzo.gasperotti@gmail.com', 5, 10);
 
 TRUNCATE TABLE `Photo`;
 INSERT INTO `Photo` (`IDPhoto`, `latitudine`, `longitudine`, `owner`, `challenge`) VALUES
@@ -84,19 +96,28 @@ INSERT INTO `Photo` (`IDPhoto`, `latitudine`, `longitudine`, `owner`, `challenge
 (5, 0, 0, 4, 2),
 (6, 0, 0, 5, 2),
 (7, 0, 0, 5, 2),
-(2, 0, 0, 2, 1);
+(2, 0, 0, 2, 1),
+(8, 0, 0, 1, 5),
+(9, 0, 0, 2, 6),
+(10, 0, 0, 3, 5),
+(11, 0, 0, 4, 6),
+(12, 0, 0, 2, 5),
+(13, 0, 0, 1, 6);
+
+TRUNCATE TABLE `Medal`;
+INSERT INTO `Medal` (`IDMedal`,`IDPhoto`,`position`)VALUES
+(1,8,1),
+(2,9,1),
+(3,10,2),
+(4,11,2),
+(5,12,3),
+(6,13,3);
 
 TRUNCATE TABLE `Rating`;
 INSERT INTO `Rating` (`IDRating`, `IDPhoto`, `IDUser`, `Rating`, `segnalazione`) VALUES
 (1, 1, 2, 3, NULL);
 
-TRUNCATE TABLE `Utente`;
-INSERT INTO `Utente` (`IDUser`, `username`, `googleKey`, `mail`, `score`, `money`) VALUES
-(1, 'michele', '12345678', 'miki426811@gmail.com', 70, 10),
-(2, 'caterina', '12312345', 'caterina.battisti@studenti.unitn.it', 20, 3),
-(3, 'Francesco', '87654321', 'franci@gmail.com', 10, 20),
-(4, 'Filippo', '525253523awd', 'filippo.nardin@gmail.com', 40, 10),
-(5, 'Lorenzo', 'awdawdwad', 'lorenzo.gasperotti@gmail.com', 5, 10);
+
 
 
 

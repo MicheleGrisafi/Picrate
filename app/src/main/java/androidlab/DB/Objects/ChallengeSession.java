@@ -1,11 +1,10 @@
 package androidlab.DB.Objects;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
+
 import android.support.annotation.NonNull;
 
-import java.net.URL;
+
 import java.util.Date;
 
 /**
@@ -29,7 +28,7 @@ public class ChallengeSession extends Challenge implements Comparable<ChallengeS
         this.IDSession = idSession;
     }
     public ChallengeSession(Challenge challenge){
-        super(challenge.getDescription(),challenge.getTitle(),challenge.getImage());
+        super(challenge.getId(),challenge.getDescription(),challenge.getTitle(),challenge.getImage());
     }
     public ChallengeSession(int IDSession,Date expiration, Challenge challenge){
         this(challenge);

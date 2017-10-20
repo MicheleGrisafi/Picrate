@@ -45,6 +45,7 @@ public class MySqlDatabase {
     private static final String urlSession                  = "/session";
     private static final String urlRating                   = "/ratings";
     private static final String urlUtilities                = "/utilities";
+    private static final String urlMedals                   = "/medals";
 
     private static final String urlInsertUtente             = "/insertUtente.php";
     private static final String urlGetUtente                = "/getUtente.php";
@@ -63,6 +64,9 @@ public class MySqlDatabase {
 
     private static final String urlGetDate                  = "/getDate.php";
 
+    private static final String urlgetUserMedals            = "/getUserMedals.php";
+    private static final String urlgetSessionMedals         = "/getSessionMedals.php";
+
 
     public static final int INSERT_UTENTE           = 0;
     public static final int GET_UTENTE              = 1;
@@ -78,6 +82,8 @@ public class MySqlDatabase {
     public static final int GET_TOP_USERS           = 11;
     public static final int UPDATE_UTENTE           = 12;
     public static final int PHOTO_CHALLENGE_FOLDER  = 13;
+    public static final int GET_USER_MEDALS         = 14;
+    public static final int GET_SESSION_MEDALS      = 15;
 
 
     private HttpURLConnection httpURLConnection;
@@ -253,6 +259,26 @@ public class MySqlDatabase {
         }
         return openConnection(data,GET_RATINGS);
     }
+    /********************** OPERAZIONI MEDALS ************************/
+    public String getUserMedals(String user){
+        data = "";
+        try {
+            data =  URLEncoder.encode("user","UTF-8")+"="+ URLEncoder.encode(user,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_USER_MEDALS);
+    }
+    public String getSessionMedals(String session){
+        data = "";
+        try {
+            data =  URLEncoder.encode("user","UTF-8")+"="+ URLEncoder.encode(session,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,GET_SESSION_MEDALS);
+    }
+
     /********************** OPERAZIONI UTILITIES ************************/
     public String getDate(){
         data = "";
@@ -334,6 +360,12 @@ public class MySqlDatabase {
                     break;
                 case UPDATE_UTENTE:
                     url = new URL(url_name+urlUtente+urlUpdateUtente);
+                    break;
+                case GET_USER_MEDALS:
+                    url = new URL(url_name+urlMedals+urlgetUserMedals);
+                    break;
+                case GET_SESSION_MEDALS:
+                    url = new URL(url_name+urlMedals+urlgetSessionMedals);
                     break;
             }
         }catch (MalformedURLException e) {
