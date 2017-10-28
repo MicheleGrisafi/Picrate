@@ -60,10 +60,9 @@ public class MedalDAO_DB_impl implements MedalDAO {
                     date = format.parse(obj.getString("expiration"));
                     challenge = new Challenge(obj.getInt("IDChallenge"),obj.getString("description"),obj.getString("title"));
                     session = new ChallengeSession(obj.getInt("IDSession"),date,challenge);
-                    photo = new Photo(user,session);
+                    photo = new Photo(user,session,new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_USER_FOLDER).toString() + "/" + Integer.toString(obj.getInt("IDPhoto")) + ".jpg"));
                     photo.setId(obj.getInt("IDPhoto"));
-                    photo.setImage(new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_USER_FOLDER).toString() + "/" + Integer.toString(photo.getId()) + ".jpg"));
-                    medal = new Medal(obj.getInt("IDMedal"),photo,obj.getInt("position"));
+                    medal = new Medal(obj.getInt("IDMedal"),obj.getInt("position"),photo);
                     lista.add(medal);
                 }
                 result = lista;
@@ -89,12 +88,13 @@ public class MedalDAO_DB_impl implements MedalDAO {
                 for (int i = 0; i < arr.length(); i++){
                     obj = arr.getJSONObject(i);
                     user = new Utente(obj.getString("username"));
-                    photo = new Photo(user,session);
-                    medal = new Medal(obj.getInt("IDMedal"),photo,obj.getInt("position"));
+                    photo = new Photo(user,session,new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_USER_FOLDER).toString() + "/" + Integer.toString(obj.getInt("IDPhoto")) + ".jpg"));
+                    photo.setId(obj.getInt("IDPhoto"));
+                    medal = new Medal(obj.getInt("IDMedal"),obj.getInt("position"),photo);
                     lista.add(medal);
                 }
                 result = lista;
-            } catch (JSONException e) {
+            } catch (JSONException | MalformedURLException e) {
                 e.printStackTrace();
             }
         }

@@ -87,7 +87,7 @@ public class FragmentTabRating extends Fragment implements LoaderManager.LoaderC
                     if(pos != 0){
                         CardView card = (CardView)recyclerView.getLayoutManager().findViewByPosition(0);
                         float voto = ((RatingBar)card.findViewById(R.id.ratingBar)).getRating();
-                        Rating rating = new Rating(AppInfo.getUtente(),adapter.getItems().get(0),Math.round(voto),false);
+                        Rating rating = new Rating(adapter.getItems().get(0),AppInfo.getUtente(),Math.round(voto),false);
                         adapter.removeItem(0);
                         TaskInsertRating insertRating = new TaskInsertRating(rating);
                         insertRating.execute();

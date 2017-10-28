@@ -65,11 +65,11 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Medal medal = medals.get(position);
-        DateTime data = new DateTime(medal.getPhoto().getSession().getExpiration());
+        DateTime data = new DateTime(medal.getSession().getExpiration());
         String dataString = data.getDayOfMonth() + "/" + data.getMonthOfYear() + "/" +data.getYear();
         // Set item views based on your views and data model
         TextView session = holder.session;
-        session.setText(medal.getPhoto().getSession().getTitle() + " " + dataString);
+        session.setText(medal.getSession().getTitle() + " " + dataString);
         final ProgressBar bar = holder.bar;
         ImageView imgMedal = holder.medal;
         switch (medal.getPosition()){
@@ -83,7 +83,7 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
                 imgMedal.setImageResource(R.drawable.ic_medal_bronze_24dp);
         }
         ImageView img = holder.img;
-        URL url = medal.getPhoto().getImage();
+        URL url = medal.getImage();
         Glide.with(MyApp.getAppContext()).load(url).listener(new RequestListener<URL, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, URL model, Target<GlideDrawable> target, boolean isFirstResource) {

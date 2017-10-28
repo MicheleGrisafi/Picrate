@@ -13,7 +13,7 @@
         android:label="Tests for cn.Ragnarok.test"
         android:targetPackage="cn.Ragnarok.test" />
 
-    <application>
+    <application android:debuggable="true" >
         <uses-library android:name="android.test.runner" />
     </application>
 

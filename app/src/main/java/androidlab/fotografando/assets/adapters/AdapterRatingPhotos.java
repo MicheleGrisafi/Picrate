@@ -36,8 +36,6 @@ import androidlab.fotografando.assets.tasks.TaskInsertRating;
  */
 
 public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhotos.ViewHolder> {
-
-
     private List<Photo> items;
     private Context mContext;
     public AsyncResponse delegate = null;
@@ -55,7 +53,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
     public void setItems(List<Photo> items) {
         this.items = items;
         //Crea una foto farlocca per fine lista
-        Photo foto = new Photo(-1,-1);
+        Photo foto = new Photo();
         if(this.items != null)
             this.items.add(foto);
         else {
@@ -113,7 +111,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
         // Get the data model based on position
         final Photo photo = items.get(position);
         //check if it's the last item
-        if(photo.getOwnerID() == -1){
+        if(photo.getId() == 0){
             RatingBar ratingBar = holder.ratingBar;
             ratingBar.setVisibility(View.GONE);
 
@@ -188,7 +186,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
                     dialogReportButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Rating rating = new Rating(AppInfo.getUtente(),items.get(0),0,true);
+                            Rating rating = new Rating(items.get(0),AppInfo.getUtente(),0,true);
                             items.remove(0);
                             notifyItemRemoved(0);
                             TaskInsertRating insertRating = new TaskInsertRating(rating);

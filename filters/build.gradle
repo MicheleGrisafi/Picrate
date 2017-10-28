@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 import org.apache.tools.ant.taskdefs.condition.Os
 
 android {
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '26.0.2'
     compileSdkVersion "android-22"
     sourceSets {
         main {
