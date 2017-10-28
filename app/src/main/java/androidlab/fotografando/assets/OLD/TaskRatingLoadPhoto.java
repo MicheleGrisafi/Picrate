@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.tasks;
+package androidlab.fotografando.assets.OLD;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -24,6 +24,7 @@ import androidlab.fotografando.R;
 import androidlab.fotografando.assets.objects.AppInfo;
 import androidlab.fotografando.assets.interfaces.AsyncResponse;
 import androidlab.fotografando.assets.adapters.AdapterRatingPhotos;
+import androidlab.fotografando.assets.tasks.TaskInsertRating;
 
 /**
  * Created by miki4 on 27/08/2017.
@@ -51,10 +52,11 @@ public class TaskRatingLoadPhoto extends AsyncTask<Void,Void,ArrayList<Photo>> {
 
     @Override
     protected void onPostExecute(final ArrayList<Photo> photos) {
+        /*
         // Lookup the recyclerview in activity layout
         RecyclerView recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerViewRatings);
         // Create adapter passing in the sample user data
-        AdapterRatingPhotos adapter = new AdapterRatingPhotos(context,photos,activity);
+        final AdapterRatingPhotos adapter = new AdapterRatingPhotos(context,photos,activity);
         // Attach the adapter to the recyclerview to populate items
         recyclerView.setAdapter(adapter);
         // Set layout manager to position the items
@@ -77,8 +79,7 @@ public class TaskRatingLoadPhoto extends AsyncTask<Void,Void,ArrayList<Photo>> {
                         CardView card = (CardView)recyclerView.getLayoutManager().findViewByPosition(0);
                         float voto = ((RatingBar)card.findViewById(R.id.ratingBar)).getRating();
                         Rating rating = new Rating(AppInfo.getUtente(),photos.get(0),Math.round(voto),false);
-                        photos.remove(0);
-                        recyclerView.getAdapter().notifyItemRemoved(0);
+                        adapter.removeItem(0);
                         TaskInsertRating insertRating = new TaskInsertRating(rating);
                         insertRating.execute();
                         //Se voto non è nullo allora dò dei soldi
@@ -91,7 +92,7 @@ public class TaskRatingLoadPhoto extends AsyncTask<Void,Void,ArrayList<Photo>> {
                     }
                 }
             }
-        });
+        });*/
 
 //        delegate.processRatingFinish(adapter);
     }

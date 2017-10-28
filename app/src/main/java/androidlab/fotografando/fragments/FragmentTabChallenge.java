@@ -45,6 +45,7 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO: sostituire ImageButton con TouchHighlightImageButton
         //TODO Implementare zoom sulle foto delle challenge
+        //TODO: impedire il refresh delle immagini al cambio tab -> unire loadImageTask e LoadExpirationTask nel LoadChallengeTask
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_challenge_tab, container, false);
 
@@ -91,9 +92,7 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<List<ChallengeSession>> loader, List<ChallengeSession> data) {
-
         adapter.setSessions(data);
-        adapter.notifyDataSetChanged();
         progressBar.setVisibility(ProgressBar.GONE);
         swipeRefreshLayoutChallenges.setRefreshing(false);
     }

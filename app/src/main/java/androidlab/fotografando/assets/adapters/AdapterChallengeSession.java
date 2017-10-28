@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,13 +37,9 @@ import androidlab.fotografando.assets.tasks.TaskLoadSessionImage;
 /** Adapter per la lista delle challenges **/
 public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallengeSession.ViewHolder> {
 
-
-
-
     private List<ChallengeSession> sessions;
     private Context context;
-    private HashMap<Integer,ArrayList<ImageViewChallenge>> imageViewMap;
-    //private SparseArray<ArrayList<ImageViewChallenge>> imageViewMap2;
+    private SparseArray<ArrayList<ImageViewChallenge>> imageViewMap;
     private SparseArray<ArrayList<ProgressBar>> progressBarMap;
     private int requestCode;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -54,8 +51,9 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
 
     public void setSessions(List<ChallengeSession> sessions) {
         this.sessions = sessions;
-        imageViewMap = new HashMap<>();
+        imageViewMap = new SparseArray<>();
         progressBarMap = new SparseArray<>();
+        notifyDataSetChanged();
     }
 
 
@@ -66,7 +64,7 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         this.swipeRefreshLayout = swipeRefreshLayout;
         this.activity = activity;
         this.sessions = new ArrayList<>();
-        imageViewMap = new HashMap<>();
+        imageViewMap = new SparseArray<>();
         progressBarMap = new SparseArray<>();
     }
 
@@ -134,7 +132,6 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         URL url = session.getImage();
         Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).centerCrop().into(
                 new MySimpleTarget<Bitmap>(myWidth,myHeight,holder.box));
-
 
 
 

@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:defaultValue="false"
+        android:theme="@style/SwitchTheme"
         android:key="save_photos"
         android:title="@string/setting_save_photo"
         android:summary="@string/setting_sum_save_photo">

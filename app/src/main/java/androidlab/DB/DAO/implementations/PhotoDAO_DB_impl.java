@@ -19,9 +19,9 @@ import androidlab.DB.Objects.Utente;
  */
 
 public class PhotoDAO_DB_impl implements PhotoDAO {
-    MySqlDatabase database;
-    Object result;
-    String response;
+    private MySqlDatabase database;
+    private Object result;
+    private String response;
     @Override
     public void open() {
         database = new MySqlDatabase();

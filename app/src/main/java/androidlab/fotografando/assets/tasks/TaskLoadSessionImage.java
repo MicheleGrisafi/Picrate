@@ -26,7 +26,7 @@ import androidlab.fotografando.R;
 import androidlab.fotografando.assets.objects.AppInfo;
 import androidlab.fotografando.assets.views.ImageViewChallenge;
 import androidlab.fotografando.assets.listeners.OnClickListenerCamera;
-import androidlab.fotografando.assets.listeners.RequestListenerGlideChallengeImage;
+import androidlab.fotografando.assets.listeners.RequestListenerGlideProgressBar;
 
 /**
  * Created by miki4 on 29/05/2017.
@@ -83,12 +83,12 @@ public class TaskLoadSessionImage extends AsyncTask<Void,Void,ArrayList<Photo>> 
                 foto = pictures.get(i);
                 imageView = imageViews.get(i);
                 if (foto != null) {
-                    RequestListenerGlideChallengeImage requestListener;
+                    RequestListenerGlideProgressBar requestListener;
                     if (i == 0) {
-                        requestListener = new RequestListenerGlideChallengeImage(progressBar1);
+                        requestListener = new RequestListenerGlideProgressBar(progressBar1);
                     }
                     else {
-                        requestListener = new RequestListenerGlideChallengeImage(progressBar2);
+                        requestListener = new RequestListenerGlideProgressBar(progressBar2);
                     }
                     Glide.with(context)
                             .load(foto.getImage())

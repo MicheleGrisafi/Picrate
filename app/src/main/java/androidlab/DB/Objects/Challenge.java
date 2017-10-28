@@ -23,16 +23,17 @@ public class Challenge {
         this();
         this.id = id;
     }
-    public Challenge(String description, String title, URL image){
-        this();
+    public Challenge(int id,String description, String title){
+        this(id);
         this.description = description;
         this.title = title;
+    }
+    public Challenge(int id, String description, String title, URL image){
+        this(id,description,title);
         this.image = image;
     }
-    public Challenge(int id,String description, String title, URL image){
-        this(description,title,image);
-        this.id = id;
-    }
+
+
 
     public int getId() {
         return id;

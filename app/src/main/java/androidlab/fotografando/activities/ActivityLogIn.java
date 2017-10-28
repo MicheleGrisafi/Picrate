@@ -24,6 +24,7 @@ public class ActivityLogIn extends Activity {
         Button btnLogin = (Button) findViewById(R.id.btnLogIn);
 
         final Intent intent = new Intent(this, ActivityMain.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         final Activity activity = this;
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
