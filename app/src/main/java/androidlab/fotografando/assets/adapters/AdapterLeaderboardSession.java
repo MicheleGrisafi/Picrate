@@ -1,7 +1,6 @@
 package androidlab.fotografando.assets.adapters;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +56,7 @@ public class AdapterLeaderboardSession  extends RecyclerView.Adapter<AdapterLead
         ImageView imgMedal = holder.medalBackground;
         ImageView foto = holder.photo;
         TextView tvMedal = holder.medalPosition;
-        tvMedal.setText(medal.getPosition());
+        tvMedal.setText(Integer.toString(medal.getPosition()));
         switch (medal.getPosition()){
             case 1:
                 //imgMedal.setImageResource(R.drawable.ic_medal_gold_24dp);
@@ -78,7 +77,6 @@ public class AdapterLeaderboardSession  extends RecyclerView.Adapter<AdapterLead
                 bar.setVisibility(View.GONE);
                 return false;
             }
-
             @Override
             public boolean onResourceReady(GlideDrawable resource, URL model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                 bar.setVisibility(View.GONE);

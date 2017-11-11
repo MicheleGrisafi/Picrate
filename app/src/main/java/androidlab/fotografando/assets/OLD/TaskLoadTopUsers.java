@@ -1,4 +1,4 @@
-package androidlab.fotografando.assets.tasks;
+package androidlab.fotografando.assets.OLD;
 
 import android.app.Activity;
 import android.content.Context;
@@ -48,9 +48,9 @@ public class TaskLoadTopUsers extends AsyncTask<Void,Void,ArrayList<Utente>> {
         // Lookup the recyclerview in activity layout
         RecyclerView recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerViewLeaderboardUsers);
         // Create adapter passing in the sample user data
-        AdapterLeaderboardTopUsers adapter = new AdapterLeaderboardTopUsers(context,items,activity,intent);
+        //AdapterLeaderboardTopUsers adapter = new AdapterLeaderboardTopUsers(context,items,activity,intent);
         // Attach the adapter to the recyclerview to populate items
-        recyclerView.setAdapter(adapter);
+        //recyclerView.setAdapter(adapter);
         // Set layout manager to position the items
         final LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

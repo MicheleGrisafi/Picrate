@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -135,7 +136,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
             TextView textView = holder.challengeTextView;
             textView.setText(photo.getSession().getTitle());
             ProgressBar progressBar = holder.progressBar;
-            progressBar.getIndeterminateDrawable().setColorFilter(Color.YELLOW, PorterDuff.Mode.MULTIPLY);
+            progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(mContext, R.color.materialOrange600), PorterDuff.Mode.MULTIPLY);
             progressBar.setVisibility(ProgressBar.VISIBLE);
             ImageButton imageButtonInfo = holder.imageButtonInfo;
             imageButtonInfo.setOnClickListener(new View.OnClickListener() {

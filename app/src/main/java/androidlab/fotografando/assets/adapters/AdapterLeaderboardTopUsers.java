@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidlab.DB.Objects.Utente;
@@ -24,17 +25,27 @@ import androidlab.fotografando.assets.listeners.UserOnClickListener;
  */
 
 public class AdapterLeaderboardTopUsers extends RecyclerView.Adapter<AdapterLeaderboardTopUsers.ViewHolder>{
+
     private List<Utente> items;
     private Context mContext;
-    public AsyncResponse delegate = null;
     private Activity activity;
     private Intent intent;
 
-    public AdapterLeaderboardTopUsers(Context mContext, List<Utente> items, Activity activity, Intent intent) {
-        this.items = items;
+    public AdapterLeaderboardTopUsers(Context mContext, Activity activity, Intent intent) {
+        this.items = new ArrayList<>();
         this.mContext = mContext;
         this.activity = activity;
         this.intent = intent;
+    }
+    public List<Utente> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Utente> items) {
+        if(items != null) {
+            this.items = items;
+            notifyDataSetChanged();
+        }
     }
     public Context getContext(){
         return mContext;

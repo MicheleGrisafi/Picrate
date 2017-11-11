@@ -1,5 +1,6 @@
 package androidlab.DB.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidlab.DB.Objects.Challenge;
@@ -15,9 +16,10 @@ public interface ChallengeSessionDAO {
     void close();
     int STATO_ATTIVO = 1;
     int STATO_RATING = 0;
-    int STATO_SCADUTO = -1;
+    int STATO_SCADUTO = 2;
 
 
-    List<ChallengeSession> getActiveSessions();
-    List<ChallengeSession> getRatingSessions();
+    ArrayList<ChallengeSession> getActiveSessions();
+    ArrayList<ChallengeSession> getRatingSessions();
+    ArrayList<ChallengeSession> getClosedSessions();
 }

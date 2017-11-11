@@ -48,41 +48,20 @@
             android:background="@color/materialOrange400">
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TabWidget
                     android:id="@android:id/tabs"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <FrameLayout
                     android:id="@android:id/tabcontent"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-                    <!--
-                    <fragment
-                        android:name="androidlab.fotografando.fragments.FragmentTabChallenge"
-                        class="androidlab.fotografando.fragments.FragmentTabChallenge"
-                        android:id="@+id/fragmentChallenge"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        tools:layout="@layout/fragment_challenge_tab" />
-                    <fragment
-                        android:name="androidlab.fotografando.fragments.FragmentTabRating"
-                        class="androidlab.fotografando.fragments.FragmentTabRating"
-                        android:id="@+id/fragmentRating"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        tools:layout="@layout/fragment_rating_tab" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <fragment
-                        android:name="androidlab.fotografando.fragments.FragmentTabLeadeboard"
-                        android:id="@+id/fragmentLeaderboard"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        tools:layout="@layout/fragment_leaderboard_tab" />-->
                 </FrameLayout>
             </LinearLayout>
         </android.support.v4.app.FragmentTabHost>

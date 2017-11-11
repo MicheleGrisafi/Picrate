@@ -1,21 +1,20 @@
 package androidlab.fotografando.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TabHost;
+import android.support.v4.app.FragmentTabHost;
 
-import androidlab.fotografando.activities.ActivityProfile;
 import androidlab.fotografando.R;
-import androidlab.fotografando.assets.tasks.TaskLoadTopUsers;
+import androidlab.fotografando.assets.objects.MyApp;
 
 /**
  * Created by miki4 on 11/09/2017.
+ *
+ * Terza pagina della homepage, a suo volta ospite di due altre pagine
  */
 
 public class FragmentTabLeadeboard extends Fragment {
@@ -31,24 +30,17 @@ public class FragmentTabLeadeboard extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leaderboard_tab, container, false);
 
         //Creo un tabhost per le due classifiche
-        final TabHost tabHostLeaderboard = (TabHost) view.findViewById(R.id.tabHostLeaderboard);
-        tabHostLeaderboard.setup();
+        final FragmentTabHost tabHostLeaderboard = (FragmentTabHost) view.findViewById(R.id.fragmentTabHost_fragment_leaderboard);
+        tabHostLeaderboard.setup(MyApp.getAppContext(),getChildFragmentManager(),R.id.tabcontent);
 
-        TabHost.TabSpec spec = tabHostLeaderboard.newTabSpec("Leaderboard Top Users Tab");
-        spec.setContent(R.id.tabLeaderboardUsers);
+        FragmentTabHost.TabSpec spec = tabHostLeaderboard.newTabSpec("Leaderboard Top Users Tab");
         spec.setIndicator(getString(R.string.tab_leaderboard_topusers));
-        tabHostLeaderboard.addTab(spec);
+        tabHostLeaderboard.addTab(spec,FragmentTabLeaderboard_users.class,null);
 
         spec = tabHostLeaderboard.newTabSpec("Leaderboard Challenges Tab");
-        spec.setContent(R.id.tabLeaderboardChallenges);
         spec.setIndicator(getString(R.string.tab_leaderboard_challenges));
-        tabHostLeaderboard.addTab(spec);
+        tabHostLeaderboard.addTab(spec,FragmentTabLeaderboard_sessions.class,null);
 
-        //Avvio task per caricamento classifiche
-        RelativeLayout tabLeaderboardTopUsers = (RelativeLayout) view.findViewById(R.id.tabLeaderboardUsers);
-        Intent intent = new Intent(getActivity(), ActivityProfile.class);
-        TaskLoadTopUsers taskLoadTopUsers = new TaskLoadTopUsers(getActivity().getApplicationContext(),tabLeaderboardTopUsers,getActivity(),intent);
-        taskLoadTopUsers.execute();
         return view;
     }
 }

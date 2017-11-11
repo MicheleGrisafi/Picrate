@@ -42,4 +42,5 @@
     <string name="not_enough_money">Not enough money!</string>
     <string name="setting_save_photo">Save taken pictures</string>
     <string name="setting_sum_save_photo">Save on the phone\'s memory the pictures you take</string>
+    <string name="leaderboard_session_name">winners:</string>
 </resources>

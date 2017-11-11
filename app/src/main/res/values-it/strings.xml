@@ -42,4 +42,5 @@
     <string name="not_enough_money">Soldi insufficienti</string>
     <string name="setting_save_photo">Salva foto scattate</string>
     <string name="setting_sum_save_photo">Salva sulla memoria le foto che scatti</string>
+    <string name="leaderboard_session_name">" vincitori: "</string>
 </resources>
