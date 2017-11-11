@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import androidlab.DB.Objects.ChallengeSession;
 import androidlab.DB.Objects.Photo;
 import androidlab.DB.Objects.Utente;
 import androidlab.fotografando.R;
@@ -142,10 +143,6 @@ public class ActivityMain extends FragmentActivity  {
                 }
             }
         });
-
-
-
-
     }
 
 
@@ -181,7 +178,7 @@ public class ActivityMain extends FragmentActivity  {
                     FragmentTabChallenge fragment = (FragmentTabChallenge) getSupportFragmentManager().findFragmentByTag("Challenges Tab");
 
                     //Creo la foto
-                    Photo foto = new Photo(AppInfo.getUtente().getId(),data.getIntExtra("sessionID",0));
+                    Photo foto = new Photo(AppInfo.getUtente(),new ChallengeSession(data.getIntExtra("sessionID",0)));
                     //Ottengo le imageView relative alla challenge dall'adapter
                     ArrayList<ImageViewChallenge> imageViews = fragment.adapter.getImageViews(data.getIntExtra("sessionID",0));
                     ArrayList<ProgressBar> progressBars = fragment.adapter.getProgressBars(data.getIntExtra("sessionID",0));

@@ -272,7 +272,7 @@ public class MySqlDatabase {
     public String getSessionMedals(String session){
         data = "";
         try {
-            data =  URLEncoder.encode("user","UTF-8")+"="+ URLEncoder.encode(session,"UTF-8");
+            data =  URLEncoder.encode("session","UTF-8")+"="+ URLEncoder.encode(session,"UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

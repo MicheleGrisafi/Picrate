@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/imageView_item_photoleaderboard_photo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ProgressBar
+        android:id="@+id/progressBar_item_photoLeaderboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="@+id/imageView_item_photoleaderboard_photo"
+        app:layout_constraintLeft_toLeftOf="@+id/imageView_item_photoleaderboard_photo"
+        app:layout_constraintTop_toTopOf="@+id/imageView_item_photoleaderboard_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_item_photoleaderboard_photo"/>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_medal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_item_photoleaderboard_photo">
+
+        <ImageView
+            android:id="@+id/imageView_medalBackground"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/circular_profile"
+            app:srcCompat="@drawable/circular_profile" />
+
+        <TextView
+            android:id="@+id/textView_medalPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical|center_horizontal|center"
+            android:text="1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_userIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout_medal"
+        app:layout_constraintRight_toLeftOf="@+id/textView_username"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed">
+
+        <ImageView
+            android:id="@+id/imageView_userIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/circular_profile"
+            app:srcCompat="@drawable/circular_profile" />
+
+        <TextView
+            android:id="@+id/textView_userInitial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical|center_horizontal|center"
+            android:text="U" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/textView_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintLeft_toRightOf="@+id/relativeLayout_userIcon"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@+id/relativeLayout_userIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/relativeLayout_userIcon" />
+</android.support.constraint.ConstraintLayout>

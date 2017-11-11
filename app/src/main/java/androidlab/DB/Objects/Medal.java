@@ -4,21 +4,15 @@ package androidlab.DB.Objects;
  * Created by miki4 on 15/10/2017.
  */
 
-public class Medal {
+public class Medal extends Photo{
     private int IDMedal;
-    private int IDPhoto;
     private int position;
-    private Photo photo;
 
 
-    public Medal(int IDMedal, int IDPhoto, int position) {
+    public Medal(int IDMedal, int position, Photo foto) {
+        super(foto);
         this.IDMedal = IDMedal;
-        this.IDPhoto = IDPhoto;
         this.position = position;
-    }
-    public Medal(int IDMedal, Photo photo,int position) {
-        this(IDMedal,photo.getId(),position);
-        this.photo = photo;
     }
 
     public int getIDMedal() {
@@ -29,14 +23,6 @@ public class Medal {
         this.IDMedal = IDMedal;
     }
 
-    public int getIDPhoto() {
-        return IDPhoto;
-    }
-
-    public void setIDPhoto(int IDPhoto) {
-        this.IDPhoto = IDPhoto;
-    }
-
     public int getPosition() {
         return position;
     }
@@ -45,11 +31,4 @@ public class Medal {
         this.position = position;
     }
 
-    public Photo getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
-    }
 }

@@ -8,6 +8,6 @@ package cn.Ragnarok;
 
 public final class R {
     public static final class string {
-        public static final int libname = 0x7f020000;
+        public static final int libname = 0x7f010000;
     }
 }

@@ -28,7 +28,7 @@ public class RatingDAO_DB_impl implements RatingDAO {
 
     @Override
     public void insertRating(Rating rating) {
-        response = database.insertRating(Integer.toString(rating.getUserID()),Integer.toString(rating.getFotoID()),Integer.toString(rating.getVoto()),Boolean.toString(rating.isSegnalazione()));
+        response = database.insertRating(Integer.toString(rating.getVoter().getId()),Integer.toString(rating.getId()),Integer.toString(rating.getVoto()),Boolean.toString(rating.isSegnalazione()));
     }
 
     @Override

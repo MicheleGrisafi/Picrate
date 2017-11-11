@@ -40,28 +40,38 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
     }
 
     @Override
-    public List<ChallengeSession> getActiveSessions() {
-        List<ChallengeSession> lista = null;
+    public ArrayList<ChallengeSession> getActiveSessions() {
+        ArrayList<ChallengeSession> lista = null;
         response = database.getSessions(Integer.toString(ChallengeSessionDAO.STATO_ATTIVO));
-        if (response != "null"){
+        if (!response.equals("null")){
             lista = getSessions(response);
         }
         return lista;
     }
 
     @Override
-    public List<ChallengeSession> getRatingSessions() {
-        List<ChallengeSession> lista = null;
+    public ArrayList<ChallengeSession> getRatingSessions() {
+        ArrayList<ChallengeSession> lista = null;
         response = database.getSessions(Integer.toString(ChallengeSessionDAO.STATO_RATING));
-        if (response != "null"){
+        if (!response.equals("null")){
+            lista = getSessions(response);
+        }
+        return lista;
+    }
+
+    @Override
+    public ArrayList<ChallengeSession> getClosedSessions() {
+        ArrayList<ChallengeSession> lista = null;
+        response = database.getSessions(Integer.toString(ChallengeSessionDAO.STATO_SCADUTO));
+        if (!response.equals("null")){
             lista = getSessions(response);
         }
         return lista;
     }
 
 
-    private List<ChallengeSession> getSessions(String response){
-        List<ChallengeSession> lista = new ArrayList<ChallengeSession>();
+    private ArrayList<ChallengeSession> getSessions(String response){
+        ArrayList<ChallengeSession> lista = new ArrayList<ChallengeSession>();
         JSONArray arr;
         ChallengeSession session;
         Challenge challege;

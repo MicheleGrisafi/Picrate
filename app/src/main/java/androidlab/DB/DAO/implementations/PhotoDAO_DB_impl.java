@@ -34,8 +34,8 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
     @Override
     public Photo insertPhoto(Photo photo,String imagePath) {
         result = null;
-        response = database.insertPhoto(imagePath,Integer.toString(photo.getOwnerID()),
-                Integer.toString(photo.getSessionID()),Double.toString(photo.getLatitudine()),
+        response = database.insertPhoto(imagePath,Integer.toString(photo.getUtente().getId()),
+                Integer.toString(photo.getSession().getIDSession()),Double.toString(photo.getLatitudine()),
                 Double.toString(photo.getLongitudine()));
 
         if (response != "null"){
@@ -46,9 +46,7 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
                     photo.setImage(new URL(obj.getString("url")));
                     result = photo;
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
+            } catch (JSONException | MalformedURLException e) {
                 e.printStackTrace();
             }
         }
@@ -113,8 +111,7 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
             for(int i = 0; i < arr.length(); i++) {
                 obj = arr.getJSONObject(i);
                 url = new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_USER_FOLDER).toString() + "/" + obj.getString("IDPhoto") + ".jpg");
-                challengeSession = new ChallengeSession();
-                challengeSession.setIDSession(obj.getInt("IDSession"));
+                challengeSession = new ChallengeSession(obj.getInt("IDSession"));
                 challengeSession.setTitle(obj.getString("title"));
                 challengeSession.setDescription(obj.getString("description"));
                 photo = new Photo();
@@ -123,9 +120,7 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
                 photo.setImage(url);
                 lista.add(photo);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
+        } catch (JSONException | MalformedURLException e) {
             e.printStackTrace();
         }
         if(!lista.isEmpty())

@@ -4,43 +4,20 @@ package androidlab.DB.Objects;
  * Created by Michele Grisafi on 12/05/2017.
  */
 
-public class Rating {
-    private int userID;
-    private int fotoID;
+public class Rating extends Photo{
+    int IDRating;
+    private Utente voter;
     private int voto;
     private boolean segnalazione;
 
-    public Rating(){}
-    public Rating(int userID, int fotoID){
-        this();
-        this.userID = userID;
-        this.fotoID = fotoID;
+    public Rating(Photo foto, Utente voter){
+        super(foto);
+        this.voter = voter;
     }
-    public Rating(Utente user,Photo foto){
-        this(user.getId(),foto.getId());
-    }
-    public Rating(Utente user, Photo foto, int voto, boolean segnalazione){
-        this(user,foto);
+    public Rating(Photo foto, Utente voter, int voto, boolean segnalazione){
+        this(foto,voter);
         this.voto = voto;
         this.segnalazione = segnalazione;
-    }
-
-
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public int getFotoID() {
-        return fotoID;
-    }
-
-    public void setFotoID(int fotoID) {
-        this.fotoID = fotoID;
     }
 
     public int getVoto() {
@@ -57,5 +34,21 @@ public class Rating {
 
     public void setSegnalazione(boolean segnalazione) {
         this.segnalazione = segnalazione;
+    }
+
+    public Utente getVoter() {
+        return voter;
+    }
+
+    public void setVoter(Utente voter) {
+        this.voter = voter;
+    }
+
+    public int getIDRating() {
+        return IDRating;
+    }
+
+    public void setIDRating(int IDRating) {
+        this.IDRating = IDRating;
     }
 }

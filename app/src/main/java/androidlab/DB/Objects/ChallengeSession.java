@@ -22,7 +22,9 @@ public class ChallengeSession extends Challenge implements Comparable<ChallengeS
     static public final int STATO_ACTIVE = 2;
     static public final int STATO_UPCOMING = 3;
 
-    public ChallengeSession(){}
+    public ChallengeSession(int idSession){
+        this.IDSession = idSession;
+    }
     public ChallengeSession(int idSession, int idChallenge){
         super(idChallenge);
         this.IDSession = idSession;

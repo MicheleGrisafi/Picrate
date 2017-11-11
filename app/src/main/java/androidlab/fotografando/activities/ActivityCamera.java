@@ -207,6 +207,7 @@ public class ActivityCamera extends Activity {
             }
 
             //Scrivo l'immagine su un file JPEG
+            //TODO: BUG PNG: alcuni telefoni salvano in png
             FileOutputStream out = null;
             try {
                 out = new FileOutputStream(mPhotoFileName);
@@ -316,6 +317,7 @@ public class ActivityCamera extends Activity {
         });
         topOverlay = (RelativeLayout)findViewById(R.id.topLayer);
         bottomOverlay = (RelativeLayout)findViewById(R.id.bottomLayer);
+        //checkWriteStoragePermission();
     }
 
     @Override
@@ -325,6 +327,7 @@ public class ActivityCamera extends Activity {
         if(mTextureView.isAvailable()){
             setupCamera(mTextureView.getWidth(),mTextureView.getHeight());
             connectCamera();
+
         }else{
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
         }
@@ -619,7 +622,6 @@ public class ActivityCamera extends Activity {
         try {
             mCaptureState = STATE_WAIT_LOCK;
             mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CaptureRequest.CONTROL_AF_TRIGGER_START);
-
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),mPreviewCaptureCallback,mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
@@ -636,6 +638,7 @@ public class ActivityCamera extends Activity {
     }
     private void shootPhoto() {
         //se già cliccato allora non faccio nulla
+        //TODO bug persmission: cambiare posizione della permission
         if(!shooting) {
             shooting = true;
             checkWriteStoragePermission();
