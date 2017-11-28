@@ -5,26 +5,22 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-
 import picrate.app.DB.DAO.UtenteDAO;
 import picrate.app.DB.DAO.implementations.UtenteDAO_DB_impl;
 import picrate.app.DB.Objects.Utente;
 import picrate.app.R;
 import picrate.app.activities.ActivityLogIn;
-import picrate.app.activities.ActivityMain;
-import picrate.app.assets.objects.AppInfo;
+
 
 /**
  * Created by miki4 on 26/11/2017.
  */
 
 public class TaskSignUp extends AsyncTask<Void,Void,Boolean> {
-    String username,email,googleKey;
-    Activity activity;
-    Utente user;
-    UtenteDAO dao = new UtenteDAO_DB_impl();
+    private String username,email,googleKey;
+    private Activity activity;
+    private Utente user;
+    private UtenteDAO dao;
 
     public TaskSignUp(String username, String email,Activity activity,String googleKey) {
         this.username = username;
@@ -42,6 +38,7 @@ public class TaskSignUp extends AsyncTask<Void,Void,Boolean> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        dao = new UtenteDAO_DB_impl();
         dao.open();
         user = new Utente(username,email,googleKey);
     }
@@ -53,8 +50,8 @@ public class TaskSignUp extends AsyncTask<Void,Void,Boolean> {
         Intent intent = new Intent(activity, ActivityLogIn.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if(result){
-            //AppInfo.loginUser(intent,activity,googleKey,email);
             activity.startActivity(intent);
+            activity.finish();
         }else{
             Toast.makeText(activity, R.string.signup_error, Toast.LENGTH_SHORT).show();
         }

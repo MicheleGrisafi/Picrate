@@ -4,15 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.widget.Button;
-import android.widget.Toast;
-
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 import picrate.app.DB.DAO.UtenteDAO;
 import picrate.app.DB.DAO.implementations.UtenteDAO_DB_impl;
 import picrate.app.DB.Objects.Utente;
+import picrate.app.activities.ActivityMain;
 import picrate.app.activities.ActivitySignUp;
 import picrate.app.assets.objects.AppInfo;
 import picrate.app.assets.objects.MyApp;
@@ -26,7 +22,7 @@ public class TaskLogInUtente extends AsyncTask<Void,Void,Utente> {
     private Intent intent;
     private Activity activity;
     String googleKey,email;
-    public TaskLogInUtente(Intent intent, Activity activity,String googleKey,String email) {
+    public TaskLogInUtente( Activity activity,String googleKey,String email) {
         this.intent = intent;
         this.activity = activity;
         this.googleKey = googleKey;
@@ -60,14 +56,18 @@ public class TaskLogInUtente extends AsyncTask<Void,Void,Utente> {
             editor.putInt("money", utente.getMoney());
             editor.putInt("score", utente.getScore());
             editor.apply();
-            activity.getApplicationContext().startActivity(intent);
+
+            intent = new Intent(activity, ActivityMain.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(intent);
             activity.finish();
         }else{
-            Intent intent = new Intent(activity, ActivitySignUp.class);
+            intent = new Intent(activity, ActivitySignUp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("googleKey",googleKey);
             intent.putExtra("email",email);
-            activity.getApplicationContext().startActivity(intent);
+            activity.startActivity(intent);
+            activity.finish();
         }
 
     }

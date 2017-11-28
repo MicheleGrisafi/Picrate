@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import picrate.app.DB.DAO.PhotoDAO;
 import picrate.app.DB.DAO.implementations.PhotoDAO_DB_impl;
 import picrate.app.DB.Objects.Photo;
-import picrate.app.assets.objects.AppInfo;
 import picrate.app.assets.interfaces.AsyncResponse;
+import picrate.app.assets.objects.AppInfo;
 
 /**
  * Created by miki4 on 27/08/2017.

@@ -1,9 +1,7 @@
 package picrate.app.DB.Objects;
 
 
-
 import android.support.annotation.NonNull;
-
 
 import java.util.Date;
 

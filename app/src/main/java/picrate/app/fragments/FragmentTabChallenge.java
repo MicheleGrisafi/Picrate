@@ -1,10 +1,9 @@
 package picrate.app.fragments;
 
 
-
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,14 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-
 import java.util.List;
 
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.R;
-import picrate.app.assets.tasks.AsyncTaskLoaderChallenges;
-import picrate.app.assets.listeners.SwipeRefreshListenerChallenge;
 import picrate.app.assets.adapters.AdapterChallengeSession;
+import picrate.app.assets.listeners.SwipeRefreshListenerChallenge;
+import picrate.app.assets.tasks.AsyncTaskLoaderChallenges;
 
 /**
  * Created by miki4 on 11/09/2017.

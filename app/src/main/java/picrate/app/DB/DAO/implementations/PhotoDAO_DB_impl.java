@@ -1,7 +1,9 @@
 package picrate.app.DB.DAO.implementations;
 
 
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;

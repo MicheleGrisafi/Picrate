@@ -3,7 +3,6 @@ package picrate.app.assets.tasks;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
-
 import picrate.app.DB.DAO.UtenteDAO;
 import picrate.app.DB.DAO.implementations.UtenteDAO_DB_impl;
 import picrate.app.DB.Objects.Utente;

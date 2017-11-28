@@ -31,7 +31,6 @@ public class ActivitySignUp extends Activity {
             public void onClick(View v) {
                 String username = etUsername.getText().toString();
                 Boolean valid = true;
-                //String results = StringEscapeUtils.escapeJava(str);
                 //TODO: username univoco? Allora va controllata l'esistenza dello stesso nel DB
                 //TODO: escaping del username
                 if(username.length() < 3)

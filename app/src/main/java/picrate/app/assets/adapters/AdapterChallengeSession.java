@@ -22,11 +22,11 @@ import java.util.List;
 
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.R;
-import picrate.app.assets.views.ImageViewChallenge;
 import picrate.app.assets.objects.MyApp;
 import picrate.app.assets.objects.MySimpleTarget;
 import picrate.app.assets.tasks.TaskLoadSessionExpiration;
 import picrate.app.assets.tasks.TaskLoadSessionImage;
+import picrate.app.assets.views.ImageViewChallenge;
 
 /**
  * Created by miki4 on 27/05/2017.

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -100,10 +99,7 @@ public class ActivityLogIn extends Activity implements View.OnClickListener{
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             // Signed in successfully, show authenticated UI.
-            String idToken = account.getIdToken();
-            Intent intent = new Intent(this, ActivityMain.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            AppInfo.loginUser(intent,this,account.getIdToken(),account.getEmail());
+            AppInfo.loginUser(this,account.getIdToken(),account.getEmail());
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.

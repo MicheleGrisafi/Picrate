@@ -21,12 +21,12 @@ import picrate.app.DB.DAO.implementations.PhotoDAO_DB_impl;
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.DB.Objects.Photo;
 import picrate.app.DB.Objects.Utente;
-import picrate.app.activities.ActivityCamera;
 import picrate.app.R;
-import picrate.app.assets.objects.AppInfo;
-import picrate.app.assets.views.ImageViewChallenge;
+import picrate.app.activities.ActivityCamera;
 import picrate.app.assets.listeners.OnClickListenerCamera;
 import picrate.app.assets.listeners.RequestListenerGlideProgressBar;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.views.ImageViewChallenge;
 
 /**
  * Created by miki4 on 29/05/2017.

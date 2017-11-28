@@ -1,11 +1,11 @@
 package picrate.app.fragments;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;

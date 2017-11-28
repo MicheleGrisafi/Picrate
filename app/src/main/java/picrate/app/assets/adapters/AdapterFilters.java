@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cn.Ragnarok.BitmapFilter;
 import picrate.app.R;
 import picrate.app.activities.ActivityImageFilter;
 import picrate.app.assets.objects.Filter;
-import cn.Ragnarok.BitmapFilter;
 
 /**
  * Created by miki4 on 18/09/2017.

@@ -26,9 +26,9 @@ import java.util.List;
 import picrate.app.DB.Objects.Photo;
 import picrate.app.DB.Objects.Rating;
 import picrate.app.R;
+import picrate.app.assets.interfaces.AsyncResponse;
 import picrate.app.assets.listeners.RequestListenerGlideProgressBar;
 import picrate.app.assets.objects.AppInfo;
-import picrate.app.assets.interfaces.AsyncResponse;
 import picrate.app.assets.tasks.TaskInsertRating;
 
 /**

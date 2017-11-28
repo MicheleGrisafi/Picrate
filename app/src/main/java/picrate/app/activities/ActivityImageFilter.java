@@ -10,12 +10,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-
 import java.util.ArrayList;
 
 import picrate.app.R;
-import picrate.app.assets.objects.AppInfo;
 import picrate.app.assets.adapters.AdapterFilters;
+import picrate.app.assets.objects.AppInfo;
 import picrate.app.assets.objects.BitmapHelper;
 import picrate.app.assets.objects.Filter;
 

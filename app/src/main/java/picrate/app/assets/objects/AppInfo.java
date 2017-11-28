@@ -1,12 +1,9 @@
 package picrate.app.assets.objects;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.widget.Button;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 import org.json.JSONException;
@@ -19,10 +16,10 @@ import java.util.Date;
 
 import picrate.app.DB.MySqlDatabase;
 import picrate.app.DB.Objects.Utente;
+import picrate.app.activities.ActivitySettings;
 import picrate.app.assets.tasks.TaskLogInUtente;
 import picrate.app.assets.tasks.TaskSignUp;
 import picrate.app.assets.tasks.TaskUpdateUtente;
-import picrate.app.activities.ActivitySettings;
 
 /**
  * Created by miki4 on 13/05/2017.
@@ -56,8 +53,8 @@ abstract public class AppInfo {
 
 
     /**Inizializzo utente prendendolo dal database **/
-    static public void loginUser(Intent intent, Activity activity, String googleKey,String email){
-        TaskLogInUtente logIn = new TaskLogInUtente(intent,activity,googleKey,email);
+    static public void loginUser( Activity activity, String googleKey,String email){
+        TaskLogInUtente logIn = new TaskLogInUtente(activity,googleKey,email);
         logIn.execute();
     }
     static public void signupUser(String googleKey,String email,String username, Activity activity){
