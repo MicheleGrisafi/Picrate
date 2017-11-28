@@ -1,11 +1,11 @@
-package androidlab.app.activities;
+package picrate.app.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import androidlab.app.R;
-import androidlab.app.fragments.FragmentSetting;
+import picrate.app.R;
+import picrate.app.fragments.FragmentSetting;
 
 /**
  * Created by miki4 on 23/09/2017.

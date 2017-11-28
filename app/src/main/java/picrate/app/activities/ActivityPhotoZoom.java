@@ -1,4 +1,4 @@
-package androidlab.app.activities;
+package picrate.app.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 
-import androidlab.app.R;
+import picrate.app.R;
 
 /**
  * Created by Cate on 25/05/2017.

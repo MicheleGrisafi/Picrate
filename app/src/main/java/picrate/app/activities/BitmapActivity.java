@@ -1,4 +1,4 @@
-package androidlab.app.activities;
+package picrate.app.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import androidlab.app.assets.objects.BitmapHelper;
+import picrate.app.assets.objects.BitmapHelper;
 
 /**
  * Created by miki4 on 30/09/2017.

@@ -1,4 +1,4 @@
-package androidlab.app.assets.interfaces;
+package picrate.app.assets.interfaces;
 
 import android.widget.Adapter;
 

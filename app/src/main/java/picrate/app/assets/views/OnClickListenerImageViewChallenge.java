@@ -1,4 +1,4 @@
-package androidlab.app.assets.views;
+package picrate.app.assets.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 
-import androidlab.app.activities.ActivityMain;
+import picrate.app.activities.ActivityMain;
 
 /**
  * Created by Cate on 26/05/2017.

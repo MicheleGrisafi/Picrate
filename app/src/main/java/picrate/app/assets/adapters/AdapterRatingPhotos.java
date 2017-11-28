@@ -1,4 +1,4 @@
-package androidlab.app.assets.adapters;
+package picrate.app.assets.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -23,13 +23,13 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidlab.app.DB.Objects.Photo;
-import androidlab.app.DB.Objects.Rating;
-import androidlab.app.R;
-import androidlab.app.assets.listeners.RequestListenerGlideProgressBar;
-import androidlab.app.assets.objects.AppInfo;
-import androidlab.app.assets.interfaces.AsyncResponse;
-import androidlab.app.assets.tasks.TaskInsertRating;
+import picrate.app.DB.Objects.Photo;
+import picrate.app.DB.Objects.Rating;
+import picrate.app.R;
+import picrate.app.assets.listeners.RequestListenerGlideProgressBar;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.interfaces.AsyncResponse;
+import picrate.app.assets.tasks.TaskInsertRating;
 
 /**
  * Created by miki4 on 27/08/2017.

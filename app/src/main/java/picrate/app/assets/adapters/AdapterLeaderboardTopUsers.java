@@ -1,4 +1,4 @@
-package androidlab.app.assets.adapters;
+package picrate.app.assets.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,9 +15,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidlab.app.DB.Objects.Utente;
-import androidlab.app.R;
-import androidlab.app.assets.listeners.UserOnClickListener;
+import picrate.app.DB.Objects.Utente;
+import picrate.app.R;
+import picrate.app.assets.listeners.UserOnClickListener;
 
 /**
  * Created by miki4 on 10/09/2017.

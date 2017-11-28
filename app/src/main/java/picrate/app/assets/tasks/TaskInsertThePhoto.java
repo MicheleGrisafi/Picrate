@@ -1,4 +1,4 @@
-package androidlab.app.assets.tasks;
+package picrate.app.assets.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,14 +9,14 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 
-import androidlab.app.DB.DAO.PhotoDAO;
-import androidlab.app.DB.DAO.implementations.PhotoDAO_DB_impl;
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.DB.Objects.Photo;
-import androidlab.app.R;
-import androidlab.app.assets.objects.AppInfo;
-import androidlab.app.assets.objects.BitmapHelper;
-import androidlab.app.assets.views.ImageViewChallenge;
+import picrate.app.DB.DAO.PhotoDAO;
+import picrate.app.DB.DAO.implementations.PhotoDAO_DB_impl;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.DB.Objects.Photo;
+import picrate.app.R;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.objects.BitmapHelper;
+import picrate.app.assets.views.ImageViewChallenge;
 
 /**
  * Created by Michele Grisafi on 11/05/2017.

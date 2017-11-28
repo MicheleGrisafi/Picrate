@@ -1,4 +1,4 @@
-package androidlab.app.activities;
+package picrate.app.activities;
 
 
 import android.os.Bundle;
@@ -8,11 +8,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import androidlab.app.DB.Objects.Medal;
-import androidlab.app.R;
-import androidlab.app.assets.objects.AppInfo;
-import androidlab.app.assets.objects.MyApp;
-import androidlab.app.assets.tasks.AsyncTaskLoaderMedalsProfile;
+import picrate.app.DB.Objects.Medal;
+import picrate.app.R;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.objects.MyApp;
+import picrate.app.assets.tasks.AsyncTaskLoaderMedalsProfile;
 
 /**
  * Created by Cate on 22/05/2017.

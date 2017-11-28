@@ -1,4 +1,4 @@
-package androidlab.app.activities;
+package picrate.app.activities;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -16,10 +16,10 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
-import androidlab.app.DB.Objects.Medal;
-import androidlab.app.R;
-import androidlab.app.assets.adapters.AdapterMedalsProfile;
-import androidlab.app.assets.objects.MyApp;
+import picrate.app.DB.Objects.Medal;
+import picrate.app.R;
+import picrate.app.assets.adapters.AdapterMedalsProfile;
+import picrate.app.assets.objects.MyApp;
 
 /**
  * Created by miki4 on 21/10/2017.

@@ -1,4 +1,4 @@
-package androidlab.app.assets.tasks;
+package picrate.app.assets.tasks;
 
 import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.content.Context;
 
 import java.util.List;
 
-import androidlab.app.DB.DAO.ChallengeSessionDAO;
-import androidlab.app.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
-import androidlab.app.DB.Objects.ChallengeSession;
+import picrate.app.DB.DAO.ChallengeSessionDAO;
+import picrate.app.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
+import picrate.app.DB.Objects.ChallengeSession;
 
 /**
  * Created by miki4 on 24/09/2017.

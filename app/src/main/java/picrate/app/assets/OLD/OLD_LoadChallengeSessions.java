@@ -1,4 +1,4 @@
-package androidlab.app.assets.OLD;
+package picrate.app.assets.OLD;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import androidlab.app.DB.DAO.ChallengeSessionDAO;
-import androidlab.app.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.R;
-import androidlab.app.assets.objects.AppInfo;
-import androidlab.app.assets.objects.MyApp;
-import androidlab.app.assets.objects.MySimpleTarget;
+import picrate.app.DB.DAO.ChallengeSessionDAO;
+import picrate.app.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.R;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.objects.MyApp;
+import picrate.app.assets.objects.MySimpleTarget;
 
 /**
  * Created by Michele Grisafi on 14/05/2017.

@@ -1,9 +1,13 @@
-package androidlab.app.assets.objects;
+package picrate.app.assets.objects;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.widget.Button;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,11 +17,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import androidlab.app.DB.MySqlDatabase;
-import androidlab.app.DB.Objects.Utente;
-import androidlab.app.assets.tasks.TaskLogInUtente;
-import androidlab.app.assets.tasks.TaskUpdateUtente;
-import androidlab.app.activities.ActivitySettings;
+import picrate.app.DB.MySqlDatabase;
+import picrate.app.DB.Objects.Utente;
+import picrate.app.assets.tasks.TaskLogInUtente;
+import picrate.app.assets.tasks.TaskSignUp;
+import picrate.app.assets.tasks.TaskUpdateUtente;
+import picrate.app.activities.ActivitySettings;
 
 /**
  * Created by miki4 on 13/05/2017.
@@ -46,11 +51,18 @@ abstract public class AppInfo {
     /** SETTINGS **/
     static public final int SAVE_PHOTOS = 0;
 
+    /** user account **/
+    static public GoogleSignInClient client;
+
 
     /**Inizializzo utente prendendolo dal database **/
-    static public void loginUser(String googleKey, Intent intent, Activity activity){
-        TaskLogInUtente logIn = new TaskLogInUtente(googleKey,intent,activity);
+    static public void loginUser(Intent intent, Activity activity, String googleKey,String email){
+        TaskLogInUtente logIn = new TaskLogInUtente(intent,activity,googleKey,email);
         logIn.execute();
+    }
+    static public void signupUser(String googleKey,String email,String username, Activity activity){
+        TaskSignUp task = new TaskSignUp(username,email,activity,googleKey);
+        task.execute();
     }
     /** Ottiene utente loggato nell'app **/
     static public Utente getUtente(){

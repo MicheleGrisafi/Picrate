@@ -1,4 +1,4 @@
-package androidlab.app.assets.OLD;
+package picrate.app.assets.OLD;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

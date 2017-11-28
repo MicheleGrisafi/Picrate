@@ -1,14 +1,14 @@
-package androidlab.app.assets.tasks;
+package picrate.app.assets.tasks;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 
-import androidlab.app.DB.DAO.UtenteDAO;
-import androidlab.app.DB.DAO.implementations.UtenteDAO_DB_impl;
-import androidlab.app.DB.Objects.Utente;
-import androidlab.app.assets.objects.AppInfo;
-import androidlab.app.assets.objects.MyApp;
+import picrate.app.DB.DAO.UtenteDAO;
+import picrate.app.DB.DAO.implementations.UtenteDAO_DB_impl;
+import picrate.app.DB.Objects.Utente;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.objects.MyApp;
 
 
 /**

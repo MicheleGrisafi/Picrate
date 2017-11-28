@@ -1,10 +1,10 @@
-package androidlab.app.assets.tasks;
+package picrate.app.assets.tasks;
 
 import android.os.AsyncTask;
 
-import androidlab.app.DB.DAO.UtenteDAO;
-import androidlab.app.DB.DAO.implementations.UtenteDAO_DB_impl;
-import androidlab.app.DB.Objects.Utente;
+import picrate.app.DB.DAO.UtenteDAO;
+import picrate.app.DB.DAO.implementations.UtenteDAO_DB_impl;
+import picrate.app.DB.Objects.Utente;
 
 /**
  * Created by Michele Grisafi on 15/09/2017.

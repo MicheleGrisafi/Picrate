@@ -1,4 +1,4 @@
-package androidlab.app.DB.DAO.implementations;
+package picrate.app.DB.DAO.implementations;
 
 
 import org.json.*;
@@ -8,11 +8,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidlab.app.DB.DAO.PhotoDAO;
-import androidlab.app.DB.MySqlDatabase;
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.DB.Objects.Photo;
-import androidlab.app.DB.Objects.Utente;
+import picrate.app.DB.DAO.PhotoDAO;
+import picrate.app.DB.MySqlDatabase;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.DB.Objects.Photo;
+import picrate.app.DB.Objects.Utente;
 
 /**
  * Created by miki4 on 07/05/2017.

@@ -1,4 +1,4 @@
-package androidlab.app.assets.adapters;
+package picrate.app.assets.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,10 +20,10 @@ import com.bumptech.glide.request.target.Target;
 import java.net.URL;
 import java.util.ArrayList;
 
-import androidlab.app.DB.Objects.Medal;
-import androidlab.app.R;
-import androidlab.app.assets.listeners.UserOnClickListener;
-import androidlab.app.assets.objects.MyApp;
+import picrate.app.DB.Objects.Medal;
+import picrate.app.R;
+import picrate.app.assets.listeners.UserOnClickListener;
+import picrate.app.assets.objects.MyApp;
 
 /**
  * Created by miki4 on 22/10/2017.

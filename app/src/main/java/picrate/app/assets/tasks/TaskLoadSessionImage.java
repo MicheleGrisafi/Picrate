@@ -1,4 +1,4 @@
-package androidlab.app.assets.tasks;
+package picrate.app.assets.tasks;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -16,17 +16,17 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import androidlab.app.DB.DAO.PhotoDAO;
-import androidlab.app.DB.DAO.implementations.PhotoDAO_DB_impl;
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.DB.Objects.Photo;
-import androidlab.app.DB.Objects.Utente;
-import androidlab.app.activities.ActivityCamera;
-import androidlab.app.R;
-import androidlab.app.assets.objects.AppInfo;
-import androidlab.app.assets.views.ImageViewChallenge;
-import androidlab.app.assets.listeners.OnClickListenerCamera;
-import androidlab.app.assets.listeners.RequestListenerGlideProgressBar;
+import picrate.app.DB.DAO.PhotoDAO;
+import picrate.app.DB.DAO.implementations.PhotoDAO_DB_impl;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.DB.Objects.Photo;
+import picrate.app.DB.Objects.Utente;
+import picrate.app.activities.ActivityCamera;
+import picrate.app.R;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.views.ImageViewChallenge;
+import picrate.app.assets.listeners.OnClickListenerCamera;
+import picrate.app.assets.listeners.RequestListenerGlideProgressBar;
 
 /**
  * Created by miki4 on 29/05/2017.

@@ -1,4 +1,4 @@
-package androidlab.app.assets.OLD;
+package picrate.app.assets.OLD;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,10 +11,10 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import androidlab.app.DB.DAO.UtenteDAO;
-import androidlab.app.DB.DAO.implementations.UtenteDAO_DB_impl;
-import androidlab.app.DB.Objects.Utente;
-import androidlab.app.R;
+import picrate.app.DB.DAO.UtenteDAO;
+import picrate.app.DB.DAO.implementations.UtenteDAO_DB_impl;
+import picrate.app.DB.Objects.Utente;
+import picrate.app.R;
 
 /**
  * Created by miki4 on 10/09/2017.

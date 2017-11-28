@@ -1,4 +1,4 @@
-package androidlab.app.assets.OLD;
+package picrate.app.assets.OLD;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,10 +8,10 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import androidlab.app.DB.DAO.ChallengeSessionDAO;
-import androidlab.app.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.assets.interfaces.AsyncResponse;
+import picrate.app.DB.DAO.ChallengeSessionDAO;
+import picrate.app.DB.DAO.implementations.ChallengeSessionDAO_DB_impl;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.assets.interfaces.AsyncResponse;
 
 /**
  * Created by miki4 on 29/05/2017.

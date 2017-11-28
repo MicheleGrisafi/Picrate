@@ -1,4 +1,4 @@
-package androidlab.app.assets.tasks;
+package picrate.app.assets.tasks;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,11 +11,11 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
-import androidlab.app.DB.DAO.MedalDAO;
-import androidlab.app.DB.DAO.implementations.MedalDAO_DB_impl;
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.DB.Objects.Medal;
-import androidlab.app.assets.adapters.AdapterLeaderboardSession;
+import picrate.app.DB.DAO.MedalDAO;
+import picrate.app.DB.DAO.implementations.MedalDAO_DB_impl;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.DB.Objects.Medal;
+import picrate.app.assets.adapters.AdapterLeaderboardSession;
 
 /**
  * Created by miki4 on 05/11/2017.

@@ -1,4 +1,4 @@
-package androidlab.app.activities;
+package picrate.app.activities;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,11 +13,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import androidlab.app.R;
-import androidlab.app.assets.objects.AppInfo;
-import androidlab.app.assets.adapters.AdapterFilters;
-import androidlab.app.assets.objects.BitmapHelper;
-import androidlab.app.assets.objects.Filter;
+import picrate.app.R;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.adapters.AdapterFilters;
+import picrate.app.assets.objects.BitmapHelper;
+import picrate.app.assets.objects.Filter;
 
 /**
  * Created by miki4 on 17/09/2017.

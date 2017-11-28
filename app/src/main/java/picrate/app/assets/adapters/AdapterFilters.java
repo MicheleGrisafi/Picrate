@@ -1,4 +1,4 @@
-package androidlab.app.assets.adapters;
+package picrate.app.assets.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import androidlab.app.R;
-import androidlab.app.activities.ActivityImageFilter;
-import androidlab.app.assets.objects.Filter;
+import picrate.app.R;
+import picrate.app.activities.ActivityImageFilter;
+import picrate.app.assets.objects.Filter;
 import cn.Ragnarok.BitmapFilter;
 
 /**

@@ -1,4 +1,4 @@
-package androidlab.app.activities;
+package picrate.app.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -51,8 +51,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import androidlab.app.R;
-import androidlab.app.assets.objects.MyApp;
+import picrate.app.R;
+import picrate.app.assets.objects.MyApp;
 
 public class ActivityCamera extends Activity {
 

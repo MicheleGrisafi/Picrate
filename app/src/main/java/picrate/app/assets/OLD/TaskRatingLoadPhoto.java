@@ -1,4 +1,4 @@
-package androidlab.app.assets.OLD;
+package picrate.app.assets.OLD;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,11 +7,11 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import androidlab.app.DB.DAO.PhotoDAO;
-import androidlab.app.DB.DAO.implementations.PhotoDAO_DB_impl;
-import androidlab.app.DB.Objects.Photo;
-import androidlab.app.assets.objects.AppInfo;
-import androidlab.app.assets.interfaces.AsyncResponse;
+import picrate.app.DB.DAO.PhotoDAO;
+import picrate.app.DB.DAO.implementations.PhotoDAO_DB_impl;
+import picrate.app.DB.Objects.Photo;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.interfaces.AsyncResponse;
 
 /**
  * Created by miki4 on 27/08/2017.

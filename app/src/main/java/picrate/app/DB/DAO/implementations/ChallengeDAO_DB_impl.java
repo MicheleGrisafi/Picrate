@@ -1,6 +1,6 @@
-package androidlab.app.DB.DAO.implementations;
+package picrate.app.DB.DAO.implementations;
 
-import androidlab.app.DB.DAO.ChallengeDAO;
+import picrate.app.DB.DAO.ChallengeDAO;
 
 /**
  * Created by Michele Grisafi on 10/05/2017.

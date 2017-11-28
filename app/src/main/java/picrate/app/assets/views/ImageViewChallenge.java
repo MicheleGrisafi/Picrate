@@ -1,10 +1,10 @@
-package androidlab.app.assets.views;
+package picrate.app.assets.views;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import androidlab.app.DB.Objects.Photo;
+import picrate.app.DB.Objects.Photo;
 
 /**
  * Created by miki4 on 23/09/2017.

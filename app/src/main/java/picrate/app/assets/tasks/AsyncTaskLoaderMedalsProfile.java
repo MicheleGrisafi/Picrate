@@ -1,14 +1,14 @@
-package androidlab.app.assets.tasks;
+package picrate.app.assets.tasks;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
 import java.util.ArrayList;
 
-import androidlab.app.DB.DAO.MedalDAO;
-import androidlab.app.DB.DAO.implementations.MedalDAO_DB_impl;
-import androidlab.app.DB.Objects.Medal;
-import androidlab.app.DB.Objects.Utente;
+import picrate.app.DB.DAO.MedalDAO;
+import picrate.app.DB.DAO.implementations.MedalDAO_DB_impl;
+import picrate.app.DB.Objects.Medal;
+import picrate.app.DB.Objects.Utente;
 
 /**
  * Created by miki4 on 15/10/2017.

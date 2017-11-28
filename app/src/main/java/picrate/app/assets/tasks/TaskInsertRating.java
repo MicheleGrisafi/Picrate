@@ -1,9 +1,9 @@
-package androidlab.app.assets.tasks;
+package picrate.app.assets.tasks;
 
 import android.os.AsyncTask;
 
-import androidlab.app.DB.DAO.implementations.RatingDAO_DB_impl;
-import androidlab.app.DB.Objects.Rating;
+import picrate.app.DB.DAO.implementations.RatingDAO_DB_impl;
+import picrate.app.DB.Objects.Rating;
 
 /**
  * Created by miki4 on 09/09/2017.

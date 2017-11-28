@@ -1,4 +1,4 @@
-package androidlab.app.DB.DAO.implementations;
+package picrate.app.DB.DAO.implementations;
 
 
 import org.json.JSONArray;
@@ -7,9 +7,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import androidlab.app.DB.DAO.UtenteDAO;
-import androidlab.app.DB.MySqlDatabase;
-import androidlab.app.DB.Objects.Utente;
+import picrate.app.DB.DAO.UtenteDAO;
+import picrate.app.DB.MySqlDatabase;
+import picrate.app.DB.Objects.Utente;
 
 /**
  * Created by miki4 on 07/05/2017.
@@ -31,7 +31,7 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
     @Override
     public Utente insertUtente(Utente user) {
         result = null;
-        response = database.insertUtente(user.getEmail(),user.getGoogleKey());
+        response = database.insertUtente(user.getEmail(),user.getGoogleKey(),user.getUsername());
         if (response != "null"){
             user.setId(Integer.parseInt(response));
             result = user;

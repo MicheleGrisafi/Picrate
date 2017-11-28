@@ -1,4 +1,4 @@
-package androidlab.app.activities;
+package picrate.app.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.widget.ImageView;
 
 import java.io.File;
 
-import androidlab.app.R;
-import androidlab.app.assets.objects.BitmapHelper;
+import picrate.app.R;
+import picrate.app.assets.objects.BitmapHelper;
 
 public class ActivityCheckPhoto extends BitmapActivity {
 

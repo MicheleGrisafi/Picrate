@@ -1,4 +1,4 @@
-package androidlab.app.assets.views;
+package picrate.app.assets.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;

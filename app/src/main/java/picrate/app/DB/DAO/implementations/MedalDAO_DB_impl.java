@@ -1,4 +1,4 @@
-package androidlab.app.DB.DAO.implementations;
+package picrate.app.DB.DAO.implementations;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,13 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import androidlab.app.DB.DAO.MedalDAO;
-import androidlab.app.DB.MySqlDatabase;
-import androidlab.app.DB.Objects.Challenge;
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.DB.Objects.Medal;
-import androidlab.app.DB.Objects.Photo;
-import androidlab.app.DB.Objects.Utente;
+import picrate.app.DB.DAO.MedalDAO;
+import picrate.app.DB.MySqlDatabase;
+import picrate.app.DB.Objects.Challenge;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.DB.Objects.Medal;
+import picrate.app.DB.Objects.Photo;
+import picrate.app.DB.Objects.Utente;
 
 /**
  * Created by miki4 on 15/10/2017.

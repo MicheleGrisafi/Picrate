@@ -1,9 +1,9 @@
-package androidlab.app.assets.listeners;
+package picrate.app.assets.listeners;
 
 
 import android.support.v4.widget.SwipeRefreshLayout;
 
-import androidlab.app.fragments.FragmentTabChallenge;
+import picrate.app.fragments.FragmentTabChallenge;
 
 /**
  * Created by miki4 on 24/09/2017.

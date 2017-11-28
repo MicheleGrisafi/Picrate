@@ -1,12 +1,12 @@
-package androidlab.app.assets.listeners;
+package picrate.app.assets.listeners;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
-import androidlab.app.DB.Objects.Utente;
-import androidlab.app.activities.ActivityMyProfile;
-import androidlab.app.assets.objects.AppInfo;
+import picrate.app.DB.Objects.Utente;
+import picrate.app.activities.ActivityMyProfile;
+import picrate.app.assets.objects.AppInfo;
 
 /**
  * Created by Michele Grisafi on 15/09/2017.

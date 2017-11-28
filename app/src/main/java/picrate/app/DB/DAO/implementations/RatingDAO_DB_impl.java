@@ -1,10 +1,10 @@
-package androidlab.app.DB.DAO.implementations;
+package picrate.app.DB.DAO.implementations;
 
 import java.util.List;
 
-import androidlab.app.DB.DAO.RatingDAO;
-import androidlab.app.DB.MySqlDatabase;
-import androidlab.app.DB.Objects.Rating;
+import picrate.app.DB.DAO.RatingDAO;
+import picrate.app.DB.MySqlDatabase;
+import picrate.app.DB.Objects.Rating;
 
 /**
  * Created by Michele Grisafi on 12/05/2017.

@@ -1,4 +1,4 @@
-package androidlab.app.assets.OLD;
+package picrate.app.assets.OLD;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import androidlab.app.DB.Objects.Photo;
+import picrate.app.DB.Objects.Photo;
 
 /**
  * Created by miki4 on 19/05/2017.

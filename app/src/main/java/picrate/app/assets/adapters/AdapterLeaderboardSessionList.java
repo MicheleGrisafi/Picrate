@@ -1,4 +1,4 @@
-package androidlab.app.assets.adapters;
+package picrate.app.assets.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,9 +19,9 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.R;
-import androidlab.app.assets.tasks.TaskLoadSessionMedals;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.R;
+import picrate.app.assets.tasks.TaskLoadSessionMedals;
 
 /**
  * Created by miki4 on 04/11/2017.

@@ -1,4 +1,4 @@
-package androidlab.app.assets.adapters;
+package picrate.app.assets.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -20,13 +20,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.R;
-import androidlab.app.assets.views.ImageViewChallenge;
-import androidlab.app.assets.objects.MyApp;
-import androidlab.app.assets.objects.MySimpleTarget;
-import androidlab.app.assets.tasks.TaskLoadSessionExpiration;
-import androidlab.app.assets.tasks.TaskLoadSessionImage;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.R;
+import picrate.app.assets.views.ImageViewChallenge;
+import picrate.app.assets.objects.MyApp;
+import picrate.app.assets.objects.MySimpleTarget;
+import picrate.app.assets.tasks.TaskLoadSessionExpiration;
+import picrate.app.assets.tasks.TaskLoadSessionImage;
 
 /**
  * Created by miki4 on 27/05/2017.

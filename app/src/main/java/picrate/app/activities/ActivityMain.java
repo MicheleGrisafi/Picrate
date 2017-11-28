@@ -1,6 +1,7 @@
-package androidlab.app.activities;
+package picrate.app.activities;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,24 +22,28 @@ import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 import java.util.ArrayList;
 
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.DB.Objects.Photo;
-import androidlab.app.DB.Objects.Utente;
-import androidlab.app.R;
-import androidlab.app.assets.objects.AppInfo;
-import androidlab.app.assets.views.ImageViewChallenge;
-import androidlab.app.assets.tasks.TaskInsertThePhoto;
-import androidlab.app.fragments.FragmentTabChallenge;
-import androidlab.app.fragments.FragmentTabLeadeboard;
-import androidlab.app.fragments.FragmentTabRating;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.DB.Objects.Photo;
+import picrate.app.DB.Objects.Utente;
+import picrate.app.R;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.views.ImageViewChallenge;
+import picrate.app.assets.tasks.TaskInsertThePhoto;
+import picrate.app.fragments.FragmentTabChallenge;
+import picrate.app.fragments.FragmentTabLeadeboard;
+import picrate.app.fragments.FragmentTabRating;
 
 public class ActivityMain extends FragmentActivity  {
     public int REQUEST_CODE_CAMERA = 0;
     private Toolbar mToolbar;
     private static Animator mCurrentAnimator;
     private static int mShortAnimationDuration;
+    private Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +88,14 @@ public class ActivityMain extends FragmentActivity  {
                 } else if (id == R.id.nav_notifications) {
 
                 } else if (id == R.id.nav_logout) {
-
+                    AppInfo.client.signOut()
+                            .addOnCompleteListener(activity, new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    activity.startActivity(new Intent(activity,ActivityLogIn.class));
+                                }
+                            });
+                    activity.finish();
                 } else if (id == R.id.nav_settings) {
                     Intent intent = new Intent(ActivityMain.this, ActivitySettings.class);
                     startActivity(new Intent(intent));

@@ -1,4 +1,4 @@
-package androidlab.app.assets.objects;
+package picrate.app.assets.objects;
 
 /**
  * Created by miki4 on 18/09/2017.

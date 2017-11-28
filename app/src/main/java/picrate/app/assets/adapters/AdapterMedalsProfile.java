@@ -1,4 +1,4 @@
-package androidlab.app.assets.adapters;
+package picrate.app.assets.adapters;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
@@ -20,9 +20,9 @@ import org.joda.time.DateTime;
 import java.net.URL;
 import java.util.ArrayList;
 
-import androidlab.app.DB.Objects.Medal;
-import androidlab.app.R;
-import androidlab.app.assets.objects.MyApp;
+import picrate.app.DB.Objects.Medal;
+import picrate.app.R;
+import picrate.app.assets.objects.MyApp;
 
 /**
  * Created by miki4 on 15/10/2017.

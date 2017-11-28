@@ -1,4 +1,4 @@
-package androidlab.app.assets.OLD;
+package picrate.app.assets.OLD;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import androidlab.app.DB.Objects.ChallengeSession;
-import androidlab.app.assets.objects.AppInfo;
+import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.assets.objects.AppInfo;
 
 /**
  * Created by miki4 on 15/05/2017.
