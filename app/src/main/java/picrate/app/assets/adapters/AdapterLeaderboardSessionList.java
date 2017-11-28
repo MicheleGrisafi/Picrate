@@ -66,11 +66,16 @@ public class AdapterLeaderboardSessionList extends RecyclerView.Adapter<AdapterL
     public void onBindViewHolder(AdapterLeaderboardSessionList.ViewHolder holder, int position) {
         ChallengeSession session = items.get(position);
         TextView title = holder.sessionTitle;
+        TextView sessionData = holder.sessionData;
+
         Date dateUtil = session.getExpiration();
         DateTime data = new DateTime(dateUtil);
         DateTimeFormatter fmt = DateTimeFormat.forPattern("e MMMM");
-        String tmp = "'"+session.getTitle()+"'" +" "+ title.getText() + " " + fmt.print(data);
-        title.setText(tmp);
+        String tmp = fmt.print(data);
+
+        sessionData.setText(tmp);
+        title.setText(session.getTitle());
+
         RecyclerView rv = holder.recyclerView;
         ProgressBar progressBar = holder.progressBar;
         progressBar.setVisibility(View.VISIBLE);
@@ -88,6 +93,7 @@ public class AdapterLeaderboardSessionList extends RecyclerView.Adapter<AdapterL
         // for any view that will be set as you render a row
         public RecyclerView recyclerView;
         public TextView sessionTitle;
+        public TextView sessionData;
         public ProgressBar progressBar;
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -97,6 +103,7 @@ public class AdapterLeaderboardSessionList extends RecyclerView.Adapter<AdapterL
             super(itemView);
             sessionTitle = (TextView) itemView.findViewById(R.id.textView_sessionName);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.recyclerView_medalList);
+            sessionData = (TextView) itemView.findViewById(R.id.textView_sessionData);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar_item_leaderboardSessionList);
         }
     }

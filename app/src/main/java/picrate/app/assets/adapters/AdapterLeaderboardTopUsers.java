@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,9 +53,7 @@ public class AdapterLeaderboardTopUsers extends RecyclerView.Adapter<AdapterLead
     public class ViewHolder extends RecyclerView.ViewHolder{
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public ConstraintLayout layoutParent;
-        public RelativeLayout layoutUser;
-        public RelativeLayout layoutScore;
+        public LinearLayout layoutParent;
         public TextView textViewPosition;
         public ImageView imageViewUser;
         public TextView textViewInitial;
@@ -66,9 +65,7 @@ public class AdapterLeaderboardTopUsers extends RecyclerView.Adapter<AdapterLead
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-            layoutParent = (ConstraintLayout) itemView.findViewById(R.id.topUsersLeaderboardItem_layout);
-            layoutUser = (RelativeLayout) itemView.findViewById(R.id.topUsersLeaderboardItem_userLayout);
-            layoutScore = (RelativeLayout) itemView.findViewById(R.id.topUsersLeaderboardItem_scoreLayout);
+            layoutParent = (LinearLayout) itemView.findViewById(R.id.topUsersLeaderboardItem_layout);
             textViewPosition = (TextView) itemView.findViewById(R.id.topUsersLeaderboardItem_position);
             imageViewUser = (ImageView) itemView.findViewById(R.id.topUsersLeaderboardItem_userIcon);
             textViewInitial = (TextView) itemView.findViewById(R.id.topUsersLeaderboardItem_userInitial);
@@ -109,7 +106,7 @@ public class AdapterLeaderboardTopUsers extends RecyclerView.Adapter<AdapterLead
         TextView textViewScore = holder.textViewScore;
         textViewScore.setText(Integer.toString(user.getScore()));
 
-        RelativeLayout rlUser = holder.layoutUser;
+        LinearLayout rlUser = holder.layoutParent;
         rlUser.setOnClickListener(new UserOnClickListener(intent,activity,user));
     }
 

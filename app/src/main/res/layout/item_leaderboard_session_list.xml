@@ -7,11 +7,20 @@
     android:paddingBottom="8dp">
     <TextView
         android:id="@+id/textView_sessionName"
-        android:text="@string/leaderboard_session_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorBlack"
+        android:textSize="23sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/textView_sessionData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorBlack"
+        android:layout_below="@id/textView_sessionName"
+        android:textSize="15sp"/>
     <ProgressBar
         android:id="@+id/progressBar_item_leaderboardSessionList"
         android:layout_width="wrap_content"
@@ -22,6 +31,7 @@
         android:id="@+id/recyclerView_medalList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView_sessionName"/>
+        android:layout_below="@+id/textView_sessionData"
+        android:paddingTop="16dp"/>
 
 </RelativeLayout>
