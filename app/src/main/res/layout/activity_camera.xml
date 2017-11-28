@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBlack"
-    tools:context="androidlab.fotografando.activities.ActivityCamera">
+    tools:context="picrate.app.activities.ActivityCamera">
 
     <TextureView
         android:id="@+id/textureView2"
@@ -21,7 +21,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textureView2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_alignParentBottom="true">>
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/btnShoot"

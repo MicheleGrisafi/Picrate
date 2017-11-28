@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\miki4\\Documents\\GitKraken\\Progetto-Fotografando\\filters\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+            "outputFile": "C:\\Users\\Michele Grisafi\\Documents\\GitKraken\\Progetto-picrate\\filters\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "D:\\miki4\\Documents\\GitKraken\\Progetto-Fotografando\\filters\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "source": "C:\\Users\\Michele Grisafi\\Documents\\GitKraken\\Progetto-picrate\\filters\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -17,10 +17,12 @@
     <color name="materialCyan500">#00BCD4</color>
     <color name="materialTeal500">#009688</color>
     <color name="materialGreen500">#4CAF50</color>
+    <color name="medalGold">#FFEB3B</color>
     <color name="materialYellow500">#FFEB3B</color>
     <color name="materialOrange900">#BF360C</color>
     <color name="materialGrey600">#757575</color>
+    <color name="medalSilver">#9E9E9E</color>
     <color name="materialGrey500">#9E9E9E</color>
-    <color name="materialBrown700">#6d4c41</color>
+    <color name="medalBronze">#6d4c41</color>
     <!-- TODO: AGGIUNGERE GLI ALTRI COLORI -->
 </resources>

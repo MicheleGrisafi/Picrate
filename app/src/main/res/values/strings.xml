@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Fotografando</string>
-    <string name="ask_camera_permission">Fotografando wants to access camera</string>
+    <string name="app_name">PicRate</string>
+    <string name="ask_camera_permission">PicRate wants to access camera</string>
     <string name="camera_permission_denied">Camera permission necessary!</string>
     <string name="camera_permission_granted">Camera connection established</string>
     <string name="generic_camera_error">Something went wrong</string>
-    <string name="photo_folder_name">Fotografando</string>
-    <string name="ask_storage_permission">Fotografando wants to access storage</string>
+    <string name="photo_folder_name">PicRate</string>
+    <string name="ask_storage_permission">PicRate wants to access storage</string>
     <string name="storage_permission_denied">Storage permission necessary!</string>
     <string name="position_not_found">Can\'t retrieve position</string>
     <string name="turn_on_gps">GPS is off. Turn it on?</string>
@@ -43,4 +43,12 @@
     <string name="setting_save_photo">Save taken pictures</string>
     <string name="setting_sum_save_photo">Save on the phone\'s memory the pictures you take</string>
     <string name="leaderboard_session_name">winners:</string>
+    <string name="signup_button">Signup</string>
+    <string name="username_field">Username</string>
+    <string name="signup_error">There was an error with the signup</string>
+    <string name="username_error">The chosen username is not valid!</string>
+    <string name="auth_key" translatable="false">1016249877332-m3muj1bgrmkr22sca4b2n6sl2g3b1n3q.apps.googleusercontent.com</string>
+    <string name="picrate_motto">Join the challenge!</string>
+    <string name="signup_message_title">Welcome to PicRate!</string>
+    <string name="signup_message_body">To join PicRate you have to choose a nickname. This will appear in leaderboards and to all of your firends</string>
 </resources>

@@ -6,7 +6,7 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="androidlab.fotografando.activities.ActivityMaps">
+    tools:context="picrate.app.activities.ActivityMaps">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraint_layout_map"
@@ -33,7 +33,7 @@
             map:layout_constraintLeft_toLeftOf="parent"
             map:layout_constraintRight_toRightOf="parent"
             map:layout_constraintTop_toTopOf="parent"
-            tools:context="androidlab.fotografando.activities.ActivityMaps"
+            tools:context="picrate.app.activities.ActivityMaps"
             tools:layout_constraintBottom_creator="1"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1"

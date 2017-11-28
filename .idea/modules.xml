@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Progetto-Fotografando.iml" filepath="$PROJECT_DIR$/Progetto-Fotografando.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Progetto-picrate.iml" filepath="$PROJECT_DIR$/Progetto-picrate.iml" />
+      <module fileurl="file://C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\Progetto-picrate.iml" filepath="C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\Progetto-picrate.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\app\app.iml" filepath="C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/filters/filters.iml" filepath="$PROJECT_DIR$/filters/filters.iml" />
+      <module fileurl="file://C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\filters.iml" filepath="C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\filters.iml" />
     </modules>
   </component>
 </project>

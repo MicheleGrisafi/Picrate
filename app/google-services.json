@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1016249877332",
+    "project_id": "firebase-picrate"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016249877332:android:3ffc985b251ca52a",
+        "android_client_info": {
+          "package_name": "picrate.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016249877332-jogjajbkr0pjbn5r99aihd8npajqou4m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "picrate.app",
+            "certificate_hash": "d38fcaf6651c59b607004bb84034c6eba5886e37"
+          }
+        },
+        {
+          "client_id": "1016249877332-m3muj1bgrmkr22sca4b2n6sl2g3b1n3q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDktCQKJh-_XK_kQLGS03BV6k5qptZlZiQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
