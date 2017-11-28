@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
 
-    <androidlab.fotografando.assets.views.ImageButtonTouchHighlight
+    <picrate.app.assets.views.ImageButtonTouchHighlight
         android:id="@+id/thumb_button_1"
         android:layout_width="100dp"
         android:layout_height="100dp"

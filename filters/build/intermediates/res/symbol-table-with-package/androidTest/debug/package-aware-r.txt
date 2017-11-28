@@ -1,2 +1,0 @@
-cn.Ragnarok.test
-int string libname 0x7f010000

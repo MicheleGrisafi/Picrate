@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Fotografando</string>
-    <string name="ask_camera_permission">Fotografando vuole acceere alla fotocamera</string>
+    <string name="app_name">PicRate</string>
+    <string name="ask_camera_permission">PicRate vuole acceere alla fotocamera</string>
     <string name="camera_permission_denied">Permessi fotocamera necessari!</string>
     <string name="camera_permission_granted">Connessione fotocamera riuscita</string>
     <string name="generic_camera_error">Qualcosa è andato storto</string>
-    <string name="photo_folder_name">Fotografando</string>
-    <string name="ask_storage_permission">Fotografando vuole accedere alla memoria esterna</string>
+    <string name="photo_folder_name">PicRate</string>
+    <string name="ask_storage_permission">PicRate vuole accedere alla memoria esterna</string>
     <string name="storage_permission_denied">Permessi memoria esterna necessari!</string>
     <string name="position_not_found">Impossibile recuperare posizione</string>
     <string name="turn_on_gps">GPS disabilitato. Vuoi abilitarlo?</string>
@@ -43,4 +43,11 @@
     <string name="setting_save_photo">Salva foto scattate</string>
     <string name="setting_sum_save_photo">Salva sulla memoria le foto che scatti</string>
     <string name="leaderboard_session_name">" vincitori: "</string>
+    <string name="signup_button">Crea</string>
+    <string name="username_field">Username</string>
+    <string name="signup_error">Si è verificato un errore con la registrazione</string>
+    <string name="username_error">L\'username scelto non è valido!</string>
+    <string name="picrate_motto">Unisci alla sfida!</string>
+    <string name="signup_message_title">Benvenuto su PicRate!</string>
+    <string name="signup_message_body">Per usare PicRate devi scegliere un nickname! Questo sarà visibile nelle classifiche e a tutti i tuoi amici</string>
 </resources>
