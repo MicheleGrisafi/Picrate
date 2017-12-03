@@ -7,6 +7,4 @@
         android:title="@string/setting_save_photo"
         android:summary="@string/setting_sum_save_photo">
     </SwitchPreference>
-
-
 </PreferenceScreen>

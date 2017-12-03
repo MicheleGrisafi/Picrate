@@ -16,6 +16,7 @@ import java.util.Date;
 
 import picrate.app.DB.MySqlDatabase;
 import picrate.app.DB.Objects.Utente;
+import picrate.app.activities.ActivityNotifications;
 import picrate.app.activities.ActivitySettings;
 import picrate.app.assets.tasks.TaskLogInUtente;
 import picrate.app.assets.tasks.TaskSignUp;
@@ -47,6 +48,10 @@ abstract public class AppInfo {
 
     /** SETTINGS **/
     static public final int SAVE_PHOTOS = 0;
+
+    /** NOTIFICAITONS **/
+    static public final int NOTIFY_NEW_CHALLENGE = 1;
+    static public final int NOTIFY_CHALLENGE_EXPIRATION = 2;
 
     /** user account **/
     static public GoogleSignInClient client;
@@ -120,6 +125,12 @@ abstract public class AppInfo {
         switch (setting){
             case SAVE_PHOTOS:
                 result = sharedPref.getBoolean(ActivitySettings.KEY_SAVE_PICTURES, false);
+                break;
+            case NOTIFY_NEW_CHALLENGE:
+                result = sharedPref.getBoolean(ActivityNotifications.KEY_NOTIFY_NEW_CHALLENGE, false);
+                break;
+            case NOTIFY_CHALLENGE_EXPIRATION:
+                result = sharedPref.getBoolean(ActivityNotifications.KEY_NOTIFY_CHALLENGE_EXPIRATION, false);
                 break;
         }
         return result;
