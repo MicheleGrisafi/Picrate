@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="false"
+        android:theme="@style/SwitchTheme"
+        android:key="notify_new_challenge"
+        android:title="@string/notify_new_challenge"
+        android:summary="@string/notify_new_challenge_sum">
+    </SwitchPreference>
+    <SwitchPreference
+        android:defaultValue="false"
+        android:theme="@style/SwitchTheme"
+        android:key="notify_challenge_expiration"
+        android:title="@string/notify_challenge_expiration"
+        android:summary="@string/notify_challenge_expiration_sum">
+    </SwitchPreference>
+</PreferenceScreen>

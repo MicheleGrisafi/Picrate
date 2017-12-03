@@ -86,7 +86,8 @@ public class ActivityMain extends FragmentActivity  {
                 } else if (id == R.id.nav_photos) {
 
                 } else if (id == R.id.nav_notifications) {
-
+                    Intent intent = new Intent(ActivityMain.this, ActivityNotifications.class);
+                    startActivity(new Intent(intent));
                 } else if (id == R.id.nav_logout) {
                     AppInfo.client.signOut()
                             .addOnCompleteListener(activity, new OnCompleteListener<Void>() {
