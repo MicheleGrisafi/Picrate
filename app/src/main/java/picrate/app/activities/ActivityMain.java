@@ -2,6 +2,9 @@ package picrate.app.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -153,6 +156,13 @@ public class ActivityMain extends FragmentActivity  {
                 }
             }
         });
+
+        /** JOBS **/
+        JobScheduler jobScheduler = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
+        ComponentName serviceName = new ComponentName(getApplicationContext(), MyJobService.class);
+        JobInfo jobInfo = new JobInfo.Builder(AppInfo.REFRESH_CHALLENGES, serviceName)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .build();
     }
 
 

@@ -51,6 +51,8 @@ abstract public class AppInfo {
     /** user account **/
     static public GoogleSignInClient client;
 
+    /** JOBS **/
+    static public final int REFRESH_CHALLENGES = 0;
 
     /**Inizializzo utente prendendolo dal database **/
     static public void loginUser( Activity activity, String googleKey,String email){
