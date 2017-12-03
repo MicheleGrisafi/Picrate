@@ -1,29 +1,29 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
-INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
-INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
-INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
-INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
-INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
-INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
+ADDED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
+INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
+INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
+INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
+INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
+INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
+INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:1-10:12
 	package
-		ADDED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:3:5-26
-		INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
-		INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
+		ADDED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:3:5-26
+		INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
+		INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
 	android:versionName
-		ADDED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:5:5-30
-		INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
-		INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
+		ADDED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:5:5-30
+		INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
+		INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:2:11-69
 	android:versionCode
-		ADDED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:4:5-28
-		INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
-		INJECTED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
+		ADDED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:4:5-28
+		INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
+		INJECTED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml
 uses-sdk
-ADDED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:7:5-9:41
+ADDED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:7:5-9:41
 	android:targetSdkVersion
-		ADDED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:9:9-38
+		ADDED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:9:9-38
 	android:minSdkVersion
-		ADDED from D:\miki4\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:8:9-34
+		ADDED from C:\Users\Michele Grisafi\Documents\GitKraken\Progetto-picrate\filters\AndroidManifest.xml:8:9-34
