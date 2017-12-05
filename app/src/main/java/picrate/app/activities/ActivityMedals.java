@@ -25,7 +25,7 @@ import picrate.app.assets.objects.MyApp;
  * Created by miki4 on 21/10/2017.
  */
 
-public class MedalsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<ArrayList<Medal>>{
+public class ActivityMedals extends FragmentActivity implements LoaderManager.LoaderCallbacks<ArrayList<Medal>>{
     private RecyclerView rvMedals;
     private AdapterMedalsProfile adapter;
     private ProgressBar progressBar;

@@ -2,20 +2,27 @@ package picrate.app.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +42,7 @@ import picrate.app.DB.Objects.Photo;
 import picrate.app.DB.Objects.Utente;
 import picrate.app.R;
 import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.objects.MyApp;
 import picrate.app.assets.tasks.TaskInsertThePhoto;
 import picrate.app.assets.views.ImageViewChallenge;
 import picrate.app.fragments.FragmentTabChallenge;
@@ -157,13 +165,12 @@ public class ActivityMain extends FragmentActivity  {
                 }
             }
         });
-
-        /** JOBS **/
-        JobScheduler jobScheduler = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
-        ComponentName serviceName = new ComponentName(getApplicationContext(), MyJobService.class);
-        JobInfo jobInfo = new JobInfo.Builder(AppInfo.REFRESH_CHALLENGES, serviceName)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                .build();
+        Intent intent = getIntent();
+        if (intent != null){
+            if(intent.getBooleanExtra("newChallenge",false)){
+                tabHost.setCurrentTab(0);
+            }
+        }
     }
 
 

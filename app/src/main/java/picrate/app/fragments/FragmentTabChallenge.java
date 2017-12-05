@@ -1,6 +1,9 @@
 package picrate.app.fragments;
 
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,7 +23,12 @@ import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.R;
 import picrate.app.assets.adapters.AdapterChallengeSession;
 import picrate.app.assets.listeners.SwipeRefreshListenerChallenge;
+import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.objects.MyApp;
+import picrate.app.assets.services.ServiceUpdateChallenges;
 import picrate.app.assets.tasks.AsyncTaskLoaderChallenges;
+
+import static android.content.Context.JOB_SCHEDULER_SERVICE;
 
 /**
  * Created by miki4 on 11/09/2017.
@@ -61,6 +69,7 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
         rvChallenge.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         adapter = new AdapterChallengeSession(getActivity().getApplicationContext(),REQUEST_CODE_CAMERA,
                 swipeRefreshLayoutChallenges,getActivity());
+        AppInfo.adapters.append(AppInfo.ADAPTER_CHALLENGES,adapter);
         rvChallenge.setAdapter(adapter);
 
         SwipeRefreshListenerChallenge listenerChallenge = new SwipeRefreshListenerChallenge(this);
@@ -77,8 +86,32 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        /** LOADER **/
+        /* LOADER **/
         getLoaderManager().initLoader(0, null, this).forceLoad();
+        /* JOBS **/
+
+        JobScheduler jobScheduler = (JobScheduler) getContext().getSystemService(JOB_SCHEDULER_SERVICE);
+        int connection = JobInfo.NETWORK_TYPE_ANY;
+        if((Boolean)AppInfo.getSetting(AppInfo.NOTIFICATION_WIFI))
+            connection = JobInfo.NETWORK_TYPE_UNMETERED;
+        if((Boolean)AppInfo.getSetting(AppInfo.NOTIFY_NEW_CHALLENGE)){
+            ComponentName serviceName = new ComponentName(getContext(), ServiceUpdateChallenges.class);
+            JobInfo jobInfo = new JobInfo.Builder(AppInfo.JOB_REFRESH_CHALLENGES, serviceName)
+                    .setPeriodic(AppInfo.NOTIFY_NEW_CHALLENGE_TIMER)
+                    .setRequiredNetworkType(connection)
+                    .build();
+            jobScheduler.schedule(jobInfo);
+        }
+        /*
+        if((Boolean)AppInfo.getSetting(AppInfo.NOTIFY_CHALLENGE_EXPIRATION)){
+            ComponentName serviceName = new ComponentName(getContext(), ServiceUpdateChallenges.class);
+            JobInfo jobInfo = new JobInfo.Builder(AppInfo.REFRESH_CHALLENGES, serviceName)
+                    .setPeriodic(1200000)
+                    .setRequiredNetworkType(connection)
+                    .build();
+            jobScheduler.schedule(jobInfo);
+        }*/
+
 
     }
 
@@ -90,7 +123,7 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<List<ChallengeSession>> loader, List<ChallengeSession> data) {
-        adapter.setSessions(data);
+        adapter.updateItems(data);
         progressBar.setVisibility(ProgressBar.GONE);
         swipeRefreshLayoutChallenges.setRefreshing(false);
     }

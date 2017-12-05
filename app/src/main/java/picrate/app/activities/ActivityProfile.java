@@ -18,7 +18,7 @@ import picrate.app.assets.tasks.AsyncTaskLoaderMedalsProfile;
  * Created by Michele Grisafi on 15/09/2017.
  */
 
-public class ActivityProfile extends MedalsActivity{
+public class ActivityProfile extends ActivityMedals {
     private Intent inIntent;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -4,14 +4,21 @@
         android:defaultValue="false"
         android:theme="@style/SwitchTheme"
         android:key="notify_new_challenge"
-        android:title="@string/notify_new_challenge"
-        android:summary="@string/notify_new_challenge_sum">
+        android:title="@string/notification_setting_new_challenge"
+        android:summary="@string/notification_setting_new_challenge_sum">
     </SwitchPreference>
     <SwitchPreference
         android:defaultValue="false"
         android:theme="@style/SwitchTheme"
         android:key="notify_challenge_expiration"
-        android:title="@string/notify_challenge_expiration"
-        android:summary="@string/notify_challenge_expiration_sum">
+        android:title="@string/notification_setting_challenge_expiration"
+        android:summary="@string/notifification_setting_challenge_expiration_sum">
+    </SwitchPreference>
+    <SwitchPreference
+        android:defaultValue="false"
+        android:theme="@style/SwitchTheme"
+        android:key="notification_wifi"
+        android:title="@string/notification_setting_wifi_title"
+        android:summary="@string/notification_setting_wifi_sum">
     </SwitchPreference>
 </PreferenceScreen>

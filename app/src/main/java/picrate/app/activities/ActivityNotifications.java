@@ -14,6 +14,7 @@ import picrate.app.fragments.FragmentNotifications;
 public class ActivityNotifications extends Activity {
     public static final String KEY_NOTIFY_NEW_CHALLENGE = "notify_new_challenge";
     public static final String KEY_NOTIFY_CHALLENGE_EXPIRATION = "notify_challenge_expiration";
+    public static final String KEY_NOTIFICATION_WIFI = "notification_wifi";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

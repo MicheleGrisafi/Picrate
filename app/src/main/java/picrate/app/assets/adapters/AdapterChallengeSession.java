@@ -22,6 +22,7 @@ import java.util.List;
 
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.R;
+import picrate.app.assets.interfaces.Updatable;
 import picrate.app.assets.objects.MyApp;
 import picrate.app.assets.objects.MySimpleTarget;
 import picrate.app.assets.tasks.TaskLoadSessionExpiration;
@@ -33,7 +34,7 @@ import picrate.app.assets.views.ImageViewChallenge;
  */
 
 /** Adapter per la lista delle challenges **/
-public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallengeSession.ViewHolder> {
+public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallengeSession.ViewHolder> implements Updatable {
 
     private List<ChallengeSession> sessions;
     private Context context;
@@ -47,6 +48,7 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         return sessions;
     }
 
+    @Deprecated
     public void setSessions(List<ChallengeSession> sessions) {
         this.sessions = sessions;
         imageViewMap = new SparseArray<>();
@@ -64,6 +66,26 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         this.sessions = new ArrayList<>();
         imageViewMap = new SparseArray<>();
         progressBarMap = new SparseArray<>();
+    }
+
+    @Override
+    public boolean updateItems(List<?> items) {
+        boolean result = false;
+        if(items != null){
+            if(items.get(0).getClass() == ChallengeSession.class){
+                this.sessions = (List<ChallengeSession>)items;
+                imageViewMap = new SparseArray<>();
+                progressBarMap = new SparseArray<>();
+                notifyDataSetChanged();
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<?> getItems() {
+        return sessions;
     }
 
 

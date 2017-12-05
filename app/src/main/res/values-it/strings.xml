@@ -50,8 +50,12 @@
     <string name="picrate_motto">Unisci alla sfida!</string>
     <string name="signup_message_title">Benvenuto su PicRate!</string>
     <string name="signup_message_body">Per usare PicRate devi scegliere un nickname! Questo sarà visibile nelle classifiche e a tutti i tuoi amici</string>
-    <string name="notify_new_challenge">Nuova sfida</string>
-    <string name="notify_new_challenge_sum">Mostra una notifica ogni volta che una nuova sfida è disponibile</string>
-    <string name="notify_challenge_expiration">Scadenza sfida</string>
-    <string name="notify_challenge_expiration_sum">Mostra una notifica ogni volta che una sfida incompleta sta per finire</string>
+    <string name="notification_setting_new_challenge">Nuova sfida</string>
+    <string name="notification_setting_new_challenge_sum">Mostra una notifica ogni volta che una nuova sfida è disponibile</string>
+    <string name="notification_setting_challenge_expiration">Scadenza sfida</string>
+    <string name="notifification_setting_challenge_expiration_sum">Mostra una notifica ogni volta che una sfida incompleta sta per finire</string>
+    <string name="notification_new_challenge_title">Nuova sfida disponibile!</string>
+    <string name="notification_new_challenge_body">Partecipa alla nuova sfida disponibile per te!</string>
+    <string name="notification_setting_wifi_sum">Le notifiche saranno visualizzate, e il contenuto aggiornato, solo se connessi ad una rete WiFi. Nota che questi aggiornamenti consumano poco del tuo traffico!</string>
+    <string name="notification_setting_wifi_title">Mostra notifiche solo con il WiFi</string>
 </resources>

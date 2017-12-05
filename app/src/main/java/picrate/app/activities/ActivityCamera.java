@@ -54,8 +54,14 @@ import java.util.List;
 import picrate.app.R;
 import picrate.app.assets.objects.MyApp;
 
+/**
+ * Creata da Michele Grisafi
+ * Crediti a "Mobile Application Tutorials", canale youtube
+ *
+ * Activity per la gestione della fotocamera.
+ * I Javadoc di questa activity non sono riportati in quanto le funzionalità sono complesse e difficili da documentare in maniere soddisfacente
+ */
 public class ActivityCamera extends Activity {
-
     private static final int REQUEST_CODE = 0;
     private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT = 1;

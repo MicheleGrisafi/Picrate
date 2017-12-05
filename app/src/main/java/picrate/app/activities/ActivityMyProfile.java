@@ -18,7 +18,7 @@ import picrate.app.assets.tasks.AsyncTaskLoaderMedalsProfile;
  * Created by Cate on 22/05/2017.
  */
 
-public class ActivityMyProfile extends MedalsActivity{
+public class ActivityMyProfile extends ActivityMedals {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_my_profile);
