@@ -58,4 +58,8 @@
     <string name="notification_new_challenge_body">Partecipa alla nuova sfida disponibile per te!</string>
     <string name="notification_setting_wifi_sum">Le notifiche saranno visualizzate, e il contenuto aggiornato, solo se connessi ad una rete WiFi. Nota che questi aggiornamenti consumano poco del tuo traffico!</string>
     <string name="notification_setting_wifi_title">Mostra notifiche solo con il WiFi</string>
+    <string name="minutes_abbre">m</string>
+    <string name="challenge_expired">Scaduta</string>
+    <string name="notification_expiration_title">Sfida in scadenza!</string>
+    <string name="notification_expiration_body">Una sfida incompleta sta per scadere! Affrettati!</string>
 </resources>

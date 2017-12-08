@@ -59,4 +59,8 @@
     <string name="notification_new_challenge_body">Check out the new challenge avaiable for you!</string>
     <string name="notification_setting_wifi_title">Show notifications on WiFi only</string>
     <string name="notification_setting_wifi_sum">Notifications will be displayed, and content will be updated, only when connected to a WiFi network. Be aware that this system consumes just a little bit of your internet connection!</string>
+    <string name="minutes_abbre">m</string>
+    <string name="challenge_expired">Expired</string>
+    <string name="notification_expiration_title">Challenge expiring soon!</string>
+    <string name="notification_expiration_body">A challenge is about to expire! Check it out!</string>
 </resources>

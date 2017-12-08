@@ -11,9 +11,6 @@ import picrate.app.DB.Objects.ChallengeSession;
 public interface ChallengeSessionDAO {
     void open();
     void close();
-    int STATO_ATTIVO = 1;
-    int STATO_RATING = 0;
-    int STATO_SCADUTO = 2;
 
 
     ArrayList<ChallengeSession> getActiveSessions();

@@ -87,6 +87,7 @@ abstract public class AppInfo {
     /** Adapter delle challenges nella FragmentChallenge **/
     static public final int ADAPTER_CHALLENGES = 0;
 
+
     /**
      * Effettua il login dell'utente specificato
      * @param activity activity chiamante

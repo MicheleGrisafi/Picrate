@@ -41,7 +41,7 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
     @Override
     public ArrayList<ChallengeSession> getActiveSessions() {
         ArrayList<ChallengeSession> lista = null;
-        response = database.getSessions(Integer.toString(ChallengeSessionDAO.STATO_ATTIVO));
+        response = database.getSessions(Integer.toString(ChallengeSession.STATO_ACTIVE));
         if (!response.equals("null")){
             lista = getSessions(response);
         }
@@ -51,7 +51,7 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
     @Override
     public ArrayList<ChallengeSession> getRatingSessions() {
         ArrayList<ChallengeSession> lista = null;
-        response = database.getSessions(Integer.toString(ChallengeSessionDAO.STATO_RATING));
+        response = database.getSessions(Integer.toString(ChallengeSession.STATO_RATING));
         if (!response.equals("null")){
             lista = getSessions(response);
         }
@@ -61,7 +61,7 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
     @Override
     public ArrayList<ChallengeSession> getClosedSessions() {
         ArrayList<ChallengeSession> lista = null;
-        response = database.getSessions(Integer.toString(ChallengeSessionDAO.STATO_SCADUTO));
+        response = database.getSessions(Integer.toString(ChallengeSession.STATO_EXPIRED));
         if (!response.equals("null")){
             lista = getSessions(response);
         }

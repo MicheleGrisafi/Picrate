@@ -71,11 +71,6 @@ public class TaskUpdateSessionsList extends AsyncTask<Void,Void,List<ChallengeSe
 
             Intent intent = new Intent(context, ActivityMain.class);
 
-            // Creating a pending intent and wrapping our intent
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.setContentIntent(pendingIntent);
-
-
             // The stack builder object will contain an artificial back stack for the
             // started Activity.
             // This ensures that navigating backward from the Activity leads out of
