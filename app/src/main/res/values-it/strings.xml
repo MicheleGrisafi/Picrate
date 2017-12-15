@@ -62,4 +62,6 @@
     <string name="challenge_expired">Scaduta</string>
     <string name="notification_expiration_title">Sfida in scadenza!</string>
     <string name="notification_expiration_body">Una sfida incompleta sta per scadere! Affrettati!</string>
+    <string name="your_medals">Le tue medaglie</string>
+    <string name="medals">Medaglie</string>
 </resources>

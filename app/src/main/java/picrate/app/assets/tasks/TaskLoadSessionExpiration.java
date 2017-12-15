@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.R;
 import picrate.app.assets.objects.AppInfo;
-import picrate.app.assets.receivers.BroadcastReceiverNotificationPublisher;
 import picrate.app.assets.services.ServiceChallengeExpiration;
 
 /**
@@ -44,19 +43,19 @@ public class TaskLoadSessionExpiration extends AsyncTask<Void,Void,Date> {
         //Calcolo differenza tra scadenza e data attuale
         long diffHours = getDateDiff(data,session.getExpiration(), TimeUnit.MILLISECONDS);
         Calendar cal = Calendar.getInstance();
-        long window = 1000 * 60 *60;
-        int window_acc = 1000 * 60 * 10;
+
+        long window = 1000 * 60 *50;
         int window_length = 1000 * 60 * 20;
         if(diffHours > window){
             //TODO: non creare sempre un nuovo oggetto notifica
-
+            long schedule = cal.getTimeInMillis() + diffHours - window;
             Intent intent = new Intent(context, ServiceChallengeExpiration.class);
             intent.putExtra("sessionID",session.getIDSession());
             PendingIntent pintent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
 
-            alarmManager.setWindow(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis() + window -window_acc,window_length,pintent);
+            alarmManager.setWindow(AlarmManager.RTC_WAKEUP,schedule,window_length,pintent);
         }
 
 

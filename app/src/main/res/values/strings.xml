@@ -63,4 +63,6 @@
     <string name="challenge_expired">Expired</string>
     <string name="notification_expiration_title">Challenge expiring soon!</string>
     <string name="notification_expiration_body">A challenge is about to expire! Check it out!</string>
+    <string name="your_medals">Your medals</string>
+    <string name="medals">Medals</string>
 </resources>

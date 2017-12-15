@@ -2,10 +2,13 @@ package picrate.app.assets.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,6 +134,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
             ConstraintLayout constraintLayout = holder.constraintLayout;
             ConstraintLayout constraintLayoutTitle = holder.constraintLayoutTitle;
             final RatingBar ratingBar = holder.ratingBar;
+
             ImageView imageView = holder.imageView;
             TextView textView = holder.challengeTextView;
             textView.setText(photo.getSession().getTitle());
