@@ -67,7 +67,7 @@ public class TaskUpdateSessionsList extends AsyncTask<Void,Void,List<ChallengeSe
             builder.setContentInfo(context.getString(R.string.notification_new_challenge_body));
             builder.setPriority(Notification.PRIORITY_HIGH);
             builder.setSmallIcon(R.drawable.ic_new_challenge_orange_24dp);
-            builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_new_challenge_orange_24dp));
+
 
             Intent intent = new Intent(context, ActivityMain.class);
 

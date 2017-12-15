@@ -9,13 +9,16 @@ import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.R;
 import picrate.app.assets.objects.AppInfo;
 import picrate.app.assets.receivers.BroadcastReceiverNotificationPublisher;
+import picrate.app.assets.services.ServiceChallengeExpiration;
 
 /**
  * Created by miki4 on 29/05/2017.
@@ -40,21 +43,20 @@ public class TaskLoadSessionExpiration extends AsyncTask<Void,Void,Date> {
     protected void onPostExecute(Date data) {
         //Calcolo differenza tra scadenza e data attuale
         long diffHours = getDateDiff(data,session.getExpiration(), TimeUnit.MILLISECONDS);
-
-        if(diffHours > 60000*60){
+        Calendar cal = Calendar.getInstance();
+        long window = 1000 * 60 *60;
+        int window_acc = 1000 * 60 * 10;
+        int window_length = 1000 * 60 * 20;
+        if(diffHours > window){
             //TODO: non creare sempre un nuovo oggetto notifica
-            Notification.Builder builder = new Notification.Builder(context);
-            builder.setContentTitle(context.getString(R.string.notification_expiration_title));
-            builder.setContentText(context.getString(R.string.notification_expiration_body));
-            builder.setSmallIcon(R.drawable.ic_launcher);
 
-            Intent notificationIntent = new Intent(context, BroadcastReceiverNotificationPublisher.class);
-            notificationIntent.putExtra(BroadcastReceiverNotificationPublisher.NOTIFICATION_ID, 1);
-            notificationIntent.putExtra(BroadcastReceiverNotificationPublisher.NOTIFICATION, builder.build());
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            //TODO controllare se una sfida è completa
+            Intent intent = new Intent(context, ServiceChallengeExpiration.class);
+            intent.putExtra("sessionID",session.getIDSession());
+            PendingIntent pintent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setWindow(AlarmManager.RTC_WAKEUP,diffHours - 60000*70,diffHours - 60000*50,pendingIntent);
+
+
+            alarmManager.setWindow(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis() + window -window_acc,window_length,pintent);
         }
 
 

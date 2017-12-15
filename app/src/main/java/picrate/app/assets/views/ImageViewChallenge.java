@@ -13,7 +13,7 @@ import picrate.app.DB.Objects.Photo;
 /** Image view containing a photo reference! **/
 public class ImageViewChallenge extends AppCompatImageView {
 
-    private Photo photo;
+    private Photo photo = null;
 
     public ImageViewChallenge(Context context) {
         super(context);
