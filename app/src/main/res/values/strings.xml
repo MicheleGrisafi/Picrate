@@ -65,4 +65,7 @@
     <string name="notification_expiration_body">A challenge is about to expire! Check it out!</string>
     <string name="your_medals">Your medals</string>
     <string name="medals">Medals</string>
+    <string name="help_message">Thank you for using our app! Feel free to contact us if you have any feedback or if you seek help of any kind!</string>
+    <string name="button_send_email">Send email</string>
+    <string name="app_description">Picrate is an app that allows you to prove yourself in the fabulous world of photography. Join the daily challenges and compete with other players in order to reach the top! Earn your credits by rating other players’ pictures and by reaching the top positions of the leaderboards.</string>
 </resources>

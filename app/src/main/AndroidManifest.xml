@@ -54,6 +54,7 @@
         <activity android:name="picrate.app.activities.ActivityImageFilter" android:screenOrientation="portrait"/>
         <activity android:name="picrate.app.activities.ActivitySettings" android:screenOrientation="portrait"/>
         <activity android:name="picrate.app.activities.ActivityNotifications" android:screenOrientation="portrait"/>
+        <activity android:name="picrate.app.activities.ActivityHelp" android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

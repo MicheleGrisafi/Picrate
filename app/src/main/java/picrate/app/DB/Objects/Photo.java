@@ -20,6 +20,16 @@ public class Photo implements Parcelable{
     private double latitudine;
     private double longitudine;
 
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    private float rating;
+
 
     public Photo(){
         latitudine = 0;

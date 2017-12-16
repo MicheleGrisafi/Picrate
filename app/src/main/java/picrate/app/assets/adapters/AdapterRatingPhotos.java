@@ -134,7 +134,12 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
             ConstraintLayout constraintLayout = holder.constraintLayout;
             ConstraintLayout constraintLayoutTitle = holder.constraintLayoutTitle;
             final RatingBar ratingBar = holder.ratingBar;
-
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                    photo.setRating(v);
+                }
+            });
             ImageView imageView = holder.imageView;
             TextView textView = holder.challengeTextView;
             textView.setText(photo.getSession().getTitle());

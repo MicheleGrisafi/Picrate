@@ -112,7 +112,8 @@ public class ActivityMain extends FragmentActivity  {
                     Intent intent = new Intent(ActivityMain.this, ActivitySettings.class);
                     startActivity(new Intent(intent));
                 } else if (id == R.id.nav_help) {
-
+                    Intent intent = new Intent(ActivityMain.this, ActivityHelp.class);
+                    startActivity(new Intent(intent));
                 }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
