@@ -81,11 +81,14 @@ public class FragmentTabRating extends Fragment implements LoaderManager.LoaderC
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                if(newState == RecyclerView.SCROLL_STATE_IDLE) {
                     View centerView = snapHelper.findSnapView(layoutManager);
                     int pos = layoutManager.getPosition(centerView);
                     if(pos != 0){
-                        CardView card = (CardView)recyclerView.getLayoutManager().findViewByPosition(0);
+                        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+
+
+                        CardView card = (CardView)manager.findViewByPosition(0);
                         float voto = ((RatingBar)card.findViewById(R.id.ratingBar)).getRating();
                         Rating rating = new Rating(adapter.getItems().get(0),AppInfo.getUtente(),Math.round(voto),false);
                         adapter.removeItem(0);

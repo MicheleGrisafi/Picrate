@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
 import org.joda.time.DateTime;
+import org.w3c.dom.Text;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -70,6 +71,8 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
         // Set item views based on your views and data model
         TextView session = holder.session;
         session.setText(medal.getSession().getTitle() + " " + dataString);
+        TextView medalPosition = holder.position;
+        medalPosition.setVisibility(View.INVISIBLE);
         final ProgressBar bar = holder.bar;
         ImageView imgMedal = holder.medal;
         switch (medal.getPosition()){
@@ -81,7 +84,13 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
                 break;
             case 3:
                 imgMedal.setImageResource(R.drawable.ic_medal_bronze_24dp);
+                break;
+            default:
+                medalPosition.setText(medal.getPosition());
+                medalPosition.setVisibility(View.VISIBLE);
         }
+        if(medal.getPosition() > 3 && medal.getPosition() <= 10)
+            imgMedal.setImageResource(R.drawable.circle_medal_top10);
         ImageView img = holder.img;
         URL url = medal.getImage();
         Glide.with(MyApp.getAppContext()).load(url).listener(new RequestListener<URL, GlideDrawable>() {
@@ -111,6 +120,7 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
         public ImageView medal,img;
         public ConstraintLayout box;
         public ProgressBar bar;
+        public TextView position;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -123,6 +133,7 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
             medal = (ImageView) itemView.findViewById(R.id.imageView_item_medal_profile_medal);
             box = (ConstraintLayout) itemView.findViewById(R.id.constraintLayout_item_medal_profile);
             bar = (ProgressBar) itemView.findViewById(R.id.progressBar_item_medal);
+            position = (TextView) itemView.findViewById(R.id.textView_medalPosition);
         }
     }
 }

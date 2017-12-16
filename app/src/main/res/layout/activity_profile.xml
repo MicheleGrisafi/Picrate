@@ -9,11 +9,12 @@
 
 
     <android.support.constraint.ConstraintLayout
-    android:id="@+id/constraint_layout_activity_profile_top"
-    android:layout_width="match_parent"
+        android:id="@+id/constraint_layout_activity_profile_top"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorLightGray"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:elevation="4dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

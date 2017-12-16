@@ -74,6 +74,7 @@ public class AdapterLeaderboardSession  extends RecyclerView.Adapter<AdapterLead
         ImageView foto = holder.photo;
         //TODO: decidere colori per medaglie dopo il podio
         TextView tvMedal = holder.medalPosition;
+        tvMedal.setVisibility(View.INVISIBLE);
         switch (medal.getPosition()){
             case 1:
                 imgMedal.setImageResource(R.drawable.ic_medal_gold_24dp);
@@ -85,8 +86,11 @@ public class AdapterLeaderboardSession  extends RecyclerView.Adapter<AdapterLead
                 imgMedal.setImageResource(R.drawable.ic_medal_bronze_24dp);
                 break;
             default:
-                tvMedal.setText(Integer.toString(medal.getPosition()));
+                tvMedal.setText(medal.getPosition());
+                tvMedal.setVisibility(View.VISIBLE);
         }
+        if(medal.getPosition() > 3 && medal.getPosition() <= 10)
+            imgMedal.setImageResource(R.drawable.circle_medal_top10);
         URL url = medal.getImage();
         Glide.with(MyApp.getAppContext()).load(url).listener(new RequestListener<URL, GlideDrawable>() {
             @Override
