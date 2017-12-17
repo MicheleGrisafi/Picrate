@@ -1,5 +1,6 @@
 package picrate.app.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Size;
@@ -65,10 +67,12 @@ public class ActivityCamera extends Activity {
     private static final int REQUEST_CODE = 0;
     private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT = 1;
+    private static final int REQUEST_CAMERA = 5;
     private static final int STATE_PREVIEW = 0;
     private static final int STATE_WAIT_LOCK = 1;
     private int mCaptureState;
     private boolean shooting = false;
+    private boolean haspermission = false;
 
     private Intent inIntent;
     private Intent outIntent;
@@ -337,6 +341,7 @@ public class ActivityCamera extends Activity {
         }else{
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
         }
+        checkWriteStoragePermission();
     }
 
     @Override
@@ -370,7 +375,7 @@ public class ActivityCamera extends Activity {
         switch (requestCode){
             case REQUEST_CAMERA_PERMISSION_RESULT:
                 try {
-                    if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                    if( grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(MyApp.getAppContext(), R.string.camera_permission_denied, Toast.LENGTH_LONG).show();
                     }
                 } catch (Resources.NotFoundException e) {
@@ -378,7 +383,7 @@ public class ActivityCamera extends Activity {
                 }
                 break;
             case REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     try {
                         createPhotoFileName();
                     } catch (IOException e) {
@@ -386,6 +391,7 @@ public class ActivityCamera extends Activity {
                     }
                 }else{
                     Toast.makeText(this,R.string.storage_permission_denied,Toast.LENGTH_LONG).show();
+                    finish();
                 }
                 break;
         }
@@ -602,17 +608,18 @@ public class ActivityCamera extends Activity {
     /** Gestisco permessi di scrittura **/
     private void checkWriteStoragePermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                 try {
                     createPhotoFileName();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }else{
-                if(shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
                     Toast.makeText(this,R.string.ask_storage_permission,Toast.LENGTH_LONG).show();
                 }
-                requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
+                //requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
             }
         }else{
            try {
@@ -622,7 +629,18 @@ public class ActivityCamera extends Activity {
             }
         }
     }
-
+    private void checkTakePhotoPermission(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+                Toast.makeText(this, "We need to take a picture!", Toast.LENGTH_SHORT).show();
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+            }
+        }
+    }
     /** Metodi per la gestione del fuoco **/
     private void lockFocus(boolean shoot){
         try {
@@ -647,7 +665,6 @@ public class ActivityCamera extends Activity {
         //TODO bug persmission: cambiare posizione della permission
         if(!shooting) {
             shooting = true;
-            checkWriteStoragePermission();
             lockFocus(true);
         }
     }

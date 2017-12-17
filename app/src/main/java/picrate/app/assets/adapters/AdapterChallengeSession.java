@@ -104,7 +104,6 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            data = (TextView) itemView.findViewById(R.id.data);
             expiration = (TextView) itemView.findViewById(R.id.expiration);
             title = (TextView) itemView.findViewById(R.id.titolo);
             description = (TextView) itemView.findViewById(R.id.descrizione);

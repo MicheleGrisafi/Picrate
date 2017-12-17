@@ -27,9 +27,8 @@
             android:id="@+id/btnBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_small"
             android:background="@drawable/button_style"
             android:src="@drawable/ic_arrow_back_white_24dp"
             app:layout_constraintLeft_toLeftOf="@+id/toolbar"
@@ -40,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="22sp"
+            android:textSize="@dimen/font_size_medium"
             android:textStyle="bold"
             android:text="@string/help_amp_feedback"
             android:textColor="@color/colorWhite"
@@ -53,10 +52,11 @@
         android:layout_height="wrap_content"
         android:text="@string/app_description"
         android:gravity="center"
+        android:textSize="@dimen/font_size_small"
         android:textColor="@color/colorWhite"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_medium"/>
     <TextView
         android:id="@+id/textView_help_activity_help"
         android:layout_below="@+id/textView_intro_activity_help"
@@ -64,10 +64,11 @@
         android:layout_height="wrap_content"
         android:text="@string/help_message"
         android:gravity="center"
+        android:textSize="@dimen/font_size_small"
         android:textColor="@color/colorWhite"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_medium"/>
 
     <Button
         android:id="@+id/button_activity_help"
@@ -75,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_send_email"
+        android:textSize="@dimen/margin_small"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="@dimen/margin_medium"/>
 </RelativeLayout>

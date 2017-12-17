@@ -158,6 +158,8 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
                     // set the custom dialog components - text, image and button
                     TextView text = (TextView) dialog.findViewById(R.id.challengeSessionInfoDialogText);
                     text.setText(photo.getSession().getDescription());
+                    TextView title = (TextView) dialog.findViewById(R.id.challengeSessionInfoDialogTitle);
+                    title.setText(photo.getSession().getTitle());
 
 
                     ImageButton dialogButton = (ImageButton) dialog.findViewById(R.id.challengeSessionInfoDialogCloseButton);

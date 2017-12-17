@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size_medium"
             app:layout_constraintBottom_toBottomOf="@+id/profilePicCircle"
             app:layout_constraintLeft_toLeftOf="@+id/profilePicCircle"
             app:layout_constraintRight_toRightOf="@+id/profilePicCircle"
@@ -40,11 +40,11 @@
         android:id="@+id/navheader_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/margin_medium"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_size_medium"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="@dimen/margin_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:ignore="RtlHardcoded" />
 

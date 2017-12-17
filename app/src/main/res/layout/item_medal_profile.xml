@@ -14,12 +14,12 @@
         app:layout_constraintRight_toLeftOf="@+id/relativeLayout_medal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/relativeLayout_medal"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/margin_small"
         app:layout_constraintTop_toTopOf="@+id/relativeLayout_medal"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_small"
         app:layout_constraintHorizontal_chainStyle="packed"
-        android:layout_marginEnd="8dp"
-        android:textSize="19sp"/>
+        android:layout_marginEnd="@dimen/margin_small"
+        android:textSize="@dimen/font_size_medium"/>
 
 
     <RelativeLayout
@@ -29,7 +29,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/textView_item_medal_profile_session"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="@dimen/margin_small">
 
         <ImageView
             android:id="@+id/imageView_item_medal_profile_medal"
@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:textSize="@dimen/font_size_small"
             android:gravity="center_vertical|center_horizontal|center"
             android:text="1" />
     </RelativeLayout>
@@ -64,7 +65,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_item_medal_profile_session"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"/>
 
 </android.support.constraint.ConstraintLayout>

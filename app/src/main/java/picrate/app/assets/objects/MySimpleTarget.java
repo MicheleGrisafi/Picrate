@@ -33,7 +33,7 @@ public class MySimpleTarget<Bitmap> extends SimpleTarget<Bitmap> {
     public void onResourceReady(Object resource, GlideAnimation glideAnimation) {
         BitmapDrawable ob = new BitmapDrawable(MyApp.getAppContext().getResources(), (android.graphics.Bitmap)resource);
         myTarget.setBackground(ob);
-        myTarget.getBackground().setAlpha(120);
+        myTarget.getBackground().setAlpha(90);
     }
 
 

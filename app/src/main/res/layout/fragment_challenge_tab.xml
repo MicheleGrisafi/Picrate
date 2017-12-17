@@ -3,7 +3,8 @@
 android:id="@+id/tabChallenges"
 android:orientation="vertical"
 android:layout_width="match_parent"
-android:layout_height="match_parent">
+android:layout_height="match_parent"
+    android:background="@color/button">
     <ProgressBar
         android:id="@+id/progressBar_fragment_challenge"
         android:layout_width="wrap_content"

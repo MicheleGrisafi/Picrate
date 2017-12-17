@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -28,31 +27,29 @@
             android:id="@+id/activeRatingPhotoTitleLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_marginRight="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
             android:layout_marginTop="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintLeft_creator="1"
             tools:layout_constraintRight_creator="1">
-
-
-
             <TextView
                 android:id="@+id/activeRatingPhotoChallenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textColor="@color/colorBlack"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margin_small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:textSize="20sp" />
+                android:textSize="@dimen/font_size_large"
+                android:textStyle="bold"/>
 
             <ImageButton
                 android:id="@+id/activeRatingPhotoChallengeInfo"
@@ -64,7 +61,7 @@
                 app:layout_constraintLeft_toRightOf="@+id/activeRatingPhotoChallenge"
                 app:layout_constraintTop_toTopOf="@+id/activeRatingPhotoChallenge"
                 app:srcCompat="@drawable/ic_info_orange_24dp"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="@dimen/margin_small"/>
 
         </android.support.constraint.ConstraintLayout>
 
@@ -72,7 +69,7 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/margin_small"
             android:numStars="3"
             android:progressBackgroundTint="@color/colorDarkGray"
             android:progressTint="@color/materialYellow500"
@@ -87,7 +84,7 @@
             android:id="@+id/activeRatingPhotoReportButon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="@dimen/margin_small"
             android:background="@null"
             android:src="@drawable/ic_warning_red_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
@@ -99,8 +96,8 @@
             android:id="@+id/activeRatingPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
             app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
