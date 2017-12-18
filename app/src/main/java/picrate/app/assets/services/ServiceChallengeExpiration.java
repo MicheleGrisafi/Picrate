@@ -32,7 +32,6 @@ public class ServiceChallengeExpiration extends Service {
         Context context = MyApp.getAppContext();
         AdapterChallengeSession adapter = (AdapterChallengeSession)AppInfo.adapters.get(AppInfo.ADAPTER_CHALLENGES);
         int sessionID = intent.getIntExtra("sessionID",0);
-        ChallengeSession session = adapter.getSession(sessionID);
         ArrayList<ImageViewChallenge> images = adapter.getImageViews(sessionID);
         if(images.get(0).getPhoto() == null){
             Notification.Builder builder = new Notification.Builder(context);

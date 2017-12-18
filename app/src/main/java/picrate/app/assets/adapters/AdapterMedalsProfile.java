@@ -70,7 +70,9 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
         String dataString = data.getDayOfMonth() + "/" + data.getMonthOfYear() + "/" +data.getYear();
         // Set item views based on your views and data model
         TextView session = holder.session;
-        session.setText(medal.getSession().getTitle() + " " + dataString);
+        session.setText(medal.getSession().getTitle());
+        TextView dataSess = holder.data;
+        dataSess.setText(dataString);
         TextView medalPosition = holder.position;
         medalPosition.setVisibility(View.INVISIBLE);
         final ProgressBar bar = holder.bar;
@@ -99,7 +101,6 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
                 bar.setVisibility(View.GONE);
                 return false;
             }
-
             @Override
             public boolean onResourceReady(GlideDrawable resource, URL model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                 bar.setVisibility(View.GONE);
@@ -116,7 +117,7 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView session;
+        public TextView session,data;
         public ImageView medal,img;
         public ConstraintLayout box;
         public ProgressBar bar;
@@ -129,6 +130,7 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
             // to access the context from any ViewHolder instance.
             super(itemView);
             session = (TextView) itemView.findViewById(R.id.textView_item_medal_profile_session);
+            data = (TextView) itemView.findViewById(R.id.textView_item_medal_profile_data);
             img = (ImageView) itemView.findViewById(R.id.imageView_item_medal_profile_img);
             medal = (ImageView) itemView.findViewById(R.id.imageView_item_medal_profile_medal);
             box = (ConstraintLayout) itemView.findViewById(R.id.constraintLayout_item_medal_profile);

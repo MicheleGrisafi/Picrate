@@ -36,7 +36,7 @@ public class ActivityLogIn extends Activity implements View.OnClickListener{
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         String authkey = getResources().getString(R.string.auth_key);
-        //authkey = "1016249877332-u4i9mt0hp6h6pear7so4ff2u9loscddn.apps.googleusercontent.com";
+        authkey = "1016249877332-u4i9mt0hp6h6pear7so4ff2u9loscddn.apps.googleusercontent.com";
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().requestIdToken(authkey).build();
 
         // Build a GoogleSignInClient with the options specified by gso.

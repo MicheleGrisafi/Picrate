@@ -72,7 +72,6 @@ public class ActivityCamera extends Activity {
     private static final int STATE_WAIT_LOCK = 1;
     private int mCaptureState;
     private boolean shooting = false;
-    private boolean haspermission = false;
 
     private Intent inIntent;
     private Intent outIntent;

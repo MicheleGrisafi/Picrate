@@ -45,17 +45,19 @@ public class TaskLoadSessionExpiration extends AsyncTask<Void,Void,Date> {
         Calendar cal = Calendar.getInstance();
 
         long window = 1000 * 60 *70;
-        int window_length = 1000 * 60 * 20;
+        long window_length = 1000 * 60 * 10;
         if(diffHours > window && (boolean)AppInfo.getSetting(AppInfo.NOTIFY_CHALLENGE_EXPIRATION)){
             //TODO: non creare sempre un nuovo oggetto notifica
-            long schedule = cal.getTimeInMillis() + diffHours - window;
+            Calendar cal2 = Calendar.getInstance();
+            cal2.setTimeInMillis(cal.getTimeInMillis() + diffHours - window);
+
             Intent intent = new Intent(context, ServiceChallengeExpiration.class);
             intent.putExtra("sessionID",session.getIDSession());
             PendingIntent pintent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
 
-            alarmManager.setWindow(AlarmManager.RTC_WAKEUP,schedule,window_length,pintent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP,cal2.getTimeInMillis(),pintent);
         }
 
 
