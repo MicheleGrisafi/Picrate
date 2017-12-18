@@ -44,9 +44,9 @@ public class TaskLoadSessionExpiration extends AsyncTask<Void,Void,Date> {
         long diffHours = getDateDiff(data,session.getExpiration(), TimeUnit.MILLISECONDS);
         Calendar cal = Calendar.getInstance();
 
-        long window = 1000 * 60 *50;
+        long window = 1000 * 60 *70;
         int window_length = 1000 * 60 * 20;
-        if(diffHours > window){
+        if(diffHours > window && (boolean)AppInfo.getSetting(AppInfo.NOTIFY_CHALLENGE_EXPIRATION)){
             //TODO: non creare sempre un nuovo oggetto notifica
             long schedule = cal.getTimeInMillis() + diffHours - window;
             Intent intent = new Intent(context, ServiceChallengeExpiration.class);

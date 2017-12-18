@@ -161,7 +161,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:background="@color/colorWhite"
-
+            android:textSize="@dimen/font_size_medium"
             android:gravity="center"
             android:text="@string/your_medals"
             android:textColor="@android:color/black"

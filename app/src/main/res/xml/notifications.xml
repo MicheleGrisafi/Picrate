@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:theme="@style/SwitchTheme"
         android:key="notify_new_challenge"
         android:title="@string/notification_setting_new_challenge"
         android:summary="@string/notification_setting_new_challenge_sum">
     </SwitchPreference>
     <SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:theme="@style/SwitchTheme"
         android:key="notify_challenge_expiration"
         android:title="@string/notification_setting_challenge_expiration"
