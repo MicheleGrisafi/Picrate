@@ -1,4 +1,4 @@
-package picrate.app.assets.views;
+package picrate.app.assets.OLD;
 
 import android.content.Context;
 import android.content.Intent;

@@ -15,7 +15,7 @@ import picrate.app.DB.DAO.MedalDAO;
 import picrate.app.DB.DAO.implementations.MedalDAO_DB_impl;
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.DB.Objects.Medal;
-import picrate.app.assets.adapters.AdapterLeaderboardSession;
+import picrate.app.assets.adapters.AdapterLeaderboardSessionMedals;
 
 /**
  * Created by miki4 on 05/11/2017.
@@ -28,15 +28,17 @@ public class TaskLoadSessionMedals extends AsyncTask<Void,Void,ArrayList<Medal>>
     private ChallengeSession session;
     private ProgressBar progressBar;
     private Activity activity;
-    private Intent intent;
+    private Intent intentUser;
+    private Intent intentPhoto;
 
-    public TaskLoadSessionMedals(RecyclerView rv, Context ctx, ChallengeSession session, ProgressBar progressBar,Activity activity,Intent intent) {
+    public TaskLoadSessionMedals(RecyclerView rv, Context ctx, ChallengeSession session, ProgressBar progressBar,Activity activity,Intent intentUser,Intent intentPhoto) {
         this.rv = rv;
         this.ctx = ctx;
         this.session = session;
         this.progressBar = progressBar;
         this.activity = activity;
-        this.intent = intent;
+        this.intentUser = intentUser;
+        this.intentPhoto = intentPhoto;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class TaskLoadSessionMedals extends AsyncTask<Void,Void,ArrayList<Medal>>
     @Override
     protected void onPostExecute(ArrayList<Medal> data) {
         progressBar.setVisibility(View.GONE);
-        AdapterLeaderboardSession adapter = new AdapterLeaderboardSession(data,activity,intent);
+        AdapterLeaderboardSessionMedals adapter = new AdapterLeaderboardSessionMedals(data,activity,intentUser,intentPhoto);
         rv.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(layoutManager);

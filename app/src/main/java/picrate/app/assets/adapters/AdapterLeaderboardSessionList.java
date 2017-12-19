@@ -31,13 +31,15 @@ public class AdapterLeaderboardSessionList extends RecyclerView.Adapter<AdapterL
     private ArrayList<ChallengeSession> items;
     private Context ctx;
     private Activity activity;
-    private Intent intent;
+    private Intent intentUser;
+    private Intent intentPhoto;
 
-    public AdapterLeaderboardSessionList(Context ctx,Activity activity,Intent intent) {
+    public AdapterLeaderboardSessionList(Context ctx,Activity activity,Intent intentUser,Intent intentPhoto) {
         this.items = new ArrayList<>();
         this.ctx = ctx;
         this.activity = activity;
-        this.intent = intent;
+        this.intentUser = intentUser;
+        this.intentPhoto = intentPhoto;
     }
     public ArrayList<ChallengeSession> getItems() {
         return items;
@@ -80,7 +82,7 @@ public class AdapterLeaderboardSessionList extends RecyclerView.Adapter<AdapterL
         ProgressBar progressBar = holder.progressBar;
         progressBar.setVisibility(View.VISIBLE);
         progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(ctx, R.color.materialOrange600), PorterDuff.Mode.MULTIPLY);
-        TaskLoadSessionMedals task = new TaskLoadSessionMedals(rv,ctx,session,progressBar,activity,intent);
+        TaskLoadSessionMedals task = new TaskLoadSessionMedals(rv,ctx,session,progressBar,activity,intentUser,intentPhoto);
         task.execute();
     }
 

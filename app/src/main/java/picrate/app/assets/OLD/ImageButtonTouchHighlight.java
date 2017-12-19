@@ -1,14 +1,15 @@
-package picrate.app.assets.views;
+package picrate.app.assets.OLD;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
 
-public class ImageButtonTouchHighlight extends ImageButton {
+public class ImageButtonTouchHighlight extends AppCompatImageButton {
 
     private Drawable mForegroundDrawable;
     private Rect mCachedBounds = new Rect();

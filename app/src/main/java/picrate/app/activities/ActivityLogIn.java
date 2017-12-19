@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -19,13 +18,13 @@ import com.google.android.gms.tasks.Task;
 
 import picrate.app.R;
 import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.OLD.ImageButtonTouchHighlight;
 
 /**
  * Created by Michele Grisafi on 15/09/2017.
  */
 
 public class ActivityLogIn extends Activity implements View.OnClickListener{
-    final Activity activity = this;
     GoogleSignInClient mGoogleSignInClient;
     final int RC_SIGN_IN = 42;
     @Override
@@ -48,6 +47,9 @@ public class ActivityLogIn extends Activity implements View.OnClickListener{
 
         //Inizializzo le impostazioni
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        ImageButtonTouchHighlight touch = (ImageButtonTouchHighlight) findViewById(R.id.touchHilight);
+        touch.setImageDrawable(getDrawable(R.drawable.beautiful_photography));
     }
 
     @Override
