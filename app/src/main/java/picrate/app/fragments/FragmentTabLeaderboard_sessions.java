@@ -22,7 +22,9 @@ import java.util.ArrayList;
 
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.R;
+import picrate.app.activities.ActivityPhotoZoom;
 import picrate.app.activities.ActivityProfile;
+import picrate.app.activities.ActivityZoom;
 import picrate.app.assets.adapters.AdapterLeaderboardSessionList;
 import picrate.app.assets.tasks.AsyncTaskLoaderSessionsLeaderboard;
 
@@ -50,7 +52,8 @@ public class FragmentTabLeaderboard_sessions extends Fragment implements LoaderM
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewLeaderboardSessions);
 
         Intent linkUser = new Intent(context, ActivityProfile.class);
-        adapter = new AdapterLeaderboardSessionList(getContext(),getActivity(),linkUser);
+        Intent linkPhoto = new Intent(context, ActivityPhotoZoom.class);
+        adapter = new AdapterLeaderboardSessionList(getContext(),getActivity(),linkUser,linkPhoto);
         recyclerView.setAdapter(adapter);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

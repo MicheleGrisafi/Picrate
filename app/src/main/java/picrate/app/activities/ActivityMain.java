@@ -2,9 +2,6 @@ package picrate.app.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,8 +31,10 @@ import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.DB.Objects.Photo;
 import picrate.app.DB.Objects.Utente;
 import picrate.app.R;
+import picrate.app.assets.listeners.OnClickListenerMedal;
 import picrate.app.assets.objects.AppInfo;
 import picrate.app.assets.tasks.TaskInsertThePhoto;
+import picrate.app.assets.tasks.TaskLoadSessionImage;
 import picrate.app.assets.views.ImageViewChallenge;
 import picrate.app.fragments.FragmentTabChallenge;
 import picrate.app.fragments.FragmentTabLeadeboard;
@@ -86,8 +85,6 @@ public class ActivityMain extends FragmentActivity  {
                 if (id == R.id.nav_profile) {
                     Intent intent = new Intent(ActivityMain.this, ActivityMyProfile.class);
                     startActivity(new Intent(intent));
-                } else if (id == R.id.nav_photos) {
-
                 } else if (id == R.id.nav_notifications) {
                     Intent intent = new Intent(ActivityMain.this, ActivityNotifications.class);
                     startActivity(new Intent(intent));
@@ -104,7 +101,8 @@ public class ActivityMain extends FragmentActivity  {
                     Intent intent = new Intent(ActivityMain.this, ActivitySettings.class);
                     startActivity(new Intent(intent));
                 } else if (id == R.id.nav_help) {
-
+                    Intent intent = new Intent(ActivityMain.this, ActivityHelp.class);
+                    startActivity(new Intent(intent));
                 }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -157,13 +155,14 @@ public class ActivityMain extends FragmentActivity  {
                 }
             }
         });
+        Intent intent = getIntent();
+        if (intent != null){
+            if(intent.getBooleanExtra("newChallenge",false)){
+                tabHost.setCurrentTab(0);
+            }
+        }
 
-        /** JOBS **/
-        JobScheduler jobScheduler = (JobScheduler) getApplicationContext().getSystemService(JOB_SCHEDULER_SERVICE);
-        ComponentName serviceName = new ComponentName(getApplicationContext(), MyJobService.class);
-        JobInfo jobInfo = new JobInfo.Builder(AppInfo.REFRESH_CHALLENGES, serviceName)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                .build();
+
     }
 
 
@@ -199,7 +198,14 @@ public class ActivityMain extends FragmentActivity  {
                     FragmentTabChallenge fragment = (FragmentTabChallenge) getSupportFragmentManager().findFragmentByTag("Challenges Tab");
 
                     //Creo la foto
+                    double lat,longi;
+                    lat = data.getDoubleExtra("lat",0);
+                    longi = data.getDoubleExtra("long",0);
                     Photo foto = new Photo(AppInfo.getUtente(),new ChallengeSession(data.getIntExtra("sessionID",0)));
+                    if(lat != 0 && longi != 0) {
+                        foto.setLatitudine(lat);
+                        foto.setLongitudine(longi);
+                    }
                     //Ottengo le imageView relative alla challenge dall'adapter
                     ArrayList<ImageViewChallenge> imageViews = fragment.adapter.getImageViews(data.getIntExtra("sessionID",0));
                     ArrayList<ProgressBar> progressBars = fragment.adapter.getProgressBars(data.getIntExtra("sessionID",0));
@@ -208,7 +214,7 @@ public class ActivityMain extends FragmentActivity  {
 
 
                     TaskInsertThePhoto taskInsertThePhoto = new TaskInsertThePhoto
-                            (foto,data.getStringExtra("fileName"),this,imageViews,requestCode,
+                            (foto,data.getStringExtra("fileName"),imageViews,requestCode,
                                     fragment.adapter.getSession(data.getIntExtra("sessionID",0)),this,
                                     progressBars);
                     taskInsertThePhoto.execute();
@@ -218,6 +224,18 @@ public class ActivityMain extends FragmentActivity  {
                         AppInfo.updateUtente(user);
                     }
                     break;
+            }
+        }
+        if(requestCode == OnClickListenerMedal.REQUEST_CODE){
+            if(resultCode == 1){
+                FragmentTabChallenge fragment = (FragmentTabChallenge) getSupportFragmentManager().findFragmentByTag("Challenges Tab");
+                ChallengeSession session = ((Photo)data.getParcelableExtra("photo")).getSession();
+                ArrayList<ImageViewChallenge> imageViews = fragment.adapter.getImageViews(session.getIDSession());
+                ArrayList<ProgressBar> progressBars = fragment.adapter.getProgressBars(session.getIDSession());
+                ProgressBar p1 = progressBars.get(0);
+                ProgressBar p2 = progressBars.get(1);
+                TaskLoadSessionImage taskLoadSessionImage = new TaskLoadSessionImage(session, imageViews,requestCode,this,p1,p2);
+                taskLoadSessionImage.execute();
             }
         }
     }

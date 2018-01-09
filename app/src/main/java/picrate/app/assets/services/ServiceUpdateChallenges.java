@@ -2,7 +2,10 @@ package picrate.app.assets.services;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.Context;
 
+import picrate.app.assets.adapters.AdapterChallengeSession;
+import picrate.app.assets.tasks.TaskUpdateSessionsList;
 import picrate.app.fragments.FragmentTabChallenge;
 
 /**
@@ -10,17 +13,17 @@ import picrate.app.fragments.FragmentTabChallenge;
  */
 
 public class ServiceUpdateChallenges extends JobService {
-    FragmentTabChallenge activity;
+    private TaskUpdateSessionsList task;
+
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
-        activity.getLoaderManager().restartLoader(0,null,activity).forceLoad();
-
+        task = new TaskUpdateSessionsList(this,jobParameters);
+        task.execute();
         return true;
     }
-
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
-        activity.getLoaderManager().destroyLoader(0);
+        task.cancel(true);
         return false;
     }
 }

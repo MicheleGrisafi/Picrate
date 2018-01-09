@@ -22,26 +22,33 @@ import java.util.ArrayList;
 
 import picrate.app.DB.Objects.Medal;
 import picrate.app.R;
+import picrate.app.activities.ActivityZoom;
+import picrate.app.assets.listeners.OnClickListenerMedal;
 import picrate.app.assets.listeners.UserOnClickListener;
+import picrate.app.assets.objects.AppInfo;
 import picrate.app.assets.objects.MyApp;
+import picrate.app.fragments.FragmentTabLeadeboard;
 
 /**
  * Created by miki4 on 22/10/2017.
  */
 
-public class AdapterLeaderboardSession  extends RecyclerView.Adapter<AdapterLeaderboardSession.ViewHolder> {
+public class AdapterLeaderboardSessionMedals extends RecyclerView.Adapter<AdapterLeaderboardSessionMedals.ViewHolder> {
     private ArrayList<Medal> items;
     private Activity activity;
-    private Intent intent;
+    private Intent intentUser;
+    private Intent intentPhoto;
 
-    public AdapterLeaderboardSession(ArrayList<Medal> items, Activity activity, Intent intent) {
+
+    public AdapterLeaderboardSessionMedals(ArrayList<Medal> items, Activity activity, Intent intentUser, Intent intentPhoto) {
         this.items = items;
         this.activity = activity;
-        this.intent = intent;
+        this.intentUser = intentUser;
+        this.intentPhoto = intentPhoto;
     }
 
     @Override
-    public AdapterLeaderboardSession.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdapterLeaderboardSessionMedals.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -58,7 +65,7 @@ public class AdapterLeaderboardSession  extends RecyclerView.Adapter<AdapterLead
         Medal medal = items.get(position);
 
         final ProgressBar bar = holder.bar;
-        UserOnClickListener userClick = new UserOnClickListener(intent,activity,medal.getUtente());
+        UserOnClickListener userClick = new UserOnClickListener(intentUser,activity,medal.getUtente());
         TextView username = holder.username;
         username.setText(medal.getUtente().getUsername());
         username.setOnClickListener(userClick);
@@ -72,8 +79,12 @@ public class AdapterLeaderboardSession  extends RecyclerView.Adapter<AdapterLead
 
         ImageView imgMedal = holder.medalBackground;
         ImageView foto = holder.photo;
+
+        foto.setOnClickListener(new OnClickListenerMedal(intentPhoto,activity,medal));
+
         //TODO: decidere colori per medaglie dopo il podio
         TextView tvMedal = holder.medalPosition;
+        tvMedal.setVisibility(View.INVISIBLE);
         switch (medal.getPosition()){
             case 1:
                 imgMedal.setImageResource(R.drawable.ic_medal_gold_24dp);
@@ -85,8 +96,11 @@ public class AdapterLeaderboardSession  extends RecyclerView.Adapter<AdapterLead
                 imgMedal.setImageResource(R.drawable.ic_medal_bronze_24dp);
                 break;
             default:
-                tvMedal.setText(Integer.toString(medal.getPosition()));
+                tvMedal.setText(medal.getPosition());
+                tvMedal.setVisibility(View.VISIBLE);
         }
+        if(medal.getPosition() > 3 && medal.getPosition() <= 10)
+            imgMedal.setImageResource(R.drawable.circle_medal_top10);
         URL url = medal.getImage();
         Glide.with(MyApp.getAppContext()).load(url).listener(new RequestListener<URL, GlideDrawable>() {
             @Override

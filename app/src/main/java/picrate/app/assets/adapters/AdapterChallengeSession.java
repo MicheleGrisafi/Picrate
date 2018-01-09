@@ -22,6 +22,7 @@ import java.util.List;
 
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.R;
+import picrate.app.assets.interfaces.Updatable;
 import picrate.app.assets.objects.MyApp;
 import picrate.app.assets.objects.MySimpleTarget;
 import picrate.app.assets.tasks.TaskLoadSessionExpiration;
@@ -33,7 +34,7 @@ import picrate.app.assets.views.ImageViewChallenge;
  */
 
 /** Adapter per la lista delle challenges **/
-public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallengeSession.ViewHolder> {
+public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallengeSession.ViewHolder> implements Updatable {
 
     private List<ChallengeSession> sessions;
     private Context context;
@@ -47,6 +48,7 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         return sessions;
     }
 
+    @Deprecated
     public void setSessions(List<ChallengeSession> sessions) {
         this.sessions = sessions;
         imageViewMap = new SparseArray<>();
@@ -66,6 +68,26 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         progressBarMap = new SparseArray<>();
     }
 
+    @Override
+    public boolean updateItems(List<?> items) {
+        boolean result = false;
+        if(items != null){
+            if(items.get(0).getClass() == ChallengeSession.class){
+                this.sessions = (List<ChallengeSession>)items;
+                imageViewMap = new SparseArray<>();
+                progressBarMap = new SparseArray<>();
+                notifyDataSetChanged();
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<?> getItems() {
+        return sessions;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
@@ -82,7 +104,6 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            data = (TextView) itemView.findViewById(R.id.data);
             expiration = (TextView) itemView.findViewById(R.id.expiration);
             title = (TextView) itemView.findViewById(R.id.titolo);
             description = (TextView) itemView.findViewById(R.id.descrizione);
@@ -138,7 +159,7 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         //Carico in maniera asincrona le scadenze delle sessioni e le immagini dell'utente
         TaskLoadSessionExpiration loadExp = new TaskLoadSessionExpiration(context,session,holder.expiration);
         loadExp.execute();
-        TaskLoadSessionImage loadImages = new TaskLoadSessionImage(context,session,imageViewMap.get(session.getIDSession()),requestCode,activity,holder.progressBar1,holder.progressBar2);
+        TaskLoadSessionImage loadImages = new TaskLoadSessionImage(session,imageViewMap.get(session.getIDSession()),requestCode,activity,holder.progressBar1,holder.progressBar2);
         loadImages.execute();
 
     }

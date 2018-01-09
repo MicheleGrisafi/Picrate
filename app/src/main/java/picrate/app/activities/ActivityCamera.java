@@ -1,5 +1,6 @@
 package picrate.app.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Size;
@@ -54,11 +56,18 @@ import java.util.List;
 import picrate.app.R;
 import picrate.app.assets.objects.MyApp;
 
+/**
+ * Creata da Michele Grisafi
+ * Crediti a "Mobile Application Tutorials", canale youtube
+ *
+ * Activity per la gestione della fotocamera.
+ * I Javadoc di questa activity non sono riportati in quanto le funzionalità sono complesse e difficili da documentare in maniere soddisfacente
+ */
 public class ActivityCamera extends Activity {
-
     private static final int REQUEST_CODE = 0;
     private static final int REQUEST_CAMERA_PERMISSION_RESULT = 0;
     private static final int REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT = 1;
+    private static final int REQUEST_CAMERA = 5;
     private static final int STATE_PREVIEW = 0;
     private static final int STATE_WAIT_LOCK = 1;
     private int mCaptureState;
@@ -331,6 +340,7 @@ public class ActivityCamera extends Activity {
         }else{
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
         }
+        checkWriteStoragePermission();
     }
 
     @Override
@@ -364,7 +374,7 @@ public class ActivityCamera extends Activity {
         switch (requestCode){
             case REQUEST_CAMERA_PERMISSION_RESULT:
                 try {
-                    if(grantResults[0] != PackageManager.PERMISSION_GRANTED){
+                    if( grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(MyApp.getAppContext(), R.string.camera_permission_denied, Toast.LENGTH_LONG).show();
                     }
                 } catch (Resources.NotFoundException e) {
@@ -372,7 +382,7 @@ public class ActivityCamera extends Activity {
                 }
                 break;
             case REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     try {
                         createPhotoFileName();
                     } catch (IOException e) {
@@ -380,6 +390,7 @@ public class ActivityCamera extends Activity {
                     }
                 }else{
                     Toast.makeText(this,R.string.storage_permission_denied,Toast.LENGTH_LONG).show();
+                    finish();
                 }
                 break;
         }
@@ -403,6 +414,8 @@ public class ActivityCamera extends Activity {
                 outIntent.putExtra("fileName",data.getStringExtra("fileName"));
                 outIntent.putExtra("sessionID",inIntent.getIntExtra("sessionID",0));
                 outIntent.putExtra("price",data.getIntExtra("price",0));
+                outIntent.putExtra("lat",data.getDoubleExtra("lat",0));
+                outIntent.putExtra("long",data.getDoubleExtra("long",0));
                 setResult(1,outIntent);
                 closeCamera();
                 finish();
@@ -576,11 +589,10 @@ public class ActivityCamera extends Activity {
     /** Gestione file e cartella **/
     private void createPhotoFolder(){
         File photoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        mPhotoFolder = new File(photoFile,"Fotografando");
+        mPhotoFolder = new File(photoFile,getString(R.string.photo_folder_name));
         if(!mPhotoFolder.exists()){
             if(!mPhotoFolder.mkdirs())
                 Toast.makeText(this, R.string.photo_folder_not_created, Toast.LENGTH_SHORT).show();
-
         }
     }
     private File createPhotoFileName() throws IOException{
@@ -596,17 +608,18 @@ public class ActivityCamera extends Activity {
     /** Gestisco permessi di scrittura **/
     private void checkWriteStoragePermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
                 try {
                     createPhotoFileName();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }else{
-                if(shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
                     Toast.makeText(this,R.string.ask_storage_permission,Toast.LENGTH_LONG).show();
                 }
-                requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
+                //requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
             }
         }else{
            try {
@@ -641,7 +654,6 @@ public class ActivityCamera extends Activity {
         //TODO bug persmission: cambiare posizione della permission
         if(!shooting) {
             shooting = true;
-            checkWriteStoragePermission();
             lockFocus(true);
         }
     }

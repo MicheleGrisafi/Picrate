@@ -13,7 +13,6 @@
     <color name="materialDeepPurple500">#673AB7</color>
     <color name="materialIndigo500">#3F51B5</color>
     <color name="materialBlue500">#2196F3</color>
-    <color name="materialLightBlue500">#03A9F4</color>
     <color name="materialCyan500">#00BCD4</color>
     <color name="materialTeal500">#009688</color>
     <color name="materialGreen500">#4CAF50</color>
@@ -24,5 +23,6 @@
     <color name="medalSilver">#9E9E9E</color>
     <color name="materialGrey500">#9E9E9E</color>
     <color name="medalBronze">#6d4c41</color>
+    <color name="button">#ffa78b</color>
     <!-- TODO: AGGIUNGERE GLI ALTRI COLORI -->
 </resources>

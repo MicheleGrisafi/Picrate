@@ -51,8 +51,26 @@
     <string name="picrate_motto">Join the challenge!</string>
     <string name="signup_message_title">Welcome to PicRate!</string>
     <string name="signup_message_body">To join PicRate you have to choose a nickname. This will appear in leaderboards and to all of your firends</string>
-    <string name="notify_new_challenge">New challenge</string>
-    <string name="notify_new_challenge_sum">Show a notification every time a new challenge is avaiable</string>
-    <string name="notify_challenge_expiration">Challenge expiration</string>
-    <string name="notify_challenge_expiration_sum">Show a notification each time an uncompleted challenge is about to expire</string>
+    <string name="notification_setting_new_challenge">New challenge</string>
+    <string name="notification_setting_new_challenge_sum">Show a notification every time a new challenge is avaiable</string>
+    <string name="notification_setting_challenge_expiration">Challenge expiration</string>
+    <string name="notifification_setting_challenge_expiration_sum">Show a notification each time an uncompleted challenge is about to expire</string>
+    <string name="notification_new_challenge_title">New challenge avaiable!</string>
+    <string name="notification_new_challenge_body">Check out the new challenge avaiable for you!</string>
+    <string name="notification_setting_wifi_title">Show notifications on WiFi only</string>
+    <string name="notification_setting_wifi_sum">Notifications will be displayed, and content will be updated, only when connected to a WiFi network. Be aware that this system consumes just a little bit of your internet connection!</string>
+    <string name="minutes_abbre">m</string>
+    <string name="challenge_expired">Expired</string>
+    <string name="notification_expiration_title">Challenge expiring soon!</string>
+    <string name="notification_expiration_body">A challenge is about to expire! Check it out!</string>
+    <string name="your_medals">Your medals</string>
+    <string name="medals">Medals</string>
+    <string name="help_message">Thank you for using our app! Feel free to contact us if you have any feedback or if you seek help of any kind!</string>
+    <string name="button_send_email">Send email</string>
+    <string name="app_description">Picrate is an app that allows you to prove yourself in the fabulous world of photography. Join the daily challenges and compete with other players in order to reach the top! Earn your credits by rating other players’ pictures and by reaching the top positions of the leaderboards.</string>
+    <string name="report_title">Report photo</string>
+    <string name="delete_picture">Remove</string>
+    <string name="delete_picture_dialog_message">Are you sure you want to remove this picture from the challenge? You won\'t be able to reverse this operation and you won\'t get any money back!</string>
+    <string name="delete_photo_error">There\'s been an error deleting the image! Please try again!</string>
+    <string name="date_pattern" translatable="false">yyyy-MM-dd HH:mm:ss</string>
 </resources>

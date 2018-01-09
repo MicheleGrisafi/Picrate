@@ -25,7 +25,6 @@ public class AsyncTaskLoaderChallenges extends AsyncTaskLoader<List<ChallengeSes
         sessionDAO.open();
         List<ChallengeSession> result = sessionDAO.getActiveSessions();
         sessionDAO.close();
-        jobFinished(params, false);
         return result;
     }
 }

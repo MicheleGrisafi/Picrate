@@ -2,8 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingStart="4dp"
-    android:paddingEnd="4dp"
+    android:paddingStart="@dimen/margin_extra_small"
+    android:paddingEnd="@dimen/margin_extra_small"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -26,7 +26,7 @@
         android:id="@+id/relativeLayout_medal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_small"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_item_photoleaderboard_photo">
@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:textSize="@dimen/font_size_small"
             android:gravity="center_vertical|center_horizontal|center"
             android:text="1" />
     </RelativeLayout>
@@ -52,7 +53,7 @@
         android:id="@+id/relativeLayout_userIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_small"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout_medal"
         app:layout_constraintRight_toLeftOf="@+id/textView_username"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -71,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:textSize="@dimen/font_size_small"
             android:gravity="center_vertical|center_horizontal|center"
             android:text="U" />
     </RelativeLayout>
@@ -81,10 +83,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="@dimen/font_size_small"
         android:textColor="@color/colorBlack"
         app:layout_constraintLeft_toRightOf="@+id/relativeLayout_userIcon"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/margin_small"
         app:layout_constraintTop_toTopOf="@+id/relativeLayout_userIcon"
         app:layout_constraintBottom_toBottomOf="@+id/relativeLayout_userIcon" />
 </android.support.constraint.ConstraintLayout>

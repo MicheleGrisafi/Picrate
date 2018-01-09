@@ -1,5 +1,6 @@
 package picrate.app.activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,7 +26,7 @@ import picrate.app.assets.objects.MyApp;
  * Created by miki4 on 21/10/2017.
  */
 
-public class MedalsActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<ArrayList<Medal>>{
+public class ActivityMedals extends FragmentActivity implements LoaderManager.LoaderCallbacks<ArrayList<Medal>>{
     private RecyclerView rvMedals;
     private AdapterMedalsProfile adapter;
     private ProgressBar progressBar;
@@ -56,7 +57,7 @@ public class MedalsActivity extends FragmentActivity implements LoaderManager.Lo
 
         // Set layout manager to position the items
         rvMedals.setLayoutManager(new LinearLayoutManager(MyApp.getAppContext()));
-        adapter = new AdapterMedalsProfile(MyApp.getAppContext());
+        adapter = new AdapterMedalsProfile(MyApp.getAppContext(),this,new Intent(this,ActivityPhotoZoom.class));
         rvMedals.setAdapter(adapter);
 
     }

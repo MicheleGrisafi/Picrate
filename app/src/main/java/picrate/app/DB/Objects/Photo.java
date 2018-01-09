@@ -20,6 +20,16 @@ public class Photo implements Parcelable{
     private double latitudine;
     private double longitudine;
 
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    private float rating;
+
 
     public Photo(){
         latitudine = 0;
@@ -96,6 +106,8 @@ public class Photo implements Parcelable{
         dest.writeString(this.image.toString());
         dest.writeDouble(latitudine);
         dest.writeDouble(longitudine);
+        dest.writeParcelable(utente,0);
+        dest.writeParcelable(session,0);
     }
     public static final Parcelable.Creator<Photo> CREATOR = new Parcelable.Creator<Photo>() {
         public Photo createFromParcel(Parcel in) {
@@ -117,5 +129,7 @@ public class Photo implements Parcelable{
         }
         this.latitudine = in.readDouble();
         this.longitudine = in.readDouble();
+        this.utente = in.readParcelable(Utente.class.getClassLoader());
+        this.session = in.readParcelable(ChallengeSession.class.getClassLoader());
     }
 }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -19,13 +18,13 @@ import com.google.android.gms.tasks.Task;
 
 import picrate.app.R;
 import picrate.app.assets.objects.AppInfo;
+import picrate.app.assets.OLD.ImageButtonTouchHighlight;
 
 /**
  * Created by Michele Grisafi on 15/09/2017.
  */
 
 public class ActivityLogIn extends Activity implements View.OnClickListener{
-    final Activity activity = this;
     GoogleSignInClient mGoogleSignInClient;
     final int RC_SIGN_IN = 42;
     @Override
@@ -36,6 +35,7 @@ public class ActivityLogIn extends Activity implements View.OnClickListener{
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         String authkey = getResources().getString(R.string.auth_key);
+        //authkey = "1016249877332-u4i9mt0hp6h6pear7so4ff2u9loscddn.apps.googleusercontent.com";
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().requestIdToken(authkey).build();
 
         // Build a GoogleSignInClient with the options specified by gso.
@@ -47,6 +47,7 @@ public class ActivityLogIn extends Activity implements View.OnClickListener{
 
         //Inizializzo le impostazioni
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
     }
 
     @Override
@@ -103,7 +104,7 @@ public class ActivityLogIn extends Activity implements View.OnClickListener{
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Toast.makeText(activity, "LOGIN ERROR" + e.getStatusCode(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(activity, "LOGIN ERROR: " + e.getStatusCode(), Toast.LENGTH_SHORT).show();
         }
     }
 }

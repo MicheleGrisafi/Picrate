@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS ChallengeSession(
 	IDSession		INT NOT NULL AUTO_INCREMENT,
 	image			VARCHAR(255) DEFAULT NULL,
 	expiration		DATETIME,
-	stato			INT(1) NOT NULL,	/* 1 = attivo, 0 = valutazione, -1 = scaduto*/
+	stato			INT(1) NOT NULL,	/* 1 = rating, 0 = scaduto, 2 = attivo, 3 = upcoming*/
 	IDChallenge		SMALLINT NOT NULL,
 	CONSTRAINT PKChallengeSession PRIMARY KEY(IDSession),
 	CONSTRAINT FKChallengeOfTheSession FOREIGN KEY (IDChallenge) REFERENCES Challenge(IDChallenge)
@@ -73,12 +73,12 @@ INSERT INTO `Challenge` (`IDChallenge`, `description`, `title`,`image`) VALUES
 
 TRUNCATE TABLE `ChallengeSession`;
 INSERT INTO `ChallengeSession` (`IDSession`, `image`, `expiration`, `stato`, `IDChallenge`) VALUES
-(1, NULL, '2017-05-30 23:59:59', 0, 1),
-(2, NULL, '2017-06-30 23:59:59', 0, 2),
-(3, NULL, '2017-09-28 23:59:59', 1, 3),
-(4, NULL, '2017-10-01 23:59:59', 1, 4),
-(5, NULL, '2017-9-01 23:59:59', 2, 5),
-(6, NULL, '2017-9-01 23:59:59', 2, 6);
+(1, NULL, '2017-05-30 23:59:59', 1, 1), /*Panorama*/
+(2, NULL, '2017-06-30 23:59:59', 1, 2), /*Cani*/
+(3, NULL, '2017-09-28 23:59:59', 2, 3), /*Scena pubblica*/
+(4, NULL, '2017-10-01 23:59:59', 2, 4), /*Scarpe*/
+(5, NULL, '2017-9-01 23:59:59', 0, 5), /*Cibo*/
+(6, NULL, '2017-9-01 23:59:59', 0, 6); /*Eleganza*/
 
 TRUNCATE TABLE `Utente`;
 INSERT INTO `Utente` (`IDUser`, `username`, `googleKey`, `mail`, `score`, `money`) VALUES
