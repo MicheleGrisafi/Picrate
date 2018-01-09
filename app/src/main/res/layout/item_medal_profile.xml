@@ -3,7 +3,12 @@
     android:id="@+id/constraintLayout_item_medal_profile"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhite"
+    android:paddingTop="@dimen/margin_medium"
+    android:paddingBottom="@dimen/margin_small"
+    android:paddingStart="@dimen/margin_large"
+    android:paddingEnd="@dimen/margin_large">
 
     <TextView
         android:id="@+id/textView_item_medal_profile_session"
@@ -56,7 +61,6 @@
         android:textColor="@color/colorBlack"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="@dimen/margin_small"
         app:layout_constraintTop_toBottomOf="@+id/textView_item_medal_profile_session"
         android:gravity="center"
         android:layout_marginEnd="@dimen/margin_small"
@@ -78,7 +82,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_item_medal_profile_data"
-        android:layout_marginBottom="@dimen/margin_small"
-        android:layout_marginTop="@dimen/margin_small"/>
+        android:layout_marginTop="@dimen/margin_extra_small"/>
 
 </android.support.constraint.ConstraintLayout>

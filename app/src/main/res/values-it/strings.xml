@@ -68,4 +68,7 @@
     <string name="button_send_email">Invia email</string>
     <string name="app_description">Picrate è un’app the ti consente ti metterti alla prova nel fantastico mondo della fotografia. Partecipa alle sfide giornaliere e competi con altri giocatori per conquistare la classifica. Guadagna crediti raggiungendo buone posizioni in classifica e valutando le foto degli altri giocatori.</string>
     <string name="report_title">Segnala foto</string>
+    <string name="delete_picture">Rimuovi</string>
+    <string name="delete_picture_dialog_message">Sei sicuro di voler rimuovere questa foto dalla sfida? Una volta fatto non potrai ripensarci e non ti verranno rimborsate eventuali spese!</string>
+    <string name="delete_photo_error">C\'è stato un problema con la rimozione della tua foto! Riprova!</string>
 </resources>

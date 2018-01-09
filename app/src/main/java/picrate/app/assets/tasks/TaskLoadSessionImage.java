@@ -23,7 +23,9 @@ import picrate.app.DB.Objects.Photo;
 import picrate.app.DB.Objects.Utente;
 import picrate.app.R;
 import picrate.app.activities.ActivityCamera;
+import picrate.app.activities.ActivityPhotoZoom;
 import picrate.app.assets.listeners.OnClickListenerCamera;
+import picrate.app.assets.listeners.OnClickListenerMedal;
 import picrate.app.assets.listeners.RequestListenerGlideProgressBar;
 import picrate.app.assets.objects.AppInfo;
 import picrate.app.assets.views.ImageViewChallenge;
@@ -45,10 +47,10 @@ public class TaskLoadSessionImage extends AsyncTask<Void,Void,ArrayList<Photo>> 
     private PhotoDAO dao;
     private int requestCode;
 
-    public TaskLoadSessionImage(Context context, ChallengeSession session, ArrayList<ImageViewChallenge> imageViews,
+    public TaskLoadSessionImage(ChallengeSession session, ArrayList<ImageViewChallenge> imageViews,
                                 int requestCode, FragmentActivity activity, ProgressBar progressBar1, ProgressBar progressBar2){
         this.session = session;
-        this.context = context;
+        this.context = activity.getApplicationContext();
         this.imageViews = imageViews;
         this.requestCode = requestCode;
         user = AppInfo.getUtente();
@@ -72,6 +74,7 @@ public class TaskLoadSessionImage extends AsyncTask<Void,Void,ArrayList<Photo>> 
 
     @Override
     protected void onPostExecute(ArrayList<Photo> pictures) {
+
         // TODO: provare a scaricare l'immagine bitmap in formato grande per implementare lo zoom
         Photo foto;
         ImageViewChallenge imageView;
@@ -81,6 +84,8 @@ public class TaskLoadSessionImage extends AsyncTask<Void,Void,ArrayList<Photo>> 
         if(pictures != null) {
             for (int i = 0; i < pictures.size(); i++){
                 foto = pictures.get(i);
+                foto.setUtente(user);
+                foto.setSession(session);
                 imageView = imageViews.get(i);
                 if (foto != null) {
                     RequestListenerGlideProgressBar requestListener;
@@ -106,7 +111,7 @@ public class TaskLoadSessionImage extends AsyncTask<Void,Void,ArrayList<Photo>> 
             if(pictures != null && !pictures.isEmpty()){
                 //immagine utente
                 //TODO: inserire zoom nel listener
-                imageView.setOnClickListener(null);
+                imageView.setOnClickListener(new OnClickListenerMedal(new Intent(context, ActivityPhotoZoom.class),activity,pictures.get(0)));
                 pictures.remove(0);
                 tags.add(true);
             }else{

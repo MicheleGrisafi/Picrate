@@ -17,6 +17,7 @@ public class OnClickListenerMedal implements View.OnClickListener {
     private Intent intent;
     private Activity activity;
     private Photo photo;
+    public static final int REQUEST_CODE = 25;
 
     public OnClickListenerMedal(Intent intent, Activity activity, Photo photo) {
         this.intent = intent;
@@ -27,6 +28,6 @@ public class OnClickListenerMedal implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         intent.putExtra("image",photo);
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent,REQUEST_CODE);
     }
 }

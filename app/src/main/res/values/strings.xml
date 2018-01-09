@@ -69,4 +69,8 @@
     <string name="button_send_email">Send email</string>
     <string name="app_description">Picrate is an app that allows you to prove yourself in the fabulous world of photography. Join the daily challenges and compete with other players in order to reach the top! Earn your credits by rating other players’ pictures and by reaching the top positions of the leaderboards.</string>
     <string name="report_title">Report photo</string>
+    <string name="delete_picture">Remove</string>
+    <string name="delete_picture_dialog_message">Are you sure you want to remove this picture from the challenge? You won\'t be able to reverse this operation and you won\'t get any money back!</string>
+    <string name="delete_photo_error">There\'s been an error deleting the image! Please try again!</string>
+    <string name="date_pattern" translatable="false">yyyy-MM-dd HH:mm:ss</string>
 </resources>

@@ -102,15 +102,7 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
                     .build();
             jobScheduler.schedule(jobInfo);
         }
-        /*
-        if((Boolean)AppInfo.getSetting(AppInfo.NOTIFY_CHALLENGE_EXPIRATION)){
-            ComponentName serviceName = new ComponentName(getContext(), ServiceUpdateChallenges.class);
-            JobInfo jobInfo = new JobInfo.Builder(AppInfo.REFRESH_CHALLENGES, serviceName)
-                    .setPeriodic(1200000)
-                    .setRequiredNetworkType(connection)
-                    .build();
-            jobScheduler.schedule(jobInfo);
-        }*/
+
 
 
     }

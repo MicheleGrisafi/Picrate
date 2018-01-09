@@ -45,9 +45,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_activity_login_motto" />
-    <picrate.app.assets.OLD.ImageButtonTouchHighlight
-        android:id="@+id/touchHilight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button"/>
+
 </android.support.constraint.ConstraintLayout>

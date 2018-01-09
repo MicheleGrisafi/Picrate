@@ -1,5 +1,6 @@
 package picrate.app.activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -56,7 +57,7 @@ public class ActivityMedals extends FragmentActivity implements LoaderManager.Lo
 
         // Set layout manager to position the items
         rvMedals.setLayoutManager(new LinearLayoutManager(MyApp.getAppContext()));
-        adapter = new AdapterMedalsProfile(MyApp.getAppContext());
+        adapter = new AdapterMedalsProfile(MyApp.getAppContext(),this,new Intent(this,ActivityPhotoZoom.class));
         rvMedals.setAdapter(adapter);
 
     }

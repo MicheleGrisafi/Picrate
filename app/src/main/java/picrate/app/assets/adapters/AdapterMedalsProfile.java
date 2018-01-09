@@ -1,6 +1,8 @@
 package picrate.app.assets.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +25,9 @@ import java.util.ArrayList;
 
 import picrate.app.DB.Objects.Medal;
 import picrate.app.R;
+import picrate.app.activities.ActivityImageFilter;
+import picrate.app.activities.ActivityPhotoZoom;
+import picrate.app.assets.listeners.OnClickListenerMedal;
 import picrate.app.assets.objects.MyApp;
 
 /**
@@ -31,13 +36,16 @@ import picrate.app.assets.objects.MyApp;
 
 public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProfile.ViewHolder> {
 
-
+    private Activity activity;
+    private Intent intentPhoto;
     private ArrayList<Medal> medals;
     private Context context;
 
-    public AdapterMedalsProfile(Context context) {
+    public AdapterMedalsProfile(Context context, Activity activity, Intent intentPhoto) {
         this.context = context;
         this.medals = new ArrayList<>();
+        this.activity = activity;
+        this.intentPhoto = intentPhoto;
     }
 
     public ArrayList<Medal> getMedals() {
@@ -107,6 +115,7 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
                 return false;
             }
         }).into(img);
+        img.setOnClickListener(new OnClickListenerMedal(intentPhoto,activity,medal));
     }
 
     @Override

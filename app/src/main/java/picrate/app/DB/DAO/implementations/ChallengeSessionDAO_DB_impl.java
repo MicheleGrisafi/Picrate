@@ -16,6 +16,8 @@ import picrate.app.DB.DAO.ChallengeSessionDAO;
 import picrate.app.DB.MySqlDatabase;
 import picrate.app.DB.Objects.Challenge;
 import picrate.app.DB.Objects.ChallengeSession;
+import picrate.app.R;
+import picrate.app.assets.objects.MyApp;
 
 
 /**
@@ -83,7 +85,7 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
                 URL tmp = MySqlDatabase.getUrl(MySqlDatabase.PHOTO_CHALLENGE_FOLDER);
                 String tmp2 = tmp.toString() + "/" + obj.getString("cImage")+MySqlDatabase.photo_extension;
                 url = new URL(tmp2);
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                DateFormat format = new SimpleDateFormat(MyApp.getAppContext().getString(R.string.date_pattern));
                 Date date = format.parse(obj.getString("expiration"));
                 challege = new Challenge(obj.getInt("IDChallenge"),obj.getString("description"),obj.getString("title"),url);
                 session = new ChallengeSession(obj.getInt("IDSession"),date,challege);

@@ -1,10 +1,13 @@
 package picrate.app.DB.Objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by miki4 on 07/05/2017.
  */
 
-public class Utente {
+public class Utente implements Parcelable{
     private String username;
     private int id;
     private String email;
@@ -77,5 +80,33 @@ public class Utente {
     }
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(username);
+        dest.writeString(email);
+        dest.writeString(googleKey);
+        dest.writeInt(score);
+        dest.writeInt(money);
+    }
+    public static final Parcelable.Creator<Utente> CREATOR = new Parcelable.Creator<Utente>() {
+        public Utente createFromParcel(Parcel in) {
+            return new Utente(in);
+        }
+
+        public Utente[] newArray(int size) {
+            return new Utente[size];
+        }
+    };
+
+    private Utente(Parcel in) {
+        this(in.readInt(),in.readString(),in.readString(),in.readString(),in.readInt(),in.readInt());
     }
 }

@@ -159,7 +159,7 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         //Carico in maniera asincrona le scadenze delle sessioni e le immagini dell'utente
         TaskLoadSessionExpiration loadExp = new TaskLoadSessionExpiration(context,session,holder.expiration);
         loadExp.execute();
-        TaskLoadSessionImage loadImages = new TaskLoadSessionImage(context,session,imageViewMap.get(session.getIDSession()),requestCode,activity,holder.progressBar1,holder.progressBar2);
+        TaskLoadSessionImage loadImages = new TaskLoadSessionImage(session,imageViewMap.get(session.getIDSession()),requestCode,activity,holder.progressBar1,holder.progressBar2);
         loadImages.execute();
 
     }

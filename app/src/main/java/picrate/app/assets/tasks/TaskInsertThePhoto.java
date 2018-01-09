@@ -25,7 +25,6 @@ import picrate.app.assets.views.ImageViewChallenge;
 public class TaskInsertThePhoto extends AsyncTask<Void, Void, Photo> {
     private Photo fotografia;
     private String nameFile;
-    private Context context;
     private ArrayList<ImageViewChallenge> imageViews;
     private ArrayList<ProgressBar> progressBars;
     private int requestCode;
@@ -34,12 +33,11 @@ public class TaskInsertThePhoto extends AsyncTask<Void, Void, Photo> {
 
     private PhotoDAO photoDAO;
 
-    public TaskInsertThePhoto(Photo fotografia, String namefile, Context context,
+    public TaskInsertThePhoto(Photo fotografia, String namefile,
                               ArrayList<ImageViewChallenge> imageViews, int requestCode,
                               ChallengeSession session, FragmentActivity activity,ArrayList<ProgressBar> progressBars){
         this.fotografia = fotografia;
         this.nameFile = namefile;
-        this.context = context;
         this.imageViews = imageViews;
         this.session = session;
         this.requestCode = requestCode;
@@ -65,7 +63,7 @@ public class TaskInsertThePhoto extends AsyncTask<Void, Void, Photo> {
             //Avvio caricamento foto
             ProgressBar p1 = progressBars.get(0);
             ProgressBar p2 = progressBars.get(1);
-            TaskLoadSessionImage taskLoadSessionImage = new TaskLoadSessionImage(context,session,
+            TaskLoadSessionImage taskLoadSessionImage = new TaskLoadSessionImage(session,
                     imageViews,requestCode,activity,p1,p2);
             taskLoadSessionImage.execute();
 
@@ -73,7 +71,7 @@ public class TaskInsertThePhoto extends AsyncTask<Void, Void, Photo> {
             if(!(boolean)AppInfo.getSetting(AppInfo.SAVE_PHOTOS)){
                 File file = new File(nameFile);
                 if(!BitmapHelper.deleteFile(file))
-                    Toast.makeText(context, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
             }
         }
         photoDAO.close();

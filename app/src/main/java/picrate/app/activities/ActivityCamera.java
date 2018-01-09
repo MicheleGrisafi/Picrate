@@ -414,6 +414,8 @@ public class ActivityCamera extends Activity {
                 outIntent.putExtra("fileName",data.getStringExtra("fileName"));
                 outIntent.putExtra("sessionID",inIntent.getIntExtra("sessionID",0));
                 outIntent.putExtra("price",data.getIntExtra("price",0));
+                outIntent.putExtra("lat",data.getDoubleExtra("lat",0));
+                outIntent.putExtra("long",data.getDoubleExtra("long",0));
                 setResult(1,outIntent);
                 closeCamera();
                 finish();
@@ -587,11 +589,10 @@ public class ActivityCamera extends Activity {
     /** Gestione file e cartella **/
     private void createPhotoFolder(){
         File photoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        mPhotoFolder = new File(photoFile,"Fotografando");
+        mPhotoFolder = new File(photoFile,getString(R.string.photo_folder_name));
         if(!mPhotoFolder.exists()){
             if(!mPhotoFolder.mkdirs())
                 Toast.makeText(this, R.string.photo_folder_not_created, Toast.LENGTH_SHORT).show();
-
         }
     }
     private File createPhotoFileName() throws IOException{
@@ -628,18 +629,7 @@ public class ActivityCamera extends Activity {
             }
         }
     }
-    private void checkTakePhotoPermission(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.CAMERA)) {
-                Toast.makeText(this, "We need to take a picture!", Toast.LENGTH_SHORT).show();
-            } else {
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
-            }
-        }
-    }
+
     /** Metodi per la gestione del fuoco **/
     private void lockFocus(boolean shoot){
         try {
