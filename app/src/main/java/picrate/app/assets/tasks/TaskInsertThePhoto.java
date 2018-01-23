@@ -66,7 +66,7 @@ public class TaskInsertThePhoto extends AsyncTask<Void, Void, Photo> {
             TaskLoadSessionImage taskLoadSessionImage = new TaskLoadSessionImage(session,
                     imageViews,requestCode,activity,p1,p2);
             taskLoadSessionImage.execute();
-
+            AppInfo.setChallengePhotoRecord(session.getIDSession(),true);
             //Cancello file locale
             if(!(boolean)AppInfo.getSetting(AppInfo.SAVE_PHOTOS)){
                 File file = new File(nameFile);

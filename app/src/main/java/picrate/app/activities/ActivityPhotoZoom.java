@@ -86,7 +86,7 @@ public class ActivityPhotoZoom extends Activity {
         //TODO: aggiungere barra di stato download
 
         TextView delete = (TextView)findViewById(R.id.textView_deletePicture);
-        if(image.getUtente() != null && image.getUtente().getId() == AppInfo.getUtente().getId()){
+        if(inIntent.getBooleanExtra("deletable",false) && image.getUtente() != null && image.getUtente().getId() == AppInfo.getUtente().getId()){
             delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override

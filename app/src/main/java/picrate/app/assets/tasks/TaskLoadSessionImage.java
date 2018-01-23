@@ -111,7 +111,9 @@ public class TaskLoadSessionImage extends AsyncTask<Void,Void,ArrayList<Photo>> 
             if(pictures != null && !pictures.isEmpty()){
                 //immagine utente
                 //TODO: inserire zoom nel listener
-                imageView.setOnClickListener(new OnClickListenerMedal(new Intent(context, ActivityPhotoZoom.class),activity,pictures.get(0)));
+                Intent outIntent = new Intent(context, ActivityPhotoZoom.class);
+                outIntent.putExtra("deletable",true);
+                imageView.setOnClickListener(new OnClickListenerMedal(outIntent,activity,pictures.get(0)));
                 pictures.remove(0);
                 tags.add(true);
             }else{
@@ -161,13 +163,13 @@ public class TaskLoadSessionImage extends AsyncTask<Void,Void,ArrayList<Photo>> 
                                 }else {
                                     // if button is clicked, close the custom dialog
                                     intent.putExtra("price",AppInfo.costo_seconda_foto);
-                                    btnDialog.setOnClickListener(new OnClickListenerCamera(intent, requestCode, activity, dialog));
+                                    btnDialog.setOnClickListener(new OnClickListenerCamera(intent, requestCode, activity, dialog,session));
                                 }
                                 dialog.show();
                             }
                         });
                     }else
-                        imageView.setOnClickListener(new OnClickListenerCamera(intent,requestCode,activity));
+                        imageView.setOnClickListener(new OnClickListenerCamera(intent,requestCode,activity,session));
                 }
             }
         }

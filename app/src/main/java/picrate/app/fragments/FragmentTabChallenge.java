@@ -24,7 +24,6 @@ import picrate.app.R;
 import picrate.app.assets.adapters.AdapterChallengeSession;
 import picrate.app.assets.listeners.SwipeRefreshListenerChallenge;
 import picrate.app.assets.objects.AppInfo;
-import picrate.app.assets.objects.MyApp;
 import picrate.app.assets.services.ServiceUpdateChallenges;
 import picrate.app.assets.tasks.AsyncTaskLoaderChallenges;
 
@@ -69,7 +68,6 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
         rvChallenge.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         adapter = new AdapterChallengeSession(getActivity().getApplicationContext(),REQUEST_CODE_CAMERA,
                 swipeRefreshLayoutChallenges,getActivity());
-        AppInfo.adapters.append(AppInfo.ADAPTER_CHALLENGES,adapter);
         rvChallenge.setAdapter(adapter);
 
         SwipeRefreshListenerChallenge listenerChallenge = new SwipeRefreshListenerChallenge(this);
@@ -88,8 +86,8 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
         super.onActivityCreated(savedInstanceState);
         /* LOADER **/
         getLoaderManager().initLoader(0, null, this).forceLoad();
-        /* JOBS **/
 
+        /* JOBS **/
         JobScheduler jobScheduler = (JobScheduler) getContext().getSystemService(JOB_SCHEDULER_SERVICE);
         int connection = JobInfo.NETWORK_TYPE_ANY;
         if((Boolean)AppInfo.getSetting(AppInfo.NOTIFICATION_WIFI))
@@ -116,6 +114,7 @@ public class FragmentTabChallenge extends Fragment implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader<List<ChallengeSession>> loader, List<ChallengeSession> data) {
         adapter.updateItems(data);
+        AppInfo.setChallengeList(data);
         progressBar.setVisibility(ProgressBar.GONE);
         swipeRefreshLayoutChallenges.setRefreshing(false);
     }

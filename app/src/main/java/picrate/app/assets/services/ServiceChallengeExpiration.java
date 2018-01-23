@@ -30,18 +30,17 @@ public class ServiceChallengeExpiration extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Context context = MyApp.getAppContext();
-        AdapterChallengeSession adapter = (AdapterChallengeSession)AppInfo.adapters.get(AppInfo.ADAPTER_CHALLENGES);
         int sessionID = intent.getIntExtra("sessionID",0);
-        ArrayList<ImageViewChallenge> images = adapter.getImageViews(sessionID);
-        if(images.get(0).getPhoto() == null){
+
+        if(!AppInfo.getChallengePhotoRecord(sessionID)){
             Notification.Builder builder = new Notification.Builder(context);
             builder.setContentTitle(context.getString(R.string.notification_expiration_title));
             builder.setContentText(context.getString(R.string.notification_expiration_body));
-            builder.setSmallIcon(R.drawable.ic_launcher);
+            builder.setSmallIcon(R.drawable.ic_expiration_24dp);
             builder.setPriority(Notification.PRIORITY_HIGH);
 
             Intent intent2 = new Intent(context, ActivityMain.class);
-
+            intent2.putExtra("notification",AppInfo.NOTIFY_CHALLENGE_EXPIRATION);
             // The stack builder object will contain an artificial back stack for the
             // started Activity.
             // This ensures that navigating backward from the Activity leads out of

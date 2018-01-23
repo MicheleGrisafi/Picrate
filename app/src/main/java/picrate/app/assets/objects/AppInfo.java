@@ -19,8 +19,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import picrate.app.DB.MySqlDatabase;
+import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.DB.Objects.Utente;
 import picrate.app.activities.ActivityNotifications;
 import picrate.app.activities.ActivitySettings;
@@ -37,6 +41,10 @@ import picrate.app.assets.tasks.TaskUpdateUtente;
 abstract public class AppInfo {
     /** Shared preferences per il salvataggio dell'utente **/
     static public final String user_shared_preferences = "user-preferences";
+    /** Shared preferences per il salvataggio delle notifiche **/
+    static public final String notifications_shared_preferences = "notification-preferences";
+    /** Shared preferences per il salvataggio delle challenge **/
+    static public final String challenge_list_shared_preferences = "challenge-preferences";
 
     /** Costo per l'aggiunta di una seconda foto alla challenge **/
     static public final int costo_seconda_foto = 40;
@@ -72,7 +80,9 @@ abstract public class AppInfo {
     /** Impostazione per l'uso esclusivo del WIFI nelle notifiche **/
     static public final int NOTIFICATION_WIFI = 3;
     /** Intervallo di tempo per l'update delle challenge **/
-    static public final int NOTIFY_NEW_CHALLENGE_TIMER = 3600000;
+    static public final int NOTIFY_NEW_CHALLENGE_TIMER = 60 * 60 * 1000;
+    /** Intervallo di tempo per la notifica delle challenge **/
+    static public final int NOTIFY_EXPIRATION_CHALLENGE_TIMER = 60 * 60 * 1000;
 
     /** Account google, necessario per il logout **/
     static public GoogleSignInClient client;
@@ -206,4 +216,61 @@ abstract public class AppInfo {
         return result;
     }
 
+    /**
+     * Notifica l'app che una notifica è stata creata per una determinata challenge
+     * @param session id della sessione in questione
+     * @param flag true o false
+     */
+    static  public void setNotification(int session,boolean flag){
+        SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(notifications_shared_preferences, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(Integer.toString(session),flag);
+        editor.apply();
+    }
+
+    /**
+     * Verifica se una sessione ha già prodotto una notifica
+     * @param session id della sessione
+     * @return falso se non è stata creata una notifica, vero altrimenti.
+     */
+    static public boolean isNotificated(int session){
+        SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(notifications_shared_preferences, 0);
+        return settings.getBoolean(Integer.toString(session),false);
+    }
+
+
+    static public void setChallengeList(List<ChallengeSession> lista){
+        SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(challenge_list_shared_preferences, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear();
+        Set<String> set = new HashSet<>(lista.size());
+        for (ChallengeSession challenge:lista) {
+            set.add(String.valueOf(challenge.getIDSession()));
+        }
+        editor.putStringSet("list",set);
+        editor.apply();
+    }
+    static public List<ChallengeSession> getChallengeList(){
+        SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(challenge_list_shared_preferences, 0);
+        Set<String> set = settings.getStringSet("list",null);
+        List<ChallengeSession> lista= new ArrayList<>();
+        if(set == null)
+            lista = null;
+        else{
+            for (String chall:set) {
+                lista.add(new ChallengeSession(Integer.parseInt(chall)));
+            }
+        }
+        return lista;
+    }
+    static public void setChallengePhotoRecord(int challengeId,boolean flag){
+        SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(challenge_list_shared_preferences, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(String.valueOf(challengeId),flag);
+        editor.apply();
+    }
+    static public boolean getChallengePhotoRecord(int challengeId){
+        SharedPreferences settings = MyApp.getAppContext().getSharedPreferences(challenge_list_shared_preferences, 0);
+        return settings.getBoolean(String.valueOf(challengeId),false);
+    }
 }

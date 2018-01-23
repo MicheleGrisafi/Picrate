@@ -106,7 +106,7 @@ public class OLD_LoadSessionsImages extends AsyncTask<Void,Void,SparseArray<Arra
                         intent = new Intent(context,ActivityCamera.class);
                         intent.putExtra("imageView",picturesMap.get(session.getIDSession()).get(i));
                         intent.putExtra("sessionID",session.getIDSession());
-                        image.setOnClickListener(new OnClickListenerCamera(intent,requestCode,(FragmentActivity) context));
+                        image.setOnClickListener(new OnClickListenerCamera(intent,requestCode,(FragmentActivity) context,session));
                     }
                 }
             }
