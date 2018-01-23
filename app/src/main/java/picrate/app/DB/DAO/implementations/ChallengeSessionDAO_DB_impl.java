@@ -89,6 +89,7 @@ public class ChallengeSessionDAO_DB_impl implements ChallengeSessionDAO {
                 Date date = format.parse(obj.getString("expiration"));
                 challege = new Challenge(obj.getInt("IDChallenge"),obj.getString("description"),obj.getString("title"),url);
                 session = new ChallengeSession(obj.getInt("IDSession"),date,challege);
+                session.setStato(ChallengeSession.STATO_ACTIVE);
                 String sImage = obj.getString("sImage");
                 if(!sImage.equals("null")){
                     session.setImage(new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_CHALLENGE_FOLDER),obj.getString("sImage")+MySqlDatabase.photo_extension));

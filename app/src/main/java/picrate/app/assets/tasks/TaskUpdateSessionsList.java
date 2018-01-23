@@ -59,8 +59,7 @@ public class TaskUpdateSessionsList extends AsyncTask<Void,Void,List<ChallengeSe
     protected void onPostExecute(List<ChallengeSession> challengeSessions) {
         sessionDAO.close();
         sessionDAO = null;
-        AdapterChallengeSession adapter = (AdapterChallengeSession)AppInfo.adapters.get(AppInfo.ADAPTER_CHALLENGES);
-        List<ChallengeSession> oldList = (List<ChallengeSession>)adapter.getItems();
+        List<ChallengeSession> oldList = AppInfo.getChallengeList();
         if(!compareLists(oldList,challengeSessions)){
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
             builder.setContentTitle(context.getString(R.string.notification_new_challenge_title));
@@ -93,24 +92,20 @@ public class TaskUpdateSessionsList extends AsyncTask<Void,Void,List<ChallengeSe
             // notification. For example, to cancel the notification, you can pass its ID
             // number to NotificationManager.cancel().
             mNotificationManager.notify(AppInfo.NOTIFY_NEW_CHALLENGE, builder.build());
-            adapter.updateItems(challengeSessions);
             service.jobFinished(jobParameters,true);
         }
     }
-    private boolean compareLists(List<ChallengeSession> list1, List<ChallengeSession> list2){
-        boolean result = list1.size() == list2.size();
-        if(result){
-            for (ChallengeSession session : list1){
-                result = false;
-                for (ChallengeSession session1 : list2){
-                    if (session.getIDSession() == session1.getIDSession())
-                        result = true;
-                }
-                if(!result)
-                    break;
+    private boolean compareLists(List<ChallengeSession> listOld, List<ChallengeSession> listNew){
+        boolean result = false;
+        for (ChallengeSession session1 : listOld){
+            result = false;
+            for (ChallengeSession session2 : listNew) {
+                if (session1.getIDSession() == session2.getIDSession())
+                    result = true;
             }
+            if(!result)
+                break;
         }
         return result;
     }
-
 }

@@ -2,6 +2,8 @@ package picrate.app.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -156,11 +159,17 @@ public class ActivityMain extends FragmentActivity  {
             }
         });
         Intent intent = getIntent();
-        if (intent != null){
-            if(intent.getBooleanExtra("newChallenge",false)){
-                tabHost.setCurrentTab(0);
-            }
+        NotificationManager mNotificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        try {
+            mNotificationManager.cancel(intent.getIntExtra("notification", 0));
+        }catch(Exception e){
+            Toast.makeText(activity, R.string.generic_camera_error, Toast.LENGTH_SHORT).show();
         }
+        if(intent.getBooleanExtra("newChallenge",false)){
+            tabHost.setCurrentTab(0);
+        }
+
 
 
     }
@@ -231,6 +240,13 @@ public class ActivityMain extends FragmentActivity  {
                 FragmentTabChallenge fragment = (FragmentTabChallenge) getSupportFragmentManager().findFragmentByTag("Challenges Tab");
                 ChallengeSession session = ((Photo)data.getParcelableExtra("photo")).getSession();
                 ArrayList<ImageViewChallenge> imageViews = fragment.adapter.getImageViews(session.getIDSession());
+                int i = 0;
+                for (ImageViewChallenge img:imageViews) {
+                    if (img.getPhoto() != null)
+                        i++;
+                }
+                if(i==0)
+                    AppInfo.setChallengePhotoRecord(session.getIDSession(),false);
                 ArrayList<ProgressBar> progressBars = fragment.adapter.getProgressBars(session.getIDSession());
                 ProgressBar p1 = progressBars.get(0);
                 ProgressBar p2 = progressBars.get(1);
