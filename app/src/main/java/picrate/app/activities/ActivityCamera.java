@@ -514,7 +514,8 @@ public class ActivityCamera extends Activity {
                 }
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-                    Toast.makeText(MyApp.getAppContext(),R.string.generic_camera_error,Toast.LENGTH_LONG).show();
+                    //TODO: bug ad alcuni -> finisce in capturefailed
+                    Toast.makeText(MyApp.getAppContext(),"error trying to configure capture session",Toast.LENGTH_LONG).show();
                 }
             },null);
         } catch (CameraAccessException e) {
@@ -540,7 +541,7 @@ public class ActivityCamera extends Activity {
                 @Override
                 public void onCaptureFailed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull CaptureFailure failure) {
                     super.onCaptureFailed(session, request, failure);
-                    Toast.makeText(ActivityCamera.this, R.string.generic_camera_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityCamera.this, "capture failed error", Toast.LENGTH_SHORT).show();
                 }
             };
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),stillCaptureCallback,null);

@@ -26,11 +26,7 @@ public class ActivityNotifications extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
-        }
+
         TextView title = (TextView) findViewById(R.id.textView_setting_title);
         title.setText(R.string.notifications);
         ImageButton btnBack = (ImageButton) findViewById(R.id.btnBack);
