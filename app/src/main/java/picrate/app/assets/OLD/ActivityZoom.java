@@ -1,4 +1,4 @@
-package picrate.app.activities;
+package picrate.app.assets.OLD;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.ByteArrayOutputStream;
 
 import picrate.app.R;
+import picrate.app.activities.ActivityMaps;
 
 public class ActivityZoom extends FragmentActivity {
 
@@ -36,7 +37,7 @@ public class ActivityZoom extends FragmentActivity {
         thumb1View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                zoomImageFromThumb(thumb1View, R.drawable.beautiful_photography);
+                zoomImageFromThumb(thumb1View, R.drawable.circular_profile);
             }
         });
 
@@ -48,7 +49,7 @@ public class ActivityZoom extends FragmentActivity {
             public void onClick(View v) {
                 Intent mapIntent = new Intent(ActivityZoom.this, ActivityMaps.class);
                 mapIntent.putExtra("latLng", new LatLng(-34, 151));
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.beautiful_photography);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.circular_profile);
                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bs);
                 mapIntent.putExtra("photo", bs.toByteArray());

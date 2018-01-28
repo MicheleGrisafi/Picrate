@@ -28,9 +28,9 @@
     <application
         android:name="picrate.app.assets.objects.MyApp"
         android:allowBackup="true"
-        android:icon="@drawable/ic_fotografando_icon"
+        android:icon="@drawable/ic_picrate_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_picrate_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="picrate.app.activities.ActivityMain" android:screenOrientation="portrait">
@@ -48,7 +48,7 @@
         <activity android:name="picrate.app.activities.ActivityCheckPhoto" android:screenOrientation="portrait"/>
         <activity android:name="picrate.app.activities.ActivityMyProfile" android:screenOrientation="portrait"/>
         <activity android:name="picrate.app.activities.ActivityMaps" android:screenOrientation="portrait"/>
-        <activity android:name="picrate.app.activities.ActivityZoom" android:screenOrientation="portrait"/>
+        <activity android:name="picrate.app.assets.OLD.ActivityZoom" android:screenOrientation="portrait"/>
         <activity android:name="picrate.app.activities.ActivityPhotoZoom" android:screenOrientation="portrait"/>
         <activity android:name="picrate.app.activities.ActivityProfile" android:screenOrientation="portrait"/>
         <activity android:name="picrate.app.activities.ActivityImageFilter" android:screenOrientation="portrait"/>
@@ -65,7 +65,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/maps_api_key_michele" />
         <service
             android:name="picrate.app.assets.services.ServiceUpdateChallenges"
             android:permission="android.permission.BIND_JOB_SERVICE"

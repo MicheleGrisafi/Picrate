@@ -462,7 +462,6 @@ public class ActivityCamera extends Activity {
                 mImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.JPEG),rotatedWidth,rotatedHeight);
                 mImageReader = ImageReader.newInstance(mImageSize.getWidth(),mImageSize.getHeight(),ImageFormat.JPEG,1);
                 mImageReader.setOnImageAvailableListener(mOnImageAvaiableListener,mBackgroundHandler);
-
                 mCameraId = cameraId;
                 return;
             }

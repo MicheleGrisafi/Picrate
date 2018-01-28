@@ -62,6 +62,8 @@ public class MedalDAO_DB_impl implements MedalDAO {
                     session = new ChallengeSession(obj.getInt("IDSession"),date,challenge);
                     photo = new Photo(user,session,new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_USER_FOLDER).toString() + "/" + Integer.toString(obj.getInt("IDPhoto")) + ".jpg"));
                     photo.setId(obj.getInt("IDPhoto"));
+                    photo.setLatitudine(obj.getDouble("latitudine"));
+                    photo.setLongitudine(obj.getDouble("longitudine"));
                     medal = new Medal(obj.getInt("IDMedal"),obj.getInt("position"),photo);
                     lista.add(medal);
                 }
@@ -90,6 +92,8 @@ public class MedalDAO_DB_impl implements MedalDAO {
                     user = new Utente(obj.getInt("IDUser"),obj.getString("username"),obj.getInt("score"));
                     photo = new Photo(user,session,new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_USER_FOLDER).toString() + "/" + Integer.toString(obj.getInt("IDPhoto")) + ".jpg"));
                     photo.setId(obj.getInt("IDPhoto"));
+                    photo.setLatitudine(obj.getDouble("latitudine"));
+                    photo.setLongitudine(obj.getDouble("longitudine"));
                     medal = new Medal(obj.getInt("IDMedal"),obj.getInt("position"),photo);
                     lista.add(medal);
                 }
