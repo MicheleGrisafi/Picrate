@@ -1,7 +1,9 @@
 package picrate.app.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,11 +14,15 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -34,6 +40,8 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
     private final int MY_PERMISSIONS_REQUEST_LOCATION = 9;
     private Switch location_switch;
     private LocationManager locationManager;
+    final private ActivityCheckPhoto activity = this;
+    private Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +137,7 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
         return res;
     }
     private void setLocation(){
+        boolean isRequesting = false;
         if(!checkLocationPermission()){
             location_switch.setChecked(false);
         }else if (!locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
@@ -139,14 +148,43 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
             //Location loca = locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,this,null);
 
             if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                isRequesting = true;
                 locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,this,null);
             }else if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+                isRequesting = true;
                 locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER,this,null);
             }else if(locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)){
+                isRequesting = true;
                 locationManager.requestSingleUpdate(LocationManager.PASSIVE_PROVIDER,this,null);
             }else{
                 Toast.makeText(this, R.string.gps_error_location, Toast.LENGTH_SHORT).show();
             }
+        }
+        if(isRequesting){
+            dialog = new Dialog(this);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.dialog_setting_location);
+
+
+
+            // set the custom dialog components - text, image and button
+            TextView textView = (TextView) dialog.findViewById(R.id.textView_dialog_gps_description);
+            ProgressBar progressBar = (ProgressBar) dialog.findViewById(R.id.progressBar_dialog_gps);
+            progressBar.setIndeterminate(true);
+            progressBar.setVisibility(ProgressBar.VISIBLE);
+            Button dialogCloseButton = (Button) dialog.findViewById(R.id.button_dialog_cancel);
+            // if button is clicked, close the custom dialog
+            dialogCloseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    locationManager.removeUpdates(activity);
+                    location_switch.setChecked(false);
+                    outIntent.putExtra("lat","");
+                    outIntent.putExtra("long","");
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
         }
     }
     @Override
@@ -184,6 +222,11 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if(isChecked)
             setLocation();
+        else {
+            location_switch.setChecked(false);
+            outIntent.putExtra("lat", "");
+            outIntent.putExtra("long", "");
+        }
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -208,7 +251,7 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
 
     @Override
     public void onLocationChanged(Location location) {
-        //TODO: add loading screen
+        dialog.dismiss();
         outIntent.putExtra("lat",location.getLatitude());
         outIntent.putExtra("long",location.getLongitude());
     }
@@ -232,6 +275,16 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
         result_sent = true;
         setResult(0,outIntent);
         super.onBackPressed();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
 
