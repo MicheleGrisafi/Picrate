@@ -1,7 +1,7 @@
 /*
 CREATE DATABASE foto;
 USE foto;*/
-
+SET FOREIGN_KEY_CHECKS = 0; 
 CREATE TABLE IF NOT EXISTS Utente(
 	IDUser			INT NOT NULL AUTO_INCREMENT,
 	username		VARCHAR(20) NULL,
@@ -132,7 +132,7 @@ INSERT INTO `Medal` (`IDMedal`,`IDPhoto`,`position`)VALUES
 TRUNCATE TABLE `Rating`;
 INSERT INTO `Rating` (`IDRating`, `IDPhoto`, `IDUser`, `Rating`, `segnalazione`) VALUES
 (1, 1, 2, 3, NULL);
-
+SET FOREIGN_KEY_CHECKS = 1; 
 
 
 
