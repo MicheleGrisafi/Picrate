@@ -7,6 +7,7 @@
     <string name="photo_folder_name">PicRate</string>
     <string name="ask_storage_permission">PicRate wants to access storage</string>
     <string name="storage_permission_denied">Storage permission necessary!</string>
+    <string name="ask_location_permission">PicRate wants to access your location</string>
     <string name="position_not_found">Can\'t retrieve position</string>
     <string name="turn_on_gps">GPS is off. Turn it on?</string>
     <string name="yes">YES</string>
@@ -52,11 +53,11 @@
     <string name="signup_message_title">Welcome to PicRate!</string>
     <string name="signup_message_body">To join PicRate you have to choose a nickname. This will appear in leaderboards and to all of your firends</string>
     <string name="notification_setting_new_challenge">New challenge</string>
-    <string name="notification_setting_new_challenge_sum">Show a notification every time a new challenge is avaiable</string>
+    <string name="notification_setting_new_challenge_sum">Show a notification every time a new challenge is available</string>
     <string name="notification_setting_challenge_expiration">Challenge expiration</string>
     <string name="notifification_setting_challenge_expiration_sum">Show a notification each time an uncompleted challenge is about to expire</string>
-    <string name="notification_new_challenge_title">New challenge avaiable!</string>
-    <string name="notification_new_challenge_body">Check out the new challenge avaiable for you!</string>
+    <string name="notification_new_challenge_title">New challenge available!</string>
+    <string name="notification_new_challenge_body">Check out the new challenge available for you!</string>
     <string name="notification_setting_wifi_title">Show notifications on WiFi only</string>
     <string name="notification_setting_wifi_sum">Notifications will be displayed, and content will be updated, only when connected to a WiFi network. Be aware that this system consumes just a little bit of your internet connection!</string>
     <string name="minutes_abbre">m</string>

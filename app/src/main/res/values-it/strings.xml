@@ -7,6 +7,7 @@
     <string name="photo_folder_name">PicRate</string>
     <string name="ask_storage_permission">PicRate vuole accedere alla memoria esterna</string>
     <string name="storage_permission_denied">Permessi memoria esterna necessari!</string>
+    <string name="ask_location_permission">PicRate vuole accedere alla tua posizione</string>
     <string name="position_not_found">Impossibile recuperare posizione</string>
     <string name="turn_on_gps">GPS disabilitato. Vuoi abilitarlo?</string>
     <string name="yes">SI</string>
