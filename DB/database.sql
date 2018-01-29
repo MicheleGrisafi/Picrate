@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS ChallengeSession(
 	expiration		DATETIME,
 	stato			INT(1) NOT NULL,	/* 1 = rating, 0 = scaduto, 2 = attivo, 3 = upcoming*/
 	IDChallenge		SMALLINT NOT NULL,
+	image      		VARCHAR(255) DEFAULT NULL, 
 	CONSTRAINT PKChallengeSession PRIMARY KEY(IDSession),
 	CONSTRAINT FKChallengeOfTheSession FOREIGN KEY (IDChallenge) REFERENCES Challenge(IDChallenge)
 );
@@ -31,11 +32,11 @@ CREATE TABLE IF NOT EXISTS Photo(
 	latitudine		DOUBLE,
 	longitudine		DOUBLE,
 	owner			INT	NOT NULL,
-	challengeSession		INT NOT NULL,
+	challenge		INT NOT NULL,
 	
 	CONSTRAINT PKPhoto PRIMARY KEY (IDPhoto),
 	CONSTRAINT FKPhotoOwner FOREIGN KEY (owner) REFERENCES Utente(IDUser),
-	CONSTRAINT FKPhotoChallenge FOREIGN KEY (challengeSession) REFERENCES ChallengeSession(IDSession)
+	CONSTRAINT FKPhotoChallenge FOREIGN KEY (challenge) REFERENCES ChallengeSession(IDSession)
 );
 CREATE TABLE IF NOT EXISTS Rating(
 	IDRating		SMALLINT NOT NULL AUTO_INCREMENT,
@@ -75,12 +76,12 @@ TRUNCATE TABLE `ChallengeSession`;
 INSERT INTO `ChallengeSession` (`IDSession`, `expiration`, `stato`, `IDChallenge`) VALUES
 (1, '2017-05-30 23:59:59', 1, 1), 	/*Panorama - rating*/
 (2, '2017-06-30 23:59:59', 1, 2), 	/*Cani - rating*/
-(3, '2018-11-02 23:59:59', 2, 3), 	/*Scena pubblica - attiva*/
-(4, '2018-10-02 12:00:00', 2, 4), 	/*Scarpe - attiva*/
+(3, '2018-02-12 23:59:59', 2, 3), 	/*Scena pubblica - attiva*/
+(4, '2018-02-10 12:00:00', 2, 4), 	/*Scarpe - attiva*/
 (5, '2017-9-01 23:59:59', 0, 5), 	/*Cibo - scaduta*/
 (6, '2017-9-01 23:59:59', 0, 6), 	/*Eleganza - scaduta*/
-(7, '2018-12-02 12:00:00', 2, 5), 	/*Cibo - attiva*/
-(8, '2017-12-02 12:00:00', 1, 6); 	/*Eleganza - rating*/
+(7, '2018-02-12 12:00:00', 2, 5), 	/*Cibo - attiva*/
+(8, '2017-02-12 12:00:00', 1, 6); 	/*Eleganza - rating*/
 
 TRUNCATE TABLE `Utente`;
 INSERT INTO `Utente` (`IDUser`, `username`, `googleKey`, `mail`, `score`, `money`) VALUES
@@ -96,7 +97,7 @@ INSERT INTO `Utente` (`IDUser`, `username`, `googleKey`, `mail`, `score`, `money
 (10, 'Catykella ', '111315445737180212473', 'caccaterina11@gmail.com', 0, 104);
 
 TRUNCATE TABLE `Photo`;
-INSERT INTO `Photo` (`IDPhoto`, `latitudine`, `longitudine`, `owner`, `challengeSession`) VALUES
+INSERT INTO `Photo` (`IDPhoto`, `latitudine`, `longitudine`, `owner`, `challenge`) VALUES
 (3, 0, 0, 3, 3), /* Scena pubblica, attiva - francesco*/
 (1, 0, 0, 3, 2), /* Cani, rating - francesco*/
 (4, 0, 0, 4, 2), /* Cani, rating - Filippo*/
