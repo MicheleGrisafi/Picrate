@@ -125,4 +125,15 @@ public class UtenteDAO_DB_impl implements UtenteDAO {
 
         return (Utente)result;
     }
+
+    @Override
+    public Utente checkUsername(String username) {
+        result = null;
+        response = database.checkUsername(username);
+        if(response.equals("1")) {
+            //esiste un utente
+            result = new Utente();
+        }
+        return (Utente)result;
+    }
 }

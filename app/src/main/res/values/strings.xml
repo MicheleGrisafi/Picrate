@@ -75,4 +75,8 @@
     <string name="date_pattern" translatable="false">yyyy-MM-dd HH:mm:ss</string>
     <string name="gps_error_location">Errror in determining the position</string>
     <string name="maps_api_key_michele" translatable="false">AIzaSyDmb3Cl5uuSO9iXMM_6ehfhMKJDJqG8_QY</string>
+    <string name="cancel">Cancel</string>
+    <string name="setting_location_message">The GPS is acquiring your location, please wait!</string>
+    <string name="username_rules">Has to be 3&#8211;20 characters long and can only contain letters, numbers, \'.\', \'-\' and \'_\'</string>
+    <string name="username_taken">This username has already been taken!</string>
 </resources>

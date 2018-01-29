@@ -45,6 +45,7 @@ public class MySqlDatabase {
     private static final String urlGetUtente                = "/getUtente.php";
     private static final String urlGetTopUsers              = "/getTopUsers.php";
     private static final String urlUpdateUtente             = "/updateUtente.php";
+    private static final String urlCheckUsername            = "/checkUsername.php";
 
     private static final String urlInsertPhoto              = "/insertPhoto.php";
     private static final String urlGetPhoto                 = "/getPhoto.php";
@@ -78,6 +79,7 @@ public class MySqlDatabase {
     public static final int PHOTO_CHALLENGE_FOLDER  = 13;
     public static final int GET_USER_MEDALS         = 14;
     public static final int GET_SESSION_MEDALS      = 15;
+    public static final int CHECK_USERNAME          = 16;
 
 
     private HttpURLConnection httpURLConnection;
@@ -137,7 +139,15 @@ public class MySqlDatabase {
         }
         return openConnection(data,UPDATE_UTENTE);
     }
-
+    public String checkUsername(String username){
+        data = "";
+        try {
+            data =  URLEncoder.encode("username","UTF-8")+"="+ URLEncoder.encode(username,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return openConnection(data,CHECK_USERNAME);
+    }
     /********************** OPERAZIONI FOTO ************************/
     public String insertPhoto(String file_path, String owner, String session, String latitudine, String longitudine){
         File image = new File(file_path);
@@ -343,6 +353,9 @@ public class MySqlDatabase {
                     break;
                 case GET_SESSION_MEDALS:
                     url = new URL(url_name+urlMedals+urlgetSessionMedals);
+                    break;
+                case CHECK_USERNAME:
+                    url = new URL(url_name+urlUtente+urlCheckUsername);
                     break;
             }
         }catch (MalformedURLException e) {
