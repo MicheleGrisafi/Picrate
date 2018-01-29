@@ -2,13 +2,10 @@ package picrate.app.assets.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,7 +92,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
             ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
             imageView = (ImageView) itemView.findViewById(R.id.activeRatingPhoto);
             imageButtonInfo = (ImageButton) itemView.findViewById(R.id.activeRatingPhotoChallengeInfo);
-            imageButtonReport = (ImageButton) itemView.findViewById(R.id.activeRatingPhotoReportButon);
+            imageButtonReport = (ImageButton) itemView.findViewById(R.id.activeRatingPhotoReportButton);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar_item_ratingPhoto);
         }
     }

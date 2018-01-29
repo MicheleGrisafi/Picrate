@@ -81,7 +81,7 @@
             tools:layout_constraintRight_creator="1" />
 
         <ImageButton
-            android:id="@+id/activeRatingPhotoReportButon"
+            android:id="@+id/activeRatingPhotoReportButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_small"
