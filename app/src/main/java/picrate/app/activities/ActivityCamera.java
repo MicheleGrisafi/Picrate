@@ -54,6 +54,7 @@ import java.util.Date;
 import java.util.List;
 
 import picrate.app.R;
+import picrate.app.assets.objects.BitmapHelper;
 import picrate.app.assets.objects.MyApp;
 
 /**
@@ -351,6 +352,12 @@ public class ActivityCamera extends Activity {
         super.onPause();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(!BitmapHelper.deleteFile(mPhotoFile))
+            Toast.makeText(this, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
     /** Rendo il layout fullscreen **/
     @Override
     public void onWindowFocusChanged(boolean hasFocus){
@@ -406,7 +413,8 @@ public class ActivityCamera extends Activity {
         switch (resultCode){
             case 0:
                 //Immagine scartata
-
+                if(!BitmapHelper.deleteFile(mPhotoFile))
+                    Toast.makeText(this, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 //Invio l'immagine all'activity principale per essere messa nell'imageview

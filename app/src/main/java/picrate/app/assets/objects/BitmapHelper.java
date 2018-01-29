@@ -2,9 +2,11 @@ package picrate.app.assets.objects;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -33,11 +35,7 @@ public abstract class BitmapHelper {
         return result;
     }
     static public boolean deleteFile(File file){
-        boolean res;
-        if(!file.delete()){
-            res = false;
-        }else
-            res = true;
+        boolean res = file.delete();
         return  res;
     }
     static public void bitmapToFile(Bitmap bitmap, String name){

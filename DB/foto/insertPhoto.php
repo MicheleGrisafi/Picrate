@@ -12,14 +12,13 @@
 	
 	//response array 
 	$response = array(); 
-	
+	$response['error']=false;
 
 	$longitudine = null;
 	$latitudine = null;
 	$owner = null;
 	$challenge = null;
 	
-
 	if(isset($_POST["challenge"]))
 		$challenge = $_POST["challenge"];
 	if(isset($_POST["longitudine"]))
@@ -29,11 +28,10 @@
 	if(isset($_POST["owner"]))
 		$owner = $_POST["owner"];
 
-	
+
 	$query = $mysqli->prepare("INSERT INTO Photo(latitudine,longitudine,owner,challenge) VALUES(?,?,?,?)");
 	$query->bind_param('ddii',$latitudine,$longitudine,$owner,$challenge);
 	$result = $query->execute();
-	$response['error']=false;
 	if (!$result) {
 		$response['error']=true;
 		$response['message']=mysqli_error($mysqli);
@@ -80,7 +78,7 @@
 					break;
 			}
 			$response["error_uploading"] = $message;	
-			$response["url"] =  $file_path;
+			$response["url"] =  "http://fotografandoapp.altervista.org/picturesUsers/".$name.'.'.$extension;
 		}catch(Exception $e){
 			$response['error']=true;
 			$response['message']=$e->getMessage();

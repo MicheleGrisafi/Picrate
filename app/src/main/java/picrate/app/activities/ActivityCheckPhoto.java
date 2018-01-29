@@ -51,8 +51,8 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
         if(location_switch.isChecked())
             setLocation();
 
-
-
+        final Context context = this;
+        String tmp = inIntent.getStringExtra("fileName");
         outIntent.putExtra("fileName",inIntent.getStringExtra("fileName"));
 
         btnOk.setOnClickListener(new View.OnClickListener() {
@@ -226,6 +226,12 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+    @Override
+    public void onBackPressed() {
+        result_sent = true;
+        setResult(0,outIntent);
+        super.onBackPressed();
     }
 }
 
