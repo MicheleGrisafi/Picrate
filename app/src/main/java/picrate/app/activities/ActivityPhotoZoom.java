@@ -42,7 +42,7 @@ import picrate.app.assets.objects.MyApp;
 import picrate.app.assets.tasks.TaskDeletePhoto;
 
 /**
- * Created by Cate on 25/05/2017.
+ * Created by Caterina Battisti on 25/05/2017.
  */
 
 public class ActivityPhotoZoom extends Activity {

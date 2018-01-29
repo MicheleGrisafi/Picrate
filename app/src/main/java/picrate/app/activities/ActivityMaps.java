@@ -41,6 +41,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import picrate.app.R;
 
+/**
+ * Created by Caterina Battisti on 09/05/2017.
+ */
+
 public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,

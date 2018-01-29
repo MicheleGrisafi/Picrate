@@ -15,7 +15,7 @@ import picrate.app.assets.objects.MyApp;
 import picrate.app.assets.tasks.AsyncTaskLoaderMedalsProfile;
 
 /**
- * Created by Cate on 22/05/2017.
+ * Created by Caterina Battisti on 22/05/2017.
  */
 
 public class ActivityMyProfile extends ActivityMedals {
