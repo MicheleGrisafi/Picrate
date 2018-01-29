@@ -5,7 +5,8 @@
     android:id="@+id/challengeSessionInfoDialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/button">
+    android:background="@color/colorWhite"
+    android:padding="@dimen/margin_small">
 
     <ImageButton
         android:id="@+id/challengeSessionInfoDialogCloseButton"
@@ -29,15 +30,14 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/margin_small"
         android:textSize="@dimen/font_size_medium"
+        android:textStyle="bold"
         android:textColor="@color/colorBlack"/>
     <TextView
         android:id="@+id/challengeSessionInfoDialogText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginBottom="@dimen/margin_small"
-        android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginEnd="@dimen/margin_small"
         android:gravity="center"
         android:text="TextView"
         android:textSize="@dimen/font_size_small"

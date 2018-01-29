@@ -66,7 +66,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/imgSession2"
                 app:layout_constraintTop_toBottomOf="@+id/descrizione"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/beautiful_photography" />
+                app:srcCompat="@drawable/circular_profile" />
 
 
             <picrate.app.assets.views.ImageViewChallenge

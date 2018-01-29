@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -19,11 +20,12 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.List;
 
 import picrate.app.R;
 import picrate.app.assets.objects.BitmapHelper;
 
-public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton.OnCheckedChangeListener {
+public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton.OnCheckedChangeListener, LocationListener {
 
     public int CODE_FILTERS = 5;
     private boolean result_sent = false;
@@ -133,9 +135,18 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
             buildAlertMessageNoGps();
             location_switch.setChecked(false);
         }else{
-            Location loca = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            outIntent.putExtra("lat",loca.getLatitude());
-            outIntent.putExtra("long",loca.getLongitude());
+            //Location loca = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            //Location loca = locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,this,null);
+
+            if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,this,null);
+            }else if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+                locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER,this,null);
+            }else if(locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)){
+                locationManager.requestSingleUpdate(LocationManager.PASSIVE_PROVIDER,this,null);
+            }else{
+                Toast.makeText(this, R.string.gps_error_location, Toast.LENGTH_SHORT).show();
+            }
         }
     }
     @Override
@@ -182,11 +193,10 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission was granted.
-                    if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        setLocation();
                     }
-                    setLocation();
+
                 } else {
                     location = false;
                     // Permission denied, Disable the functionality that depends on this permission.
@@ -196,6 +206,27 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
         }
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        //TODO: add loading screen
+        outIntent.putExtra("lat",location.getLatitude());
+        outIntent.putExtra("long",location.getLongitude());
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 }
 
 

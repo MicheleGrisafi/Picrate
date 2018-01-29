@@ -71,4 +71,5 @@
     <string name="delete_picture">Rimuovi</string>
     <string name="delete_picture_dialog_message">Sei sicuro di voler rimuovere questa foto dalla sfida? Una volta fatto non potrai ripensarci e non ti verranno rimborsate eventuali spese!</string>
     <string name="delete_photo_error">C\'è stato un problema con la rimozione della tua foto! Riprova!</string>
+    <string name="gps_error_location">Errore nel rilevamento della posizione</string>
 </resources>

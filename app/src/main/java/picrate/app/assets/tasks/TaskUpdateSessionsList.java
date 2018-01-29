@@ -91,6 +91,7 @@ public class TaskUpdateSessionsList extends AsyncTask<Void,Void,List<ChallengeSe
             // mNotificationId is a unique integer your app uses to identify the
             // notification. For example, to cancel the notification, you can pass its ID
             // number to NotificationManager.cancel().
+            intent.putExtra("notification",AppInfo.NOTIFY_NEW_CHALLENGE);
             mNotificationManager.notify(AppInfo.NOTIFY_NEW_CHALLENGE, builder.build());
             service.jobFinished(jobParameters,true);
         }
