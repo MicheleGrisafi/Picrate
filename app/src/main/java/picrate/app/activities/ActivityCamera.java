@@ -54,6 +54,7 @@ import java.util.Date;
 import java.util.List;
 
 import picrate.app.R;
+import picrate.app.assets.objects.BitmapHelper;
 import picrate.app.assets.objects.MyApp;
 
 /**
@@ -351,6 +352,12 @@ public class ActivityCamera extends Activity {
         super.onPause();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(!BitmapHelper.deleteFile(mPhotoFile))
+            Toast.makeText(this, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
     /** Rendo il layout fullscreen **/
     @Override
     public void onWindowFocusChanged(boolean hasFocus){
@@ -406,7 +413,8 @@ public class ActivityCamera extends Activity {
         switch (resultCode){
             case 0:
                 //Immagine scartata
-
+                if(!BitmapHelper.deleteFile(mPhotoFile))
+                    Toast.makeText(this, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
                 break;
             case 1:
                 //Invio l'immagine all'activity principale per essere messa nell'imageview
@@ -462,7 +470,6 @@ public class ActivityCamera extends Activity {
                 mImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.JPEG),rotatedWidth,rotatedHeight);
                 mImageReader = ImageReader.newInstance(mImageSize.getWidth(),mImageSize.getHeight(),ImageFormat.JPEG,1);
                 mImageReader.setOnImageAvailableListener(mOnImageAvaiableListener,mBackgroundHandler);
-
                 mCameraId = cameraId;
                 return;
             }
@@ -514,7 +521,8 @@ public class ActivityCamera extends Activity {
                 }
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession session) {
-                    Toast.makeText(MyApp.getAppContext(),R.string.generic_camera_error,Toast.LENGTH_LONG).show();
+                    //TODO: bug ad alcuni -> finisce in capturefailed
+                    Toast.makeText(MyApp.getAppContext(),"error trying to configure capture session",Toast.LENGTH_LONG).show();
                 }
             },null);
         } catch (CameraAccessException e) {
@@ -540,7 +548,7 @@ public class ActivityCamera extends Activity {
                 @Override
                 public void onCaptureFailed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull CaptureFailure failure) {
                     super.onCaptureFailed(session, request, failure);
-                    Toast.makeText(ActivityCamera.this, R.string.generic_camera_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityCamera.this, "capture failed error", Toast.LENGTH_SHORT).show();
                 }
             };
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),stillCaptureCallback,null);

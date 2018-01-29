@@ -24,7 +24,6 @@ import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.R;
 import picrate.app.activities.ActivityPhotoZoom;
 import picrate.app.activities.ActivityProfile;
-import picrate.app.activities.ActivityZoom;
 import picrate.app.assets.adapters.AdapterLeaderboardSessionList;
 import picrate.app.assets.tasks.AsyncTaskLoaderSessionsLeaderboard;
 

@@ -22,12 +22,9 @@ import java.util.ArrayList;
 
 import picrate.app.DB.Objects.Medal;
 import picrate.app.R;
-import picrate.app.activities.ActivityZoom;
 import picrate.app.assets.listeners.OnClickListenerMedal;
 import picrate.app.assets.listeners.UserOnClickListener;
-import picrate.app.assets.objects.AppInfo;
 import picrate.app.assets.objects.MyApp;
-import picrate.app.fragments.FragmentTabLeadeboard;
 
 /**
  * Created by miki4 on 22/10/2017.

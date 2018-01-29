@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
@@ -53,7 +55,7 @@ public class ActivityPhotoZoom extends Activity {
         final ImageButton btnBack = (ImageButton) findViewById(R.id.btnBack);
         final ImageButton btnDownload = (ImageButton) findViewById(R.id.btnDownload);
         final ImageButton btnMap = (ImageButton) findViewById(R.id.btnMap);
-        ImageView img = (ImageView) findViewById(R.id.expanded_image);
+        final ImageView img = (ImageView) findViewById(R.id.expanded_image);
         Intent inIntent = getIntent();
         final Photo image = inIntent.getParcelableExtra("image");
 
@@ -74,8 +76,10 @@ public class ActivityPhotoZoom extends Activity {
                 public void onClick(View v) {
                     Intent mapIntent = new Intent(ActivityPhotoZoom.this, ActivityMaps.class);
                     mapIntent.putExtra("latLng", new LatLng(image.getLatitudine(), image.getLongitudine()));
-                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.beautiful_photography);
+                    Bitmap bitmap = ((GlideBitmapDrawable)img.getDrawable()).getBitmap();
+                    //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.circular_profile);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
+
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bs);
                     mapIntent.putExtra("photo", bs.toByteArray());
                     startActivity(new Intent(mapIntent));

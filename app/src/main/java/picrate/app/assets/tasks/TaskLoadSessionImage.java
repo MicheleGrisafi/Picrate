@@ -87,20 +87,18 @@ public class TaskLoadSessionImage extends AsyncTask<Void,Void,ArrayList<Photo>> 
                 foto.setUtente(user);
                 foto.setSession(session);
                 imageView = imageViews.get(i);
-                if (foto != null) {
-                    RequestListenerGlideProgressBar requestListener;
-                    if (i == 0) {
-                        requestListener = new RequestListenerGlideProgressBar(progressBar1);
-                    }
-                    else {
-                        requestListener = new RequestListenerGlideProgressBar(progressBar2);
-                    }
-                    Glide.with(context)
-                            .load(foto.getImage())
-                            .listener(requestListener)
-                            .into(imageView);
-                    imageView.setPhoto(foto);
+                RequestListenerGlideProgressBar requestListener;
+                if (i == 0) {
+                    requestListener = new RequestListenerGlideProgressBar(progressBar1);
                 }
+                else {
+                    requestListener = new RequestListenerGlideProgressBar(progressBar2);
+                }
+                Glide.with(context)
+                        .load(foto.getImage())
+                        .listener(requestListener)
+                        .into(imageView);
+                imageView.setPhoto(foto);
             }
         }
 

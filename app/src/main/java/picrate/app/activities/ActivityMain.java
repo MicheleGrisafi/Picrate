@@ -57,12 +57,12 @@ public class ActivityMain extends FragmentActivity  {
 
         /** Inizializzo utente **/
 
-
+        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(getResources().getColor(R.color.materialOrange600));
-        }
+        }*/
 
         /** Imposto titolo prima scheda **/
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
