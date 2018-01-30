@@ -20,9 +20,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.DB.Objects.Photo;
 import picrate.app.DB.Objects.Rating;
 import picrate.app.R;
@@ -157,7 +160,11 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
                     text.setText(photo.getSession().getDescription());
                     TextView title = (TextView) dialog.findViewById(R.id.challengeSessionInfoDialogTitle);
                     title.setText(photo.getSession().getTitle());
+                    TextView expiration = (TextView) dialog.findViewById(R.id.textView_expiration);
 
+                    DateTime data = new DateTime(photo.getSession().getExpiration());
+                    String dataString = data.getDayOfMonth() + "/" + data.getMonthOfYear() + "/" +data.getYear();
+                    expiration.setText(dataString);
 
                     ImageButton dialogButton = (ImageButton) dialog.findViewById(R.id.challengeSessionInfoDialogCloseButton);
                     // if button is clicked, close the custom dialog

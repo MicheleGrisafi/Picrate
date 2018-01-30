@@ -80,4 +80,5 @@
     <string name="setting_location_message">The GPS is acquiring your location, please wait!</string>
     <string name="username_rules">Has to be 3&#8211;20 characters long and can only contain letters, numbers, \'.\', \'-\' and \'_\'</string>
     <string name="username_taken">This username has already been taken!</string>
+    <string name="expired_on">Expired on:</string>
 </resources>
