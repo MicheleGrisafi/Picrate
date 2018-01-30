@@ -3,6 +3,7 @@ package picrate.app.assets.adapters;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -20,9 +21,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.DB.Objects.Photo;
 import picrate.app.DB.Objects.Rating;
 import picrate.app.R;
@@ -131,6 +135,7 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
             ConstraintLayout constraintLayout = holder.constraintLayout;
             ConstraintLayout constraintLayoutTitle = holder.constraintLayoutTitle;
             final RatingBar ratingBar = holder.ratingBar;
+            ratingBar.setRating(0.0f);
             ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                 @Override
                 public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -141,7 +146,9 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
             TextView textView = holder.challengeTextView;
             textView.setText(photo.getSession().getTitle());
             ProgressBar progressBar = holder.progressBar;
-            progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(mContext, R.color.materialOrange600), PorterDuff.Mode.MULTIPLY);
+            Drawable progressDrawable = progressBar.getIndeterminateDrawable().mutate();
+            progressDrawable.setColorFilter(ContextCompat.getColor(mContext, R.color.materialOrange600), PorterDuff.Mode.SRC_IN);
+            progressBar.setProgressDrawable(progressDrawable);
             progressBar.setVisibility(ProgressBar.VISIBLE);
             ImageButton imageButtonInfo = holder.imageButtonInfo;
             imageButtonInfo.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +164,11 @@ public class AdapterRatingPhotos extends RecyclerView.Adapter<AdapterRatingPhoto
                     text.setText(photo.getSession().getDescription());
                     TextView title = (TextView) dialog.findViewById(R.id.challengeSessionInfoDialogTitle);
                     title.setText(photo.getSession().getTitle());
+                    TextView expiration = (TextView) dialog.findViewById(R.id.textView_expiration);
 
+                    DateTime data = new DateTime(photo.getSession().getExpiration());
+                    String dataString = data.getDayOfMonth() + "/" + data.getMonthOfYear() + "/" +data.getYear();
+                    expiration.setText(dataString);
 
                     ImageButton dialogButton = (ImageButton) dialog.findViewById(R.id.challengeSessionInfoDialogCloseButton);
                     // if button is clicked, close the custom dialog
