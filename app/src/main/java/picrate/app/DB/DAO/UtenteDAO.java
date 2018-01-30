@@ -18,6 +18,6 @@ public interface UtenteDAO {
     Utente getUtente(int id);
     ArrayList<Utente> getTopUsers();
     Utente updateUtente(Utente user);
-
+    Utente checkUsername(String username);
 
 }

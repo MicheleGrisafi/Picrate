@@ -37,13 +37,25 @@
         android:hint="@string/username_field"
         android:textColor="@color/colorWhite"
         android:layout_below="@id/textView_activity_signup_messageBody"
+
         />
+    <TextView
+        android:id="@+id/help_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText_signup"
+        android:layout_centerHorizontal="true"
+        android:text="@string/username_rules"
+        android:layout_marginEnd="@dimen/margin_extra_large"
+        android:layout_marginStart="@dimen/margin_extra_large"
+        android:gravity="center"/>
+
     <!-- TODO: aggiungere un color picker o un profile picture -->
     <Button
         android:id="@+id/button_signup"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_signup"
+        android:layout_below="@+id/help_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_small"
         android:backgroundTint="@color/button"
