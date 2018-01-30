@@ -16,6 +16,8 @@
 
         <ProgressBar
             android:id="@+id/progressBar_item_ratingPhoto"
+            android:indeterminate="true"
+            android:indeterminateBehavior="repeat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"

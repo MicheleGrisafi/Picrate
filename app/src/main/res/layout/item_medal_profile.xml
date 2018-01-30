@@ -67,6 +67,8 @@
         android:textSize="@dimen/font_size_extra_small"/>
     <ProgressBar
         android:id="@+id/progressBar_item_medal"
+        android:indeterminate="true"
+        android:indeterminateBehavior="repeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="@+id/imageView_item_medal_profile_img"

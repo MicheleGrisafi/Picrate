@@ -3,7 +3,10 @@ package picrate.app.assets.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +87,10 @@ public class AdapterMedalsProfile extends RecyclerView.Adapter<AdapterMedalsProf
         TextView medalPosition = holder.position;
         medalPosition.setVisibility(View.INVISIBLE);
         final ProgressBar bar = holder.bar;
+        Drawable progressDrawable = bar.getIndeterminateDrawable().mutate();
+        progressDrawable.setColorFilter(ContextCompat.getColor(context, R.color.materialOrange600), PorterDuff.Mode.SRC_IN);
+        bar.setProgressDrawable(progressDrawable);
+
         ImageView imgMedal = holder.medal;
         switch (medal.getPosition()){
             case 1:
