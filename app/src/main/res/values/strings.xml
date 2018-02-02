@@ -51,7 +51,7 @@
     <string name="auth_key" translatable="false">1016249877332-m3muj1bgrmkr22sca4b2n6sl2g3b1n3q.apps.googleusercontent.com</string>
     <string name="picrate_motto">Join the challenge!</string>
     <string name="signup_message_title">Welcome to PicRate!</string>
-    <string name="signup_message_body">To join PicRate you have to choose a nickname. This will appear in leaderboards and to all of your firends</string>
+    <string name="signup_message_body">To join PicRate you have to choose a nickname. This will appear in leaderboards and to all of your friends</string>
     <string name="notification_setting_new_challenge">New challenge</string>
     <string name="notification_setting_new_challenge_sum">Show a notification every time a new challenge is available</string>
     <string name="notification_setting_challenge_expiration">Challenge expiration</string>
