@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -170,7 +172,10 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
             // set the custom dialog components - text, image and button
             TextView textView = (TextView) dialog.findViewById(R.id.textView_dialog_gps_description);
             ProgressBar progressBar = (ProgressBar) dialog.findViewById(R.id.progressBar_dialog_gps);
-            progressBar.setIndeterminate(true);
+            Drawable progressDrawable = progressBar.getIndeterminateDrawable().mutate();
+            progressDrawable.setColorFilter(ContextCompat.getColor(activity, R.color.colorWhite), PorterDuff.Mode.SRC_IN);
+            progressBar.setProgressDrawable(progressDrawable);
+
             progressBar.setVisibility(ProgressBar.VISIBLE);
             Button dialogCloseButton = (Button) dialog.findViewById(R.id.button_dialog_cancel);
             // if button is clicked, close the custom dialog
@@ -286,6 +291,7 @@ public class ActivityCheckPhoto extends BitmapActivity implements CompoundButton
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }
 
 

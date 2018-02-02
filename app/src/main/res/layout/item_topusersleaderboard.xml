@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/topUsersLeaderboardItem_layout"
@@ -12,7 +11,7 @@
 
     <TextView
         android:id="@+id/topUsersLeaderboardItem_position"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="0"
         android:paddingStart="@dimen/margin_small"
@@ -22,8 +21,9 @@
         android:textSize="@dimen/font_size_small"/>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_weight="8">
         <RelativeLayout
             android:id="@+id/topUsersLeaderboardItem_layoutPicUser"
@@ -56,7 +56,7 @@
             android:layout_gravity="center_vertical"
             android:layout_centerVertical="true"
             android:gravity="center_vertical|center_horizontal"
-            android:text="uername"
+            android:text="username"
             android:textColor="@color/colorBlack"
             android:layout_marginStart="8dp"
             android:layout_toEndOf="@+id/topUsersLeaderboardItem_layoutPicUser"
@@ -66,11 +66,10 @@
 
     <RelativeLayout
         android:id="@+id/topUsersLeaderboardItem_scoreLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="2"
-        android:gravity="end">
+        android:layout_weight="2">
 
         <TextView
             android:id="@+id/topUsersLeaderboardItem_score"
@@ -86,13 +85,12 @@
             android:id="@+id/topUsersLeaderboardItem_starImage"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentEnd="false"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/margin_small"
             android:layout_toEndOf="@+id/topUsersLeaderboardItem_score"
             android:src="@drawable/ic_star_yellow_24dp"
-            app:srcCompat="@drawable/ic_star_yellow_24dp" />
+            app:srcCompat="@drawable/ic_star_yellow_24dp"
+            />
     </RelativeLayout>
-
-
 </LinearLayout>

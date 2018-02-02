@@ -77,4 +77,5 @@
     <string name="setting_location_message">Il GPS sta acquisendo la tua posizione, attendi perfavore!</string>
     <string name="username_rules">Deve essere di 3&#8211;20 caratteri e può contenere lettere, numeri, \'-\' e \'_\'.</string>
     <string name="username_taken">Questo username è già stato scelto!</string>
+    <string name="expired_on">"Scaduta il: "</string>
 </resources>

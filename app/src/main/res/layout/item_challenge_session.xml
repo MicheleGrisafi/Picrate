@@ -89,7 +89,8 @@
 
             <ProgressBar
                 android:id="@+id/progressBar_item_challenge_img1"
-                style="?android:attr/progressBarStyle"
+                android:indeterminate="true"
+                android:indeterminateBehavior="repeat"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 app:layout_constraintTop_toTopOf="@+id/imgSession1"

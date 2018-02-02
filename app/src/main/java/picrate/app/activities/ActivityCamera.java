@@ -162,7 +162,7 @@ public class ActivityCamera extends Activity {
     private Size mImageSize;
     private ImageReader mImageReader;
     /** Acquisizione immagine **/
-    private final ImageReader.OnImageAvailableListener mOnImageavailableListener = new ImageReader.OnImageAvailableListener() {
+    private final ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
         @Override
         public void onImageAvailable(ImageReader reader) {
             mBackgroundHandler.post(new ImageSaver(reader.acquireLatestImage()));
@@ -469,7 +469,7 @@ public class ActivityCamera extends Activity {
                 mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),rotatedWidth,rotatedHeight);
                 mImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.JPEG),rotatedWidth,rotatedHeight);
                 mImageReader = ImageReader.newInstance(mImageSize.getWidth(),mImageSize.getHeight(),ImageFormat.JPEG,1);
-                mImageReader.setOnImageAvailableListener(mOnImageavailableListener,mBackgroundHandler);
+                mImageReader.setOnImageAvailableListener(mOnImageAvailableListener,mBackgroundHandler);
                 mCameraId = cameraId;
                 return;
             }
