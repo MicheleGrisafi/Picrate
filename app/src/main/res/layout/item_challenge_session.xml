@@ -30,15 +30,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/titolo"
-            android:background="@color/colorWhite">
+            android:background="@color/colorWhite"
+            android:paddingStart="@dimen/margin_small"
+            android:paddingEnd="@dimen/margin_small">
 
 
             <TextView
                 android:id="@+id/descrizione"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_medium"
-                android:layout_marginRight="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:text="Descrizione sfida"
                 android:gravity="center"
@@ -89,7 +89,8 @@
 
             <ProgressBar
                 android:id="@+id/progressBar_item_challenge_img1"
-                style="?android:attr/progressBarStyle"
+                android:indeterminate="true"
+                android:indeterminateBehavior="repeat"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 app:layout_constraintTop_toTopOf="@+id/imgSession1"

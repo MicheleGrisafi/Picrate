@@ -3,8 +3,11 @@ package picrate.app.assets.tasks;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -57,6 +60,13 @@ public class TaskLoadSessionImage extends AsyncTask<Void,Void,ArrayList<Photo>> 
         this.activity = activity;
         this.progressBar1 = progressBar1;
         this.progressBar2 = progressBar2;
+        Drawable progressDrawable = progressBar1.getIndeterminateDrawable().mutate();
+        progressDrawable.setColorFilter(ContextCompat.getColor(activity, R.color.materialOrange600), PorterDuff.Mode.SRC_IN);
+        progressBar1.setProgressDrawable(progressDrawable);
+        progressDrawable = progressBar2.getIndeterminateDrawable().mutate();
+        progressDrawable.setColorFilter(ContextCompat.getColor(activity, R.color.materialOrange600), PorterDuff.Mode.SRC_IN);
+
+        progressBar2.setProgressDrawable(progressDrawable);
         progressBar2.setVisibility(ProgressBar.VISIBLE);
         progressBar1.setVisibility(ProgressBar.VISIBLE);
     }

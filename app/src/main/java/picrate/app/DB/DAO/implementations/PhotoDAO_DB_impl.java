@@ -7,7 +7,11 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import picrate.app.DB.DAO.PhotoDAO;
@@ -15,6 +19,8 @@ import picrate.app.DB.MySqlDatabase;
 import picrate.app.DB.Objects.ChallengeSession;
 import picrate.app.DB.Objects.Photo;
 import picrate.app.DB.Objects.Utente;
+import picrate.app.R;
+import picrate.app.assets.objects.MyApp;
 
 /**
  * Created by miki4 on 07/05/2017.
@@ -113,7 +119,10 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
             for(int i = 0; i < arr.length(); i++) {
                 obj = arr.getJSONObject(i);
                 url = new URL(MySqlDatabase.getUrl(MySqlDatabase.PHOTO_USER_FOLDER).toString() + "/" + obj.getString("IDPhoto") + ".jpg");
+                DateFormat format = new SimpleDateFormat(MyApp.getAppContext().getString(R.string.date_pattern));
+                Date date = format.parse(obj.getString("expiration"));
                 challengeSession = new ChallengeSession(obj.getInt("IDSession"));
+                challengeSession.setExpiration(date);
                 challengeSession.setTitle(obj.getString("title"));
                 challengeSession.setDescription(obj.getString("description"));
                 photo = new Photo();
@@ -122,7 +131,7 @@ public class PhotoDAO_DB_impl implements PhotoDAO {
                 photo.setImage(url);
                 lista.add(photo);
             }
-        } catch (JSONException | MalformedURLException e) {
+        } catch (JSONException | MalformedURLException | ParseException e) {
             e.printStackTrace();
         }
         if(!lista.isEmpty())

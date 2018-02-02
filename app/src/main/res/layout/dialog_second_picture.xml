@@ -36,17 +36,15 @@
         android:id="@+id/textView_dialog_second_picture_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
         android:gravity="center"
         android:text="@string/buy_second_picture"
         android:textSize="@dimen/font_size_small"
-        android:layout_marginTop="@dimen/margin_small"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton_dialog_second_picture_closeButton"
-        android:layout_marginRight="@dimen/margin_small"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="@dimen/margin_small"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginEnd="@dimen/margin_small" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_dialog_second_picture_closeButton" />
 
     <ImageButton
         android:id="@+id/imageButton_dialog_second_picture_closeButton"

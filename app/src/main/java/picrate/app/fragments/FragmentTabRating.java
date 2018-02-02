@@ -98,7 +98,7 @@ public class FragmentTabRating extends Fragment implements LoaderManager.LoaderC
                             Utente user = AppInfo.getUtente();
                             user.setMoney(AppInfo.retribuzione_votazione,true);
                             AppInfo.updateUtente(user);
-                            Toast.makeText(getContext(), "1 dollar earned!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "1 coin earned!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

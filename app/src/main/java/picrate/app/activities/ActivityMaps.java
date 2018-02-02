@@ -33,6 +33,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -40,6 +41,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import picrate.app.R;
+
+/**
+ * Created by Caterina Battisti on 09/05/2017.
+ */
 
 public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -64,19 +69,11 @@ public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
         intent = getIntent();
         extras = intent.getExtras();
         state = 0;
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkLocationPermission();
-        }
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        checkLocationPermission();
     }
 
     @Override
@@ -145,6 +142,11 @@ public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback
                     == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
+            } else {
+                if(shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)){
+                    Toast.makeText(this, R.string.ask_location_permission, Toast.LENGTH_SHORT).show();
+                }
+                requestPermissions(new String[] {android.Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_REQUEST_LOCATION);
             }
         }
         else {
@@ -271,6 +273,10 @@ public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback
             }
             return false;
         } else {
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
             return true;
         }
     }
@@ -286,24 +292,18 @@ public class ActivityMaps extends FragmentActivity implements OnMapReadyCallback
                     // Permission was granted.
                     if (ContextCompat.checkSelfPermission(this,
                             Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        mMap.setMyLocationEnabled(true);
+                            != PackageManager.PERMISSION_GRANTED) {
+                        // Permission denied, Disable the functionality that depends on this permission.
+                        Toast.makeText(this, R.string.gps_permission_denied, Toast.LENGTH_LONG).show();
+                        checkLocationPermission();
                     }
-
-                } else {
-                    // Permission denied, Disable the functionality that depends on this permission.
-
-                    Toast.makeText(this, R.string.gps_permission_denied, Toast.LENGTH_LONG).show();
                 }
+                // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.map);
+                mapFragment.getMapAsync(this);
                 return;
             }
-
-            // other 'case' lines to check for other permissions this app might request.
-            //You can add here other case statements according to your requirement.
         }
     }
 }

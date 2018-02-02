@@ -7,6 +7,7 @@
     <string name="photo_folder_name">PicRate</string>
     <string name="ask_storage_permission">PicRate vuole accedere alla memoria esterna</string>
     <string name="storage_permission_denied">Permessi memoria esterna necessari!</string>
+    <string name="ask_location_permission">PicRate vuole accedere alla tua posizione</string>
     <string name="position_not_found">Impossibile recuperare posizione</string>
     <string name="turn_on_gps">GPS disabilitato. Vuoi abilitarlo?</string>
     <string name="yes">SI</string>
@@ -72,4 +73,9 @@
     <string name="delete_picture_dialog_message">Sei sicuro di voler rimuovere questa foto dalla sfida? Una volta fatto non potrai ripensarci e non ti verranno rimborsate eventuali spese!</string>
     <string name="delete_photo_error">C\'è stato un problema con la rimozione della tua foto! Riprova!</string>
     <string name="gps_error_location">Errore nel rilevamento della posizione</string>
+    <string name="cancel">Annulla</string>
+    <string name="setting_location_message">Il GPS sta acquisendo la tua posizione, attendi perfavore!</string>
+    <string name="username_rules">Deve essere di 3&#8211;20 caratteri e può contenere lettere, numeri, \'-\' e \'_\'.</string>
+    <string name="username_taken">Questo username è già stato scelto!</string>
+    <string name="expired_on">"Scaduta il: "</string>
 </resources>

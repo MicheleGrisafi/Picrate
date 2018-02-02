@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "832219910358",
+    "project_id": "fotografando-166810"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832219910358:android:3ffc985b251ca52a",
+        "android_client_info": {
+          "package_name": "picrate.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832219910358-r9788jfl6vtt32a5h0u76rh20lj4r8k3.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "832219910358-fa4bmj602icqk7g9mq19aa8a86i7b6d1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "picrate.app",
+            "certificate_hash": "2e0da6a4fcb1360bc9d9fe7cdf78245018adbc35"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD0j6sx7ZcUnCOViJyAnZ1ZySOJj8QIJ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

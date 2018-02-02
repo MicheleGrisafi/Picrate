@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -80,8 +81,12 @@ public class AdapterLeaderboardSessionList extends RecyclerView.Adapter<AdapterL
 
         RecyclerView rv = holder.recyclerView;
         ProgressBar progressBar = holder.progressBar;
+        Drawable progressDrawable = progressBar.getIndeterminateDrawable().mutate();
+        progressDrawable.setColorFilter(ContextCompat.getColor(activity, R.color.materialOrange600), PorterDuff.Mode.SRC_IN);
+        progressBar.setProgressDrawable(progressDrawable);
+
+
         progressBar.setVisibility(View.VISIBLE);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(ctx, R.color.materialOrange600), PorterDuff.Mode.MULTIPLY);
         TaskLoadSessionMedals task = new TaskLoadSessionMedals(rv,ctx,session,progressBar,activity,intentUser,intentPhoto);
         task.execute();
     }

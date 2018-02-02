@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/layout_dialog_second_picture"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_small"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <ProgressBar
+        android:id="@+id/progressBar_dialog_gps"
+        android:indeterminate="true"
+        android:indeterminateBehavior="repeat"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+/>
+
+    <TextView
+        android:id="@+id/textView_dialog_gps_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:gravity="center"
+        android:text="@string/setting_location_message"
+        android:textSize="@dimen/font_size_small"
+        android:layout_toRightOf="@id/progressBar_dialog_gps"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+ />
+
+    <Button
+        android:id="@+id/button_dialog_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/cancel"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/font_size_small"
+        android:layout_below="@id/progressBar_dialog_gps"
+        android:layout_centerHorizontal="true"
+ />
+</RelativeLayout>
