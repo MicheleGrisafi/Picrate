@@ -1,12 +1,12 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/block"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/colorWhite"
     app:cardCornerRadius="6dp"
-    android:layout_marginTop="@dimen/margin_small">
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,9 +26,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/margin_small"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
                 android:gravity="center"
                 android:text="Titolo sfida"
                 android:textColor="@color/colorBlack"
@@ -124,15 +124,15 @@
                 android:id="@+id/expiration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_extra_small"
                 android:layout_marginTop="@dimen/margin_extra_small"
                 android:gravity="end"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/font_size_extra_small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/progressBar_item_challenge_img1" />
+                app:layout_constraintTop_toBottomOf="@id/imgSession2" />
         </android.support.constraint.ConstraintLayout>
     </RelativeLayout>
 
