@@ -149,7 +149,7 @@ public class AdapterChallengeSession extends RecyclerView.Adapter<AdapterChallen
         int myWidth = 300;
         int myHeight = 150;
         URL url = session.getImage();
-        Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).centerCrop().into(
+        Glide.with(MyApp.getAppContext()).load(url).asBitmap().override(300,150).fitCenter().into(
                 new MySimpleTarget<Bitmap>(myWidth,myHeight,holder.box));
 
 
