@@ -48,7 +48,7 @@
     <string name="username_field">Username</string>
     <string name="signup_error">Si è verificato un errore con la registrazione</string>
     <string name="username_error">L\'username scelto non è valido!</string>
-    <string name="picrate_motto">Unisci alla sfida!</string>
+    <string name="picrate_motto">Partecipa alla sfida!</string>
     <string name="signup_message_title">Benvenuto su PicRate!</string>
     <string name="signup_message_body">Per usare PicRate devi scegliere un nickname! Questo sarà visibile nelle classifiche e a tutti i tuoi amici</string>
     <string name="notification_setting_new_challenge">Nuova sfida</string>

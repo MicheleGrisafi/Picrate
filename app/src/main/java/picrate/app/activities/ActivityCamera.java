@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
@@ -34,6 +35,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.view.KeyEvent;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -71,6 +73,7 @@ public class ActivityCamera extends Activity {
     private static final int REQUEST_CAMERA = 5;
     private static final int STATE_PREVIEW = 0;
     private static final int STATE_WAIT_LOCK = 1;
+    private static final int STATE_PICTURE_CAPTURED = 2;
     private int mCaptureState;
     private boolean shooting = false;
 
@@ -92,6 +95,7 @@ public class ActivityCamera extends Activity {
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             //Inizalizzo fotocamera appena la SurfaceTexture... è disponibile
             setupCamera(width,height);
+            transformImage(width,height);
             connectCamera();
         }
 
@@ -106,6 +110,26 @@ public class ActivityCamera extends Activity {
         public void onSurfaceTextureUpdated(SurfaceTexture surface) {
         }
     };
+
+    private void transformImage(int width, int height){
+        if(mPreviewSize != null && mTextureView != null){
+            Matrix matrix = new Matrix();
+            int rotation = getWindowManager().getDefaultDisplay().getRotation();
+            RectF textureRectF = new RectF(0,0,width,height);
+            RectF previewRectF = new RectF(0,0,mPreviewSize.getHeight(),mPreviewSize.getWidth());
+            float centerX = textureRectF.centerX();
+            float centerY = textureRectF.centerY();
+            if(rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270){
+                previewRectF.offset(centerX-previewRectF.centerX(),centerY-previewRectF.centerY());
+                matrix.setRectToRect(textureRectF,previewRectF,Matrix.ScaleToFit.FILL);
+                float scale = Math.max((float)width/mPreviewSize.getWidth(),(float)height / mPreviewSize.getHeight());
+                matrix.postScale(scale,scale,centerX,centerY);
+                matrix.postRotate(90 *(rotation-2),centerX,centerY);
+
+            }
+            mTextureView.setTransform(matrix);
+        }
+    }
 
     /** Camera device **/
     private CameraDevice mCameraDevice;
@@ -165,7 +189,7 @@ public class ActivityCamera extends Activity {
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
         @Override
         public void onImageAvailable(ImageReader reader) {
-            mBackgroundHandler.post(new ImageSaver(reader.acquireLatestImage()));
+            mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage()));//it was latetest image
         }
     };
 
@@ -225,7 +249,7 @@ public class ActivityCamera extends Activity {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                //mImage.close();
+                mImage.close();
                 try {
                     if (out != null) {
                         out.close();
@@ -264,14 +288,12 @@ public class ActivityCamera extends Activity {
                     //Gestisco il fuoco
                     // mCaptureState = STATE_PREVIEW;
                     Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
-                    if (afState == CaptureRequest.CONTROL_AF_STATE_FOCUSED_LOCKED /*|| afState == CaptureRequest.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED*/){
-                        unLockFocus();
+                    if (afState == CaptureRequest.CONTROL_AF_STATE_FOCUSED_LOCKED || afState == CaptureRequest.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED){
+                        //unLockFocus();
                         //Toast.makeText(getApplicationContext(),"AF locked!",Toast.LENGTH_SHORT).show();
                         //Avvio cattura immagine
+                        mCaptureState = STATE_PICTURE_CAPTURED;
                         startStillCaptureRequest();
-                    }else{
-                        //Toast.makeText(ActivityCamera.this, "af state WRONG", Toast.LENGTH_SHORT).show();
-                        //lockFocus(true);
                     }
                     break;
             }
@@ -294,10 +316,10 @@ public class ActivityCamera extends Activity {
     private File mPhotoFile;
     private static SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
-        ORIENTATIONS.append(Surface.ROTATION_0,0);
-        ORIENTATIONS.append(Surface.ROTATION_90,90);
-        ORIENTATIONS.append(Surface.ROTATION_180,180);
-        ORIENTATIONS.append(Surface.ROTATION_270,270);
+        ORIENTATIONS.append(Surface.ROTATION_0,90);
+        ORIENTATIONS.append(Surface.ROTATION_90,0);
+        ORIENTATIONS.append(Surface.ROTATION_180,270);
+        ORIENTATIONS.append(Surface.ROTATION_270,180);
     }
     private static class CompareSizeByArea implements Comparator<Size>{
         @Override
@@ -336,8 +358,8 @@ public class ActivityCamera extends Activity {
         startBackgroundThread();
         if(mTextureView.isAvailable()){
             setupCamera(mTextureView.getWidth(),mTextureView.getHeight());
+            transformImage(mTextureView.getWidth(),mTextureView.getHeight());
             connectCamera();
-
         }else{
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
         }
@@ -348,7 +370,6 @@ public class ActivityCamera extends Activity {
     protected void onPause(){
         closeCamera();
         stopBackgroundThread();
-        System.gc();
         super.onPause();
     }
 
@@ -357,6 +378,16 @@ public class ActivityCamera extends Activity {
         if(!BitmapHelper.deleteFile(mPhotoFile))
             Toast.makeText(this, R.string.deletingLocalFileError, Toast.LENGTH_SHORT).show();
         super.onBackPressed();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
     /** Rendo il layout fullscreen **/
     @Override
@@ -377,7 +408,6 @@ public class ActivityCamera extends Activity {
     /** Gestisco i permessi **/
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
             case REQUEST_CAMERA_PERMISSION_RESULT:
                 try {
@@ -389,17 +419,13 @@ public class ActivityCamera extends Activity {
                 }
                 break;
             case REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT:
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    try {
-                        createPhotoFileName();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }else{
+                if(grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(this,R.string.storage_permission_denied,Toast.LENGTH_LONG).show();
                     finish();
                 }
                 break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
     }
@@ -457,6 +483,8 @@ public class ActivityCamera extends Activity {
                     continue;
                 }
                 StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+
+                /*
                 int deviceOrientation = getWindowManager().getDefaultDisplay().getRotation();
                 mTotalrotation = sensorToDeviceRotation(cameraCharacteristics,deviceOrientation);
                 boolean swapRotation = mTotalrotation == 90 || mTotalrotation == 270;
@@ -465,11 +493,20 @@ public class ActivityCamera extends Activity {
                 if (swapRotation){
                     rotatedWidth = height;
                     rotatedHeight = width;
-                }
-                mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),rotatedWidth,rotatedHeight);
-                mImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.JPEG),rotatedWidth,rotatedHeight);
-                mImageReader = ImageReader.newInstance(mImageSize.getWidth(),mImageSize.getHeight(),ImageFormat.JPEG,1);
+                }*/
+                Size largestImageSize = Collections.max(Arrays.asList(map.getOutputSizes(ImageFormat.JPEG)), new Comparator<Size>() {
+                    @Override
+                    public int compare(Size lhs, Size rhs) {
+                        return Long.signum(lhs.getWidth() * lhs.getHeight() - rhs.getHeight() * rhs.getWidth());
+                    }
+                });
+                mImageReader = ImageReader.newInstance(largestImageSize.getWidth(),largestImageSize.getHeight(),ImageFormat.JPEG,1);
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener,mBackgroundHandler);
+                mPreviewSize = getPreferredPreviewSize(map.getOutputSizes(SurfaceTexture.class),width,height);
+               // mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),rotatedWidth,rotatedHeight);
+                mImageSize = chooseOptimalSize(map.getOutputSizes(ImageFormat.JPEG),width,height);
+                /*mImageReader = ImageReader.newInstance(mImageSize.getWidth(),mImageSize.getHeight(),ImageFormat.JPEG,1);
+                mImageReader.setOnImageAvailableListener(mOnImageAvailableListener,mBackgroundHandler);*/
                 mCameraId = cameraId;
                 return;
             }
@@ -533,7 +570,8 @@ public class ActivityCamera extends Activity {
         try {
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             mCaptureRequestBuilder.addTarget(mImageReader.getSurface());
-            mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION,mTotalrotation);
+            int rotation = getWindowManager().getDefaultDisplay().getRotation();
+            mCaptureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION,ORIENTATIONS.get(rotation));
             CameraCaptureSession.CaptureCallback stillCaptureCallback = new CameraCaptureSession.CaptureCallback() {
                 @Override
                 public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
@@ -542,15 +580,18 @@ public class ActivityCamera extends Activity {
 
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
-                    super.onCaptureCompleted(session, request, result);
+                    shooting = false;
+                    unLockFocus();
                 }
 
                 @Override
                 public void onCaptureFailed(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull CaptureFailure failure) {
                     super.onCaptureFailed(session, request, failure);
                     Toast.makeText(ActivityCamera.this, "capture failed error", Toast.LENGTH_SHORT).show();
+                    unLockFocus();
                 }
             };
+            mPreviewCaptureSession.stopRepeating();
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),stillCaptureCallback,null);
         } catch (CameraAccessException e) {
             e.printStackTrace();
@@ -593,14 +634,54 @@ public class ActivityCamera extends Activity {
             return choices[0];
         }
     }
-
+    private Size getPreferredPreviewSize(Size[] mapSizes, int width, int height){
+        List<Size> collectorSizes = new ArrayList<>();
+        for (Size option:mapSizes){
+            if(width>height){
+                if(option.getHeight() > height && option.getWidth()> width){
+                    collectorSizes.add(option);
+                }
+            }else{
+                if(option.getHeight() > width && option.getWidth()> height){
+                    collectorSizes.add(option);
+                }
+            }
+        }
+        Size result = mapSizes[0];
+        if(collectorSizes.size() > 0){
+            result = Collections.min(collectorSizes, new Comparator<Size>() {
+                @Override
+                public int compare(Size lhs, Size rhs) {
+                    return Long.signum(lhs.getWidth() * lhs.getHeight() - rhs.getWidth() * rhs.getHeight());
+                }
+            });
+        }
+        return result;
+    }
     /** Gestione file e cartella **/
     private void createPhotoFolder(){
-        File photoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        mPhotoFolder = new File(photoFile,getString(R.string.photo_folder_name));
-        if(!mPhotoFolder.exists()){
-            if(!mPhotoFolder.mkdirs())
-                Toast.makeText(this, R.string.photo_folder_not_created, Toast.LENGTH_SHORT).show();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                File photoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                mPhotoFolder = new File(photoFile,getString(R.string.photo_folder_name));
+                if(!mPhotoFolder.exists()){
+                    if(!mPhotoFolder.mkdirs())
+                        Toast.makeText(this, R.string.photo_folder_not_created, Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+                    Toast.makeText(this,R.string.ask_storage_permission,Toast.LENGTH_LONG).show();
+                }
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
+                //requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITE_EXTERNAL_STORAGE_PERMISSION_RESULT);
+            }
+        }else{
+            File photoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            mPhotoFolder = new File(photoFile,getString(R.string.photo_folder_name));
+            if(!mPhotoFolder.exists()){
+                if(!mPhotoFolder.mkdirs())
+                    Toast.makeText(this, R.string.photo_folder_not_created, Toast.LENGTH_SHORT).show();
+            }
         }
     }
     private File createPhotoFileName() throws IOException{
@@ -651,11 +732,11 @@ public class ActivityCamera extends Activity {
     private void unLockFocus(){
         mCaptureState = STATE_PREVIEW;
         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,CaptureRequest.CONTROL_AF_TRIGGER_CANCEL);
-        try {
+        /*try {
             mPreviewCaptureSession.capture(mCaptureRequestBuilder.build(),mPreviewCaptureCallback,mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
-        }
+        }*/
     }
     private void shootPhoto() {
         //se già cliccato allora non faccio nulla
